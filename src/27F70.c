@@ -73,14 +73,42 @@ void* func_80027588(u16 arg0, u8 arg1, u8 arg2, u8 arg3) {
     return temp_v1;
 }
 
-void func_80027644(u16 arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4, s32 arg5) {
-    func_800273FC(arg0, arg1, arg2, arg3, arg4);
+void func_80027644(u16 arg0, u16 arg1, u16 x, u16 y, u16 z, s32 arg5) {
+    func_800273FC(arg0, arg1, x, y, z);
     gActors[arg0].unk_094 |= 0x200;
     gActors[arg0].flags |= 8;
     gActors[arg0].unk_18C = arg5;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_800276DC.s")
+extern u16 D_800D16C4[];
+
+u16 func_800276DC(u16 arg0, u8* arg1, u16 x, u16 y, u16 z, s32 arg5) {
+    while (*arg1 != 0) {
+        if (*arg1 == 0x23) {
+            gActors[arg0].flags = 0;
+            arg0++;
+        } else if (*arg1 != 0x20) {
+            //////////////////////////////////////////
+            // #######   ###   #     # #     # #######
+            // #          #     #   #  ##   ## #
+            // #          #      # #   # # # # #
+            // #####      #       #    #  #  # #####
+            // #          #      # #   #     # #
+            // #          #     #   #  #     # #
+            // #         ###   #     # #     # #######
+            //////////////////////////////////////////
+            // D_800D16C4 is from 26A00 and is likely the wrong symbol
+            // likely data in 27F70 which has an appropriate lookup table
+            //////////////////////////////////////////
+            func_80027644(arg0, D_800D16C4[(*arg1) - 0x1A] * 2 + 0x2D2, x, y, z, arg5);
+            //////////////////////////////////////////
+            arg0++;
+        }
+        arg1++;
+        x += 9;
+    }
+    return arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80027800.s")
 

@@ -1,10 +1,18 @@
 #include "common.h"
 #include "actor.h"
 
+typedef struct {
+    u8 pad0[2];
+    s16 unk2;
+    s16 unk4;
+    u8 pad6[2];
+} Unk800D1788;
+
 extern u16 D_800CA230;
 extern u32 D_80137458;
 extern u16 D_80178136;
 
+extern Unk800D1788 D_800D1788[];
 extern s8 D_800D2204[];
 extern s8 D_800D2228[];
 extern s8 D_800D222C[];
@@ -56,7 +64,14 @@ void func_80027510(u16 arg0, void* arg1, u16 x, u16 y, u16 z) {
     gActors[arg0].unk_0E6 = 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80027588.s")
+void* func_80027588(u16 arg0, u8 arg1, u8 arg2, u8 arg3) {
+    Unk800D1788* temp_v1;
+
+    temp_v1 = &D_800D1788[arg0];
+    temp_v1->unk2 = (((arg1 / 2) << 11) + ((arg2 / 2) << 6) + ((arg3 / 2) * 2) + 1);
+    temp_v1->unk4 = ((arg1 << 11) + (arg2 << 6) + (arg3 * 2) + 1);
+    return temp_v1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80027644.s")
 

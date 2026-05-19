@@ -23,7 +23,15 @@ extern void func_80042864(u16);
 extern void func_800423A0(u16);
 extern void func_800427E0(u16);
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80027370.s")
+void func_80027370(u16 arg0, u16 arg1, u16 arg2, u16 arg3) {
+    gActors[arg0].actorType = 0;
+    func_8001E2D0(arg0);
+    gActors[arg0].unk_094 |= 0x800;
+    gActors[arg0].unk_188 = 0;
+    gActors[arg0].posX.whole = arg1;
+    gActors[arg0].posY.whole = arg2;
+    gActors[arg0].posZ.whole = arg3;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_800273FC.s")
 

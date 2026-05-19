@@ -73,7 +73,12 @@ void* func_80027588(u16 arg0, u8 arg1, u8 arg2, u8 arg3) {
     return temp_v1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80027644.s")
+void func_80027644(u16 arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4, s32 arg5) {
+    func_800273FC(arg0, arg1, arg2, arg3, arg4);
+    gActors[arg0].unk_094 |= 0x200;
+    gActors[arg0].flags |= 8;
+    gActors[arg0].unk_18C = arg5;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_800276DC.s")
 

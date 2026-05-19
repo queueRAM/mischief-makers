@@ -50,7 +50,11 @@ void func_80027468(u16 arg0, u16 arg1, u16 x, u16 y, u16 z, u8 red, u8 green, u8
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80027510.s")
+void func_80027510(u16 arg0, void* arg1, u16 x, u16 y, u16 z) {
+    func_80027370(arg0, x, y, z);
+    gActors[arg0].unk_0E8 = arg1;
+    gActors[arg0].unk_0E6 = 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80027588.s")
 

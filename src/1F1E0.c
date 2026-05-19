@@ -7,6 +7,9 @@
 
 typedef void (*UnkFunc800CA1C0)(u16, u16, Actor*);
 
+extern u16 gRngSeed;
+extern u16 gAudioFadeMode;
+
 extern u16 D_800BE4D0;
 extern u16 D_800BE4D4;
 extern u16 D_800BE4D8;
@@ -16,6 +19,8 @@ extern u16 D_800BE500;
 extern u16 D_800BE530;
 extern u16 D_800BE534;
 extern u16 D_800BE544;
+extern u16 D_800BE5D0;
+extern u16 D_800BE668;
 extern u16 D_800BE6B4;
 extern u16 D_800BE6B8;
 extern u16 D_800BE704;
@@ -24,11 +29,14 @@ extern u16 D_800BE708;
 extern s32 D_800CA28C; // unknown type
 extern s32 D_800CA2A0; // unknown type
 
-// these could be related arrays
 extern s16 D_800C7CA4[];
 extern s16 D_800C7CAC[];
 extern s16 D_800C7CB4[];
 extern s16 D_800C7CBC[];
+extern u16 D_800C8378[];
+extern u16 D_800C83F8[];
+extern u16 D_800CA234;
+extern u16 D_800CA2B0[];
 
 extern UnkFunc800CA1C0 D_800CA1C0[];
 extern u16 D_800CA230;
@@ -44,6 +52,7 @@ extern u16* D_800CBE0C[];
 
 extern u16 D_800D28E4;
 extern u16 D_800D28E8;
+extern u16 D_800D2908;
 extern u16 D_800D2918;
 extern u16 D_800D291C;
 extern u16 D_800D2920;
@@ -79,6 +88,8 @@ extern u16 D_801781DC;
 extern u16 D_801781E0;
 extern u16 D_801782B8;
 
+extern void GameState_Loading(void);
+extern void Sound_StartFade(u16, u16);
 extern void func_8001107C(void);
 extern void func_800122B0(void);
 extern void func_80012830(void);
@@ -544,7 +555,81 @@ void func_80021098(void) {
     gGameStateSubState = prev_game_sub_state;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/1F1E0/GameState_Attract.s")
+void GameState_Attract(void) {
+    Actor* actors_200;
+    s32 var_v0;
+    actors_200 = &gActors[200];
+    switch (gGameStateSubState) {
+    case 0:
+        if (D_800CA238 > 3) {
+            D_800CA238 = 0;
+        }
+        D_80178162 = D_800CA2B0[D_800CA238];
+        D_800BE5D0 = D_800C8378[D_80178162];
+        D_800D28E4 = D_800C83F8[D_80178162];
+        D_800CA234 = 0xA00;
+        D_800D2908 = 1;
+        gActors[0].health = 0x3E8;
+        D_800BE668 = 0x32;
+        gRngSeed = 0x1234;
+        GameState_Loading();
+        gGameState = 0xA;
+        gGameStateSubState = 1;
+        D_80104098[0x1440] = D_80104098[0x1490] = 0;
+        func_8002092C();
+        actors_200[0].unk_0B0 = actors_200[1].unk_0AE = actors_200[2].unk_0AA = actors_200[3].unk_0AC = 0;
+        D_800CA23C = 0;
+        D_800CA240 = 0;
+        D_800CA248 = 0;
+        D_800CA24C = 0;
+        D_800CA244 = D_800CBDFC[D_800CA238][0]; // [D_800CA23C]
+        D_800CA250 = D_800CBE0C[D_800CA238][0]; // [D_800CA248]
+        break;
+    case 1:
+        if (actors_200[2].unk_0AA == 0x90) {
+            actors_200[0].flags = actors_200[1].flags = actors_200[2].flags = actors_200[3].flags = 0;
+        } else {
+            actors_200[0].unk_0B0 += 2;
+            actors_200[1].unk_0AE -= 2;
+            actors_200[2].unk_0AA += 3;
+            actors_200[3].unk_0AC -= 3;
+        }
+        func_80021098();
+        if ((D_800CA234-- == 0) || (gButtonPress & D_800BE500)) {
+            if (actors_200[0].flags == 0) {
+                Sound_StartFade(1, 0x40);
+                D_800CA234 = 0x40;
+                gGameStateSubState++;
+            }
+        }
+        break;
+    case 2:
+        func_80021098();
+        var_v0 = (D_800CA234--) ^ 0x30;
+        if (var_v0 == 0) {
+            actors_200[3].flags = 0xB;
+            actors_200[2].flags = 0xB;
+            actors_200[1].flags = 0xB;
+            actors_200[0].flags = 0xB;
+            gGameStateSubState++;
+        }
+        break;
+    case 3:
+        func_80021098();
+        if (actors_200[2].unk_0AA == actors_200[3].unk_0AC) {
+            D_800CA238++;
+            gAudioFadeMode = 0;
+            gGameState = 0;
+            gGameStateSubState = 0;
+        } else {
+            actors_200[0].unk_0B0 -= 2;
+            actors_200[1].unk_0AE += 2;
+            actors_200[2].unk_0AA -= 3;
+            actors_200[3].unk_0AC += 3;
+        }
+        break;
+    }
+}
 
 void func_80021620(void) {
     if (gButtonPress & D_800BE534) {

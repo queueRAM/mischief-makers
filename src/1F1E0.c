@@ -558,6 +558,7 @@ void func_80021098(void) {
 void GameState_Attract(void) {
     Actor* actors_200;
     s32 var_v0;
+
     actors_200 = &gActors[200];
     switch (gGameStateSubState) {
     case 0:
@@ -569,7 +570,7 @@ void GameState_Attract(void) {
         D_800D28E4 = D_800C83F8[D_80178162];
         D_800CA234 = 0xA00;
         D_800D2908 = 1;
-        gActors[0].health = 0x3E8;
+        gActors[0].health = 1000;
         D_800BE668 = 0x32;
         gRngSeed = 0x1234;
         GameState_Loading();
@@ -582,13 +583,14 @@ void GameState_Attract(void) {
         D_800CA240 = 0;
         D_800CA248 = 0;
         D_800CA24C = 0;
-        D_800CA244 = D_800CBDFC[D_800CA238][0]; // [D_800CA23C]
-        D_800CA250 = D_800CBE0C[D_800CA238][0]; // [D_800CA248]
+        D_800CA244 = D_800CBDFC[D_800CA238][0];
+        D_800CA250 = D_800CBE0C[D_800CA238][0];
         break;
     case 1:
         if (actors_200[2].unk_0AA == 0x90) {
             actors_200[0].flags = actors_200[1].flags = actors_200[2].flags = actors_200[3].flags = 0;
-        } else {
+        }
+        else {
             actors_200[0].unk_0B0 += 2;
             actors_200[1].unk_0AE -= 2;
             actors_200[2].unk_0AA += 3;
@@ -607,10 +609,7 @@ void GameState_Attract(void) {
         func_80021098();
         var_v0 = (D_800CA234--) ^ 0x30;
         if (var_v0 == 0) {
-            actors_200[3].flags = 0xB;
-            actors_200[2].flags = 0xB;
-            actors_200[1].flags = 0xB;
-            actors_200[0].flags = 0xB;
+            actors_200[0].flags = actors_200[1].flags = actors_200[2].flags = actors_200[3].flags = 0xB;
             gGameStateSubState++;
         }
         break;
@@ -621,7 +620,8 @@ void GameState_Attract(void) {
             gAudioFadeMode = 0;
             gGameState = 0;
             gGameStateSubState = 0;
-        } else {
+        }
+        else {
             actors_200[0].unk_0B0 -= 2;
             actors_200[1].unk_0AE += 2;
             actors_200[2].unk_0AA -= 3;

@@ -33,7 +33,10 @@ void func_80027370(u16 arg0, u16 arg1, u16 arg2, u16 arg3) {
     gActors[arg0].posZ.whole = arg3;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_800273FC.s")
+void func_800273FC(u16 arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4) {
+    func_80027370(arg0, arg2, arg3, arg4);
+    gActors[arg0].unk_084 = arg1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80027468.s")
 

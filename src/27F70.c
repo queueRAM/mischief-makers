@@ -23,22 +23,32 @@ extern void func_80042864(u16);
 extern void func_800423A0(u16);
 extern void func_800427E0(u16);
 
-void func_80027370(u16 arg0, u16 arg1, u16 arg2, u16 arg3) {
+void func_80027370(u16 arg0, u16 x, u16 y, u16 z) {
     gActors[arg0].actorType = 0;
     func_8001E2D0(arg0);
     gActors[arg0].unk_094 |= 0x800;
     gActors[arg0].unk_188 = 0;
-    gActors[arg0].posX.whole = arg1;
-    gActors[arg0].posY.whole = arg2;
-    gActors[arg0].posZ.whole = arg3;
+    gActors[arg0].posX.whole = x;
+    gActors[arg0].posY.whole = y;
+    gActors[arg0].posZ.whole = z;
 }
 
-void func_800273FC(u16 arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4) {
-    func_80027370(arg0, arg2, arg3, arg4);
+void func_800273FC(u16 arg0, u16 arg1, u16 x, u16 y, u16 z) {
+    func_80027370(arg0, x, y, z);
     gActors[arg0].unk_084 = arg1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80027468.s")
+void func_80027468(u16 arg0, u16 arg1, u16 x, u16 y, u16 z, u8 red, u8 green, u8 blue) {
+    func_80027370(arg0, x, y, z);
+    gActors[arg0].unk_0E6 = 0;
+    gActors[arg0].unk_084 = arg1;
+    if (red | green | blue) {
+        gActors[arg0].unk_094 |= 0x10;
+        gActors[arg0].colorR = red;
+        gActors[arg0].colorG = green;
+        gActors[arg0].colorB = blue;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80027510.s")
 

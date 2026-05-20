@@ -181,7 +181,16 @@ u16 func_80027A88(u16* arg0) {
     return len1 + len0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80027AC8.s")
+u16 func_80027AC8(u16 arg0, u16* arg1) {
+    while (*arg1 != ALPHA_NULL) {
+        if (*arg1 != 0) {
+            gActors[arg0].flags = 0;
+            arg0++;
+        }
+        arg1++;
+    }
+    return arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80027B28.s")
 

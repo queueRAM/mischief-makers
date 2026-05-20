@@ -77,8 +77,8 @@ typedef struct {
     /* 0x0EC */ s32 velocityX; // FixedCoord(?) velocity see: 66250, 8D0A0, and matched overlays
     /* 0x0F0 */ s32 velocityY;
     /* 0x0F4 */ s32 unk_0F4; // FixedCoord parameter in overlay_76F390
-    /* 0x0F8 */ s32 unk_0F8; // FixedCoord parameter in overlay_76F390
-    /* 0x0FC */ s32 unk_0FC; // FixedCoord parameter in overlay_76F390
+    /* 0x0F8 */ s32 unk_0F8; // FixedCoord updated to velocityX
+    /* 0x0FC */ s32 unk_0FC; // FixedCoord updated to velocityY
     /* 0x100 */ s32 unk_100;
     /* 0x104 */ s32 unk_104; // FixedCoord updated to posX in func_80028C80
     /* 0x108 */ s32 unk_108; // FixedCoord updated to posY in func_80028C80

@@ -581,7 +581,27 @@ s32 func_80028C80(u16 actor_inde) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80028CE8.s")
+void func_80028CE8(u16 actor_index) {
+    gActors[actor_index].velocityX = gActors[actor_index].unk_0F8;
+    gActors[actor_index].velocityY = gActors[actor_index].unk_0FC;
+
+    gActors[actor_index].flags &= ~0x280;
+    if (gActors[gActors[actor_index].unk_0D6].flags & 0x100) {
+        gActors[actor_index].flags |= 0x80;
+    }
+    else {
+        gActors[actor_index].flags |= 0x200;
+    }
+
+    if (gActors[actor_index].velocityX != 0) {
+        if (gActors[actor_index].velocityX < 0) {
+            gActors[actor_index].flags |= 0x20;
+        }
+        else {
+            gActors[actor_index].flags &= ~0x20;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80028DAC.s")
 

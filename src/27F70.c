@@ -16,6 +16,8 @@ extern f32 D_800BE5B4;
 extern s16 D_800BE5D8;
 extern s16 D_800BE5DC;
 extern u16 D_800CA230;
+extern s16 D_800D2920;
+extern s16 D_800D2924;
 extern u32 D_80137458;
 extern u16 D_80178136;
 
@@ -451,7 +453,23 @@ void Actor_ClearSceneActors(void) {
     Actor_ClearRange_C0ToC7();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002877C.s")
+u16 func_8002877C(u16 actor_index) {
+    s16 temp_v1;
+
+    temp_v1 = D_800BE558 + gActors[actor_index].posX.whole + gActors[actor_index].unk_0AA;
+    if (temp_v1 < D_800D2920) {
+        gActors[actor_index].posX.whole += D_800D2920 - temp_v1;
+        gActors[actor_index].unk_098 |= 4;
+        return 1;
+    }
+    temp_v1 = D_800BE558 + gActors[actor_index].posX.whole + gActors[actor_index].unk_0AC;
+    if (temp_v1 > D_800D2924) {
+        gActors[actor_index].posX.whole += D_800D2924 - temp_v1;
+        gActors[actor_index].unk_098 |= 8;
+        return 2;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002884C.s")
 

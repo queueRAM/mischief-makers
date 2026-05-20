@@ -353,7 +353,15 @@ void func_800283BC(u32 arg0, u16 arg1) {
 void func_800284B0(s32 arg0) {
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_800284B8.s")
+u16 func_800284B8(u16 arg0, u16 arg1) {
+    while (arg0 < arg1) {
+        if (!(gActors[arg0].flags & 0x2)) {
+            return arg0;
+        }
+        arg0++;
+    }
+    return 0;
+}
 
 void func_80028528(void) {
     func_800284B8(0x90, 0xC0);

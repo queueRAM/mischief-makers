@@ -110,7 +110,18 @@ u16 func_800276DC(u16 arg0, u8* arg1, u16 x, u16 y, u16 z, s32 arg5) {
     return arg0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80027800.s")
+u16 func_80027800(u16 arg0, u16 arg1, u16 x, u16 y, u16 z, s32 arg5) {
+    u16 tens;
+
+    tens = 0;
+    while (arg1 >= 10) {
+        arg1 -= 10;
+        tens++;
+    }
+    func_80027644(arg0 + 0, (tens * 2) + 0x2D2, x, y, z, arg5);
+    func_80027644(arg0 + 1, (arg1 * 2) + 0x2D2, x + 9, y, z, arg5);
+    return arg0 + 2;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_800278E8.s")
 

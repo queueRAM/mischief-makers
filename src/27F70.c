@@ -173,7 +173,13 @@ u16 func_80027A44(u16* arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80027A88.s")
+u16 func_80027A88(u16* arg0) {
+    u16 len0;
+    u16 len1;
+    len0 = func_80027A44(arg0++);
+    len1 = func_80027A44(arg0);
+    return len1 + len0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80027AC8.s")
 

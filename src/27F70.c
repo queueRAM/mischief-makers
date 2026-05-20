@@ -471,7 +471,18 @@ u16 func_8002877C(u16 actor_index) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002884C.s")
+u16 func_8002884C(u16 actor_index) {
+    s16 temp_v1;
+    temp_v1 = D_800BE558 + gActors[actor_index].posX.whole + gActors[actor_index].unk_0AA;
+    if (temp_v1 < D_800D2920) {
+        return 0;
+    }
+    temp_v1 = D_800BE558 + gActors[actor_index].posX.whole + gActors[actor_index].unk_0AC;
+    if (temp_v1 > D_800D2924) {
+        return 0;
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_800288EC.s")
 

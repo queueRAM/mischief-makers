@@ -9,6 +9,10 @@ typedef struct {
     u8 pad6[2];
 } Unk800D1788;
 
+extern s16 D_800BE558;
+extern s16 D_800BE55C;
+extern s16 D_800BE5D8;
+extern s16 D_800BE5DC;
 extern u16 D_800CA230;
 extern u32 D_80137458;
 extern u16 D_80178136;
@@ -302,7 +306,19 @@ void func_80028260(u16 arg0, u16 arg1, u8 arg2, u8 arg3, u8 arg4) {
     sp4[arg1] = ((arg2 << 8) & 0xF800) | ((arg3 << 3) & 0x7C0) | ((arg4 >> 2) & 0x3E) | 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_800282F0.s")
+void func_800282F0(s16 arg0, s16 arg1) {
+    func_80012288();
+    D_801373E0.unk_20 = 0;
+    D_801373E0.unk_24 = 0;
+    gActors->posX.whole = arg0;
+    gActors->posY.whole = arg1;
+    D_800BE5D8 = D_800BE558 + arg0;
+    D_800BE5DC = D_800BE55C + arg1;
+    D_800CA230 = 0;
+    if (gActors->health < 0) {
+        gActors->health = 0;
+    }
+}
 
 void func_80028380(void) {
     gActors[0].flags = 0;

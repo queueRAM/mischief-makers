@@ -80,9 +80,9 @@ typedef struct {
     /* 0x0F8 */ s32 unk_0F8; // FixedCoord parameter in overlay_76F390
     /* 0x0FC */ s32 unk_0FC; // FixedCoord parameter in overlay_76F390
     /* 0x100 */ s32 unk_100;
-    /* 0x104 */ s32 unk_104;
-    /* 0x108 */ s32 unk_108;
-    /* 0x10C */ s32 unk_10C;
+    /* 0x104 */ s32 unk_104; // FixedCoord updated to posX in func_80028C80
+    /* 0x108 */ s32 unk_108; // FixedCoord updated to posY in func_80028C80
+    /* 0x10C */ s32 unk_10C; // FixedCoord updated to posZ in func_80028C80
     /* 0x110 */ f32 unk_110;
     /* 0x114 */ f32 unk_114;
     /* 0x118 */ f32 unk_118;

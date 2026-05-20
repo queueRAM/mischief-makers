@@ -563,12 +563,23 @@ s32 func_80028C08(u16 actor_index) {
         gActors[other_index].unk_0D6 = actor_index;
         gActors[other_index].unk_098 |= 0x200;
         return 1;
-    } else {
+    }
+    else {
         return 0;
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80028C80.s")
+s32 func_80028C80(u16 actor_inde) {
+    if (gActors[actor_inde].unk_098 & 0x200) {
+        gActors[actor_inde].posX.raw = gActors[actor_inde].unk_104;
+        gActors[actor_inde].posY.raw = gActors[actor_inde].unk_108;
+        gActors[actor_inde].posZ.raw = gActors[actor_inde].unk_10C;
+        return 0;
+    }
+    else {
+        return 1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80028CE8.s")
 

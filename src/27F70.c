@@ -603,7 +603,22 @@ void func_80028CE8(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80028DAC.s")
+// TODO: func_8001FCA0 only matches if `s16 arg2`, but only matches here as s32
+// see https://decomp.me/scratch/ZJ7E3
+#if 0
+u8 func_8001FCA0(u16 arg0, s16 arg1, s16 arg2);
+#else
+u8 func_8001FCA0(u16 arg0, s16 arg1, s32 arg2);
+#endif
+s32 func_80028DAC(u16 arg0, s16 arg1) {
+    if ((func_8001FCA0(arg0, arg1, gActors[0].posY.whole + 2) & 0x80) &&
+        (func_8001FCA0(arg0, arg1, gActors[0].posY.whole + 2) & 0x80)) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80028E1C.s")
 

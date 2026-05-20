@@ -542,7 +542,15 @@ void func_80028B1C(u16 actor_index) {
     func_800289E4(actor_index, D_800D36DC, dist);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80028B90.s")
+void func_80028B90(u16 actor_index) {
+    u16 other_index = gActors[actor_index].unk_0D6;
+    if (gActors[actor_index].posX.whole < gActors[other_index].posX.whole) {
+        gActors[actor_index].unk_0F8 = -gActors[other_index].unk_0F8;
+    }
+    else {
+        gActors[actor_index].unk_0F8 = gActors[other_index].unk_0F8;
+    }
+}
 
 void func_80028C00(s32 arg0) {
 }

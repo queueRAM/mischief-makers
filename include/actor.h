@@ -61,7 +61,7 @@ typedef struct {
     };
     /* 0x0D2 */ u16 actorType; // < 0x100: static actor type; >= 0x100: high byte selects bank, low byte indexes func_80016E70 table
     /* 0x0D4 */ u16 unk_0D4;
-    /* 0x0D6 */ u16 unk_0D6;
+    /* 0x0D6 */ u16 unk_0D6; // used as another actor index
     /* 0x0D8 */ u16 unk_0D8;
     /* 0x0DA */ u8 unk_0DA;
     /* 0x0DB */ u8 unk_0DB;

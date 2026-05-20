@@ -18,7 +18,7 @@ extern s16 D_800BE5DC;
 extern u16 D_800CA230;
 extern s16 D_800D2920;
 extern s16 D_800D2924;
-extern s16 D_800E3580;
+extern u16 D_800E3580; // nearest actor index, updated in func_800289E4
 extern u32 D_80137458;
 extern u16 D_80178136;
 
@@ -27,6 +27,8 @@ extern u8 D_800D17FC[];
 extern s8 D_800D2204[];
 extern s8 D_800D2228[];
 extern s8 D_800D222C[];
+extern u16 D_800D36DC[];
+extern u16 D_800D36FC[];
 
 extern void Actor_ClearRange_10To20(void);
 extern void Actor_ClearRange_30To90(void);
@@ -99,7 +101,7 @@ u16 func_800276DC(u16 actor_index, u8* arg1, u16 x, u16 y, u16 z, s32 arg5) {
             gActors[actor_index].flags = 0;
             actor_index++;
         } else if (*arg1 != 0x20) {
-            //////////////////////////////////////////
+            /////////////////////////////////////////////
             // #######   ###   #     # #     # #######
             // #          #     #   #  ##   ## #
             // #          #      # #   # # # # #
@@ -107,12 +109,12 @@ u16 func_800276DC(u16 actor_index, u8* arg1, u16 x, u16 y, u16 z, s32 arg5) {
             // #          #      # #   #     # #
             // #          #     #   #  #     # #
             // #         ###   #     # #     # #######
-            //////////////////////////////////////////
+            /////////////////////////////////////////////
             // D_800D16C4 is from 26A00 and is likely the wrong symbol
             // likely data in 27F70 which has an appropriate lookup table
-            //////////////////////////////////////////
+            /////////////////////////////////////////////
             func_80027644(actor_index, D_800D16C4[(*arg1) - 0x1A] * 2 + 0x2D2, x, y, z, arg5);
-            //////////////////////////////////////////
+            /////////////////////////////////////////////
             actor_index++;
         }
         arg1++;
@@ -166,7 +168,7 @@ u16 func_80027A44(u16* str) {
         return 7;
     }
     else {
-        //////////////////////////////////////////
+        /////////////////////////////////////////////
         // #######   ###   #     # #     # #######
         // #          #     #   #  ##   ## #
         // #          #      # #   # # # # #
@@ -174,12 +176,12 @@ u16 func_80027A44(u16* str) {
         // #          #      # #   #     # #
         // #          #     #   #  #     # #
         // #         ###   #     # #     # #######
-        //////////////////////////////////////////
-        // D_800D17B8 may be the wrong symbol as this could have a positive or negative offset
+        /////////////////////////////////////////////
+        // FIXME: D_800D17B8 may be the wrong symbol as this could have a positive or negative offset
         // disasm was: return D_800D0E84[*arg0 + 0x826];
-        //////////////////////////////////////////
+        /////////////////////////////////////////////
         return D_800D17B8[*str - 0x10E];
-        //////////////////////////////////////////
+        /////////////////////////////////////////////
     }
 }
 
@@ -507,30 +509,38 @@ void func_80028980(u16 arg0, s16 arg1, u32 arg2) {
 s32 func_800289CC(s32 arg0) {
     if (arg0 < 0) {
         return -arg0;
-    } else {
+    }
+    else {
         return arg0;
     }
 }
 
-void func_800289E4(u16 actor_index, u16* arg1, s16 arg2) {
+// Actor_NearestFromList
+void func_800289E4(u16 actor_index, u16* actor_list, s16 max_dist) {
     s16 dist_x;
     u16 index;
 
     D_800E3580 = 0;
-    while (*arg1 != 0) {
-        index = *arg1;
+    while (*actor_list != 0) {
+        index = *actor_list;
         dist_x = func_800289CC(gActors[actor_index].posX.whole - gActors[index].posX.whole);
-        if (dist_x < arg2) {
+        if (dist_x < max_dist) {
             D_800E3580 = index;
-            arg2 = dist_x;
+            max_dist = dist_x;
         }
-        arg1++;
+        actor_list++;
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80028AE8.s")
+// Actor_UpdateNearest
+void func_80028AE8(u16 actor_index) {
+    func_800289E4(actor_index, D_800D36FC, 0x7FFF);
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80028B1C.s")
+void func_80028B1C(u16 actor_index) {
+    s16 dist = func_800289CC(gActors[actor_index].posX.whole - gActors[0].posX.whole);
+    func_800289E4(actor_index, D_800D36DC, dist);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80028B90.s")
 

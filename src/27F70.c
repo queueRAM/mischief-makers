@@ -410,7 +410,31 @@ void Actor_ClearRange_C0ToC7(void) {
     Actor_ClearRange(0xC0, 0xC7);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_800286C8.s")
+/////////////////////////////////////////////
+// ####### ####### #####   #######
+//    #    #     # #    #  #     #
+//    #    #     # #     # #     #
+//    #    #     # #     # #     #
+//    #    #     # #     # #     #
+//    #    #     # #    #  #     #
+//    #    ####### #####   #######
+/////////////////////////////////////////////
+// TODO: resolve type of D_80104098
+/////////////////////////////////////////////
+typedef struct {
+    u8 unk0[0x80];
+    u16 unk80;
+    u8 unk82[0xA0 - 0x82];
+} Unk80104098;
+extern Unk80104098 D_80104098[0x40];
+/////////////////////////////////////////////
+
+void func_800286C8(void) {
+    u16 index;
+    for (index = 0; index < (u16)ARRAYLENGTH(D_80104098); index++) {
+        D_80104098[index].unk80 = 0;
+    }
+}
 
 void func_80028704(void) {
     Actor_ClearRange_10To20();

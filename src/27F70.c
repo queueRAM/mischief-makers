@@ -367,7 +367,25 @@ void func_80028528(void) {
     func_800284B8(0x90, 0xC0);
 }
 
+#ifdef NON_MATCHING
+// only matches if func_8001E2D0 returns void
+// https://decomp.me/scratch/opNVZ
+u16 func_8002854C(u16 arg0, s16 x, s16 y, s16 z) {
+    u16 actor_index;
+
+    actor_index = func_800284B8(0x90, 0xC0);
+    if (actor_index != 0) {
+        gActors[actor_index].actorType = arg0;
+        func_8001E2D0(actor_index);
+        gActors[actor_index].posX.whole = x;
+        gActors[actor_index].posY.whole = y;
+        gActors[actor_index].posZ.whole = z;
+    }
+    return actor_index;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002854C.s")
+#endif
 
 void Actor_ClearRange(u16 actor_index, u16 end) {
     while (actor_index < end) {

@@ -123,7 +123,27 @@ u16 func_80027800(u16 arg0, u16 arg1, u16 x, u16 y, u16 z, s32 arg5) {
     return arg0 + 2;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_800278E8.s")
+u16 func_800278E8(u16 arg0, u16 arg1, u16 x, u16 y, u16 z, s32 arg5) {
+    u16 hundos;
+    u16 tens;
+    s32 index;
+
+    tens = 0;
+    hundos = 0;
+    while (arg1 >= 100) {
+        arg1 -= 100;
+        hundos++;
+    }
+    while (arg1 >= 10) {
+        arg1 -= 10;
+        tens++;
+    }
+    index = arg0;
+    func_80027644(index, (hundos * 2) + 0x2D2, x, y, z, arg5);
+    func_80027644(index + 1, (tens * 2) + 0x2D2, x + 9, y, z, arg5);
+    func_80027644(index + 2, (arg1 * 2) + 0x2D2, x + 18, y, z, arg5);
+    return index + 3;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80027A44.s")
 

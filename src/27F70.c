@@ -1,6 +1,7 @@
 #include "common.h"
 #include "actor.h"
 #include "Alphabet.h"
+#include "music.h"
 
 typedef struct {
     u8 pad0[2];
@@ -11,6 +12,7 @@ typedef struct {
 
 extern s16 D_800BE558;
 extern s16 D_800BE55C;
+extern f32 D_800BE5B4;
 extern s16 D_800BE5D8;
 extern s16 D_800BE5DC;
 extern u16 D_800CA230;
@@ -329,7 +331,24 @@ void func_80028380(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_800283BC.s")
+void func_800283BC(u32 arg0, u16 arg1) {
+    s16 var_v0;
+
+    var_v0 = (gActors[arg1 & 0xFFF].posX.whole - D_800BE5B4) / 2;
+    if (var_v0 >= 0x40) {
+        var_v0 = 0x3F;
+    }
+    else if (var_v0 < -0x40) {
+        var_v0 = -0x40;
+    }
+
+    if (arg1 & 0x8000) {
+        func_80003474(arg0, 0x100, var_v0 + 0x40);
+    }
+    else {
+        func_80003430(arg0, 0x100, var_v0 + 0x40);
+    }
+}
 
 void func_800284B0(s32 arg0) {
 }

@@ -492,7 +492,11 @@ u16 func_800288EC(u16 actor_index, s16 arg1) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80028980.s")
+void func_80028980(u16 arg0, s16 arg1, u32 arg2) {
+    if (func_800288EC(arg0, arg1) == 0) {
+        func_800036C8(arg2, arg0);
+    }
+}
 
 s32 func_800289CC(s32 arg0) {
     if (arg0 < 0) {

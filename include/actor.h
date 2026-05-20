@@ -103,7 +103,8 @@ typedef struct {
     /* 0x134 */ f32 unk_134;
     /* 0x138 */ f32 unk_138;
     /* 0x13C */ f32 unk_13C;
-    /* 0x140 */ f32 unk_140;
+    /* 0x140 */ u8 unk_140; // was: f32
+    /* 0x141 */ u8 unk_141[3]; // pad
     /* 0x144 */ f32 unk_144;
     /* 0x148 */ f32 unk_148;
     /* 0x14C */ f32 unk_14C;

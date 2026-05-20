@@ -19,6 +19,7 @@ extern u16 D_800CA230;
 extern s16 D_800D2920;
 extern s16 D_800D2924;
 extern u16 D_800E3580; // nearest actor index, updated in func_800289E4
+extern u16 D_80137450;
 extern u32 D_80137458;
 extern u16 D_80178136;
 
@@ -603,7 +604,7 @@ void func_80028CE8(u16 actor_index) {
     }
 }
 
-// TODO: func_8001FCA0 only matches if `s16 arg2`, but only matches here as s32
+// TODO: func_8001FCA0/func_80028E1C only matche if `s16 arg2`, but only matches here as s32
 // see https://decomp.me/scratch/ZJ7E3
 #if 0
 u8 func_8001FCA0(u16 arg0, s16 arg1, s16 arg2);
@@ -620,7 +621,55 @@ s32 func_80028DAC(u16 arg0, s16 arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80028E1C.s")
+s32 func_80028E1C(u16 arg0) {
+    s16 actor0_pos;
+    if (gActors[arg0].unk_098 & 0x200) {
+        if (D_80137450 == arg0) {
+            if ((gActors[0].unk_140 == 0) && (gActors[0].posY.whole < gActors[arg0].posY.whole)) {
+                actor0_pos = gActors[0].posY.whole;
+                while (actor0_pos < gActors[arg0].posY.whole) {
+                    if (func_8001FCA0(arg0, gActors[0].posX.whole, actor0_pos) & 0x80) {
+                        gActors[0].unk_098 = 0x10000;
+                        gActors[0].unk_0F8 = 0;
+                        gActors[0].unk_0FC = -0x30000;
+                        func_800036C8(100, arg0);
+                        return 1;
+                    }
+                    actor0_pos += 16;
+                }
+            }
+            else if (gActors[0].unk_140 == 4) {
+                if (gActors[0].flags & 0x20) {
+                    actor0_pos = gActors[0].posX.whole;
+                    while (gActors[arg0].posX.whole < actor0_pos) {
+                        if (func_80028DAC(arg0, actor0_pos) != 0) {
+                            gActors[0].unk_098 = 0x10000;
+                            gActors[0].unk_0F8 = 0x30000;
+                            gActors[0].unk_0FC = 0;
+                            func_800036C8(100, arg0);
+                            return 1;
+                        }
+                        actor0_pos -= 16;
+                    }
+                }
+                else {
+                    actor0_pos = gActors[0].posX.whole;
+                    while (actor0_pos < gActors[arg0].posX.whole) {
+                        if (func_80028DAC(arg0, actor0_pos) != 0) {
+                            gActors[0].unk_098 = 0x10000;
+                            gActors[0].unk_0F8 = -0x30000;
+                            gActors[0].unk_0FC = 0;
+                            func_800036C8(100, arg0);
+                            return 1;
+                        }
+                        actor0_pos += 16;
+                    }
+                }
+            }
+        }
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80029044.s")
 

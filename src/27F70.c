@@ -294,7 +294,13 @@ u16 func_80028150(u16 arg0, u16* arg1, u16 x, u16 y, u16 z) {
     return arg0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80028260.s")
+void func_80028260(u16 arg0, u16 arg1, u8 arg2, u8 arg3, u8 arg4) {
+    u16* sp4;
+    if ((arg0 == 0) || (arg0 == 1) || (arg0 == 2)) {
+        sp4 = (u16*)0x80380400;
+    }
+    sp4[arg1] = ((arg2 << 8) & 0xF800) | ((arg3 << 3) & 0x7C0) | ((arg4 >> 2) & 0x3E) | 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_800282F0.s")
 

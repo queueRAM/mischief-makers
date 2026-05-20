@@ -192,7 +192,22 @@ u16 func_80027AC8(u16 arg0, u16* arg1) {
     return arg0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80027B28.s")
+u16 func_80027B28(u16 arg0, u16* arg1, u16 x, u16 y, u16 z) {
+    while (*arg1 != ALPHA_NULL) {
+        if (*arg1 != 0) {
+            func_80027370(arg0, x, y, z);
+            gActors[arg0].flags |= 0x8;
+            gActors[arg0].unk_084 = (*arg1 * 2) + 0x2D2;
+            arg0++;
+            x += func_80027A88(arg1);
+        }
+        else {
+            x += 14;
+        }
+        arg1++;
+    }
+    return arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80027C40.s")
 

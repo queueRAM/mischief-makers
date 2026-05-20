@@ -495,7 +495,9 @@ u16 func_800288EC(u16 actor_index, s16 length) {
         (gActors[actor_index].posY.whole > (0x60 + length)) || (gActors[actor_index].posY.whole < (-0x60 - length))) {
         return 1;
     }
-    return 0;
+    else {
+        return 0;
+    }
 }
 
 // Actor_OutsideBoxSound
@@ -555,7 +557,16 @@ void func_80028B90(u16 actor_index) {
 void func_80028C00(s32 arg0) {
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80028C08.s")
+s32 func_80028C08(u16 actor_index) {
+    u16 other_index = gActors[actor_index].unk_0D6;
+    if ((gActors[other_index].flags & 0x2) && (gActors[other_index].health > 0)) {
+        gActors[other_index].unk_0D6 = actor_index;
+        gActors[other_index].unk_098 |= 0x200;
+        return 1;
+    } else {
+        return 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80028C80.s")
 

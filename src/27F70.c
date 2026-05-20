@@ -14,6 +14,7 @@ extern u32 D_80137458;
 extern u16 D_80178136;
 
 extern Unk800D1788 D_800D1788[];
+extern u8 D_800D17FC[];
 extern s8 D_800D2204[];
 extern s8 D_800D2228[];
 extern s8 D_800D222C[];
@@ -257,7 +258,24 @@ u16 func_80027D94(u16 arg0, u16* arg1, u16 x, u16 y, u16 z, u8 red, u8 green, u8
     return arg0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002801C.s")
+u16 func_8002801C(u16 arg0, u16* arg1, u16 x, u16 y, u16 z) {
+    while (*arg1 != ALPHA_NULL) {
+        if (*arg1 != 0) {
+            func_80027370(arg0, x, y, z);
+            gActors[arg0].unk_094 |= 0x200;
+            gActors[arg0].unk_18C = (s32)D_800D17FC;
+            gActors[arg0].flags |= 0x8;
+            gActors[arg0].unk_084 = (*arg1 * 2) + 0x2D2;
+            arg0++;
+            x += func_80027A88(arg1);
+        }
+        else {
+            x += 14;
+        }
+        arg1++;
+    }
+    return arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80028150.s")
 

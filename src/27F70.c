@@ -1,5 +1,6 @@
 #include "common.h"
 #include "actor.h"
+#include "Alphabet.h"
 
 typedef struct {
     u8 pad0[2];
@@ -145,7 +146,32 @@ u16 func_800278E8(u16 arg0, u16 arg1, u16 x, u16 y, u16 z, s32 arg5) {
     return index + 3;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80027A44.s")
+extern u8 D_800D17B8[];
+
+u16 func_80027A44(u16* arg0) {
+    if (*arg0 < ALPHA_LOWER_A) {
+        return 6;
+    }
+    else if (*arg0 == ALPHA_BOLD_SPACE) {
+        return 7;
+    }
+    else {
+        //////////////////////////////////////////
+        // #######   ###   #     # #     # #######
+        // #          #     #   #  ##   ## #
+        // #          #      # #   # # # # #
+        // #####      #       #    #  #  # #####
+        // #          #      # #   #     # #
+        // #          #     #   #  #     # #
+        // #         ###   #     # #     # #######
+        //////////////////////////////////////////
+        // D_800D17B8 may be the wrong symbol as this could have a positive or negative offset
+        // disasm was: return D_800D0E84[*arg0 + 0x826];
+        //////////////////////////////////////////
+        return D_800D17B8[*arg0 - 0x10E];
+        //////////////////////////////////////////
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80027A88.s")
 

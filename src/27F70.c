@@ -18,6 +18,7 @@ extern s16 D_800BE5DC;
 extern u16 D_800CA230;
 extern s16 D_800D2920;
 extern s16 D_800D2924;
+extern s16 D_800E3580;
 extern u32 D_80137458;
 extern u16 D_80178136;
 
@@ -511,7 +512,21 @@ s32 func_800289CC(s32 arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_800289E4.s")
+void func_800289E4(u16 actor_index, u16* arg1, s16 arg2) {
+    s16 dist_x;
+    u16 index;
+
+    D_800E3580 = 0;
+    while (*arg1 != 0) {
+        index = *arg1;
+        dist_x = func_800289CC(gActors[actor_index].posX.whole - gActors[index].posX.whole);
+        if (dist_x < arg2) {
+            D_800E3580 = index;
+            arg2 = dist_x;
+        }
+        arg1++;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80028AE8.s")
 

@@ -484,7 +484,13 @@ u16 func_8002884C(u16 actor_index) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_800288EC.s")
+u16 func_800288EC(u16 actor_index, s16 arg1) {
+    if ((gActors[actor_index].posX.whole > (0x90 + arg1)) || (gActors[actor_index].posX.whole < (-0x90 - arg1)) || 
+        (gActors[actor_index].posY.whole > (0x60 + arg1)) || (gActors[actor_index].posY.whole < (-0x60 - arg1))) {
+        return 1;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80028980.s")
 

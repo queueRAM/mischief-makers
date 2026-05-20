@@ -232,7 +232,30 @@ u16 func_80027C40(u16 arg0, u16* arg1, u16 x, u16 y, u16 z, u8 red, u8 green, u8
     return arg0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80027D94.s")
+u16 func_80027D94(u16 arg0, u16* arg1, u16 x, u16 y, u16 z, u8 red, u8 green, u8 blue, f32 scale_x, f32 scale_y) {
+    while (*arg1 != ALPHA_NULL) {
+        if (*arg1 != 0) {
+            func_80027370(arg0, x, y, z);
+            gActors[arg0].flags |= 8;
+            if ((scale_x != 1.0) || (scale_y != 1.0)) {
+                gActors[arg0].unk_094 |= 1;
+            }
+            gActors[arg0].scaleX = scale_x;
+            gActors[arg0].scaleY = scale_y;
+            gActors[arg0].unk_084 = (*arg1 * 2) + 0x2D2;
+            if (red | green | blue) {
+                gActors[arg0].unk_094 |= 0x10;
+                gActors[arg0].colorR = red;
+                gActors[arg0].colorG = green;
+                gActors[arg0].colorB = blue;
+            }
+            arg0++;
+        }
+        arg1++;
+        x += 16 * scale_x;
+    }
+    return arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002801C.s")
 

@@ -41,37 +41,37 @@ extern void func_80042864(u16);
 extern void func_800423A0(u16);
 extern void func_800427E0(u16);
 
-void func_80027370(u16 arg0, u16 x, u16 y, u16 z) {
-    gActors[arg0].actorType = 0;
-    func_8001E2D0(arg0);
-    gActors[arg0].unk_094 |= 0x800;
-    gActors[arg0].unk_188 = 0;
-    gActors[arg0].posX.whole = x;
-    gActors[arg0].posY.whole = y;
-    gActors[arg0].posZ.whole = z;
+void func_80027370(u16 actor_index, u16 x, u16 y, u16 z) {
+    gActors[actor_index].actorType = 0;
+    func_8001E2D0(actor_index);
+    gActors[actor_index].unk_094 |= 0x800;
+    gActors[actor_index].unk_188 = 0;
+    gActors[actor_index].posX.whole = x;
+    gActors[actor_index].posY.whole = y;
+    gActors[actor_index].posZ.whole = z;
 }
 
-void func_800273FC(u16 arg0, u16 arg1, u16 x, u16 y, u16 z) {
-    func_80027370(arg0, x, y, z);
-    gActors[arg0].unk_084 = arg1;
+void func_800273FC(u16 actor_index, u16 arg1, u16 x, u16 y, u16 z) {
+    func_80027370(actor_index, x, y, z);
+    gActors[actor_index].unk_084 = arg1;
 }
 
-void func_80027468(u16 arg0, u16 arg1, u16 x, u16 y, u16 z, u8 red, u8 green, u8 blue) {
-    func_80027370(arg0, x, y, z);
-    gActors[arg0].unk_0E6 = 0;
-    gActors[arg0].unk_084 = arg1;
+void func_80027468(u16 actor_index, u16 arg1, u16 x, u16 y, u16 z, u8 red, u8 green, u8 blue) {
+    func_80027370(actor_index, x, y, z);
+    gActors[actor_index].unk_0E6 = 0;
+    gActors[actor_index].unk_084 = arg1;
     if (red | green | blue) {
-        gActors[arg0].unk_094 |= 0x10;
-        gActors[arg0].colorR = red;
-        gActors[arg0].colorG = green;
-        gActors[arg0].colorB = blue;
+        gActors[actor_index].unk_094 |= 0x10;
+        gActors[actor_index].colorR = red;
+        gActors[actor_index].colorG = green;
+        gActors[actor_index].colorB = blue;
     }
 }
 
-void func_80027510(u16 arg0, void* arg1, u16 x, u16 y, u16 z) {
-    func_80027370(arg0, x, y, z);
-    gActors[arg0].unk_0E8 = arg1;
-    gActors[arg0].unk_0E6 = 1;
+void func_80027510(u16 actor_index, void* arg1, u16 x, u16 y, u16 z) {
+    func_80027370(actor_index, x, y, z);
+    gActors[actor_index].unk_0E8 = arg1;
+    gActors[actor_index].unk_0E6 = 1;
 }
 
 void* func_80027588(u16 arg0, u8 arg1, u8 arg2, u8 arg3) {
@@ -83,20 +83,20 @@ void* func_80027588(u16 arg0, u8 arg1, u8 arg2, u8 arg3) {
     return temp_v1;
 }
 
-void func_80027644(u16 arg0, u16 arg1, u16 x, u16 y, u16 z, s32 arg5) {
-    func_800273FC(arg0, arg1, x, y, z);
-    gActors[arg0].unk_094 |= 0x200;
-    gActors[arg0].flags |= 8;
-    gActors[arg0].unk_18C = arg5;
+void func_80027644(u16 actor_index, u16 arg1, u16 x, u16 y, u16 z, s32 arg5) {
+    func_800273FC(actor_index, arg1, x, y, z);
+    gActors[actor_index].unk_094 |= 0x200;
+    gActors[actor_index].flags |= 8;
+    gActors[actor_index].unk_18C = arg5;
 }
 
 extern u16 D_800D16C4[];
 
-u16 func_800276DC(u16 arg0, u8* arg1, u16 x, u16 y, u16 z, s32 arg5) {
+u16 func_800276DC(u16 actor_index, u8* arg1, u16 x, u16 y, u16 z, s32 arg5) {
     while (*arg1 != 0) {
         if (*arg1 == 0x23) {
-            gActors[arg0].flags = 0;
-            arg0++;
+            gActors[actor_index].flags = 0;
+            actor_index++;
         } else if (*arg1 != 0x20) {
             //////////////////////////////////////////
             // #######   ###   #     # #     # #######
@@ -110,58 +110,58 @@ u16 func_800276DC(u16 arg0, u8* arg1, u16 x, u16 y, u16 z, s32 arg5) {
             // D_800D16C4 is from 26A00 and is likely the wrong symbol
             // likely data in 27F70 which has an appropriate lookup table
             //////////////////////////////////////////
-            func_80027644(arg0, D_800D16C4[(*arg1) - 0x1A] * 2 + 0x2D2, x, y, z, arg5);
+            func_80027644(actor_index, D_800D16C4[(*arg1) - 0x1A] * 2 + 0x2D2, x, y, z, arg5);
             //////////////////////////////////////////
-            arg0++;
+            actor_index++;
         }
         arg1++;
         x += 9;
     }
-    return arg0;
+    return actor_index;
 }
 
-u16 func_80027800(u16 arg0, u16 arg1, u16 x, u16 y, u16 z, s32 arg5) {
+u16 func_80027800(u16 actor_index, u16 num, u16 x, u16 y, u16 z, s32 arg5) {
     u16 tens;
 
     tens = 0;
-    while (arg1 >= 10) {
-        arg1 -= 10;
+    while (num >= 10) {
+        num -= 10;
         tens++;
     }
-    func_80027644(arg0 + 0, (tens * 2) + 0x2D2, x, y, z, arg5);
-    func_80027644(arg0 + 1, (arg1 * 2) + 0x2D2, x + 9, y, z, arg5);
-    return arg0 + 2;
+    func_80027644(actor_index + 0, (tens * 2) + 0x2D2, x, y, z, arg5);
+    func_80027644(actor_index + 1, (num * 2) + 0x2D2, x + 9, y, z, arg5);
+    return actor_index + 2;
 }
 
-u16 func_800278E8(u16 arg0, u16 arg1, u16 x, u16 y, u16 z, s32 arg5) {
+u16 func_800278E8(u16 actor_index, u16 num, u16 x, u16 y, u16 z, s32 arg5) {
     u16 hundos;
     u16 tens;
     s32 index;
 
     tens = 0;
     hundos = 0;
-    while (arg1 >= 100) {
-        arg1 -= 100;
+    while (num >= 100) {
+        num -= 100;
         hundos++;
     }
-    while (arg1 >= 10) {
-        arg1 -= 10;
+    while (num >= 10) {
+        num -= 10;
         tens++;
     }
-    index = arg0;
+    index = actor_index;
     func_80027644(index, (hundos * 2) + 0x2D2, x, y, z, arg5);
     func_80027644(index + 1, (tens * 2) + 0x2D2, x + 9, y, z, arg5);
-    func_80027644(index + 2, (arg1 * 2) + 0x2D2, x + 18, y, z, arg5);
+    func_80027644(index + 2, (num * 2) + 0x2D2, x + 18, y, z, arg5);
     return index + 3;
 }
 
 extern u8 D_800D17B8[];
 
-u16 func_80027A44(u16* arg0) {
-    if (*arg0 < ALPHA_LOWER_A) {
+u16 func_80027A44(u16* str) {
+    if (*str < ALPHA_LOWER_A) {
         return 6;
     }
-    else if (*arg0 == ALPHA_BOLD_SPACE) {
+    else if (*str == ALPHA_BOLD_SPACE) {
         return 7;
     }
     else {
@@ -177,129 +177,129 @@ u16 func_80027A44(u16* arg0) {
         // D_800D17B8 may be the wrong symbol as this could have a positive or negative offset
         // disasm was: return D_800D0E84[*arg0 + 0x826];
         //////////////////////////////////////////
-        return D_800D17B8[*arg0 - 0x10E];
+        return D_800D17B8[*str - 0x10E];
         //////////////////////////////////////////
     }
 }
 
-u16 func_80027A88(u16* arg0) {
+u16 func_80027A88(u16* str) {
     u16 len0;
     u16 len1;
-    len0 = func_80027A44(arg0++);
-    len1 = func_80027A44(arg0);
+    len0 = func_80027A44(str++);
+    len1 = func_80027A44(str);
     return len1 + len0;
 }
 
-u16 func_80027AC8(u16 arg0, u16* arg1) {
-    while (*arg1 != ALPHA_NULL) {
-        if (*arg1 != 0) {
-            gActors[arg0].flags = 0;
-            arg0++;
+u16 func_80027AC8(u16 actor_index, u16* str) {
+    while (*str != ALPHA_NULL) {
+        if (*str != 0) {
+            gActors[actor_index].flags = 0;
+            actor_index++;
         }
-        arg1++;
+        str++;
     }
-    return arg0;
+    return actor_index;
 }
 
-u16 func_80027B28(u16 arg0, u16* arg1, u16 x, u16 y, u16 z) {
-    while (*arg1 != ALPHA_NULL) {
-        if (*arg1 != 0) {
-            func_80027370(arg0, x, y, z);
-            gActors[arg0].flags |= 0x8;
-            gActors[arg0].unk_084 = (*arg1 * 2) + 0x2D2;
-            arg0++;
-            x += func_80027A88(arg1);
+u16 func_80027B28(u16 actor_index, u16* str, u16 x, u16 y, u16 z) {
+    while (*str != ALPHA_NULL) {
+        if (*str != 0) {
+            func_80027370(actor_index, x, y, z);
+            gActors[actor_index].flags |= 0x8;
+            gActors[actor_index].unk_084 = (*str * 2) + 0x2D2;
+            actor_index++;
+            x += func_80027A88(str);
         }
         else {
             x += 14;
         }
-        arg1++;
+        str++;
     }
-    return arg0;
+    return actor_index;
 }
 
-u16 func_80027C40(u16 arg0, u16* arg1, u16 x, u16 y, u16 z, u8 red, u8 green, u8 blue) {
-    while (*arg1 != ALPHA_NULL) {
-        if (*arg1 != 0) {
-            func_80027370(arg0, x, y, z);
-            gActors[arg0].flags |= 8;
-            gActors[arg0].unk_084 = (*arg1 * 2) + 0x2D2;
+u16 func_80027C40(u16 actor_index, u16* str, u16 x, u16 y, u16 z, u8 red, u8 green, u8 blue) {
+    while (*str != ALPHA_NULL) {
+        if (*str != 0) {
+            func_80027370(actor_index, x, y, z);
+            gActors[actor_index].flags |= 8;
+            gActors[actor_index].unk_084 = (*str * 2) + 0x2D2;
             if (red | green | blue) {
-                gActors[arg0].unk_094 |= 0x10;
-                gActors[arg0].colorR = red;
-                gActors[arg0].colorG = green;
-                gActors[arg0].colorB = blue;
+                gActors[actor_index].unk_094 |= 0x10;
+                gActors[actor_index].colorR = red;
+                gActors[actor_index].colorG = green;
+                gActors[actor_index].colorB = blue;
             }
-            arg0++;
-            x += func_80027A88(arg1);
+            actor_index++;
+            x += func_80027A88(str);
         }
         else {
             x += 14;
         }
-        arg1++;
+        str++;
     }
-    return arg0;
+    return actor_index;
 }
 
-u16 func_80027D94(u16 arg0, u16* arg1, u16 x, u16 y, u16 z, u8 red, u8 green, u8 blue, f32 scale_x, f32 scale_y) {
-    while (*arg1 != ALPHA_NULL) {
-        if (*arg1 != 0) {
-            func_80027370(arg0, x, y, z);
-            gActors[arg0].flags |= 8;
+u16 func_80027D94(u16 actor_index, u16* str, u16 x, u16 y, u16 z, u8 red, u8 green, u8 blue, f32 scale_x, f32 scale_y) {
+    while (*str != ALPHA_NULL) {
+        if (*str != 0) {
+            func_80027370(actor_index, x, y, z);
+            gActors[actor_index].flags |= 8;
             if ((scale_x != 1.0) || (scale_y != 1.0)) {
-                gActors[arg0].unk_094 |= 1;
+                gActors[actor_index].unk_094 |= 1;
             }
-            gActors[arg0].scaleX = scale_x;
-            gActors[arg0].scaleY = scale_y;
-            gActors[arg0].unk_084 = (*arg1 * 2) + 0x2D2;
+            gActors[actor_index].scaleX = scale_x;
+            gActors[actor_index].scaleY = scale_y;
+            gActors[actor_index].unk_084 = (*str * 2) + 0x2D2;
             if (red | green | blue) {
-                gActors[arg0].unk_094 |= 0x10;
-                gActors[arg0].colorR = red;
-                gActors[arg0].colorG = green;
-                gActors[arg0].colorB = blue;
+                gActors[actor_index].unk_094 |= 0x10;
+                gActors[actor_index].colorR = red;
+                gActors[actor_index].colorG = green;
+                gActors[actor_index].colorB = blue;
             }
-            arg0++;
+            actor_index++;
         }
-        arg1++;
+        str++;
         x += 16 * scale_x;
     }
-    return arg0;
+    return actor_index;
 }
 
-u16 func_8002801C(u16 arg0, u16* arg1, u16 x, u16 y, u16 z) {
-    while (*arg1 != ALPHA_NULL) {
-        if (*arg1 != 0) {
-            func_80027370(arg0, x, y, z);
-            gActors[arg0].unk_094 |= 0x200;
-            gActors[arg0].unk_18C = (s32)D_800D17FC;
-            gActors[arg0].flags |= 0x8;
-            gActors[arg0].unk_084 = (*arg1 * 2) + 0x2D2;
-            arg0++;
-            x += func_80027A88(arg1);
+u16 func_8002801C(u16 actor_index, u16* str, u16 x, u16 y, u16 z) {
+    while (*str != ALPHA_NULL) {
+        if (*str != 0) {
+            func_80027370(actor_index, x, y, z);
+            gActors[actor_index].unk_094 |= 0x200;
+            gActors[actor_index].unk_18C = (s32)D_800D17FC;
+            gActors[actor_index].flags |= 0x8;
+            gActors[actor_index].unk_084 = (*str * 2) + 0x2D2;
+            actor_index++;
+            x += func_80027A88(str);
         }
         else {
             x += 14;
         }
-        arg1++;
+        str++;
     }
-    return arg0;
+    return actor_index;
 }
 
-u16 func_80028150(u16 arg0, u16* arg1, u16 x, u16 y, u16 z) {
-    while (*arg1 != ALPHA_NULL) {
-        if (*arg1 != 0) {
-            func_80027370(arg0, x, y, z);
-            gActors[arg0].flags |= 8;
-            gActors[arg0].unk_084 = (*arg1 * 2) + 0x2D2;
+u16 func_80028150(u16 actor_index, u16* str, u16 x, u16 y, u16 z) {
+    while (*str != ALPHA_NULL) {
+        if (*str != 0) {
+            func_80027370(actor_index, x, y, z);
+            gActors[actor_index].flags |= 8;
+            gActors[actor_index].unk_084 = (*str * 2) + 0x2D2;
         }
         else {
-            gActors[arg0].flags = 0;
+            gActors[actor_index].flags = 0;
         }
-        arg0++;
-        arg1++;
+        actor_index++;
+        str++;
         x += 16;
     }
-    return arg0;
+    return actor_index;
 }
 
 void func_80028260(u16 arg0, u16 arg1, u8 arg2, u8 arg3, u8 arg4) {
@@ -310,14 +310,14 @@ void func_80028260(u16 arg0, u16 arg1, u8 arg2, u8 arg3, u8 arg4) {
     sp4[arg1] = ((arg2 << 8) & 0xF800) | ((arg3 << 3) & 0x7C0) | ((arg4 >> 2) & 0x3E) | 1;
 }
 
-void func_800282F0(s16 arg0, s16 arg1) {
+void func_800282F0(s16 x, s16 y) {
     func_80012288();
     D_801373E0.unk_20 = 0;
     D_801373E0.unk_24 = 0;
-    gActors->posX.whole = arg0;
-    gActors->posY.whole = arg1;
-    D_800BE5D8 = D_800BE558 + arg0;
-    D_800BE5DC = D_800BE55C + arg1;
+    gActors->posX.whole = x;
+    gActors->posY.whole = y;
+    D_800BE5D8 = D_800BE558 + x;
+    D_800BE5DC = D_800BE55C + y;
     D_800CA230 = 0;
     if (gActors->health < 0) {
         gActors->health = 0;
@@ -355,16 +355,18 @@ void func_800283BC(u32 arg0, u16 arg1) {
 void func_800284B0(s32 arg0) {
 }
 
-u16 func_800284B8(u16 arg0, u16 arg1) {
-    while (arg0 < arg1) {
-        if (!(gActors[arg0].flags & 0x2)) {
-            return arg0;
+// Actor_RangeFindFlag2
+u16 func_800284B8(u16 actor_index, u16 actor_index_stop) {
+    while (actor_index < actor_index_stop) {
+        if (!(gActors[actor_index].flags & 0x2)) {
+            return actor_index;
         }
-        arg0++;
+        actor_index++;
     }
     return 0;
 }
 
+// Actor_RangeFindFlag2_90ToC0
 void func_80028528(void) {
     func_800284B8(0x90, 0xC0);
 }
@@ -372,12 +374,12 @@ void func_80028528(void) {
 #ifdef NON_MATCHING
 // only matches if func_8001E2D0 returns void
 // https://decomp.me/scratch/opNVZ
-u16 func_8002854C(u16 arg0, s16 x, s16 y, s16 z) {
+u16 func_8002854C(u16 actor_type, s16 x, s16 y, s16 z) {
     u16 actor_index;
 
     actor_index = func_800284B8(0x90, 0xC0);
     if (actor_index != 0) {
-        gActors[actor_index].actorType = arg0;
+        gActors[actor_index].actorType = actor_type;
         func_8001E2D0(actor_index);
         gActors[actor_index].posX.whole = x;
         gActors[actor_index].posY.whole = y;
@@ -484,25 +486,29 @@ u16 func_8002884C(u16 actor_index) {
     return 1;
 }
 
-u16 func_800288EC(u16 actor_index, s16 arg1) {
-    if ((gActors[actor_index].posX.whole > (0x90 + arg1)) || (gActors[actor_index].posX.whole < (-0x90 - arg1)) || 
-        (gActors[actor_index].posY.whole > (0x60 + arg1)) || (gActors[actor_index].posY.whole < (-0x60 - arg1))) {
+// Actor_IsOutsideBox
+u16 func_800288EC(u16 actor_index, s16 length) {
+    if ((gActors[actor_index].posX.whole > (0x90 + length)) || (gActors[actor_index].posX.whole < (-0x90 - length)) || 
+        (gActors[actor_index].posY.whole > (0x60 + length)) || (gActors[actor_index].posY.whole < (-0x60 - length))) {
         return 1;
     }
     return 0;
 }
 
+// Actor_OutsideBoxSound
 void func_80028980(u16 arg0, s16 arg1, u32 arg2) {
     if (func_800288EC(arg0, arg1) == 0) {
         func_800036C8(arg2, arg0);
     }
 }
 
+// Math_AbsS32()
 s32 func_800289CC(s32 arg0) {
     if (arg0 < 0) {
         return -arg0;
+    } else {
+        return arg0;
     }
-    return arg0;
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_800289E4.s")

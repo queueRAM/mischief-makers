@@ -10,6 +10,7 @@ typedef struct {
     u8 pad6[2];
 } Unk800D1788;
 
+extern u16 D_800BE4E0;
 extern s16 D_800BE558;
 extern s16 D_800BE55C;
 extern f32 D_800BE5B4;
@@ -1040,19 +1041,103 @@ s32 func_80029D58(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80029DEC.s")
+s32 func_80029DEC(u16 arg0, u16 arg1) {
+    if (!(D_800BE4E0 & arg0) && !(func_8000178C() & arg1)) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80029E48.s")
+u16 func_80029E48(u16 actor_index, s16 arg1, s16 arg2) {
+    Actor* actor;
+    s16 temp_v0;
+    s16 temp_t0;
+    u16 var_v1;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80029F00.s")
+    actor = &gActors[actor_index];
+    temp_v0 = D_800BE558 + actor->posX.whole;
+    if ((arg1 >= temp_v0) || (arg2 < temp_v0)) {
+        var_v1 = 0x8000;
+    }
+    else {
+        var_v1 = 0;
+    }
+    temp_t0 = (arg1 + ((arg2 - arg1) / 2));
+    if (temp_t0 < temp_v0) {
+        var_v1 |= 0x1;
+    }
+    return var_v1;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80029FB8.s")
+u16 func_80029F00(u16 actor_index, s16 arg1, s16 arg2) {
+    Actor* actor;
+    s16 temp_v0;
+    s16 temp_t0;
+    u16 var_v1;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002A018.s")
+    actor = &gActors[actor_index];
+    temp_v0 = D_800BE55C + actor->posY.whole;
+    if ((arg2 >= temp_v0) || (arg1 < temp_v0)) {
+        var_v1 = 0x8000;
+    }
+    else {
+        var_v1 = 0;
+    }
+    temp_t0 = arg2 + ((s32) (arg1 - arg2) / 2);
+    if (temp_t0 < temp_v0) {
+        var_v1 |= 0x2;
+    }
+    return var_v1;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002A090.s")
+u16 func_80029FB8(u16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
+    return func_80029E48(arg0, arg1, arg2) | func_80029F00(arg0, arg3, arg4);
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002A0C4.s")
+s16* func_8002A018(s16* arg0, s16 arg1) {
+    s16 var_a1;
+    s16 var_v0;
+    s16* var_v1;
+
+    var_v1 = arg0;
+    var_v0 = 0x7FFF;
+    while (*arg0 != 0x765) {
+        var_a1 = *arg0 - arg1;
+        if (var_a1 < 0) {
+            var_a1 = -var_a1;
+        }
+        if (var_a1 < var_v0) {
+            var_v1 = arg0;
+            var_v0 = var_a1;
+        }
+        arg0++;
+    }
+    return var_v1;
+}
+
+s32 func_8002A090(s32 arg0, s32 arg1) {
+    if (arg1 < 0) {
+        arg1 = -arg1;
+    }
+    if (arg1 < arg0) {
+        arg0 = arg1;
+    }
+    if (arg0 < -arg1) {
+        arg0 = -arg1;
+    }
+    return arg0;
+}
+
+void func_8002A0C4(u16 actor_index, s32 velocity_x) {
+    if (gActors[actor_index].flags & 0x20) {
+        gActors[actor_index].velocityX = -velocity_x;
+    }
+    else {
+        gActors[actor_index].velocityX = velocity_x;
+    }
+}
 
 extern void func_8002A118(u16, s32);
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002A118.s")

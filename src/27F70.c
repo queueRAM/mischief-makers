@@ -1221,7 +1221,48 @@ void func_8002A57C(u16 actor_index, s32 arg1, s32 arg2, s32 max_vx) {
     }
 }
 
+#ifdef NON_MATCHING
+// https://decomp.me/scratch/r3ke1
+s32 func_8002A658(u16 arg0) {
+    u8 var_v0;
+    u8 var_v1;
+
+    if (gActors[0].unk_140_u8 & 0x80) {
+        var_v0 = ((gActors[arg0].unk_0C4 / 0.3515625) / 64) + 4.0;
+        var_v0 &= 0xF;
+        switch (gActors[0].unk_140_u8 & 0xF) {
+        case 0:
+            if (!(gActors[0].flags & 0x20)) {
+                var_v1 = ((var_v0 == 0) || (var_v0 >= 8)) ? 2 : 14;
+            }
+            else {
+                var_v1 = (var_v0 >= 9) ? 2 : 14;
+            }
+            break;
+        case 4:
+            var_v1 = ((var_v0 >= 4) && (var_v0 < 0xD)) ? 2 : 6;
+            break;
+        case 12:
+            var_v1 = ((var_v0 >= 4) && (var_v0 < 0xD)) ? 14 : 10;
+            break;
+        case 8:
+            if (!(gActors[0].flags & 0x20)) {
+                var_v1 = ((var_v0 == 0) || (var_v0 >= 8)) ? 6 : 10;
+            }
+            else {
+                var_v1 = (var_v0 >= 9) ? 6 : 10;
+            }
+            break;
+        }
+        return (var_v1 * -0x400000) + 0x01000000;
+    }
+    else {
+        return (gActors[0].unk_140_u8 * -0x400000) + 0x01000000;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002A658.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002A898.s")
 

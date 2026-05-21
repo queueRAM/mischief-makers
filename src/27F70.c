@@ -1393,7 +1393,7 @@ s32 func_8002AD7C(u16 arg0, s32 arg1, s32 arg2, s32 arg3) {
     return arg2 & 0x3FF;
 }
 
-// clamps colors to arg1
+// clamps colors to +/-arg1
 u16 func_8002AE44(s16 arg0, s16 arg1) {
     if (arg1 < 0) {
         if (-arg1 >= arg0) {
@@ -1438,7 +1438,38 @@ void func_8002AF7C(u16 actor_index, u16 arg1, s16 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002B010.s")
+u8 func_8002B010(u16 actor_index, s16 arg1, s16 arg2) {
+    if (arg2 > 0) {
+        if (gActors[actor_index].unk_094 & 0x10) {
+            arg1 = arg1 - arg2;
+            if (arg1 < 0) {
+                gActors[actor_index].unk_094 &= 0xFFEF;
+                arg1 = -arg1;
+            }
+        }
+        else {
+            arg1 = arg1 + arg2;
+        }
+    } else {
+        if (gActors[actor_index].unk_094 & 0x10) {
+            arg1 = arg1 - arg2;
+        }
+        else {
+            arg1 = arg1 + arg2;
+            if (arg1 < 0) {
+                gActors[actor_index].unk_094 |= 0x10;
+                arg1 = -arg1;
+            }
+        }
+    }
+
+    if (arg1 >= 0x80) {
+        return 0x7F;
+    }
+    else {
+        return arg1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002B140.s")
 

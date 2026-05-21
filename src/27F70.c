@@ -20,7 +20,10 @@ extern u32 D_800D28FC;
 extern s16 D_800D291C;
 extern s16 D_800D2920;
 extern s16 D_800D2924;
+extern s32 D_800E3578;
+extern s32 D_800E357C;
 extern u16 D_800E3580; // nearest actor index, updated in func_800289E4
+extern s32 D_800E3584;
 extern u16 D_80137450;
 extern u32 D_80137458;
 extern u16 D_80178136;
@@ -965,7 +968,14 @@ void func_800299B0(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80029A7C.s")
+s32 func_80029A7C(s16 arg0, s16 arg1, s16 arg2) {
+    if (D_800E3584 & 0x10000) {
+        if ((D_800E3578 < arg0) && (-arg0 < D_800E3578) && (arg1 > D_800E357C) && (arg2 < D_800E357C)) {
+            return 1;
+        }
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80029B00.s")
 

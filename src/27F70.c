@@ -1496,7 +1496,17 @@ void func_8002B2D0(u16 actor_index) {
     gActors[actor_index].colorB = gActors[actor_index].colorR;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002B330.s")
+void func_8002B330(u16 actor_index) {
+    if (D_800BE4E0 & 4) {
+        gActors[actor_index].colorR = func_8002B010(actor_index, gActors[actor_index].colorR, 0x40);
+        gActors[actor_index].colorG = gActors[actor_index].colorR;
+        gActors[actor_index].colorB = gActors[actor_index].colorR;
+    } else {
+        gActors[actor_index].colorR = func_8002B010(actor_index, gActors[actor_index].colorR, -0x40);
+        gActors[actor_index].colorG = gActors[actor_index].colorR;
+        gActors[actor_index].colorB = gActors[actor_index].colorR;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002B400.s")
 

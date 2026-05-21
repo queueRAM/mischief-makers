@@ -1667,7 +1667,16 @@ s32 func_8002BB04(u16 actor_index) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002BC10.s")
+u16 func_8002BC10(u16 actor_index) {
+    u16 temp_v1;
+    temp_v1 = func_80012C04(gActors[actor_index].posX.whole, gActors[actor_index].posY.whole) & 0x7F;
+    if ((temp_v1 == 0x32) || (temp_v1 == 0x36)) {
+        return 0;
+    }
+    else {
+        return temp_v1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002BC90.s")
 

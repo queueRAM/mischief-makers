@@ -908,9 +908,9 @@ s32 func_800298D0(s32 arg0, s32 arg1, s32 arg2) {
     s32 temp_t7;
 
     arg1 &= 0x03FFFFFF;
-    temp_v0 = (arg0 - arg1);
+    temp_v0 = arg0 - arg1;
     temp_v1 = temp_v0 & 0x03FFFFFF;
-    temp_t7 = (0x04000000 - arg2);
+    temp_t7 = 0x04000000 - arg2;
     if ((arg2 >= temp_v1) || (temp_v1 >= temp_t7)) {
         return arg0;
     }
@@ -1353,7 +1353,39 @@ void func_8002ACFC(u16 actor_index, s16 arg1, s16 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002AD7C.s")
+s32 func_8002AD7C(u16 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    s32 temp_t0;
+    s32 temp_t4;
+    s32 temp_v0;
+
+    gActors[arg0].unk_18C &= ~1;
+    arg2 &= 0x3FF;
+    temp_v0 = arg1 - arg2;
+    temp_t0 = temp_v0 & 0x3FF;
+    temp_t4 = 0x400 - arg3;
+    if ((arg3 >= temp_t0) || (temp_t0 >= temp_t4)) {
+        gActors[arg0].unk_18C |= 1;
+        return arg1;
+    }
+
+    if (arg1 >= arg2) {
+        if (temp_v0 < 0x200) {
+            arg2 += arg3;
+        }
+        else {
+            arg2 -= arg3;
+        }
+    }
+    else {
+        if (temp_v0 >= -0x1FF) {
+            arg2 -= arg3;
+        }
+        else {
+            arg2 += arg3;
+        }
+    }
+    return arg2 & 0x3FF;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002AE44.s")
 

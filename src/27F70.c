@@ -1642,7 +1642,14 @@ s32 func_8002B9D8(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002BACC.s")
+s32 func_8002BACC(u16 arg0, u16 arg1) {
+    if ((D_800BE4D8 == 0) && (arg1 & 0x80)) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002BB04.s")
 

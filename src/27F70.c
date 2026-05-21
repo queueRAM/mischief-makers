@@ -1281,7 +1281,41 @@ s32 func_8002A990(u16 andex0, u16 andex1) {
            ((gActors[andex1].unk_0B0 + gActors[andex1].unk_0AE) / 2) - gActors[andex0].posY.whole;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002AA20.s")
+void func_8002AA20(u16 arg0, s32 arg1) {
+    s32 var_v0;
+    s32 var_v1;
+
+    D_800E3584 = 0;
+    if (D_800E3580 != arg0) {
+        D_800E3578 = func_8002A900(arg0, D_800E3580);
+        D_800E357C = func_8002A990(arg0, D_800E3580);
+        if (D_800E3578 < 0) {
+            var_v1 = (gActors[arg0].flags & 0x20) ? 1 : 0;
+            var_v0 = (gActors[D_800E3580].flags & 0x20) ? 1 : 0;
+        }
+        else {
+            var_v1 = (gActors[arg0].flags & 0x20) ? 0 : 1;
+            var_v0 = (gActors[D_800E3580].flags & 0x20) ? 0 : 1;
+        }
+
+        if (var_v1) {
+            if (var_v0) {
+                D_800E3584 |= 0x20000;
+            }
+            else {
+                D_800E3584 |= 0x10000;
+            }
+        }
+        else {
+            if (var_v0) {
+                D_800E3584 |= 0x80000;
+            }
+            else {
+                D_800E3584 |= 0x40000;
+            }
+        }
+    }
+}
 
 void func_8002ABE4(u16 actor_index, s16 val) {
     gActors[actor_index].unk_0A6 = val;

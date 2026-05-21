@@ -986,7 +986,14 @@ s32 func_80029B00(s16 arg0, s16 arg1, s16 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80029B74.s")
+s32 func_80029B74(s16 arg0) {
+    if ((D_800E3578 < arg0) && (-arg0 < D_800E3578)) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80029BB4.s")
 

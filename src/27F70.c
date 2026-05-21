@@ -1497,31 +1497,43 @@ void func_8002B2D0(u16 actor_index) {
 }
 
 void func_8002B330(u16 actor_index) {
-    if (D_800BE4E0 & 4) {
+    if (D_800BE4E0 & 0x4) {
         gActors[actor_index].colorR = func_8002B010(actor_index, gActors[actor_index].colorR, 0x40);
         gActors[actor_index].colorG = gActors[actor_index].colorR;
         gActors[actor_index].colorB = gActors[actor_index].colorR;
-    } else {
+    }
+    else {
         gActors[actor_index].colorR = func_8002B010(actor_index, gActors[actor_index].colorR, -0x40);
         gActors[actor_index].colorG = gActors[actor_index].colorR;
         gActors[actor_index].colorB = gActors[actor_index].colorR;
     }
 }
 
-void func_8002B400(u16 arg0) {
-    if (D_800BE4E0 & 4) {
-        gActors[arg0].colorR = func_8002B010(arg0, gActors[arg0].colorR, 0x40);
-        gActors[arg0].colorG = 0;
-        gActors[arg0].colorB = 0;
+void func_8002B400(u16 actor_index) {
+    if (D_800BE4E0 & 0x4) {
+        gActors[actor_index].colorR = func_8002B010(actor_index, gActors[actor_index].colorR, 0x40);
+        gActors[actor_index].colorG = 0;
+        gActors[actor_index].colorB = 0;
     }
     else {
-        gActors[arg0].colorR = 0;
-        gActors[arg0].colorG = func_8002B010(arg0, gActors[arg0].colorG, -0x40);
-        gActors[arg0].colorB = gActors[arg0].colorG;
+        gActors[actor_index].colorR = 0;
+        gActors[actor_index].colorG = func_8002B010(actor_index, gActors[actor_index].colorG, -0x40);
+        gActors[actor_index].colorB = gActors[actor_index].colorG;
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002B4D0.s")
+void func_8002B4D0(u16 actor_index) {
+    if (D_800BE4E0 & 0x4) {
+        gActors[actor_index].colorR = 0;
+        gActors[actor_index].colorG = 0;
+        gActors[actor_index].colorB = func_8002B010(actor_index, gActors[actor_index].colorB, 0x40);
+    }
+    else {
+        gActors[actor_index].colorR = func_8002B010(actor_index, gActors[actor_index].colorR, -0x40);
+        gActors[actor_index].colorG = 0;
+        gActors[actor_index].colorB = func_8002B010(actor_index, gActors[actor_index].colorB, -0x40);
+    }
+}
 
 u16 Palette_AdjustRgb5551(u16 color, s16 blue_offset, s16 green_offset, s16 red_offset) {
     s16 clamped_blue;

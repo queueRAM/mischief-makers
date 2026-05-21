@@ -16,6 +16,8 @@ extern f32 D_800BE5B4;
 extern s16 D_800BE5D8;
 extern s16 D_800BE5DC;
 extern u16 D_800CA230;
+extern u32 D_800D28FC;
+extern s16 D_800D291C;
 extern s16 D_800D2920;
 extern s16 D_800D2924;
 extern u16 D_800E3580; // nearest actor index, updated in func_800289E4
@@ -848,7 +850,20 @@ s32 func_80029678(u16 arg0, u16 arg1, u16 arg2, u16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80029678.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80029798.s")
+u16 func_80029798(u16 actor_index) {
+    Actor* actor;
+    s32 prev_flags;
+
+    if (D_800D28FC & 0x400) {
+        actor = &gActors[actor_index];
+        if ((D_800BE55C + actor->posY.whole) < (D_800D291C - 0x10)) {
+            prev_flags = actor->flags;
+            actor->flags = 0;
+            return prev_flags;
+        }
+    }
+    return 0;
+}
 
 s32 Math_ApproachS32(s32 current, s32 target, s32 step) {
     if ((current - target) > 0) {

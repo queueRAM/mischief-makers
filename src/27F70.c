@@ -1276,7 +1276,10 @@ s32 func_8002A900(u16 andex0, u16 andex1) {
            (gActors[andex1].unk_0AA + gActors[andex1].unk_0AC) / 2 - gActors[andex0].posX.whole;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002A990.s")
+s32 func_8002A990(u16 andex0, u16 andex1) {
+    return ((gActors[andex0].unk_0AE + gActors[andex0].unk_0B0) / 2) + gActors[andex1].posY.whole + 
+           ((gActors[andex1].unk_0B0 + gActors[andex1].unk_0AE) / 2) - gActors[andex0].posY.whole;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002AA20.s")
 

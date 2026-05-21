@@ -259,7 +259,7 @@ u8 func_8001FA78(u16 arg0, s16 arg1, s16 arg2) {
     return 0;
 }
 
-u8 func_8001FCA0(u16 arg0, s16 arg1, s16 arg2) {
+u8 func_8001FCA0(u16 actor_index, s16 arg1, s16 arg2) {
     u8 temp_v0;
     u16 index;
 
@@ -272,7 +272,7 @@ u8 func_8001FCA0(u16 arg0, s16 arg1, s16 arg2) {
     for (index = 0; index < D_800BE4D0; index++) {
         if ((D_8011D170[index] >= arg1) && (arg1 >= D_8011D3D0[index]) &&
             (D_8011D610[index] >= arg2) && (arg2 >= D_8011D850[index]) &&
-            (arg0 != D_8011CF20[index])) {
+            (actor_index != D_8011CF20[index])) {
             D_800BE4DC = D_8011CF20[index];
             D_800BE4D8 = 1;
             return 0xC0;
@@ -282,7 +282,7 @@ u8 func_8001FCA0(u16 arg0, s16 arg1, s16 arg2) {
     for (index = 0; index < D_800BE4D4; index++) {
         if ((D_8011D048[index] >= arg1) && (arg1 >= D_8011D290[index]) &&
             (D_8011D4F0[index] >= arg2) && (arg2 >= D_8011D730[index]) &&
-            (arg0 != D_8011CDF8[index])) {
+            (actor_index != D_8011CDF8[index])) {
             D_800BE4DC = D_8011CDF8[index];
             D_800BE4D8 = 1;
             return 0x40;

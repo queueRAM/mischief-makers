@@ -1271,7 +1271,10 @@ s32 func_8002A898(u16 actor_index) {
     return func_8002A658(actor_index);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002A900.s")
+s32 func_8002A900(u16 andex0, u16 andex1) {
+    return (gActors[andex0].unk_0AC + gActors[andex0].unk_0AA) / 2 + gActors[andex1].posX.whole + 
+           (gActors[andex1].unk_0AA + gActors[andex1].unk_0AC) / 2 - gActors[andex0].posX.whole;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002A990.s")
 

@@ -688,7 +688,15 @@ s32 func_80029044(u16 arg0) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80029134.s")
+void func_80029134(u16 actor_index) {
+    gActors[actor_index].flags &= 0xFFFEEFFF, gActors[actor_index].flags |= 0x20000;
+    gActors[actor_index].velocityX = 0;
+    gActors[actor_index].velocityY = 0;
+    gActors[actor_index].unk_0F4 = 0;
+    gActors[actor_index].posX.raw = gActors[actor_index].unk_104;
+    gActors[actor_index].posY.raw = gActors[actor_index].unk_108;
+    gActors[actor_index].posZ.raw = gActors[actor_index].unk_10C;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_800291AC.s")
 

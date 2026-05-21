@@ -1477,7 +1477,11 @@ void func_8002B140(u16 actor_index, s16 arg1) {
     gActors[actor_index].colorB = func_8002B010(actor_index, gActors[actor_index].colorB, arg1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002B1D0.s")
+void func_8002B1D0(u16 actor_index, s16 arg1) {
+    gActors[actor_index].colorR = Math_ApproachS32(gActors[actor_index].colorR, 0, arg1);
+    gActors[actor_index].colorG = Math_ApproachS32(gActors[actor_index].colorG, 0, arg1);
+    gActors[actor_index].colorB = Math_ApproachS32(gActors[actor_index].colorB, 0, arg1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002B25C.s")
 

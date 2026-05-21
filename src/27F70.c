@@ -901,7 +901,35 @@ f32 Math_ApproachF32(f32 current, f32 target, f32 step) {
     return current;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_800298D0.s")
+s32 func_800298D0(s32 arg0, s32 arg1, s32 arg2) {
+    s32 temp_v0;
+    s32 temp_v1;
+    s32 temp_t7;
+
+    arg1 &= 0x03FFFFFF;
+    temp_v0 = (arg0 - arg1);
+    temp_v1 = temp_v0 & 0x03FFFFFF;
+    temp_t7 = (0x04000000 - arg2);
+    if ((arg2 >= temp_v1) || (temp_v1 >= temp_t7)) {
+        return arg0;
+    }
+
+    if (arg0 >= arg1) {
+        if (temp_v0 < 0x02000000) {
+            arg1 += arg2;
+        }
+        else {
+            arg1 -= arg2;
+        }
+    }
+    else if (temp_v0 >= -0x01FFFFFF) {
+        arg1 -= arg2;
+    }
+    else {
+        arg1 += arg2;
+    }
+    return arg1 & 0x03FFFFFF;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002995C.s")
 

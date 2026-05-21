@@ -1471,7 +1471,11 @@ u8 func_8002B010(u16 actor_index, s16 arg1, s16 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002B140.s")
+void func_8002B140(u16 actor_index, s16 arg1) {
+    gActors[actor_index].colorR = func_8002B010(actor_index, gActors[actor_index].colorR, arg1);
+    gActors[actor_index].colorG = func_8002B010(actor_index, gActors[actor_index].colorG, arg1);
+    gActors[actor_index].colorB = func_8002B010(actor_index, gActors[actor_index].colorB, arg1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002B1D0.s")
 

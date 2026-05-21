@@ -931,7 +931,24 @@ s32 func_800298D0(s32 arg0, s32 arg1, s32 arg2) {
     return arg1 & 0x03FFFFFF;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002995C.s")
+s32 func_8002995C(s32 arg0, s32 arg1) {
+    if (arg0 >= arg1) {
+        if ((arg0 - arg1) < 0x02000000) {
+            return 1;
+        }
+        else {
+            return -1;
+        }
+    }
+    else {
+        if ((arg0 - arg1) >= -0x01FFFFFF) {
+            return -1;
+        }
+        else {
+            return 1;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_800299B0.s")
 

@@ -38,8 +38,8 @@ extern u16 D_800D36DC[];
 extern u16 D_800D36FC[];
 
 // forward declarations
-void func_8002A200(s32, s32, s32); // guess
-void func_8002A258(s32, s32); // guess
+void func_8002A200(u16 actor_index, s32 max_val);
+void func_8002A258(u16 actor_index, s32 max_val);
 void func_8002AC30(u16 actor_index, s16 val);
 
 void func_80027370(u16 actor_index, u16 x, u16 y, u16 z) {
@@ -727,7 +727,7 @@ s32 func_800291AC(u16 actor_index, u16 state1, s32 flags1, u16 state2, s32 flags
                     gActors->unk_0DD = 0x11;
                     gActors->unk_0F8 = gActors[actor_index].unk_0F8;
                     gActors->unk_0FC = gActors[actor_index].unk_0FC;
-                    func_8002A200(0, 0x40000, flags1);
+                    func_8002A200(0, 0x40000);
                     func_8002A258(0, 0x20000);
                     gActors->unk_0E2 = 0;
                 }
@@ -1140,26 +1140,30 @@ void func_8002A0C4(u16 actor_index, s32 velocity_x) {
 }
 
 // Actor_UpdateVelocityX
-void func_8002A118(u16 arg0, s32 arg1) {
-    gActors[arg0].velocityX = func_8002A090(gActors[arg0].velocityX, arg1);
+void func_8002A118(u16 actor_index, s32 max_val) {
+    gActors[actor_index].velocityX = func_8002A090(gActors[actor_index].velocityX, max_val);
 }
 
 // Actor_UpdateVelocityY
-void func_8002A170(u16 arg0, s32 arg1) {
-    gActors[arg0].velocityY = func_8002A090(gActors[arg0].velocityY, arg1);
+void func_8002A170(u16 actor_index, s32 max_val) {
+    gActors[actor_index].velocityY = func_8002A090(gActors[actor_index].velocityY, max_val);
 }
 
 // Actor_UpdateVelocity
-void func_8002A1C8(u16 arg0, s32 arg1) {
-    func_8002A118(arg0, arg1);
-    func_8002A170(arg0, arg1);
+void func_8002A1C8(u16 actor_index, s32 max_val) {
+    func_8002A118(actor_index, max_val);
+    func_8002A170(actor_index, max_val);
 }
 
-void func_8002A200(s32, s32, s32); // guess
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002A200.s")
+// Actor_Update_0F8 (related to VelX)
+void func_8002A200(u16 actor_index, s32 max_val) {
+    gActors[actor_index].unk_0F8 = func_8002A090(gActors[actor_index].unk_0F8, max_val);
+}
 
-void func_8002A258(s32, s32); // guess
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002A258.s")
+// Actor_Update_0FC (related to VelY)
+void func_8002A258(u16 actor_index, s32 max_val) {
+    gActors[actor_index].unk_0FC = func_8002A090(gActors[actor_index].unk_0FC, max_val);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002A2B0.s")
 

@@ -1139,12 +1139,17 @@ void func_8002A0C4(u16 actor_index, s32 velocity_x) {
     }
 }
 
-extern void func_8002A118(u16, s32);
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002A118.s")
+// Actor_UpdateVelocityX
+void func_8002A118(u16 arg0, s32 arg1) {
+    gActors[arg0].velocityX = func_8002A090(gActors[arg0].velocityX, arg1);
+}
 
-extern void func_8002A170(u16, s32);
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002A170.s")
+// Actor_UpdateVelocityY
+void func_8002A170(u16 arg0, s32 arg1) {
+    gActors[arg0].velocityY = func_8002A090(gActors[arg0].velocityY, arg1);
+}
 
+// Actor_UpdateVelocity
 void func_8002A1C8(u16 arg0, s32 arg1) {
     func_8002A118(arg0, arg1);
     func_8002A170(arg0, arg1);

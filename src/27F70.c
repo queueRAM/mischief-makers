@@ -950,7 +950,20 @@ s32 func_8002995C(s32 arg0, s32 arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_800299B0.s")
+void func_800299B0(u16 actor_index) {
+    if ((gActors[actor_index].velocityX > 0) && (gActors[actor_index].unk_098 & 0x8)) {
+        gActors[actor_index].velocityX = 0;
+    }
+    if ((gActors[actor_index].velocityX < 0) && (gActors[actor_index].unk_098 & 0x4)) {
+        gActors[actor_index].velocityX = 0;
+    }
+    if ((gActors[actor_index].velocityY > 0) && (gActors[actor_index].unk_098 & 0x10)) {
+        gActors[actor_index].velocityY = 0;
+    }
+    if ((gActors[actor_index].velocityY < 0) && (gActors[actor_index].unk_098 & 0x20)) {
+        gActors[actor_index].velocityY = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80029A7C.s")
 

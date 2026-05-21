@@ -1584,7 +1584,13 @@ void func_8002B7B8(u16* src_idx, u16* dst, u16 color) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002B7F4.s")
+// sets array of palette indexes to color in array
+void func_8002B7F4(u16* src_idx, u16* dst) {
+    while (src_idx[0] != 0x100) {
+        dst[src_idx[0]] = src_idx[1];
+        src_idx += 2;
+    }
+}
 
 void Palette_AdjustRgb5551Array(u16* src, u16* dst, s16 count, s16 blue_offset, s16 green_offset, s16 red_offset) {
     u16 result;

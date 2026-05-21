@@ -31,19 +31,10 @@ extern s8 D_800D222C[];
 extern u16 D_800D36DC[];
 extern u16 D_800D36FC[];
 
-extern void Actor_ClearRange_10To20(void);
-extern void Actor_ClearRange_30To90(void);
-extern void Actor_ClearRange_90ToC0(void);
-extern void Actor_ClearRange_C0ToC7(void);
-extern void func_800286C8(void);
-extern void func_8002A118(u16, s32);
-extern void func_8002A170(u16, s32);
-extern void func_80030A74(u16);
-extern void func_80030B0C(u16);
-extern void func_8003FD0C(s32, s16, s16, s16, s32);
-extern void func_80042864(u16);
-extern void func_800423A0(u16);
-extern void func_800427E0(u16);
+// forward declarations
+void func_8002A200(s32, s32, s32); // guess
+void func_8002A258(s32, s32); // guess
+void func_8002AC30(u16 actor_index, s16 val);
 
 void func_80027370(u16 actor_index, u16 x, u16 y, u16 z) {
     gActors[actor_index].actorType = 0;
@@ -360,8 +351,8 @@ void func_800284B0(s32 arg0) {
 }
 
 // Actor_RangeFindFlag2
-u16 func_800284B8(u16 actor_index, u16 actor_index_stop) {
-    while (actor_index < actor_index_stop) {
+u16 func_800284B8(u16 actor_index, u16 end) {
+    while (actor_index < end) {
         if (!(gActors[actor_index].flags & 0x2)) {
             return actor_index;
         }
@@ -698,7 +689,78 @@ void func_80029134(u16 actor_index) {
     gActors[actor_index].posZ.raw = gActors[actor_index].unk_10C;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_800291AC.s")
+s32 func_800291AC(u16 actor_index, u16 state1, s32 flags1, u16 state2, s32 flags2) {
+    if (gActors[actor_index].unk_098 & 0x200) {
+        func_8002AC30(actor_index, 8);
+        gActors[actor_index].unk_098 |= 0x80000;
+        gActors[actor_index].velocityX = 0;
+        gActors[actor_index].velocityY = 0;
+        gActors[actor_index].unk_0F4 = 0;
+        gActors[actor_index].posX.raw = gActors[actor_index].unk_104;
+        gActors[actor_index].posY.raw = gActors[actor_index].unk_108;
+        gActors[actor_index].posZ.raw = gActors[actor_index].unk_10C;
+        if (gActors->stateLower == 0x26) {
+            if (func_80012AB4(gActors[actor_index].posX.whole, gActors[actor_index].posY.whole) & 0x80) {
+                gActors[actor_index].posX.raw = gActors->posX.raw;
+            }
+        }
+        if (func_80028E1C(actor_index) != 0) {
+            gActors[actor_index].state = state2;
+            gActors[actor_index].flags = (gActors[actor_index].flags & 0x20) + (flags2 & 0x6B503);
+            return 3;
+        }
+        else {
+            if (flags1 & 0x20) {
+                gActors[actor_index].flags &= ~0x20;
+                gActors[actor_index].flags |= (gActors[gActors[actor_index].unk_0D6].flags & 0x20);
+            }
+            if ((gActors[actor_index].unk_098 & 2) && (D_80137450 == actor_index)) {
+                if (gActors[actor_index].unk_0DD != 0x15) {
+                    gActors->unk_0DC = 0;
+                    gActors->unk_098 |= 2;
+                    gActors->unk_0DD = 0x11;
+                    gActors->unk_0F8 = gActors[actor_index].unk_0F8;
+                    gActors->unk_0FC = gActors[actor_index].unk_0FC;
+                    func_8002A200(0, 0x40000, flags1);
+                    func_8002A258(0, 0x20000);
+                    gActors->unk_0E2 = 0;
+                }
+                return 1;
+            }
+            else {
+                return 0;
+            }
+        }
+    }
+    else if (gActors[actor_index].unk_098 & 0x400) {
+        gActors[actor_index].state = state1;
+        gActors[actor_index].flags = (gActors[actor_index].flags & 0x20) + (flags1 & 0x6B503);
+        gActors[actor_index].velocityX = gActors[actor_index].unk_0F8;
+        gActors[actor_index].velocityY = gActors[actor_index].unk_0FC;
+        if (flags1 & 0x280) {
+            if (gActors[gActors[actor_index].unk_0D6].flags & 0x100) {
+                gActors[actor_index].flags |= 0x80;
+            }
+            else {
+                gActors[actor_index].flags |= 0x200;
+            }
+        }
+        if (flags1 & 0x20) {
+            if (gActors[actor_index].velocityX != 0) {
+                if (gActors[actor_index].velocityX < 0) {
+                    gActors[actor_index].flags |= 0x20;
+                }
+                else {
+                    gActors[actor_index].flags &= ~0x20;
+                }
+            }
+        }
+        return 2;
+    }
+    gActors[actor_index].state = state2;
+    gActors[actor_index].flags = (gActors[actor_index].flags & 0x20) + (flags2 & 0x6B503);
+    return 3;
+}
 
 s32 func_800294E0(s32 arg0, s32 arg1) {
     s32 tmp;
@@ -831,8 +893,10 @@ f32 Math_ApproachF32(f32 current, f32 target, f32 step) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002A0C4.s")
 
+extern void func_8002A118(u16, s32);
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002A118.s")
 
+extern void func_8002A170(u16, s32);
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002A170.s")
 
 void func_8002A1C8(u16 arg0, s32 arg1) {
@@ -840,8 +904,10 @@ void func_8002A1C8(u16 arg0, s32 arg1) {
     func_8002A170(arg0, arg1);
 }
 
+void func_8002A200(s32, s32, s32); // guess
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002A200.s")
 
+void func_8002A258(s32, s32); // guess
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002A258.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002A2B0.s")
@@ -1088,8 +1154,10 @@ void func_8002F6AC(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80030A24.s")
 
+void func_80030A74(u16);
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80030A74.s")
 
+void func_80030B0C(u16);
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80030B0C.s")
 
 void func_80030B84(u16 arg0) {
@@ -1383,6 +1451,7 @@ void func_8003F9CC(f32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8003FB20.s")
 
+void func_8003FD0C(s32, s16, s16, s16, s32);
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8003FD0C.s")
 
 void func_8003FE4C(s32 arg0, s16 arg1, s16 arg2, s16 arg3) {
@@ -1475,10 +1544,13 @@ void Actor_AdvanceState(u16 actor_index) {
     gActors[actor_index].state++;
 }
 
+void func_800423A0(u16);
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_800423A0.s")
 
+void func_800427E0(u16);
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_800427E0.s")
 
+void func_80042864(u16);
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80042864.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_800429A4.s")

@@ -13,6 +13,7 @@ extern s32 Sound_PlaySfx(u32 sound_id);
 extern void Sound_StartFade(u16 mode, u16 duration);
 
 extern void func_80012288(void);
+extern u8 func_80012AB4(s16 arg0, s16 arg1);
 extern u16 func_8000178C(void);
 
 extern void func_80022D10(void);

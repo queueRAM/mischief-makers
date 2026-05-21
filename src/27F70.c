@@ -825,8 +825,6 @@ s32 func_80029650(s32 arg0, s32 arg1) {
     return (func_800294E0(arg0, arg1) + 0x20) & 0x3C0;
 }
 
-#ifdef NON_MATCHING
-// https://decomp.me/scratch/NHHTH
 s32 func_80029678(u16 arg0, u16 arg1, u16 arg2, u16 arg3) {
     s16 temp_t2;
     s32 var_v1;
@@ -839,20 +837,18 @@ s32 func_80029678(u16 arg0, u16 arg1, u16 arg2, u16 arg3) {
         temp_t2 = 0;
         arg0 = 0;
     }
-
+    
     if (temp_t2 <= 0) {
         if ((arg0 % arg2) == 0) {
             var_v1 |= 0x80000000;
         }
-        return var_v1 | ((arg0 / arg2) << 0x10) | (arg0 & 0xFFFF);
+        var_v1 |= ((arg0 / arg2) << 16);
     }
     else {
-        return 0x40000000 | (arg0 & 0xFFFF);
+        var_v1 = 0x40000000;
     }
+    return var_v1 | (arg0 & 0xFFFF);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80029678.s")
-#endif
 
 u16 func_80029798(u16 actor_index) {
     Actor* actor;

@@ -1568,6 +1568,7 @@ u16 Palette_AdjustRgb5551(u16 color, s16 blue_offset, s16 green_offset, s16 red_
     return (clamped_red << 11) | (clamped_green << 6) | (clamped_blue << 1) | (color & 1);
 }
 
+// sets array of palette indexes to given RGB
 void func_8002B6E8(u16* src_idx, u16* dst, s16 arg2, s16 arg3, s16 arg4) {
     while (src_idx[0] != 0x100) {
         dst[src_idx[0]] = Palette_AdjustRgb5551(src_idx[1], arg2, arg3, arg4);
@@ -1575,7 +1576,13 @@ void func_8002B6E8(u16* src_idx, u16* dst, s16 arg2, s16 arg3, s16 arg4) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002B7B8.s")
+// sets array of palette indexes to color
+void func_8002B7B8(u16* src_idx, u16* dst, u16 color) {
+    while (*src_idx != 0x100) {
+        dst[*src_idx] = color;
+        src_idx += 2;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002B7F4.s")
 

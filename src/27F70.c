@@ -604,12 +604,12 @@ void func_80028CE8(u16 actor_index) {
     }
 }
 
-// TODO: func_8001FCA0/func_80028E1C only matche if `s16 arg2`, but only matches here as s32
+// TODO: func_8001FCA0 only matches if arg1/arg2 are `s16`, but only matches below as `s32`
 // see https://decomp.me/scratch/ZJ7E3
 #if 0
 u8 func_8001FCA0(u16 arg0, s16 arg1, s16 arg2);
 #else
-u8 func_8001FCA0(u16 arg0, s16 arg1, s32 arg2);
+u8 func_8001FCA0(u16 arg0, s32 arg1, s32 arg2);
 #endif
 s32 func_80028DAC(u16 arg0, s16 arg1) {
     if ((func_8001FCA0(arg0, arg1, gActors[0].posY.whole + 2) & 0x80) &&
@@ -625,7 +625,7 @@ s32 func_80028E1C(u16 arg0) {
     s16 actor0_pos;
     if (gActors[arg0].unk_098 & 0x200) {
         if (D_80137450 == arg0) {
-            if ((gActors[0].unk_140 == 0) && (gActors[0].posY.whole < gActors[arg0].posY.whole)) {
+            if ((gActors[0].unk_140_u8 == 0) && (gActors[0].posY.whole < gActors[arg0].posY.whole)) {
                 actor0_pos = gActors[0].posY.whole;
                 while (actor0_pos < gActors[arg0].posY.whole) {
                     if (func_8001FCA0(arg0, gActors[0].posX.whole, actor0_pos) & 0x80) {
@@ -638,7 +638,7 @@ s32 func_80028E1C(u16 arg0) {
                     actor0_pos += 16;
                 }
             }
-            else if (gActors[0].unk_140 == 4) {
+            else if (gActors[0].unk_140_u8 == 4) {
                 if (gActors[0].flags & 0x20) {
                     actor0_pos = gActors[0].posX.whole;
                     while (gActors[arg0].posX.whole < actor0_pos) {
@@ -671,7 +671,22 @@ s32 func_80028E1C(u16 arg0) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80029044.s")
+s32 func_80029044(u16 arg0) {
+    s32 x;
+    s32 y;
+    if ((gActors[arg0].unk_098 & 0x200) && (D_80137450 == arg0)) {
+        x = ((gActors[arg0].posX.whole - gActors[0].posX.whole) / 2) + gActors[0].posX.whole;
+        y = ((gActors[arg0].posY.whole - gActors[0].posY.whole) / 2) + gActors[0].posY.whole;
+        if (func_8001FCA0(arg0, x, y) & 0x80) {
+            gActors->unk_098 = 0x10000;
+            gActors->unk_0F8 = 0;
+            gActors->unk_0FC = 0x30000;
+            func_800036C8(100, arg0);
+            return 1;
+        }
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80029134.s")
 

@@ -10,6 +10,7 @@ typedef struct {
     u8 pad6[2];
 } Unk800D1788;
 
+extern u16 D_800BE4D8;
 extern u16 D_800BE4E0;
 extern s16 D_800BE558;
 extern s16 D_800BE55C;
@@ -1617,7 +1618,17 @@ s32 func_8002B8F0(u16 actor_index, u16 health_diff) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002B954.s")
+s32 func_8002B954(u16 actor_index, u16 arg1) {
+    if (D_800BE4D8 == 0) {
+        if (arg1 & 0x80) {
+            return 1;
+        }
+        else if ((arg1 & 0x40) && (gActors[actor_index].velocityY < 0)) {
+            return 1;
+        }
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002B9D8.s")
 

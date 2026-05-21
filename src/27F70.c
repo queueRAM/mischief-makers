@@ -1427,7 +1427,16 @@ void func_8002AEF8(u16 actor_index, s16 arg1) {
     gActors[actor_index].colorB = func_8002AE44(gActors[actor_index].colorB, arg1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002AF7C.s")
+void func_8002AF7C(u16 actor_index, u16 arg1, s16 arg2) {
+    if (!(D_800BE4E0 & arg1)) {
+        gActors[actor_index].colorR = 0x7F;
+        gActors[actor_index].colorG = 0x7F;
+        gActors[actor_index].colorB = 0x7F;
+    }
+    else {
+        func_8002AEF8(actor_index, arg2);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002B010.s")
 

@@ -1261,10 +1261,15 @@ s32 func_8002A658(u16 arg0) {
     }
 }
 #else
+s32 func_8002A658(u16 arg0);
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002A658.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002A898.s")
+s32 func_8002A898(u16 actor_index) {
+    gActors[actor_index].flags &= ~0x600;
+    gActors[actor_index].flags |= 0x80;
+    return func_8002A658(actor_index);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002A900.s")
 

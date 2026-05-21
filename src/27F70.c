@@ -1630,7 +1630,17 @@ s32 func_8002B954(u16 actor_index, u16 arg1) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002B9D8.s")
+s32 func_8002B9D8(u16 actor_index) {
+    if (func_8002B954(actor_index, func_8001FCA0(actor_index, gActors[actor_index].posX.whole - 4, gActors[actor_index].posY.whole)) || 
+        func_8002B954(actor_index, func_8001FCA0(actor_index, gActors[actor_index].posX.whole + 4, gActors[actor_index].posY.whole)) || 
+        func_8002B954(actor_index, func_8001FCA0(actor_index, gActors[actor_index].posX.whole, gActors[actor_index].posY.whole - 4)) || 
+        func_8002B954(actor_index, func_8001FCA0(actor_index, gActors[actor_index].posX.whole, gActors[actor_index].posY.whole + 4))) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002BACC.s")
 

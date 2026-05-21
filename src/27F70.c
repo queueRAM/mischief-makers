@@ -1342,7 +1342,16 @@ void func_8002AC7C(u16 actor_index, s16 arg1, s16 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002ACFC.s")
+void func_8002ACFC(u16 actor_index, s16 arg1, s16 arg2) {
+    if (gActors[actor_index].flags & 0x20) {
+        gActors[actor_index].unk_0AC = -arg1;
+        gActors[actor_index].unk_0AA = -arg2;
+    }
+    else {
+        gActors[actor_index].unk_0AA = arg1;
+        gActors[actor_index].unk_0AC = arg2;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002AD7C.s")
 

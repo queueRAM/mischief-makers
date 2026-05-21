@@ -686,7 +686,8 @@ s32 func_80029044(u16 arg0) {
 }
 
 void func_80029134(u16 actor_index) {
-    gActors[actor_index].flags &= 0xFFFEEFFF, gActors[actor_index].flags |= 0x20000;
+    gActors[actor_index].flags &= 0xFFFEEFFF; \
+    gActors[actor_index].flags |= 0x20000;
     gActors[actor_index].velocityX = 0;
     gActors[actor_index].velocityY = 0;
     gActors[actor_index].unk_0F4 = 0;
@@ -829,16 +830,18 @@ s32 func_80029650(s32 arg0, s32 arg1) {
 s32 func_80029678(u16 arg0, u16 arg1, u16 arg2, u16 arg3) {
     s16 temp_t2;
     s32 var_v1;
+    u16 low_bits;
 
     var_v1 = 0;
     temp_t2 = arg0;
     temp_t2 -= (arg2 * arg1);
+
     if ((temp_t2 >= 0) && (arg3 < temp_t2)) {
         var_v1 = 0x20000000;
         temp_t2 = 0;
         arg0 = 0;
     }
-    
+
     if (temp_t2 <= 0) {
         if ((arg0 % arg2) == 0) {
             var_v1 |= 0x80000000;
@@ -848,7 +851,9 @@ s32 func_80029678(u16 arg0, u16 arg1, u16 arg2, u16 arg3) {
     else {
         var_v1 = 0x40000000;
     }
-    return var_v1 | (arg0 & 0xFFFF);
+
+    low_bits = arg0 + 0;
+    return var_v1 | low_bits;
 }
 
 u16 func_80029798(u16 actor_index) {
@@ -1222,7 +1227,8 @@ void func_8002A57C(u16 actor_index, s32 arg1, s32 arg2, s32 max_vx) {
 }
 
 #ifdef NON_MATCHING
-// https://decomp.me/scratch/r3ke1
+// matches: https://decomp.me/scratch/r3ke1
+// TODO: need to map .rodata
 s32 func_8002A658(u16 arg0) {
     u8 var_v0;
     u8 var_v1;
@@ -1231,33 +1237,33 @@ s32 func_8002A658(u16 arg0) {
         var_v0 = ((gActors[arg0].unk_0C4 / 0.3515625) / 64) + 4.0;
         var_v0 &= 0xF;
         switch (gActors[0].unk_140_u8 & 0xF) {
-        case 0:
-            if (!(gActors[0].flags & 0x20)) {
-                var_v1 = ((var_v0 == 0) || (var_v0 >= 8)) ? 2 : 14;
-            }
-            else {
-                var_v1 = (var_v0 >= 9) ? 2 : 14;
-            }
-            break;
-        case 4:
-            var_v1 = ((var_v0 >= 4) && (var_v0 < 0xD)) ? 2 : 6;
-            break;
-        case 12:
-            var_v1 = ((var_v0 >= 4) && (var_v0 < 0xD)) ? 14 : 10;
-            break;
-        case 8:
-            if (!(gActors[0].flags & 0x20)) {
-                var_v1 = ((var_v0 == 0) || (var_v0 >= 8)) ? 6 : 10;
-            }
-            else {
-                var_v1 = (var_v0 >= 9) ? 6 : 10;
-            }
-            break;
+            case 0:
+                if (!(gActors[0].flags & 0x20)) {
+                    var_v1 = ((var_v0 == 0) || (var_v0 >= 8)) ? 2 : 14;
+                }
+                else {
+                    var_v1 = (var_v0 >= 9) ? 2 : 14;
+                }
+                break;
+            case 4:
+                var_v1 = ((var_v0 >= 4) && (var_v0 < 0xD)) ? 2 : 6;
+                break;
+            case 12:
+                var_v1 = ((var_v0 >= 4) && (var_v0 < 0xD)) ? 14 : 10;
+                break;
+            case 8:
+                if (!(gActors[0].flags & 0x20)) {
+                    var_v1 = ((var_v0 == 0) || (var_v0 >= 8)) ? 6 : 10;
+                }
+                else {
+                    var_v1 = (var_v0 >= 9) ? 6 : 10;
+                }
+                break;
         }
-        return (var_v1 * -0x400000) + 0x01000000;
+        return (-var_v1 << 22) + 0x01000000;
     }
     else {
-        return (gActors[0].unk_140_u8 * -0x400000) + 0x01000000;
+        return (-gActors[0].unk_140_u8 << 22) + 0x01000000;
     }
 }
 #else
@@ -1387,7 +1393,25 @@ s32 func_8002AD7C(u16 arg0, s32 arg1, s32 arg2, s32 arg3) {
     return arg2 & 0x3FF;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002AE44.s")
+u16 func_8002AE44(s16 arg0, s16 arg1) {
+    if (arg1 < 0) {
+        if (-arg1 >= arg0) {
+            return 0;
+        }
+        else {
+            return (arg0 + arg1);
+        }
+    }
+    else {
+        arg0 += arg1;
+        if (arg0 >= 0x100) {
+            return 0xFF;
+        }
+        else {
+            return arg0;
+        }
+    }
+}
 
 void Actor_SetColorRgb(u16 actor_index, u16 color) {
     gActors[actor_index].colorR = color;

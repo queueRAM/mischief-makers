@@ -1603,7 +1603,19 @@ void Palette_AdjustRgb5551Array(u16* src, u16* dst, s16 count, s16 blue_offset, 
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002B8F0.s")
+// Actor_ReduceHealth
+// reduce health by amount
+// returns 1 if health remaining, 0 otherwise
+s32 func_8002B8F0(u16 actor_index, u16 health_diff) {
+    if (gActors[actor_index].health <= health_diff) {
+        gActors[actor_index].health = 0;
+        return 0;
+    }
+    else {
+        gActors[actor_index].health = gActors[actor_index].health - health_diff;
+        return 1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002B954.s")
 

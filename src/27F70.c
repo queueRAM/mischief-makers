@@ -1393,6 +1393,7 @@ s32 func_8002AD7C(u16 arg0, s32 arg1, s32 arg2, s32 arg3) {
     return arg2 & 0x3FF;
 }
 
+// clamps colors to arg1
 u16 func_8002AE44(s16 arg0, s16 arg1) {
     if (arg1 < 0) {
         if (-arg1 >= arg0) {
@@ -1419,7 +1420,12 @@ void Actor_SetColorRgb(u16 actor_index, u16 color) {
     gActors[actor_index].colorB = color;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002AEF8.s")
+// clamp actor's RGB to arg1
+void func_8002AEF8(u16 actor_index, s16 arg1) {
+    gActors[actor_index].colorR = func_8002AE44(gActors[actor_index].colorR, arg1);
+    gActors[actor_index].colorG = func_8002AE44(gActors[actor_index].colorG, arg1);
+    gActors[actor_index].colorB = func_8002AE44(gActors[actor_index].colorB, arg1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002AF7C.s")
 

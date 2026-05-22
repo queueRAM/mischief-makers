@@ -12,6 +12,11 @@ typedef struct {
 
 extern u16 D_800BE4D8;
 extern u16 D_800BE4E0;
+extern u16 D_800BE504;
+extern u16 D_800BE508;
+extern u16 D_800BE50C;
+extern u16 D_800BE510;
+extern u16 D_800BE514;
 extern s16 D_800BE558;
 extern s16 D_800BE55C;
 extern f32 D_800BE5B4;
@@ -29,6 +34,7 @@ extern s32 D_800E3584;
 extern u16 D_80137450;
 extern u32 D_80137458;
 extern u16 D_80178136;
+extern u16 D_800BE5FC;
 
 extern Unk800D1788 D_800D1788[];
 extern u8 D_800D17FC[];
@@ -38,6 +44,8 @@ extern s8 D_800D222C[];
 extern u16 D_800D2230[];
 extern u16 D_800D36DC[];
 extern u16 D_800D36FC[];
+
+extern u16 D_8011DD70[];
 
 // forward declarations
 void func_8002A200(u16 actor_index, s32 max_val);
@@ -1680,7 +1688,141 @@ u16 func_8002BC10(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002BC90.s")
+void func_8002BC90(u16 arg0) {
+    u16 target;
+    u16 index;
+    u16 count;
+    u16 value;
+
+    target = arg0 ? D_800BE510 : D_800BE50C;
+    count = 0;
+    for (index = 0; index < 18; index++) {
+        value = D_8011DD70[index];
+        value &= -1 - D_800BE504;
+        if (value != 0) {
+            if (target == value) {
+                count++;
+                if (count == 2) {
+                    D_800BE5FC = 0x3;
+                    return;
+                }
+            }
+            else {
+                break;
+            }
+        }
+    }
+
+    target = arg0 ? D_800BE50C : D_800BE510;
+    count = 0;
+    for (index = 0; index < 18; index++) {
+        value = D_8011DD70[index];
+        value &= -1 - D_800BE504;
+        if (value != 0) {
+            if (target == value) {
+                count++;
+                if (count == 2) {
+                    D_800BE5FC = 0x5;
+                    return;
+                }
+            }
+            else {
+                break;
+            }
+        }
+    }
+
+    target = arg0 ? D_800BE510 : D_800BE50C;
+    if (D_800BE5FC & 1) {
+        for (index = 0; index < 10; index++) {
+            value = D_8011DD70[index];
+            if (value != 0) {
+                if (value == D_800BE514 || value == (D_800BE514 + target)) {
+                    D_800BE5FC = 0xB;
+                    return;
+                }
+                break;
+            }
+        }
+    }
+
+    target = arg0 ? D_800BE50C : D_800BE510;
+    if (D_800BE5FC & 1) {
+        for (index = 0; index < 10; index++) {
+            value = D_8011DD70[index];
+            if (value != 0) {
+                if (value == D_800BE514 || value == (D_800BE514 + target)) {
+                    D_800BE5FC = 0xD;
+                    return;
+                }
+                break;
+            }
+        }
+    }
+
+    count = 0;
+    for (index = 0; index < 20; index++) {
+        value = D_8011DD70[index];
+        if (value != 0) {
+            if (value != D_800BE514 && value != (D_800BE514 + D_800BE504)) {
+                index = 100;
+            }
+            else {
+                break;
+            }
+        }
+    }
+
+    index++;
+    for (; index < 20; index++) {
+        value = D_8011DD70[index];
+        if (value != 0) {
+            if (value == D_800BE504) {
+                count++;
+                if (count == 2) {
+                    D_800BE5FC = 0x10;
+                    return;
+                }
+            }
+            else {
+                break;
+            }
+        }
+    }
+
+    count = 0;
+    index = 0;
+    for (; index < 20; index++) {
+        value = D_8011DD70[index];
+        if (value != 0) {
+            if (value != D_800BE514 && value != (D_800BE514 + D_800BE508)) {
+                index = 100;
+            }
+            else {
+                break;
+            }
+        }
+    }
+
+    index++;
+    for (; index < 20; index++) {
+        value = D_8011DD70[index];
+        if (value != 0) {
+            if (value == D_800BE508) {
+                count++;
+                if (count == 2) {
+                    D_800BE5FC = 0x20;
+                    return;
+                }
+            }
+            else {
+                break;
+            }
+        }
+    }
+
+    D_800BE5FC = 0;
+}
 
 void func_8002C044(void) {
     u16 actor_index;
@@ -1750,7 +1892,23 @@ void func_8002C218(u16 actor_index) {
     }
 }
 
+#ifdef NON_MATCHING
+// matches: https://decomp.me/scratch/FAIhZ
+// TODO: need to map .rodata for 0.3515625
+void func_8002C328(u16 actor_index) {
+
+    if (gActors[actor_index].velocityX != 0) {
+        func_8002C218(actor_index);
+    }
+    else {
+        gActors[actor_index].unk_188 = 0;
+    }
+
+    gActors[actor_index].unk_0C4 = (gActors[actor_index].unk_188 / 65536) * 0.3515625;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002C328.s")
+#endif
 
 s32 func_8002C3C8(u16 actor_index) {
     if (gActors[actor_index].unk_098 & 0x200) {
@@ -1770,7 +1928,7 @@ s32 func_8002C3C8(u16 actor_index) {
             if (gActors[actor_index].unk_0DD != 0x17) {
                 gActors[actor_index].state = 0x20;
                 gActors[actor_index].unk_0D4 = 4;
-                gActors[actor_index].flags |= 0x00020000u; // unsigned literal needed to match
+                gActors[actor_index].flags |= 0x00020000;
                 gActors[actor_index].flags &= 0xFFFEFD7F;
                 gActors[actor_index].velocityY = gActors[actor_index].unk_0FC;
                 gActors[actor_index].velocityX = gActors[actor_index].unk_0F8;

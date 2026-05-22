@@ -204,7 +204,7 @@ void func_8001EC1C(void);
 #pragma GLOBAL_ASM("asm/nonmatchings/1F1E0/func_8001EC1C.s")
 
 void func_8001F88C(void) {
-    u16 index; // var_a0
+    u16 index;
 
     if (!(D_80137458 & 0x10)) {
         for (index = 0, D_800BE4D0 = 0, D_800BE4D4 = 0; index < 144; index++) {

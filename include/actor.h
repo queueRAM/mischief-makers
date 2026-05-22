@@ -50,7 +50,7 @@ typedef struct {
     /* 0x0C8 */ s16 unk_0C8;
     /* 0x0CA */ s16 unk_0CA;
     /* 0x0CC */ s16 unk_0CC;
-    /* 0x0CE */ s16 unk_0CE;
+    /* 0x0CE */ u16 unk_0CE;
     union {
         /* 0x0D0 */ u16 state; // >= 0x4000: normal u16 state
         // < 0x4000: common action state, action = state / 16, other = state & 0xF; sometimes read as individual bytes

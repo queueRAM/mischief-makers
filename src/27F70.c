@@ -35,6 +35,7 @@ extern u8 D_800D17FC[];
 extern s8 D_800D2204[];
 extern s8 D_800D2228[];
 extern s8 D_800D222C[];
+extern u16 D_800D2230[];
 extern u16 D_800D36DC[];
 extern u16 D_800D36FC[];
 
@@ -1681,7 +1682,23 @@ u16 func_8002BC10(u16 actor_index) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002BC90.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002C044.s")
+void func_8002C044(void) {
+    u16 actor_index;
+    u16 index;
+
+    index = 0;
+    for (actor_index = 0x30; actor_index < 0x90; actor_index++) {
+        if (((gActors[actor_index].flags & 0x402) == 0x402) && (gActors[actor_index].health > 0) && (!func_800288EC(actor_index, 0x20))) {
+            D_800D2230[index++] = actor_index;
+            if (index >= 0x20) {
+                return;
+            }
+        }
+    }
+    for (; index < 0x20; index++) {
+        D_800D2230[index] = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002C140.s")
 

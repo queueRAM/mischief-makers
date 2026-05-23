@@ -2156,6 +2156,7 @@ u16 func_8003123C(void* arg0, s32 arg1, s32 arg2, s32 arg3) {
     return func_80030F94(actor_index, arg0, arg1, arg2, arg3);
 }
 
+u16 func_80031284(s32 arg0, s16 arg1, s16 arg2, s32 arg3);
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80031284.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_800312CC.s")
@@ -2422,7 +2423,36 @@ s32 func_800358CC(s32 arg0, s32 arg1) {
 void func_8003F9CC(f32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 }
 
+#ifdef NON_MATCHING
+// matches: https://decomp.me/scratch/iH45G
+// TODO: need to map .rodata for double constants
+u16 func_8003F9E0(f32 arg0, s16 arg1, s16 arg2, s16 arg3) {
+    u16 actor_index;
+
+    actor_index = func_80031284(0x1F0, arg1, arg2, arg3 + 1);
+    if (actor_index != 0) {
+        gActors[actor_index].unk_094 = 0x201;
+        if (func_8000178C() & 1) {
+            gActors[actor_index].flags |= 0x20;
+        }
+        gActors[actor_index].unk_154 = -0xC;
+        gActors[actor_index].unk_18C = 0x8022D4E8;
+        Actor_SetColorRgb(actor_index, 0x30);
+        gActors[actor_index].scaleX = arg0 * 0.5;
+        gActors[actor_index].scaleY = arg0 * 0.5;
+        gActors[actor_index].unk_110 = arg0 * 0.2;
+        gActors[actor_index].unk_114 = arg0 * 0.2;
+        gActors[actor_index].unk_118 = arg0 * -0.01;
+        gActors[actor_index].unk_11C = arg0 * -0.01;
+        gActors[actor_index].unk_0F4 = 0x10000;
+        gActors[actor_index].unk_148 = 16.0f;
+    }
+    return actor_index;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8003F9E0.s")
+#endif
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8003FB20.s")
 

@@ -1242,16 +1242,13 @@ void func_8002A57C(u16 actor_index, s32 arg1, s32 arg2, s32 max_vx) {
     }
 }
 
-#ifdef NON_MATCHING
-// matches: https://decomp.me/scratch/r3ke1
-// TODO: need to map .rodata
-s32 func_8002A658(u16 arg0) {
+s32 func_8002A658(u16 actor_index) {
     u8 var_v0;
     u8 var_v1;
 
     // BUG: UB, var_v1 may be uninitialized
     if (gActors[0].unk_140_u8 & 0x80) {
-        var_v0 = ((gActors[arg0].unk_0C4 / 0.3515625) / 64) + 4.0;
+        var_v0 = ((gActors[actor_index].unk_0C4 / 0.3515625) / 64) + 4.0;
         var_v0 &= 0xF;
         switch (gActors[0].unk_140_u8 & 0xF) {
             case 0:
@@ -1283,10 +1280,6 @@ s32 func_8002A658(u16 arg0) {
         return (-gActors[0].unk_140_u8 << 22) + 0x01000000;
     }
 }
-#else
-s32 func_8002A658(u16 arg0);
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002A658.s")
-#endif
 
 s32 func_8002A898(u16 actor_index) {
     gActors[actor_index].flags &= ~0x600;
@@ -1898,11 +1891,7 @@ void func_8002C218(u16 actor_index) {
     }
 }
 
-#ifdef NON_MATCHING
-// matches: https://decomp.me/scratch/FAIhZ
-// TODO: need to map .rodata for 0.3515625
 void func_8002C328(u16 actor_index) {
-
     if (gActors[actor_index].velocityX != 0) {
         func_8002C218(actor_index);
     }
@@ -1912,9 +1901,6 @@ void func_8002C328(u16 actor_index) {
 
     gActors[actor_index].unk_0C4 = (gActors[actor_index].unk_188 / 65536) * 0.3515625;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002C328.s")
-#endif
 
 s32 func_8002C3C8(u16 actor_index) {
     if (gActors[actor_index].unk_098 & 0x200) {
@@ -1997,9 +1983,6 @@ void func_8002C6DC(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002CCD0.s")
 
-#ifdef NON_MATCHING
-// matches: https://decomp.me/scratch/LOOiG
-// TODO: need to map .rodata for 0.04f
 void func_8002D040(u16 actor_index, s32 arg1) {
     u16 index;
 
@@ -2048,9 +2031,6 @@ void func_8002D040(u16 actor_index, s32 arg1) {
     }
     func_8003F9E0(3.0f, gActors[actor_index].posX.whole, gActors[actor_index].posY.whole, 0x10);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002D040.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002D260.s")
 
@@ -2423,9 +2403,6 @@ s32 func_800358CC(s32 arg0, s32 arg1) {
 void func_8003F9CC(f32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 }
 
-#ifdef NON_MATCHING
-// matches: https://decomp.me/scratch/iH45G
-// TODO: need to map .rodata for double constants
 u16 func_8003F9E0(f32 arg0, s16 arg1, s16 arg2, s16 arg3) {
     u16 actor_index;
 
@@ -2449,10 +2426,6 @@ u16 func_8003F9E0(f32 arg0, s16 arg1, s16 arg2, s16 arg3) {
     }
     return actor_index;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8003F9E0.s")
-#endif
-
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8003FB20.s")
 

@@ -10,6 +10,12 @@ typedef struct {
     u8 pad6[2];
 } Unk800D1788;
 
+typedef struct {
+    u8 unk0[0x80];
+    u16 unk80;
+    u8 unk82[0xA0 - 0x82];
+} Unk80104098; // size = 0xA0
+
 extern u16 D_800BE4D8;
 extern u16 D_800BE4E0;
 extern u16 D_800BE504;
@@ -24,12 +30,14 @@ extern s16 D_800BE5D8;
 extern s16 D_800BE5DC;
 extern u16 D_800BE5FC;
 extern u16 D_800CA230;
+extern u16 D_800D16D0[]; // LUT (ASCII - 0x20)->index
+extern u8 D_800D17B8[]; // LUT of (Alphbet-0x10E)->width
 extern u32 D_800D28FC;
 extern s16 D_800D291C;
 extern s16 D_800D2920;
 extern s16 D_800D2924;
-extern u16 D_800E1380[];
 extern u16 D_800D84E8[];
+extern u16 D_800E1380[];
 extern u16 D_800E14C8[];
 extern s32 D_800E3578;
 extern s32 D_800E357C;
@@ -51,6 +59,7 @@ extern u8 D_800DCE7C[]; // guess
 extern u8 D_800DD07C[]; // guess
 extern u8 D_800DD27C[]; // guess
 
+extern Unk80104098 D_80104098[0x40];
 extern u16 D_8011DD70[];
 
 // forward declarations
@@ -110,31 +119,21 @@ void func_80027644(u16 actor_index, u16 arg1, u16 x, u16 y, u16 z, s32 arg5) {
     gActors[actor_index].unk_18C = arg5;
 }
 
-extern u16 D_800D16C4[];
-
-u16 func_800276DC(u16 actor_index, u8* arg1, u16 x, u16 y, u16 z, s32 arg5) {
-    while (*arg1 != 0) {
-        if (*arg1 == 0x23) {
+// render string to screen horizontally
+// str: ASCII string
+// e.g. used in title screen "PRESS START"
+u16 func_800276DC(u16 actor_index, char* str, u16 x, u16 y, u16 z, s32 arg5) {
+    char ch;
+    while ((ch = *str) != 0) {
+        if (ch == '#') {
             gActors[actor_index].flags = 0;
             actor_index++;
-        } else if (*arg1 != 0x20) {
-            /////////////////////////////////////////////
-            // #######   ###   #     # #     # #######
-            // #          #     #   #  ##   ## #
-            // #          #      # #   # # # # #
-            // #####      #       #    #  #  # #####
-            // #          #      # #   #     # #
-            // #          #     #   #  #     # #
-            // #         ###   #     # #     # #######
-            /////////////////////////////////////////////
-            // D_800D16C4 is from 26A00 and is likely the wrong symbol
-            // likely data in 27F70 which has an appropriate lookup table
-            /////////////////////////////////////////////
-            func_80027644(actor_index, D_800D16C4[(*arg1) - 0x1A] * 2 + 0x2D2, x, y, z, arg5);
-            /////////////////////////////////////////////
+        }
+        else if (ch != ' ') {
+            func_80027644(actor_index, D_800D16D0[ch - ' '] * 2 + 0x2D2, x, y, z, arg5);
             actor_index++;
         }
-        arg1++;
+        str++;
         x += 9;
     }
     return actor_index;
@@ -175,8 +174,7 @@ u16 func_800278E8(u16 actor_index, u16 num, u16 x, u16 y, u16 z, s32 arg5) {
     return index + 3;
 }
 
-extern u8 D_800D17B8[];
-
+// get pixel width of character by alphabet symbol
 u16 func_80027A44(u16* str) {
     if (*str < ALPHA_LOWER_A) {
         return 6;
@@ -185,20 +183,7 @@ u16 func_80027A44(u16* str) {
         return 7;
     }
     else {
-        /////////////////////////////////////////////
-        // #######   ###   #     # #     # #######
-        // #          #     #   #  ##   ## #
-        // #          #      # #   # # # # #
-        // #####      #       #    #  #  # #####
-        // #          #      # #   #     # #
-        // #          #     #   #  #     # #
-        // #         ###   #     # #     # #######
-        /////////////////////////////////////////////
-        // FIXME: D_800D17B8 may be the wrong symbol as this could have a positive or negative offset
-        // disasm was: return D_800D0E84[*arg0 + 0x826];
-        /////////////////////////////////////////////
         return D_800D17B8[*str - 0x10E];
-        /////////////////////////////////////////////
     }
 }
 
@@ -433,25 +418,6 @@ void Actor_ClearRange_90ToC0(void) {
 void Actor_ClearRange_C0ToC7(void) {
     Actor_ClearRange(0xC0, 0xC7);
 }
-
-/////////////////////////////////////////////
-// ####### ####### #####   #######
-//    #    #     # #    #  #     #
-//    #    #     # #     # #     #
-//    #    #     # #     # #     #
-//    #    #     # #     # #     #
-//    #    #     # #    #  #     #
-//    #    ####### #####   #######
-/////////////////////////////////////////////
-// TODO: resolve type of D_80104098
-/////////////////////////////////////////////
-typedef struct {
-    u8 unk0[0x80];
-    u16 unk80;
-    u8 unk82[0xA0 - 0x82];
-} Unk80104098;
-extern Unk80104098 D_80104098[0x40];
-/////////////////////////////////////////////
 
 void func_800286C8(void) {
     u16 index;

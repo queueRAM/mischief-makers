@@ -47,6 +47,9 @@ extern s8 D_800D222C[];
 extern u16 D_800D2230[];
 extern u16 D_800D36DC[];
 extern u16 D_800D36FC[];
+extern u8 D_800DCE7C[]; // guess
+extern u8 D_800DD07C[]; // guess
+extern u8 D_800DD27C[]; // guess
 
 extern u16 D_8011DD70[];
 
@@ -1981,7 +1984,114 @@ void func_8002C6DC(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002C6E4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002CCD0.s")
+void func_8002CCD0(u16 actor_index, s16 pos_x, s16 pos_y, u16 arg3) {
+    u8 angle;
+    s32 pad;
+
+    gActors[actor_index].unk_110 = 0.0f;
+    switch (gActors[actor_index].unk_084) {
+    default:
+        gActors[actor_index].flags = 0;
+        return;
+    case 0x302E:
+        gActors[actor_index].unk_0D8 = 0;
+        break;
+    case 0x300E:
+        gActors[actor_index].unk_0D8 = 2;
+        if (gActors[actor_index].unk_18C == (s32)D_800DCE7C) {
+            gActors[actor_index].unk_0D8 = 6;
+        }
+        else if (gActors[actor_index].unk_18C == (s32)D_800DD07C) {
+            gActors[actor_index].unk_0D8 = 0xA;
+        }
+        else if (gActors[actor_index].unk_18C == (s32)D_800DD27C) {
+            gActors[actor_index].unk_0D8 = 0xE;
+        }
+        break;
+    case 0x3010:
+        gActors[actor_index].unk_0D8 = 4;
+        if (gActors[actor_index].unk_18C == (s32)D_800DCE7C) {
+            gActors[actor_index].unk_0D8 = 8;
+        }
+        else if (gActors[actor_index].unk_18C == (s32)D_800DD07C) {
+            gActors[actor_index].unk_0D8 = 0xC;
+        }
+        else if (gActors[actor_index].unk_18C == (s32)D_800DD27C) {
+            gActors[actor_index].unk_0D8 = 0x10;
+        }
+        break;
+    case 0x304C:
+    case 0x304E:
+        gActors[actor_index].unk_0D8 = 0x12;
+        break;
+    case 0x3004:
+        gActors[actor_index].unk_0D8 = 0x14;
+        break;
+    case 0x3006:
+        gActors[actor_index].unk_0D8 = 0x16;
+        break;
+    case 0x3012:
+        gActors[actor_index].unk_0D8 = 0x18;
+        break;
+    case 0x305C:
+    case 0x305E:
+    case 0x3060:
+        gActors[actor_index].unk_0D8 = 0x1A;
+        break;
+    case 0x306E:
+        gActors[actor_index].unk_0D8 = 0x1C;
+        break;
+    case 0x246:
+        gActors[actor_index].unk_0D8 = 0x1E;
+        break;
+    }
+    gActors[actor_index].actorType = 0x2607;
+    gActors[actor_index].flags = 2;
+    gActors[actor_index].unk_098 = 0;
+    gActors[actor_index].state = 0;
+    gActors[actor_index].unk_114 = 0.0f;
+    gActors[actor_index].unk_118 = 0.0f;
+    gActors[actor_index].unk_11C = 0.0f;
+    gActors[actor_index].unk_120 = 0.0f;
+    gActors[actor_index].unk_124 = 0.0f;
+    gActors[actor_index].unk_128 = 0.0f;
+    gActors[actor_index].unk_12C = 0.0f;
+    gActors[actor_index].unk_130 = 0.0f;
+    gActors[actor_index].unk_134 = 0.0f;
+    gActors[actor_index].unk_138 = 0.0f;
+    gActors[actor_index].unk_13C = 0.0f;
+    gActors[actor_index].unk_140_f32 = 0.0f;
+    gActors[actor_index].unk_144 = 0.0f;
+    gActors[actor_index].unk_148 = 0.0f;
+    gActors[actor_index].unk_14C = 0.0f;
+    gActors[actor_index].unk_150 = 0;
+    gActors[actor_index].unk_154 = 0;
+    gActors[actor_index].unk_158 = 0;
+    gActors[actor_index].unk_15C = 0;
+    gActors[actor_index].unk_160 = 0;
+    gActors[actor_index].unk_164 = 0;
+    gActors[actor_index].unk_168 = 0;
+    gActors[actor_index].unk_16C = 0;
+    gActors[actor_index].unk_170 = 0;
+    gActors[actor_index].unk_174 = 0;
+    gActors[actor_index].unk_178 = 0;
+    gActors[actor_index].unk_17C = 0;
+    gActors[actor_index].unk_180 = 0;
+    gActors[actor_index].unk_184 = 0;
+    gActors[actor_index].unk_188 = 0;
+    gActors[actor_index].unk_18C = 0;
+    gActors[actor_index].unk_190 = 0;
+    gActors[actor_index].posX.whole = pos_x;
+    gActors[actor_index].posY.whole = pos_y;
+    angle = func_8000178C();
+    if (arg3 & 1) {
+        gActors[actor_index].velocityX = (COS(angle * 4) * 131072.0f);
+    }
+    if (arg3 & 2) {
+        gActors[actor_index].velocityY = (SIN(angle * 4) * 131072.0f);
+    }
+    gActors[actor_index].unk_0D4 = 0x1E;
+}
 
 void func_8002D040(u16 actor_index, s32 arg1) {
     u16 index;

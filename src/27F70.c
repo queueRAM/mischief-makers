@@ -22,11 +22,15 @@ extern s16 D_800BE55C;
 extern f32 D_800BE5B4;
 extern s16 D_800BE5D8;
 extern s16 D_800BE5DC;
+extern u16 D_800BE5FC;
 extern u16 D_800CA230;
 extern u32 D_800D28FC;
 extern s16 D_800D291C;
 extern s16 D_800D2920;
 extern s16 D_800D2924;
+extern u16 D_800E1380[];
+extern u16 D_800D84E8[];
+extern u16 D_800E14C8[];
 extern s32 D_800E3578;
 extern s32 D_800E357C;
 extern u16 D_800E3580; // nearest actor index, updated in func_800289E4
@@ -34,7 +38,6 @@ extern s32 D_800E3584;
 extern u16 D_80137450;
 extern u32 D_80137458;
 extern u16 D_80178136;
-extern u16 D_800BE5FC;
 
 extern Unk800D1788 D_800D1788[];
 extern u8 D_800D17FC[];
@@ -51,6 +54,9 @@ extern u16 D_8011DD70[];
 void func_8002A200(u16 actor_index, s32 max_val);
 void func_8002A258(u16 actor_index, s32 max_val);
 void func_8002AC30(u16 actor_index, s16 val);
+void func_80030B0C(u16);
+u16 func_8003123C(void*, s32, s32, s32);
+u16 func_8003F9E0(f32, s16, s16, s16);
 
 void func_80027370(u16 actor_index, u16 x, u16 y, u16 z) {
     gActors[actor_index].actorType = 0;
@@ -378,8 +384,8 @@ u16 func_800284B8(u16 actor_index, u16 end) {
 }
 
 // Actor_RangeFindFlag2_90ToC0
-void func_80028528(void) {
-    func_800284B8(0x90, 0xC0);
+u16 func_80028528(void) {
+    return func_800284B8(0x90, 0xC0);
 }
 
 #ifdef NON_MATCHING
@@ -1991,7 +1997,60 @@ void func_8002C6DC(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002CCD0.s")
 
+#ifdef NON_MATCHING
+// matches: https://decomp.me/scratch/LOOiG
+// TODO: need to map .rodata for 0.04f
+void func_8002D040(u16 actor_index, s32 arg1) {
+    u16 index;
+
+    func_800036C8(0x43, actor_index);
+    func_8005CA34(-6, 0xA);
+    gActors[actor_index].actorType = 1;
+    gActors[actor_index].unk_0A6 = 8;
+    gActors[actor_index].unk_0A8 = -8;
+    gActors[actor_index].unk_0A2 = -8;
+    gActors[actor_index].unk_0A4 = 8;
+    gActors[actor_index].flags = 0x282;
+    gActors[actor_index].unk_0E4 = 0x28; \
+    gActors[actor_index].unk_0F8 = 0x11000; \
+    gActors[actor_index].unk_0FC = 0x7C000;
+    gActors[actor_index].unk_0DE = 0;
+    gActors[actor_index].unk_0DF = 0;
+    gActors[actor_index].unk_0DB = 0xB; \
+    gActors[actor_index].unk_0DA = 0x84;
+    gActors[actor_index].unk_110 = 8.0f;
+    gActors[actor_index].velocityX = 0;
+    gActors[actor_index].velocityY = 0;
+    index = func_8003123C(D_800E1380, gActors[actor_index].posX.whole, gActors[actor_index].posY.whole, 0x11);
+    if (index != 0) {
+        gActors[index].unk_094 = 0x209;
+        gActors[index].unk_18C = (s32) D_800D84E8;
+        gActors[index].unk_084 = 0x168;
+        gActors[index].unk_150 = 0x800000;
+        gActors[index].unk_154 = -15;
+        gActors[index].scaleX = 1.0f;
+        gActors[index].scaleY = 1.0f;
+        gActors[index].unk_110 = 0.25f;
+        gActors[index].unk_114 = 0.25f;
+        Actor_SetColorRgb(index, 0x7F);
+    }
+    index = func_8003123C(D_800E14C8, gActors[actor_index].posX.whole, gActors[actor_index].posY.whole, 0x10);
+    if (index != 0) {
+        gActors[index].unk_094 = 1;
+        gActors[index].unk_154 = 16;
+        gActors[index].unk_164 = -2;
+        gActors[index].unk_17C = (s32) func_80030B0C;
+        gActors[index].unk_104 = 0x1E;
+        gActors[index].scaleX = 1.5f;
+        gActors[index].scaleY = 1.5f;
+        gActors[index].unk_110 = 0.04f;
+        gActors[index].unk_114 = 0.04f;
+    }
+    func_8003F9E0(3.0f, gActors[actor_index].posX.whole, gActors[actor_index].posY.whole, 0x10);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002D040.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8002D260.s")
 
@@ -2083,6 +2142,7 @@ void func_80030B84(u16 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80030E58.s")
 
+u16 func_80030F94(u16, void*, s32, s32, s32);
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80030F94.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_800310A4.s")
@@ -2091,7 +2151,10 @@ void func_80030B84(u16 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_800311EC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_8003123C.s")
+u16 func_8003123C(void* arg0, s32 arg1, s32 arg2, s32 arg3) {
+    u16 actor_index = func_80028528();
+    return func_80030F94(actor_index, arg0, arg1, arg2, arg3);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/27F70/func_80031284.s")
 

@@ -76,4 +76,6 @@ extern void func_80082E04(void);
 extern void func_80082F10(void);
 extern void func_80083E74(void);
 
+extern void func_8005CA34(s32, s32);
+
 #endif

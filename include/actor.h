@@ -245,7 +245,10 @@ typedef struct {
     /* 0x164 */ s32 unk_164;
     /* 0x168 */ s32 unk_168;
     /* 0x16C */ s32 unk_16C;
-    /* 0x170 */ s32 unk_170;
+    union {
+        /* 0x170 */ s32 unk_170;
+        /* 0x170 */ s8 unk_170_s8[4];
+    };
     /* 0x174 */ s32 unk_174;
     /* 0x178 */ s32 unk_178; // assigned animation/frame table pointers(?) by matched overlays
     union{

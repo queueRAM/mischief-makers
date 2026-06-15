@@ -17,7 +17,40 @@ s32 func_8004F2B0(u16 arg0) {
     return 2;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_8004F35C.s")
+s32 func_8004F35C(u16 arg0, u32* arg1) {
+    if (func_8005D418(arg0) != 0) {
+        gActors[arg0].unk_12F_u8 = 0;
+        Sound_PlaySfx(0xAD);
+        return 1;
+    }
+    *arg1 += 1;
+    if (!(*arg1 & 0x40000000)) {
+        if ((*arg1 & 0x3FFFFFFF) >= 0x10) {
+            if (func_8005D338(arg0) == 0x6B) {
+                Sound_PlaySfx(0xB4);
+            }
+            else {
+                Sound_PlaySfx(0xCA);
+            }
+            *arg1 |= 0x40000000;
+        }
+    }
+    if ((gActors[arg0].unk_170_s8[0] == 0) && (gActors[arg0].unk_170_s8[1] == 0)) {
+        return 0;
+    }
+    if (!(*arg1 & 0x80000000)) {
+        if (!(D_801370CE & gButton_B)) {
+            return 0;
+        }
+        *arg1 |= 0x80000000;
+    }
+    if (!(D_801370CC & gButton_B)) {
+        return 0;
+    }
+    gActors[arg0].unk_170_s8[0] = 0x7F;
+    *arg1 += 4;
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_8004F514.s")
 

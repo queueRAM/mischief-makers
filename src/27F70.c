@@ -679,7 +679,7 @@ s32 func_80028E1C(u16 actor_index) {
     s16 actor0_pos;
     if (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK9) {
         if (D_80137450 == actor_index) {
-            if ((gActors[0].unk_140_u8 == 0) && (gActors[0].posY.whole < gActors[actor_index].posY.whole)) {
+            if ((gActors[0].unk_140_u8[0] == 0) && (gActors[0].posY.whole < gActors[actor_index].posY.whole)) {
                 actor0_pos = gActors[0].posY.whole;
                 while (actor0_pos < gActors[actor_index].posY.whole) {
                     if (func_8001FCA0(actor_index, gActors[0].posX.whole, actor0_pos) & 0x80) {
@@ -692,7 +692,7 @@ s32 func_80028E1C(u16 actor_index) {
                     actor0_pos += 16;
                 }
             }
-            else if (gActors[0].unk_140_u8 == 4) {
+            else if (gActors[0].unk_140_u8[0] == 4) {
                 if (gActors[0].flags & ACTOR_FLAG_FLIPPED) {
                     actor0_pos = gActors[0].posX.whole;
                     while (gActors[actor_index].posX.whole < actor0_pos) {
@@ -1278,10 +1278,10 @@ s32 func_8002A658(u16 actor_index) {
     u8 var_v1;
 
     // BUG: UB, var_v1 may be uninitialized
-    if (gActors[0].unk_140_u8 & 0x80) {
+    if (gActors[0].unk_140_u8[0] & 0x80) {
         var_v0 = ((gActors[actor_index].rotateZ / 0.3515625) / 64) + 4.0;
         var_v0 &= 0xF;
-        switch (gActors[0].unk_140_u8 & 0xF) {
+        switch (gActors[0].unk_140_u8[0] & 0xF) {
             case 0:
                 if (!(gActors[0].flags & ACTOR_FLAG_FLIPPED)) {
                     var_v1 = ((var_v0 == 0) || (var_v0 >= 8)) ? 2 : 14;
@@ -1308,7 +1308,7 @@ s32 func_8002A658(u16 actor_index) {
         return (-var_v1 << 22) + 0x01000000;
     }
     else {
-        return (-gActors[0].unk_140_u8 << 22) + 0x01000000;
+        return (-gActors[0].unk_140_u8[0] << 22) + 0x01000000;
     }
 }
 
@@ -5437,7 +5437,7 @@ void func_80037B90(u16 actor_index) {
             d_pos_x = -d_pos_x;
         }
         if (gActors[actor_index].state != 3) {
-            if ((gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK9) && (gActors[actor_index].unk_0D6 == 0) && (gActors[0].unk_140_u8 == 8)) {
+            if ((gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK9) && (gActors[actor_index].unk_0D6 == 0) && (gActors[0].unk_140_u8[0] == 8)) {
                 if (((gActors[0].posY.whole - gActors[actor_index].posY.whole) >= 0x1B) && (d_pos_x < 0xC)) {
                     func_80035524(actor_index, 0);
                     gActors[actor_index].flags_098 &= ~ACTOR_FLAG3_UNK9;

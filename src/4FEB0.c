@@ -10,7 +10,7 @@ s32 func_8004F2B0(u16 arg0) {
         return 0;
     }
     gActors[arg0].flags &= ~0x4040;
-    gActors[arg0].unk_140_u8 = func_80048C28(0, arg0);
+    gActors[arg0].unk_140_u8[0] = func_80048C28(0, arg0);
     if (!(D_801373D8 & ~0x80)) {
         return 1;
     }
@@ -52,7 +52,18 @@ s32 func_8004F35C(u16 arg0, u32* arg1) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_8004F514.s")
+void func_8004F514(u16 arg0, u16 arg1) {
+    gActors[arg0].flags &= 0xFDFFFFFF;
+    if (arg1 != 0xFFFF) {
+        if (gActors[arg1].flags & 2) {
+            gActors[arg1].flags_098 &= ~0x200;
+        }
+        if (arg0 == 0) {
+            gActors[arg0].unk_140_u16[1] = gActors[arg0].unk_0D6;
+            gActors[arg0].unk_140_u8[1] = 0x1E;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_8004F5B0.s")
 

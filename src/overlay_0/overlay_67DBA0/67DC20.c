@@ -564,7 +564,7 @@ s32 func_80194D3C_68085C(u16 actor_index) {
 
     if (gActors[0x37].flags_098 & ACTOR_FLAG3_UNK9) {
         gActors[0x37].flags &= ~(ACTOR_FLAG_UNK12 | ACTOR_FLAG_UNK9);
-        if (gActors[0].unk_140_u8 == 0) {
+        if (gActors[0].unk_140_u8[0] == 0) {
             gActors[index].state = 0x400;
             func_80193DF0_67F910(index, 0x10);
             return 1;

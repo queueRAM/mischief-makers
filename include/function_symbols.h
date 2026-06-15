@@ -105,7 +105,7 @@ extern void func_800472D4(void);
 extern s32 func_8004735C(s32 arg0, s32 arg1);
 extern s32 func_800486F4(void);
 extern s32 func_80048CE4(void);
-extern void func_8004F614(u16 actor_index, s32 arg1, s32 arg2, s32 arg3);
+extern u16 func_8004F614(u16 actor_index, s32 arg1, s32 arg2, s16 arg3);
 extern void func_8005DF40(s32 arg0, s32 arg1);
 extern void func_8007CE24(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 extern void func_8007CEB8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8);

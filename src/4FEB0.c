@@ -3,30 +3,30 @@
 
 extern u16 D_801373D8;
 
-s32 func_8004F2B0(u16 arg0) {
+s32 func_8004F2B0(u16 actor_index) {
     s32 pad;
 
     if (!(D_801370CE & gButton_B)) {
         return 0;
     }
-    gActors[arg0].flags &= ~0x4040;
-    gActors[arg0].unk_140_u8[0] = func_80048C28(0, arg0);
+    gActors[actor_index].flags &= ~0x4040;
+    gActors[actor_index].unk_140_u8[0] = func_80048C28(0, actor_index);
     if (!(D_801373D8 & ~0x80)) {
         return 1;
     }
     return 2;
 }
 
-s32 func_8004F35C(u16 arg0, u32* arg1) {
-    if (func_8005D418(arg0) != 0) {
-        gActors[arg0].unk_12F_u8 = 0;
+s32 func_8004F35C(u16 actor_index, u32* arg1) {
+    if (func_8005D418(actor_index) != 0) {
+        gActors[actor_index].unk_12F_u8 = 0;
         Sound_PlaySfx(0xAD);
         return 1;
     }
     *arg1 += 1;
     if (!(*arg1 & 0x40000000)) {
         if ((*arg1 & 0x3FFFFFFF) >= 0x10) {
-            if (func_8005D338(arg0) == 0x6B) {
+            if (func_8005D338(actor_index) == 0x6B) {
                 Sound_PlaySfx(0xB4);
             }
             else {
@@ -35,7 +35,7 @@ s32 func_8004F35C(u16 arg0, u32* arg1) {
             *arg1 |= 0x40000000;
         }
     }
-    if ((gActors[arg0].unk_170_s8[0] == 0) && (gActors[arg0].unk_170_s8[1] == 0)) {
+    if ((gActors[actor_index].unk_170_s8[0] == 0) && (gActors[actor_index].unk_170_s8[1] == 0)) {
         return 0;
     }
     if (!(*arg1 & 0x80000000)) {
@@ -47,25 +47,37 @@ s32 func_8004F35C(u16 arg0, u32* arg1) {
     if (!(D_801370CC & gButton_B)) {
         return 0;
     }
-    gActors[arg0].unk_170_s8[0] = 0x7F;
+    gActors[actor_index].unk_170_s8[0] = 0x7F;
     *arg1 += 4;
     return 0;
 }
 
-void func_8004F514(u16 arg0, u16 arg1) {
-    gActors[arg0].flags &= 0xFDFFFFFF;
-    if (arg1 != 0xFFFF) {
-        if (gActors[arg1].flags & 2) {
-            gActors[arg1].flags_098 &= ~0x200;
+void func_8004F514(u16 actor0, u16 actor1) {
+    gActors[actor0].flags &= 0xFDFFFFFF;
+    if (actor1 != 0xFFFF) {
+        if (gActors[actor1].flags & 2) {
+            gActors[actor1].flags_098 &= ~0x200;
         }
-        if (arg0 == 0) {
-            gActors[arg0].unk_140_u16[1] = gActors[arg0].unk_0D6;
-            gActors[arg0].unk_140_u8[1] = 0x1E;
+        if (actor0 == 0) {
+            gActors[actor0].unk_140_u16[1] = gActors[actor0].unk_0D6;
+            gActors[actor0].unk_140_u8[1] = 0x1E;
         }
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_8004F5B0.s")
+void func_8004F5B0(u16 actor_index) {
+    switch (gActors[actor_index].unk_140_u16[1]) {
+    case 0:
+        gActors[actor_index].unk_140_u16[1] = 1;
+        break;
+    case 8:
+        gActors[actor_index].unk_140_u16[1] = 2;
+        break;
+    default:
+        gActors[actor_index].unk_140_u16[1] = 0;
+        break;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_8004F614.s")
 

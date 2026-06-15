@@ -1,6 +1,21 @@
 #include "common.h"
+#include "boot.h"
 
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_8004F2B0.s")
+extern u16 D_801373D8;
+
+s32 func_8004F2B0(u16 arg0) {
+    s32 pad;
+
+    if (!(D_801370CE & gButton_B)) {
+        return 0;
+    }
+    gActors[arg0].flags &= ~0x4040;
+    gActors[arg0].unk_140_u8 = func_80048C28(0, arg0);
+    if (!(D_801373D8 & ~0x80)) {
+        return 1;
+    }
+    return 2;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_8004F35C.s")
 

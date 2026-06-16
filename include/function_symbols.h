@@ -12,6 +12,7 @@ extern u8 func_80012C04(s16, s16);
 
 extern void func_80010C20(u16 arg0);
 extern void func_800282F0(s16 arg0, s16 arg1);
+extern u16 func_8002877C(u16 actor_index);
 extern s32 Math_AbsS32(s32 val);
 extern s32 Math_Atan2(s32 x, s32 y);
 extern void func_8002AA20(u16 actor_index, s32 unused);
@@ -25,7 +26,9 @@ extern u8 func_80048C28(s32, u16);
 extern void func_80045D84(u32 arg0, u32 arg1);
 extern void func_80057320(s32, s32);
 extern void func_8005739C(s32 arg0, s32 arg1);
+extern s32 func_8005C6D0(s32);
 extern void func_8005CA34(s32 mag, s32 time); // shake camera vertically.
+extern s32 func_8005D1B0(u16, s32);
 extern s32 func_8005D1E8(u16);
 extern s32 func_8005D338(u16 actor_index);
 extern s32 func_8005D418(u16 actor_index);

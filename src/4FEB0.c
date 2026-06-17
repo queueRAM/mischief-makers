@@ -476,7 +476,41 @@ block_55:
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_800500B0.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_8005060C.s")
+void func_8005060C(u16 actor_index) {
+    u16 index;
+
+    gActors[actor_index].unk_12C_u16[0] = 7;
+    index = gActors[actor_index].unk_0D6;
+    func_8004F7D8(actor_index);
+    gActors[actor_index].velocityX.raw = Math_ApproachS32(gActors[actor_index].velocityX.raw, 0, func_80048C94(0));
+    if (gActors[actor_index].stateUpper == 0) {
+        func_8005A4B0(actor_index, 1.0f);
+        if (func_8005D1B0(index) != 2) {
+            Sound_PlaySfx(0xAC);
+        }
+        else {
+            Sound_PlaySfx(0xAC);
+        }
+        if (gActors[actor_index].unk_140_u8[0] == 0) {
+            gActors[actor_index].unk_170 = 0x2C;
+        } else {
+            gActors[actor_index].unk_170 = 0x2B;
+        }
+        gActors[actor_index].stateUpper += 1;
+    }
+    if (gActors[actor_index].unk_170_s8[1] == 1) {
+        gActors[actor_index].unk_170_s8[0] = 0;
+        if (gActors[actor_index].var_150 == 0) {
+            gActors[actor_index].unk_170_s8[1] = 2;
+        }
+        else {
+            gActors[actor_index].var_150 = gActors[actor_index].var_150 - 1;
+        }
+    }
+    if (func_8005D418(actor_index) != 0) {
+        gActors[actor_index].state = 4;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_8005074C.s")
 

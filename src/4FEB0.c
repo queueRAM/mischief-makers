@@ -102,38 +102,38 @@ void func_8004F5B0(u16 actor_index) {
 void func_80059D88(u16, s32*, s32, s32);
 void func_8005C520(s8, s32);
 s32 func_8005C774(s32);
-extern FixedCoord D_800D413C[];
-u16 func_8004F614(u16 arg0, s32 arg1, s32 arg2, s16 arg3) {
+u16 func_8004F614(u16 actor_index, s32 arg1, s32 arg2, s16 arg3) {
     s32 var_v0;
     s32 sp34[4];
     u16 temp_s0;
     s32 temp_v0;
 
-    var_v0 = gActors[arg0].unk_140_u16[1];
-    temp_s0 = gActors[arg0].unk_0D6;
+    var_v0 = gActors[actor_index].unk_140_u16[1];
+    temp_s0 = gActors[actor_index].unk_0D6;
     if (var_v0 >= 3) {
         var_v0 = 0;
     }
     sp34[0] = 0x12;
     sp34[2] = 1;
     sp34[3] = 0x8022D4E8;
-    sp34[1] = D_800D413C[var_v0].whole;
-    func_80059D88(arg0, sp34, 0, 0x40400000);
-    gActors[arg0].flags &= 0xFDFFFFFF;
+    sp34[1] = D_800D413C[var_v0].unk0;
+    func_80059D88(actor_index, sp34, 0, 0x40400000);
+    gActors[actor_index].flags &= 0xFDFFFFFF;
     if (temp_s0 == 0xFFFF) {
         return temp_s0;
     }
     if (!(gActors[temp_s0].flags & 2)) {
         return 0xFFFF;
     }
-    func_8004F514(arg0, temp_s0);
+    func_8004F514(actor_index, temp_s0);
     gActors[temp_s0].flags_098 |= 0x400;
     gActors[temp_s0].unk_0DC = 0xC0;
     gActors[temp_s0].unk_0DD = 0x19;
     gActors[temp_s0].pendingDamage = arg3;
-    if (!(gActors[arg0].flags & 0x20)) {
+    if (!(gActors[actor_index].flags & 0x20)) {
         gActors[temp_s0].unk_0F8.raw = arg1;
-    } else {
+    }
+    else {
         gActors[temp_s0].unk_0F8.raw = -arg1;
     }
     gActors[temp_s0].unk_0FC.raw = arg2;
@@ -193,7 +193,7 @@ s32 func_8004F7D8(u16 actor_index) {
         var_t0 = D_800D413C[temp_t5].unk2 - gActors[temp_a0].hitboxBY1;
     }
 
-    temp_a3 = 0x40000 - (func_8005D1B0(temp_a0, var_a1) << 0xE);
+    temp_a3 = 0x40000 - (func_8005D1B0(temp_a0) << 0xE);
 
     if (temp_a3 >= func_8005C6D0((var_a1 << 0x10) - D_801373E0.unk_00)) {
         D_801373E0.unk_00 = (var_a1 << 0x10);
@@ -226,23 +226,24 @@ s32 func_8004F7D8(u16 actor_index);
 
 #ifdef NON_MATCHING
 // https://decomp.me/scratch/JsH8K
-void func_8004FB30(u16 arg0, s32 arg1) {
+void func_8004FB30(u16 actor_index, s32 arg1) {
     u16 index1;
     s32 temp_f16;
     Unk800D410C* temp_v0;
 
     temp_v0 = D_800D410C[arg1];
     if (temp_v0 != 0) {
-        index1 = gActors[arg0].unk_0D6;
-        gActors[index1].unk_104 = gActors[arg0].posX.raw;
-        gActors[index1].unk_108 = gActors[arg0].posY.raw;
-        temp_f16 = gActors[0].unk_120 * (temp_v0[gActors[arg0].unk_170_s8[1]].unk0 << 0x10);
-        if (!(gActors[arg0].flags & 0x20)) {
+        index1 = gActors[actor_index].unk_0D6;
+        gActors[index1].unk_104 = gActors[actor_index].posX.raw;
+        gActors[index1].unk_108 = gActors[actor_index].posY.raw;
+        temp_f16 = gActors[0].unk_120 * (temp_v0[gActors[actor_index].unk_170_s8[1]].unk0 << 0x10);
+        if (!(gActors[actor_index].flags & 0x20)) {
             gActors[index1].unk_104 += temp_f16;
-        } else {
+        }
+        else {
             gActors[index1].unk_104 -= temp_f16;
         }
-        temp_f16 = gActors[0].unk_120 * (temp_v0[gActors[arg0].unk_170_s8[1]].unk1 << 0x10);
+        temp_f16 = gActors[0].unk_120 * (temp_v0[gActors[actor_index].unk_170_s8[1]].unk1 << 0x10);
         gActors[index1].unk_108 += temp_f16;
     }
 }
@@ -252,7 +253,7 @@ void func_8004FB30(u16 arg0, s32 arg1) {
 
 #ifdef NON_MATCHING
 // https://decomp.me/scratch/MFNFc
-s32 func_8004FC68(u16 arg0, u16 arg1) {
+s32 func_8004FC68(u16 actor_index, u16 arg1) {
     s16 var_v0;
     s16 temp;
     s32 var_a3;
@@ -260,12 +261,12 @@ s32 func_8004FC68(u16 arg0, u16 arg1) {
 
     var_v0 = D_800D4130[0].unk0;
     var_t0 =  D_800D413C[0].unk0;
-    if (!(gActors[arg0].flags & 0x20)) {
+    if (!(gActors[actor_index].flags & 0x20)) {
         if ((var_v0 + gActors[arg1].hitboxBX0) < D_800D4130[0].unk2) {
             var_v0 = D_800D4130[0].unk2 - gActors[arg1].hitboxBX0;
         }
         var_v0 = var_v0 + gActors[arg1].hitboxBX1;
-        if (gActors[arg0].unk_140_u8[0] != 0) {
+        if (gActors[actor_index].unk_140_u8[0] != 0) {
             var_v0 -= 2;
         }
     }
@@ -275,7 +276,7 @@ s32 func_8004FC68(u16 arg0, u16 arg1) {
             var_v0 = -D_800D4130[0].unk2 - gActors[arg1].hitboxBX1;
         }
         var_v0 = var_v0 + gActors[arg1].hitboxBX0;
-        if (gActors[arg0].unk_140_u8[0] != 0) {
+        if (gActors[actor_index].unk_140_u8[0] != 0) {
             var_v0 = var_v0 + 2;
         }
     }
@@ -284,7 +285,7 @@ s32 func_8004FC68(u16 arg0, u16 arg1) {
         temp = D_800D413C[0].unk2 - gActors[arg1].hitboxBY1;
         var_a3 = temp + gActors[arg1].hitboxBY1;
     }
-    if (func_8001FCA0(arg1, gActors[arg0].posX.whole + var_v0, gActors[arg0].posY.whole + var_a3) & 0x80) {
+    if (func_8001FCA0(arg1, gActors[actor_index].posX.whole + var_v0, gActors[actor_index].posY.whole + var_a3) & 0x80) {
         return 1;
     }
     return 0;
@@ -334,7 +335,146 @@ void func_8004FDF8(u16 actor_index) {
     }
 }
 
+#ifdef NON_MATCHING
+// https://decomp.me/scratch/V00hL
+void func_800500B0(u16 actor_index) {
+    u16 var_a3;
+    u16 index;
+
+    func_8004F7D8(actor_index);
+    gActors[actor_index].unk_17C = 0;
+    index = gActors[actor_index].unk_0D6;
+    if ((D_801373D8 & 0x20) || (func_8004FC68(actor_index, index))) {
+        if (gActors[index].unk_0DE != 0x16) {
+            gActors[actor_index].unk_140_u8[0] = 0;
+            gActors[actor_index].unk_140_u16[1] = 1;
+            var_a3 = 0x10;
+            if (func_8005D1B0(index) != 2) {
+                var_a3 = 0xB;
+            }
+            if ((func_8005D338(actor_index) == 8) || (func_8005D338(actor_index) == 0xD)) {
+                var_a3 = 0xE;
+                if (func_8005D1B0(index) != 2) {
+                    var_a3 = 9;
+                }
+                func_8005D370(actor_index, var_a3);
+                gActors[actor_index].flags |= 0x40;
+            }
+        }
+        else {
+            goto block_12;
+        }
+    }
+    else {
+block_12:
+        gActors[actor_index].unk_140_u8[0] = 4;
+        gActors[actor_index].unk_140_u16[1] = 0;
+        var_a3 = 0xD;
+        if (func_8005D1B0(index) != 2) {
+            var_a3 = 8;
+        }
+        if ((func_8005D338(actor_index) == 0xB) || (func_8005D338(actor_index) == 0x10)) {
+            var_a3 = 0xF;
+            if (func_8005D1B0(index) != 2) {
+                var_a3 = 0xA;
+            }
+            func_8005D370(actor_index, var_a3);
+            gActors[actor_index].flags |= 0x40;
+        }
+        if (D_801373D8 & 0x10) {
+            gActors[actor_index].unk_17C = 1;
+            var_a3 = 0x11;
+            if (func_8005D1B0(index) != 2) {
+                var_a3 = 0xC;
+            }
+        }
+    }
+    if (D_801373E0.unk_78 & 0x10000) {
+        if ((D_801373E0.unk_12 == 0) && (D_801373E0.unk_11 < 0xE) && (D_801373E0.unk_10 >= 5) && (D_801373E0.unk_10 < 0xC) && (gActors[actor_index].unk_140_u16[1] == 0)) {
+            gActors[actor_index].state = 0x28;
+        }
+        else {
+            if (gActors[actor_index].flags & 0x4040) {
+                if (func_8005D418(actor_index) != 0) {
+                    gActors[actor_index].flags &= ~0x4040;
+                }
+            }
+            if (!(gActors[actor_index].flags & 0x4040)) {
+                if (D_801373D8 & 0x80) {
+                    gActors[actor_index].flags ^= 0x20;
+                }
+                func_8005D370(actor_index, var_a3);
+            }
+        }
+    }
+    else {
+        gActors[actor_index].unk_12C_u16[0] = 7;
+        if ((gActors[actor_index].unk_0A0 & 7) == 7) {
+            if (!(gActors[actor_index].unk_0A0 & 0x10)) {
+                var_a3 = 0x13;
+                if (!(gActors[actor_index].flags & 0x20)) {
+                    var_a3 = 0x12;
+                }
+                gActors[actor_index].velocityX.raw = -0x6000;
+            }
+            else {
+                var_a3 = 0x12;
+                if (!(gActors[actor_index].flags & 0x20)) {
+                    var_a3 = 0x13;
+                }
+                gActors[actor_index].velocityX.raw = 0x6000;
+            }
+            if (gActors[actor_index].unk_140_u16[1] == 1) {
+                var_a3 += 2;
+            }
+            if ((var_a3 != func_8005D338(actor_index)) && !(gActors[actor_index].flags & 0x4040)) {
+                func_8005D370(actor_index, var_a3);
+            }
+        }
+        if (gActors[actor_index].velocityX.raw != 0) {
+            if ((D_801373D8 & 0x80) && (func_8005C6D0(gActors[actor_index].velocityX.raw) > func_80048C94(1))) {
+                gActors[actor_index].state = 0xA;
+            }
+            else {
+                gActors[actor_index].velocityX.raw = Math_ApproachS32(gActors[actor_index].velocityX.raw, 0, func_80048C94(0));
+                goto block_55;
+            }
+        }
+        else {
+block_55:
+            if (D_801373D8 & 0x80) {
+                if (gActors[actor_index].unk_140_u8[0] == 0) {
+                    gActors[actor_index].unk_170 = 0x19;
+                }
+                else {
+                    gActors[actor_index].unk_170 = 0x18;
+                }
+                gActors[actor_index].flags ^= 0x20;
+                if (D_801373D8 & 2) {
+                    gActors[actor_index].flags &= ~0x20;
+                }
+                if (D_801373D8 & 1) {
+                    gActors[actor_index].flags |= 0x20;
+                }
+                gActors[actor_index].flags |= 0x4000;
+            }
+            if (var_a3 != func_8005D338(actor_index)) {
+                if (gActors[actor_index].flags & 0x4040) {
+                    gActors[actor_index].velocityX.raw = Math_ApproachS32(gActors[actor_index].velocityX.raw, 0, func_80048C94(0));
+                    if (func_8005D418(actor_index) != 0) {
+                        gActors[actor_index].flags &= ~0x4040;
+                    }
+                }
+                else if (gActors[actor_index].velocityX.raw == 0) {
+                    func_8005D370(actor_index, var_a3);
+                }
+            }
+        }
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_800500B0.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_8005060C.s")
 

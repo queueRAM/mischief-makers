@@ -291,6 +291,7 @@ s32 func_8004FC68(u16 actor_index, u16 arg1) {
     return 0;
 }
 #else
+s32 func_8004FC68(u16 actor_index, u16 arg1);
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_8004FC68.s")
 #endif
 
@@ -493,7 +494,8 @@ void func_8005060C(u16 actor_index) {
         }
         if (gActors[actor_index].unk_140_u8[0] == 0) {
             gActors[actor_index].unk_170 = 0x2C;
-        } else {
+        }
+        else {
             gActors[actor_index].unk_170 = 0x2B;
         }
         gActors[actor_index].stateUpper += 1;
@@ -512,7 +514,39 @@ void func_8005060C(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_8005074C.s")
+void func_8005074C(u16 actor_index) {
+    u16 index;
+    s32 var_a1;
+
+    gActors[actor_index].unk_12C_u16[0] = 7;
+    func_8004F7D8(actor_index);
+    var_a1 = func_80048C94(1);
+    if (gActors[actor_index].flags & 0x20) {
+        var_a1 = -var_a1;
+    }
+    gActors[actor_index].velocityX.raw = Math_ApproachS32(gActors[actor_index].velocityX.raw, var_a1, func_8005C6D0(var_a1) / 12);
+    index = gActors[actor_index].unk_0D6;
+    if (((D_801373D8 & 0x20) || ((func_8004FC68(actor_index, index) != 0))) && (gActors[index].unk_0DE != 0x16)) {
+        gActors[actor_index].unk_140_u8[0] = 0;
+        gActors[actor_index].unk_140_u16[1] = 1;
+        if (func_8005D338(actor_index) != 0x20) {
+            gActors[actor_index].unk_170_u16[1] = 0x20;
+        }
+    }
+    else {
+        gActors[actor_index].unk_140_u8[0] = 4;
+        gActors[actor_index].unk_140_u16[1] = 0;
+        if (func_8005D338(actor_index) != 0x1F) {
+            gActors[actor_index].unk_170_u16[1] = 0x1F;
+        }
+    }
+    if ((gActors[actor_index].unk_170_s8[0] == 0) && ((gActors[actor_index].unk_170_s8[1] == 2) || (gActors[actor_index].unk_170_s8[1] == 8))) {
+        Sound_PlaySfx(0x53U);
+    }
+    if (!(D_801373D8 & 3) || (D_801373D8 & 0x80)) {
+        gActors[actor_index].state = 4;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_800508F4.s")
 

@@ -246,6 +246,7 @@ typedef struct {
     /* 0x16C */ s32 unk_16C;
     union {
         /* 0x170 */ s32 unk_170;
+        /* 0x170 */ u16 unk_170_u16[2];
         /* 0x170 */ s8 unk_170_s8[4];
     };
     /* 0x174 */ s32 unk_174;

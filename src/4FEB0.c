@@ -837,7 +837,39 @@ void func_80052780(s32 arg0, s32 arg1) {
 
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_8005278C.s")
+void func_8005278C(u16 actor_0, u16 actor_1) {
+    if (gActors[actor_1].unk_0DE == 0x16) {
+        gActors[actor_0].unk_140_u8[0] = 4;
+        gActors[actor_0].unk_140_u16[1] = 0;
+    }
+    func_8004F7D8(actor_0);
+    if (gActors[actor_0].flags & 0x810000) {
+        gActors[actor_0].unk_12C_u16[0] |= 2;
+    }
+    if (gActors[actor_0].stateUpper == 0) {
+        if (gActors[actor_0].flags & 0x810000) {
+            gActors[actor_0].unk_170 = 0x3C;
+        }
+        else {
+            gActors[actor_0].unk_170 = 0x3F;
+        }
+        if (gActors[actor_0].unk_140_u8[0] == 0) {
+            gActors[actor_0].unk_170 += 1;
+        }
+        if (gActors[actor_0].unk_140_u8[0] == 8) {
+            gActors[actor_0].unk_170 += 2;
+        }
+        gActors[actor_0].stateUpper = 1;
+    }
+    if (func_8005D418(actor_0)) {
+        if (gActors[actor_0].flags & 0x810000) {
+            gActors[actor_0].state = 4;
+        }
+        else {
+            gActors[actor_0].state = 0x1D;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_800528F4.s")
 

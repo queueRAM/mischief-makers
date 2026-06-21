@@ -833,7 +833,9 @@ void func_80050F3C(u16 actor_index) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80052004.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80052780.s")
+void func_80052780(s32 arg0, s32 arg1) {
+
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_8005278C.s")
 

@@ -967,7 +967,14 @@ s32 func_80052A6C(u16 actor_0, u16 actor_1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80052C4C.s")
+void func_80052C4C(u16 actor_0, u16 actor_1) {
+    if (gActors[actor_1].graphicFlags & 0x800) {
+        gActors[actor_0].posZ.raw = gActors[actor_1].unk_188 + 0x10000;
+    }
+    else {
+        gActors[actor_0].posZ.raw = gActors[actor_1].posZ.raw + 0x10000;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80052CD0.s")
 

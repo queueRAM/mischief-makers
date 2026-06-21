@@ -151,81 +151,84 @@ u16 func_8004F614(u16 actor_index, s32 arg1, s32 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_8004F614.s")
 #endif
 
-#ifdef NON_MATCHING
-// https://decomp.me/scratch/e5Q7Y
 s32 func_8004F7D8(u16 actor_index) {
-    u16 temp_a0;
+    u16 index;
     u16 temp_t5;
-    s32 temp_a3;
     s32 pad0;
-    s32 var_a1; // sp38
+    s32 var_a0;
+    s32 var_a1;
     s32 var_t0;
-    s32 pad1;
-    s32 pad2;
+    s32 temp_a3;
+    s32 temp_2;
     s32 sp28;
-    s32 pad3;
+    s32 temp_3;
 
-    temp_a0 = gActors[actor_index].unk_0D6;
-    func_8002877C(temp_a0);
-    gActors[actor_index].flags_098 |= gActors[temp_a0].flags_098 & 0xC;
-    sp28 = gActors[temp_a0].flags_098 & 0xC;
-    if (func_8005C6D0(((gActors[temp_a0].posX.raw + (gScreenPosCurrentX.whole << 0x10)) - (gScreenPosNextX.whole << 0x10)) - gActors[temp_a0].unk_104) >= 0x10000) {
-        gActors[actor_index].posX.raw = ((gActors[actor_index].posX.raw + gActors[temp_a0].posX.raw + (gScreenPosCurrentX.whole << 0x10)) - gActors[temp_a0].unk_104) - (gScreenPosNextX.whole << 0x10);
+    index = gActors[actor_index].unk_0D6;
+    func_8002877C(index);
+    gActors[actor_index].flags_098 |= gActors[index].flags_098 & 0xC;
+    sp28 = gActors[index].flags_098 & 0xC;
+    if (func_8005C6D0(((gActors[index].posX.raw + (gScreenPosCurrentX.whole << 0x10)) - (gScreenPosNextX.whole << 0x10)) - gActors[index].unk_104) >= 0x10000) {
+        gActors[actor_index].posX.raw = ((gActors[actor_index].posX.raw + gActors[index].posX.raw + (gScreenPosCurrentX.whole << 0x10)) - gActors[index].unk_104) - (gScreenPosNextX.whole << 0x10);
     }
-    if (((gActors[temp_a0].posY.raw + (gScreenPosCurrentY.whole << 0x10)) != ((gScreenPosNextY.whole << 0x10) + gActors[temp_a0].unk_108)) && !(gActors[actor_index].flags & 0x810000)) {
-        gActors[actor_index].posY.raw = ((gActors[actor_index].posY.raw + gActors[temp_a0].posY.raw + (gScreenPosCurrentY.whole << 0x10)) - gActors[temp_a0].unk_108) - (gScreenPosNextY.whole << 0x10);
+    var_a0 = gScreenPosCurrentY.whole << 0x10;\
+    var_a1 = gScreenPosNextY.whole << 0x10;
+    temp_2 = gActors[index].posY.raw;
+    temp_3 = gActors[index].unk_108;
+    if (((var_a1 + temp_3) != (temp_2 + var_a0)) && !(gActors[actor_index].flags & 0x810000)) {
+        gActors[actor_index].posY.raw += ((temp_2 + var_a0) - temp_3) - var_a1;
     }
-    gActors[temp_a0].unk_104 = gActors[actor_index].posX.raw;
-    gActors[temp_a0].unk_108 = gActors[actor_index].posY.raw;
-    gActors[temp_a0].unk_10C = gActors[actor_index].posZ.raw - 0x4000;
-    temp_t5 = gActors[actor_index].unk_140_u16[1];
+    gActors[index].unk_104 = gActors[actor_index].posX.raw;
+    gActors[index].unk_108 = gActors[actor_index].posY.raw;
+    gActors[index].unk_10C = gActors[actor_index].posZ.raw - 0x4000;
+    // fakematch
+    temp_t5 = gActors[actor_index].unk_140_u16[1] & 0xFFFF & 0xFFFF & 0xFFFF & 0xFFFF & 0xFFFF & 0xFFFF & 0xFFFF & 0xFFFF;
     var_a1 = D_800D4130[temp_t5].unk0;
     var_t0 = D_800D413C[temp_t5].unk0;
     if (!(gActors[actor_index].flags & 0x20)) {
-        if ((var_a1 + gActors[temp_a0].hitboxBX0) < D_800D4130[temp_t5].unk2) {
-            var_a1 = D_800D4130[temp_t5].unk2 - gActors[temp_a0].hitboxBX0;
+        if ((var_a1 + gActors[index].hitboxBX0) < D_800D4130[temp_t5].unk2) {
+            var_a1 = D_800D4130[temp_t5].unk2 - gActors[index].hitboxBX0;
         }
     }
     else {
         var_a1 = -var_a1;
-        if (-D_800D4130[temp_t5].unk2 < (var_a1 + gActors[temp_a0].hitboxBX1)) {
-            var_a1 = -D_800D4130[temp_t5].unk2 - gActors[temp_a0].hitboxBX1;
+        if ((var_a1 + gActors[index].hitboxBX1) > -D_800D4130[temp_t5].unk2) {
+            var_a1 = -D_800D4130[temp_t5].unk2 - gActors[index].hitboxBX1;
         }
     }
-    if ((var_t0 + gActors[temp_a0].hitboxBY1) < D_800D413C[temp_t5].unk2) {
-        var_t0 = D_800D413C[temp_t5].unk2 - gActors[temp_a0].hitboxBY1;
+    if ((var_t0 + gActors[index].hitboxBY1) < D_800D413C[temp_t5].unk2) {
+        var_t0 = D_800D413C[temp_t5].unk2 - gActors[index].hitboxBY1;
     }
 
-    temp_a3 = 0x40000 - (func_8005D1B0(temp_a0) << 0xE);
+    temp_a3 = 0x40000 - (func_8005D1B0(index) << 0xE);
 
-    if (temp_a3 >= func_8005C6D0((var_a1 << 0x10) - D_801373E0.unk_00)) {
-        D_801373E0.unk_00 = (var_a1 << 0x10);
+    var_a1 <<= 0x10;
+    var_t0 <<= 0x10;
+    if (temp_a3 >= func_8005C6D0((var_a1) - D_801373E0.unk_00)) {
+        D_801373E0.unk_00 = var_a1;
     }
-    else if (D_801373E0.unk_00 < (var_a1 << 0x10)) {
+    else if (D_801373E0.unk_00 < var_a1) {
         D_801373E0.unk_00 += temp_a3;
     }
     else {
         D_801373E0.unk_00 -= temp_a3;
     }
 
-    if (temp_a3 >= func_8005C6D0((var_t0 << 0x10) - D_801373E0.unk_04)) {
-        D_801373E0.unk_04 = (var_t0 << 0x10);
+    if (temp_a3 >= func_8005C6D0(var_t0 - D_801373E0.unk_04)) {
+        D_801373E0.unk_04 = var_t0;
     }
-    else if (D_801373E0.unk_04 < (var_t0 << 0x10)) {
+    else if (D_801373E0.unk_04 < var_t0) {
         D_801373E0.unk_04 += temp_a3;
     }
     else {
         D_801373E0.unk_04 -= temp_a3;
     }
 
-    gActors[temp_a0].unk_104 += D_801373E0.unk_00;
-    gActors[temp_a0].unk_108 += D_801373E0.unk_04;
+    var_a0 = D_801373E0.unk_00;
+    var_a1 = D_801373E0.unk_04;
+    gActors[index].unk_104 += var_a0;
+    gActors[index].unk_108 += var_a1;
     return sp28;
 }
-#else
-s32 func_8004F7D8(u16 actor_index);
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_8004F7D8.s")
-#endif
 
 #ifdef NON_MATCHING
 // https://decomp.me/scratch/JsH8K

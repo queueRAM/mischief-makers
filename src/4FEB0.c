@@ -871,7 +871,40 @@ void func_8005278C(u16 actor_0, u16 actor_1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_800528F4.s")
+s32 func_800528F4(u16 actor_0, u16 actor_1) {
+    if (actor_1 == 0xFFFF) {
+        return 0;
+    }
+    if (!(gActors[actor_1].flags & 2) || (gActors[actor_1].flags_098 & 0x200) || (gActors[actor_1].health <= 0)) {
+        func_8004F514(actor_0, actor_1);
+        if (gActors[actor_0].flags & 0x810000) {
+            gActors[actor_0].state = 3;
+        }
+        else {
+            gActors[actor_0].state = 0x16;
+        }
+        return 1;
+    }
+    else {
+        gActors[actor_1].flags_098 |= 0x200;
+        gActors[actor_1].unk_0D6 = actor_0;
+        if (!(gActors[actor_0].flags_098 & 0x10000)) {
+            return 0;
+        }
+        gActors[actor_1].pendingDamage = 0;
+        gActors[actor_1].flags_098 |= 0x400;
+        func_8004F514(actor_0, actor_1);
+        gActors[actor_0].velocityX.raw = gActors[actor_0].unk_0F8.raw;
+        if (gActors[actor_0].flags & 0x810000) {
+            gActors[actor_0].state = 3;
+        }
+        else {
+            gActors[actor_0].velocityY.raw = gActors[actor_0].unk_0FC.raw;
+            gActors[actor_0].state = 0x16;
+        }
+        return 2;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80052A6C.s")
 

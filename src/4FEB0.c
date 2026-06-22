@@ -1244,7 +1244,63 @@ void func_80053358(u16 actor_0, u16 actor_1) {
     }
 }
 
+#ifdef NON_MATCHING
+// https://decomp.me/scratch/r11VD
+void func_800536CC(u16 actor_0, u16 actor_1) {
+    s32 sp2C;
+    s32 sp28;
+    s32 step;
+
+    step = 0x40000;
+    func_80052C4C(actor_0, actor_1);
+    if (!(gActors[actor_0].flags & 0x20)) {
+        sp2C = (gActors[actor_0].hitboxBX1 - gActors[actor_1].hitboxBX0) << 0x10;
+    }
+    else {
+        sp2C = (gActors[actor_0].hitboxBX0 - gActors[actor_1].hitboxBX1) << 0x10;
+    }
+    sp28 = ((-(gActors[actor_1].hitboxBY0 + gActors[actor_1].hitboxBY1) / 2) + D_800D413C[0].unk0) << 0x10;
+    if (func_8005C6D0(D_801373E0.unk_00 - sp2C) < step) {
+        D_801373E0.unk_00 = sp2C;
+    }
+    else if (D_801373E0.unk_00 < sp2C) {
+        D_801373E0.unk_00 += step;
+    }
+    else {
+        D_801373E0.unk_00 -= step;
+    }
+    if (func_8005C6D0(D_801373E0.unk_04 - sp28) < step) {
+        D_801373E0.unk_04 = sp28;
+    }
+    else if (D_801373E0.unk_04 < sp28) {
+        D_801373E4 = D_801373E0.unk_04 + step;
+    }
+    else {
+        D_801373E4 = D_801373E0.unk_04 - step;
+    }
+    gActors[actor_0].posX.raw = gActors[actor_1].posX.raw - D_801373E0.unk_00;
+    func_8002877C(actor_0);
+    if (gActors[actor_0].flags_098 & 0xC) {
+        gActors[actor_1].posX.raw = gActors[actor_0].posX.raw + D_801373E0.unk_00;
+        sp28 = gActors[actor_0].flags_098 & 0xC;
+        gActors[actor_1].flags_098 |= sp28;
+    }
+    step = D_801373E0.unk_04 + gActors[actor_0].posY.raw;
+    if ((gActors[actor_0].flags_098 & 0x10) && (step < gActors[actor_1].posY.raw)) {
+        gActors[actor_1].posY.raw = step;
+        sp28 = gActors[actor_0].flags_098 & 0x10;
+        gActors[actor_1].flags_098 |= sp28;
+    }
+    else {
+        gActors[actor_0].posY.raw = gActors[actor_1].posY.raw - D_801373E0.unk_04;
+    }
+    gActors[actor_1].unk_104 = gActors[actor_1].posX.raw;
+    gActors[actor_1].unk_108 = gActors[actor_1].posY.raw;
+    gActors[actor_1].unk_10C = gActors[actor_1].posZ.raw;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_800536CC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_8005396C.s")
 

@@ -1,6 +1,8 @@
 #include "common.h"
 #include "boot.h"
 
+typedef void (*ActorFunc2)(u16, u16);
+
 typedef struct {
     s8 pad0[0x9];
     s8 unk9;
@@ -20,6 +22,7 @@ typedef struct {
     /* 0x02 */ s16 unk2;
 } Unk800D4130;
 
+extern ActorFunc2 D_800D3F70[];
 extern Unk800D4000 D_800D4000;
 extern Unk800D410C* D_800D410C[];
 extern Unk800D4130 D_800D4130[];
@@ -34,6 +37,8 @@ extern s16 D_801373EE;
 extern s8 D_801373F3;
 
 s32 func_80049040(u16);
+void func_800575C0(u16);
+void func_80058924(u16);
 void func_8005D370(u16, u16);
 void func_8005D3D8(u16);
 u8 func_8001FCA0(u16 arg0, s16 arg1, s16 arg2);
@@ -1505,7 +1510,32 @@ void func_800541B8(u16 actor_0, u16 actor_1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80054320.s")
+void func_80054320(u16 actor_0, u16 actor_1) {
+    s32 sp24;
+
+    if (gActors[actor_0].stateUpper == 0) {
+        gActors[actor_0].stateUpper = 1;
+        func_8004F514(actor_0, actor_1);
+        gActors[actor_1].flags_098 |= 0x10000;
+        func_80058924(actor_0);
+        if (!(gActors[actor_0].flags & 0x20)) {
+            gActors[actor_0].unk_0F8.raw = -0x18000;
+        }
+        else {
+            gActors[actor_0].unk_0F8.raw = 0x18000;
+        }
+        gActors[actor_0].unk_0FC.raw = 0x30000;
+        func_8005C550(actor_0, 0x3C);
+        sp24 = func_8005739C(actor_0, gActors[actor_1].damage);
+        if (sp24 >= 3) {
+            func_800575C0(actor_0);
+            if (sp24 == 3) {
+                Sound_PlaySfx(0x3C);
+            }
+        }
+        D_800D3F70[gActors[actor_1].unk_0DB](actor_0, actor_1);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80054474.s")
 
@@ -1557,6 +1587,7 @@ void func_800541B8(u16 actor_0, u16 actor_1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_800574B4.s")
 
+void func_800575C0(u16);
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_800575C0.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_800576A0.s")
@@ -1569,6 +1600,7 @@ void func_800541B8(u16 actor_0, u16 actor_1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_8005878C.s")
 
+void func_80058924(u16);
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80058924.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_8005896C.s")

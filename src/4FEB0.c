@@ -1111,7 +1111,37 @@ void func_80052CD0(u16 actor_0, u16 actor_1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80052CD0.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80053210.s")
+s32 func_80053210(u16 actor_0, u16 actor_1) {
+    s32 var_v0;
+
+    var_v0 = func_8004F2B0(actor_0);
+    if (var_v0 == 1) {
+        func_8004F514(actor_0, actor_1);
+        gActors[actor_0].unk_12F_u8 = 0;
+        gActors[actor_0].state = 0x16;
+        return 3;
+    }
+    else if (var_v0 == 2) {
+        gActors[actor_0].unk_12F_u8 = 0;
+        gActors[actor_0].velocityY.raw = 0;
+        gActors[actor_0].velocityX.raw = 0;
+        if (actor_1 == 0xFFFF) {
+            gActors[actor_0].state = 0x25;
+            return 2;
+        }
+        gActors[actor_0].state = 0x26;
+        return 2;
+    }
+    else if (func_80048F70(actor_0, actor_1) != 0) {
+        func_8004F514(actor_0, actor_1);
+        gActors[actor_0].state = 0x14;
+        gActors[actor_0].stateUpper = 0xA;
+        return 4;
+    }
+    else {
+        return 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80053358.s")
 

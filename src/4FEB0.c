@@ -1565,7 +1565,80 @@ void func_80054474(u16 actor_0, u16 unused_arg1) {
     }
 }
 
+#ifdef NON_MATCHING
+// https://decomp.me/scratch/PKzT7
+void func_8005457C(u16 actor_0, u16 actor_1) {
+    s32 sp34;
+    s32 sp30;
+    s32 temp_f18;
+    s32 sp28;
+    s32 sp24;
+
+    gActors[actor_0].graphicFlags |= 8;
+    gActors[actor_0].rotateZ = gActors[actor_1].unk_140_f32;
+    func_80052C4C(actor_0, actor_1);
+    if (gActors[actor_1].unk_0DE == 0x10) {
+        if (D_801373D8 & 2) {
+            gActors[actor_0].flags |= 0x20;
+        }
+        if (D_801373D8 & 1) {
+            gActors[actor_0].flags &= ~0x20;
+        }
+        sp28 = 0x12;
+        sp24 = 4;
+    }
+    if (gActors[actor_1].unk_0DE == 0x11) {
+        sp28 = -1;
+        if (D_801373D8 & 2) {
+            gActors[actor_0].flags &= ~0x20;
+        }
+        sp24 = 0x1B;
+        if (D_801373D8 & 1) {
+            gActors[actor_0].flags |= 0x20;
+        }
+    }
+    if (gActors[actor_0].flags & 0x20) {
+        sp28 = -sp28;
+    }
+    temp_f18 = gActors[actor_0].rotateZ / 0.3515625;
+    sp34 = sp28 * COS(temp_f18);
+    sp30 = sp24 * COS(temp_f18);
+    sp34 -= sp24 * SIN(temp_f18);
+    sp30 += sp28 * SIN(temp_f18);
+    sp34 <<= 0x10;
+    sp30 <<= 0x10;
+
+    temp_f18 = 0x40000;
+    if (func_8005C6D0(D_801373E0.unk_00[0].raw - sp34) < temp_f18) {
+        D_801373E0.unk_00[0].raw = sp34;
+    }
+    else if (D_801373E0.unk_00[0].raw < sp34) {
+        D_801373E0.unk_00[0].raw += temp_f18;
+    }
+    else {
+        D_801373E0.unk_00[0].raw -= temp_f18;
+    }
+    if (func_8005C6D0(D_801373E0.unk_00[1].raw - sp30) < temp_f18) {
+        D_801373E0.unk_00[1].raw = sp30;
+    }
+    else if (D_801373E0.unk_00[1].raw < sp30) {
+        D_801373E4 = D_801373E0.unk_00[1].raw + temp_f18;
+    }
+    else {
+        D_801373E4 = D_801373E0.unk_00[1].raw - temp_f18;
+    }
+
+    gActors[actor_0].posX.raw = (gActors[actor_1].posX.raw + (((gActors[actor_1].hitboxBX0 + gActors[actor_1].hitboxBX1) << 0x10) / 2)) - D_801373E0.unk_00[0].raw;
+    gActors[actor_0].posY.raw = (gActors[actor_1].posY.raw + (((gActors[actor_1].hitboxBY0 + gActors[actor_1].hitboxBY1) << 0x10) / 2)) - D_801373E0.unk_00[1].raw;
+    gActors[actor_0].unk_0F8.raw = ((gActors[actor_1].posX.raw + gScreenPosCurrentX.raw) - gActors[actor_1].unk_104) - gScreenPosNextX.raw;
+    gActors[actor_1].unk_104 = gActors[actor_1].posX.raw;
+    gActors[actor_0].unk_0FC.raw = ((gActors[actor_1].posY.raw + gScreenPosCurrentY.raw) - gActors[actor_1].unk_108) - gScreenPosNextY.raw;
+    gActors[actor_1].unk_108 = gActors[actor_1].posY.raw;
+    gActors[actor_1].unk_10C = gActors[actor_1].posZ.raw;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_8005457C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_8005498C.s")
 

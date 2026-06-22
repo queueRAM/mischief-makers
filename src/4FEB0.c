@@ -23,6 +23,7 @@ typedef struct {
 extern Unk800D4000 D_800D4000;
 extern Unk800D410C* D_800D410C[];
 extern Unk800D4130 D_800D4130[];
+extern s16 D_800D4138;
 extern Unk800D4130 D_800D413C[];
 
 extern s16 D_801370D2;
@@ -1340,7 +1341,60 @@ void func_8005396C(u16 actor_0, u16 actor_1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80053B28.s")
+void func_80053B28(u16 arg0, u16 arg1) {
+    s32 sp2C;
+    s32 sp28;
+    s32 step;
+
+    func_80052C4C(arg0, arg1);
+    sp2C = -((gActors[arg1].hitboxBX0 + gActors[arg1].hitboxBX1) / 2);
+    if (!(gActors[arg0].flags & 0x20)) {
+        sp2C += (D_800D4138 / 2);
+    }
+    else {
+        sp2C -= (D_800D4138 / 2);
+    }
+    sp2C <<= 0x10;
+    sp28 = (gActors[arg0].hitboxBY1 - gActors[arg1].hitboxBY0) << 0x10;
+    step = 0x40000;
+    if (func_8005C6D0(D_801373E0.unk_00 - sp2C) < step) {
+        D_801373E0.unk_00 = sp2C;
+    }
+    else if (D_801373E0.unk_00 < sp2C) {
+        D_801373E0.unk_00 += step;
+    }
+    else {
+        D_801373E0.unk_00 -= step;
+    }
+    if (func_8005C6D0(D_801373E0.unk_04 - sp28) < step) {
+        D_801373E0.unk_04 = sp28;
+    }
+    else if (D_801373E0.unk_04 < sp28) {
+        D_801373E4 = D_801373E0.unk_04 + step;
+    }
+    else {
+        D_801373E4 = D_801373E0.unk_04 - step;
+    }
+    gActors[arg0].posX.raw = gActors[arg1].posX.raw - D_801373E0.unk_00;
+    func_8002877C(arg0);
+    if (gActors[arg0].flags_098 & 0xC) {
+        // fakematch: is D_801373E0 array?
+        gActors[arg1].posX.raw = gActors[arg0].posX.raw + (&D_801373E0)[0].unk_00;
+        gActors[arg1].flags_098 |= gActors[arg0].flags_098 & 0xC;
+    }
+    // fakematch: is D_801373E0 array?
+    sp28 = gActors[arg0].posY.raw + (&D_801373E0)[0].unk_04;
+    if ((gActors[arg0].flags_098 & 0x10) && (sp28 < gActors[arg1].posY.raw)) {
+        gActors[arg1].posY.raw = sp28;
+        gActors[arg1].flags_098 |= gActors[arg0].flags_098 & 0x10;
+    }
+    else {
+        gActors[arg0].posY.raw = gActors[arg1].posY.raw - D_801373E0.unk_04;
+    }
+    gActors[arg1].unk_104 = gActors[arg1].posX.raw;
+    gActors[arg1].unk_108 = gActors[arg1].posY.raw;
+    gActors[arg1].unk_10C = gActors[arg1].posZ.raw;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80053DC8.s")
 

@@ -51,7 +51,7 @@ s32 func_8004F2B0(u16 actor_index) {
         return 0;
     }
     gActors[actor_index].flags &= ~0x4040;
-    gActors[actor_index].unk_140_u8[0] = func_80048C28(0, actor_index);
+    gActors[actor_index].unk_140_u8[0] = func_80048C28(0);
     if (!(D_801373D8 & ~0x80)) {
         return 1;
     }
@@ -1821,7 +1821,51 @@ void func_80055188(u16 actor_0) {
     D_800D3EB0[gActors[actor_1].unk_0DE](actor_0, actor_1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_800551F8.s")
+void func_800551F8(u16 actor_index) {
+    s32 sp24;
+    s32 temp_v0;
+    s32 temp_v0_2;
+
+    gActors[actor_index].unk_12E_u8 |= 1;
+    if (gActors[actor_index].stateUpper == 0) {
+        gActors[actor_index].unk_170 = 0x45;
+        gActors[actor_index].unk_17C = 0;
+        gActors[actor_index].stateUpper = 1;
+    }
+    else if ((gActors[actor_index].stateUpper == 1) && (func_8005D418(actor_index) != 0)) {
+        temp_v0 = func_80048C28(1);
+        switch (temp_v0) {
+        case 4:
+            sp24 = 0x30;
+            break;
+        case 6:
+            sp24 = 0x380;
+            break;
+        case 8:
+            sp24 = 0x380;
+            break;
+        default:
+            sp24 = 0x80;
+            break;
+        }
+        temp_v0_2 = func_80048C94(0xF);
+        gActors[actor_index].velocityX.raw = func_8005C6D0(COS(sp24) * temp_v0_2);
+        if (gActors[actor_index].flags & 0x20) {
+            gActors[actor_index].velocityX.raw = -gActors[actor_index].velocityX.raw;
+        }
+        temp_v0_2 = func_80048C94(0xF);
+        gActors[actor_index].velocityY.raw = SIN(sp24) * temp_v0_2;
+        gActors[actor_index].unk_170 = 0x46;
+        if (gActors[actor_index].velocityY.raw > 0) {
+            gActors[actor_index].unk_17C = 4;
+        }
+        gActors[actor_index].flags &= 0xFF3CFFFF;
+        gActors[actor_index].flags |= 0x20000;
+        D_801373F3 = 0;
+        Sound_PlaySfx(0x24);
+        gActors[actor_index].state = 0x16;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_800553EC.s")
 

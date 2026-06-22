@@ -23,6 +23,7 @@ typedef struct {
 extern Unk800D4000 D_800D4000;
 extern Unk800D410C* D_800D410C[];
 extern Unk800D4130 D_800D4130[];
+extern s16 D_800D4134;
 extern s16 D_800D4138;
 extern Unk800D4130 D_800D413C[];
 
@@ -951,7 +952,8 @@ s32 func_80052A6C(u16 actor_0, u16 actor_1) {
     if (gActors[actor_0].unk_140_u8[0] == 8) {
         if ((var_v1 == 0x52) || (var_v1 == 0x55)) {
             var_v1 = 0;
-        } else {
+        }
+        else {
             var_v1 += 2;
         }
     }
@@ -1423,7 +1425,58 @@ void func_80053DC8(u16 actor_0, u16 actor_1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80053F34.s")
+void func_80053F34(u16 actor_0, u16 actor_1) {
+    s32 sp2C;
+    s32 temp_a2;
+    s32 step;
+
+    func_80052C4C(actor_0, actor_1);
+    sp2C = -((gActors[actor_1].hitboxBX0 + gActors[actor_1].hitboxBX1) / 2);
+    if (!(gActors[actor_0].flags & 0x20)) {
+        sp2C += D_800D4134;
+    }
+    else {
+        sp2C -= D_800D4134;
+    }
+    sp2C = sp2C << 0x10;
+    step = 0x40000;
+    temp_a2 = ((gActors[actor_0].hitboxBY0 - gActors[actor_1].hitboxBY1) << 0x10) + step;
+    if (func_8005C6D0(D_801373E0.unk_00 - sp2C) < step) {
+        D_801373E0.unk_00 = sp2C;
+    }
+    else if (D_801373E0.unk_00 < sp2C) {
+        D_801373E0.unk_00 += step;
+    }
+    else {
+        D_801373E0.unk_00 -= step;
+    }
+    if (func_8005C6D0(D_801373E0.unk_04 - temp_a2) < step) {
+        D_801373E0.unk_04 = temp_a2;
+    }
+    else if (D_801373E0.unk_04 < temp_a2) {
+        D_801373E4 = D_801373E0.unk_04 + step;
+    }
+    else {
+        D_801373E4 = D_801373E0.unk_04 - step;
+    }
+    gActors[actor_0].posX.raw = gActors[actor_1].posX.raw - D_801373E0.unk_00;
+    func_8002877C(actor_0);
+    if (gActors[actor_0].flags_098 & 0xC) {
+        gActors[actor_1].posX.raw = gActors[actor_0].posX.raw + (&D_801373E0)[0].unk_00;
+        gActors[actor_1].flags_098 |= gActors[actor_0].flags_098 & 0xC;
+    }
+    temp_a2 = gActors[actor_0].posY.raw + (&D_801373E0)[0].unk_04;
+    if ((gActors[actor_0].flags_098 & 0x10) && (temp_a2 < gActors[actor_1].posY.raw)) {
+        gActors[actor_1].posY.raw = temp_a2;
+        gActors[actor_1].flags_098 |= gActors[actor_0].flags_098 & 0x10;
+    }
+    else {
+        gActors[actor_0].posY.raw = gActors[actor_1].posY.raw - D_801373E0.unk_04;
+    }
+    gActors[actor_1].unk_104 = gActors[actor_1].posX.raw;
+    gActors[actor_1].unk_108 = gActors[actor_1].posY.raw;
+    gActors[actor_1].unk_10C = gActors[actor_1].posZ.raw;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_800541B8.s")
 

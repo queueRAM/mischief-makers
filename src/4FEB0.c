@@ -1341,21 +1341,21 @@ void func_8005396C(u16 actor_0, u16 actor_1) {
     }
 }
 
-void func_80053B28(u16 arg0, u16 arg1) {
+void func_80053B28(u16 actor_0, u16 actor_1) {
     s32 sp2C;
     s32 sp28;
     s32 step;
 
-    func_80052C4C(arg0, arg1);
-    sp2C = -((gActors[arg1].hitboxBX0 + gActors[arg1].hitboxBX1) / 2);
-    if (!(gActors[arg0].flags & 0x20)) {
+    func_80052C4C(actor_0, actor_1);
+    sp2C = -((gActors[actor_1].hitboxBX0 + gActors[actor_1].hitboxBX1) / 2);
+    if (!(gActors[actor_0].flags & 0x20)) {
         sp2C += (D_800D4138 / 2);
     }
     else {
         sp2C -= (D_800D4138 / 2);
     }
     sp2C <<= 0x10;
-    sp28 = (gActors[arg0].hitboxBY1 - gActors[arg1].hitboxBY0) << 0x10;
+    sp28 = (gActors[actor_0].hitboxBY1 - gActors[actor_1].hitboxBY0) << 0x10;
     step = 0x40000;
     if (func_8005C6D0(D_801373E0.unk_00 - sp2C) < step) {
         D_801373E0.unk_00 = sp2C;
@@ -1375,28 +1375,53 @@ void func_80053B28(u16 arg0, u16 arg1) {
     else {
         D_801373E4 = D_801373E0.unk_04 - step;
     }
-    gActors[arg0].posX.raw = gActors[arg1].posX.raw - D_801373E0.unk_00;
-    func_8002877C(arg0);
-    if (gActors[arg0].flags_098 & 0xC) {
+    gActors[actor_0].posX.raw = gActors[actor_1].posX.raw - D_801373E0.unk_00;
+    func_8002877C(actor_0);
+    if (gActors[actor_0].flags_098 & 0xC) {
         // fakematch: is D_801373E0 array?
-        gActors[arg1].posX.raw = gActors[arg0].posX.raw + (&D_801373E0)[0].unk_00;
-        gActors[arg1].flags_098 |= gActors[arg0].flags_098 & 0xC;
+        gActors[actor_1].posX.raw = gActors[actor_0].posX.raw + (&D_801373E0)[0].unk_00;
+        gActors[actor_1].flags_098 |= gActors[actor_0].flags_098 & 0xC;
     }
     // fakematch: is D_801373E0 array?
-    sp28 = gActors[arg0].posY.raw + (&D_801373E0)[0].unk_04;
-    if ((gActors[arg0].flags_098 & 0x10) && (sp28 < gActors[arg1].posY.raw)) {
-        gActors[arg1].posY.raw = sp28;
-        gActors[arg1].flags_098 |= gActors[arg0].flags_098 & 0x10;
+    sp28 = gActors[actor_0].posY.raw + (&D_801373E0)[0].unk_04;
+    if ((gActors[actor_0].flags_098 & 0x10) && (sp28 < gActors[actor_1].posY.raw)) {
+        gActors[actor_1].posY.raw = sp28;
+        gActors[actor_1].flags_098 |= gActors[actor_0].flags_098 & 0x10;
     }
     else {
-        gActors[arg0].posY.raw = gActors[arg1].posY.raw - D_801373E0.unk_04;
+        gActors[actor_0].posY.raw = gActors[actor_1].posY.raw - D_801373E0.unk_04;
     }
-    gActors[arg1].unk_104 = gActors[arg1].posX.raw;
-    gActors[arg1].unk_108 = gActors[arg1].posY.raw;
-    gActors[arg1].unk_10C = gActors[arg1].posZ.raw;
+    gActors[actor_1].unk_104 = gActors[actor_1].posX.raw;
+    gActors[actor_1].unk_108 = gActors[actor_1].posY.raw;
+    gActors[actor_1].unk_10C = gActors[actor_1].posZ.raw;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80053DC8.s")
+void func_80053DC8(u16 actor_0, u16 actor_1) {
+    gActors[actor_0].unk_12E_u8 |= 0x80;
+    if (gActors[actor_0].stateUpper == 0) {
+        gActors[actor_0].unk_140_u16[1] = gActors[actor_0].unk_140_u8[0] = 8;
+        gActors[actor_0].flags &= ~0x4040;
+        gActors[actor_0].flags &= 0xFF3CFFFF; \
+        gActors[actor_0].flags |= 0x20000;
+        gActors[actor_0].stateUpper = 1;
+    }
+    if ((gActors[actor_0].flags & 0x4040) && (func_8005D418(actor_0) != 0)) {
+        gActors[actor_0].flags &= ~0x4040;
+    }
+    if (!(gActors[actor_0].flags & 0x4040)) {
+        func_8005D370(actor_0, 0x44U);
+    }
+    func_80052A6C(actor_0, actor_1);
+    func_80053B28(actor_0, actor_1);
+    if (func_80053210(actor_0, actor_1) == 2) {
+        if (D_801373D8 & 2) {
+            gActors[actor_0].flags |= 0x20;
+        }
+        if (D_801373D8 & 1) {
+            gActors[actor_0].flags &= ~0x20;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80053F34.s")
 

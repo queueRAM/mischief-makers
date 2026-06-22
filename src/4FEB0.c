@@ -353,60 +353,63 @@ void func_8004FDF8(u16 actor_index) {
     }
 }
 
-#ifdef NON_MATCHING
-// https://decomp.me/scratch/V00hL
 void func_800500B0(u16 actor_index) {
-    u16 var_a3;
     u16 index;
+    u16 var_a3;
 
     func_8004F7D8(actor_index);
     gActors[actor_index].unk_17C = 0;
     index = gActors[actor_index].unk_0D6;
-    if ((D_801373D8 & 0x20) || (func_8004FC68(actor_index, index))) {
-        if (gActors[index].unk_0DE != 0x16) {
-            gActors[actor_index].unk_140_u8[0] = 0;
-            gActors[actor_index].unk_140_u16[1] = 1;
-            var_a3 = 0x10;
-            if (func_8005D1B0(index) != 2) {
-                var_a3 = 0xB;
-            }
-            if ((func_8005D338(actor_index) == 8) || (func_8005D338(actor_index) == 0xD)) {
-                var_a3 = 0xE;
-                if (func_8005D1B0(index) != 2) {
-                    var_a3 = 9;
-                }
-                func_8005D370(actor_index, var_a3);
-                gActors[actor_index].flags |= 0x40;
-            }
+    if (((D_801373D8 & 0x20) || func_8004FC68(actor_index, index)) && gActors[index].unk_0DE != 0x16) {
+        gActors[actor_index].unk_140_u8[0] = 0;
+        gActors[actor_index].unk_140_u16[1] = 1;
+        if (func_8005D1B0(index) != 2) {
+            var_a3 = 0xB;
         }
         else {
-            goto block_12;
+            var_a3 = 0x10;
+        }
+        if ((func_8005D338(actor_index) == 8) || (func_8005D338(actor_index) == 0xD)) {
+            if (func_8005D1B0(index) != 2) {
+                var_a3 = 9;
+            }
+            else {
+                var_a3 = 0xE;
+            }
+            func_8005D370(actor_index, var_a3);
+            gActors[actor_index].flags |= 0x40;
         }
     }
     else {
-block_12:
         gActors[actor_index].unk_140_u8[0] = 4;
         gActors[actor_index].unk_140_u16[1] = 0;
-        var_a3 = 0xD;
         if (func_8005D1B0(index) != 2) {
             var_a3 = 8;
         }
+        else {
+            var_a3 = 0xD;
+        }
         if ((func_8005D338(actor_index) == 0xB) || (func_8005D338(actor_index) == 0x10)) {
-            var_a3 = 0xF;
             if (func_8005D1B0(index) != 2) {
                 var_a3 = 0xA;
+            }
+            else {
+                var_a3 = 0xF;
             }
             func_8005D370(actor_index, var_a3);
             gActors[actor_index].flags |= 0x40;
         }
         if (D_801373D8 & 0x10) {
             gActors[actor_index].unk_17C = 1;
-            var_a3 = 0x11;
             if (func_8005D1B0(index) != 2) {
                 var_a3 = 0xC;
             }
+            else {
+                var_a3 = 0x11;
+            }
         }
     }
+
     if (D_801373E0.unk_78 & 0x10000) {
         if ((D_801373E0.unk_12 == 0) && (D_801373E0.unk_11 < 0xE) && (D_801373E0.unk_10 >= 5) && (D_801373E0.unk_10 < 0xC) && (gActors[actor_index].unk_140_u16[1] == 0)) {
             gActors[actor_index].state = 0x28;
@@ -424,75 +427,75 @@ block_12:
                 func_8005D370(actor_index, var_a3);
             }
         }
+        return;
     }
-    else {
-        gActors[actor_index].unk_12C_u16[0] = 7;
-        if ((gActors[actor_index].unk_0A0 & 7) == 7) {
-            if (!(gActors[actor_index].unk_0A0 & 0x10)) {
+
+    gActors[actor_index].unk_12C_u16[0] = 7;
+    if ((gActors[actor_index].unk_0A0 & 7) == 7) {
+        if (!(gActors[actor_index].unk_0A0 & 0x10)) {
+            if (!(gActors[actor_index].flags & 0x20)) {
+                var_a3 = 0x12;
+            }
+            else {
                 var_a3 = 0x13;
-                if (!(gActors[actor_index].flags & 0x20)) {
-                    var_a3 = 0x12;
-                }
-                gActors[actor_index].velocityX.raw = -0x6000;
+            }
+            gActors[actor_index].velocityX.raw = -0x6000;
+        }
+        else {
+            if (!(gActors[actor_index].flags & 0x20)) {
+                var_a3 = 0x13;
             }
             else {
                 var_a3 = 0x12;
-                if (!(gActors[actor_index].flags & 0x20)) {
-                    var_a3 = 0x13;
-                }
-                gActors[actor_index].velocityX.raw = 0x6000;
             }
-            if (gActors[actor_index].unk_140_u16[1] == 1) {
-                var_a3 += 2;
-            }
-            if ((var_a3 != func_8005D338(actor_index)) && !(gActors[actor_index].flags & 0x4040)) {
-                func_8005D370(actor_index, var_a3);
-            }
+            gActors[actor_index].velocityX.raw = 0x6000;
         }
-        if (gActors[actor_index].velocityX.raw != 0) {
-            if ((D_801373D8 & 0x80) && (func_8005C6D0(gActors[actor_index].velocityX.raw) > func_80048C94(1))) {
-                gActors[actor_index].state = 0xA;
-            }
-            else {
-                gActors[actor_index].velocityX.raw = Math_ApproachS32(gActors[actor_index].velocityX.raw, 0, func_80048C94(0));
-                goto block_55;
-            }
+        if (gActors[actor_index].unk_140_u16[1] == 1) {
+            var_a3 += 2;
+        }
+        // fakematch: ^0
+        if ((var_a3 != (func_8005D338(actor_index)^0)) && !(gActors[actor_index].flags & 0x4040)) {
+            func_8005D370(actor_index, var_a3);
+        }
+    }
+    if (gActors[actor_index].velocityX.raw != 0) {
+        if ((D_801373D8 & 0x80) && (func_8005C6D0(gActors[actor_index].velocityX.raw) > func_80048C94(1))) {
+            gActors[actor_index].state = 0xA;
+            return;
+        }
+
+        gActors[actor_index].velocityX.raw = Math_ApproachS32(gActors[actor_index].velocityX.raw, 0, func_80048C94(0));
+    }
+
+    if (D_801373D8 & 0x80) {
+        if (gActors[actor_index].unk_140_u8[0] == 0) {
+            gActors[actor_index].unk_170 = 0x19;
         }
         else {
-block_55:
-            if (D_801373D8 & 0x80) {
-                if (gActors[actor_index].unk_140_u8[0] == 0) {
-                    gActors[actor_index].unk_170 = 0x19;
-                }
-                else {
-                    gActors[actor_index].unk_170 = 0x18;
-                }
-                gActors[actor_index].flags ^= 0x20;
-                if (D_801373D8 & 2) {
-                    gActors[actor_index].flags &= ~0x20;
-                }
-                if (D_801373D8 & 1) {
-                    gActors[actor_index].flags |= 0x20;
-                }
-                gActors[actor_index].flags |= 0x4000;
+            gActors[actor_index].unk_170 = 0x18;
+        }
+        gActors[actor_index].flags ^= 0x20;
+        if (D_801373D8 & 2) {
+            gActors[actor_index].flags &= ~0x20;
+        }
+        if (D_801373D8 & 1) {
+            gActors[actor_index].flags |= 0x20;
+        }
+        gActors[actor_index].flags |= 0x4000;
+    }
+    // fakematch: ^0
+    if (var_a3 != (func_8005D338(actor_index)^0)) {
+        if (gActors[actor_index].flags & 0x4040) {
+            gActors[actor_index].velocityX.raw = Math_ApproachS32(gActors[actor_index].velocityX.raw, 0, func_80048C94(0));
+            if (func_8005D418(actor_index) != 0) {
+                gActors[actor_index].flags &= ~0x4040;
             }
-            if (var_a3 != func_8005D338(actor_index)) {
-                if (gActors[actor_index].flags & 0x4040) {
-                    gActors[actor_index].velocityX.raw = Math_ApproachS32(gActors[actor_index].velocityX.raw, 0, func_80048C94(0));
-                    if (func_8005D418(actor_index) != 0) {
-                        gActors[actor_index].flags &= ~0x4040;
-                    }
-                }
-                else if (gActors[actor_index].velocityX.raw == 0) {
-                    func_8005D370(actor_index, var_a3);
-                }
-            }
+        }
+        else if (gActors[actor_index].velocityX.raw == 0) {
+            func_8005D370(actor_index, var_a3);
         }
     }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_800500B0.s")
-#endif
 
 void func_8005060C(u16 actor_index) {
     u16 index;

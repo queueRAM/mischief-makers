@@ -48,8 +48,7 @@ typedef struct {
 
 // struct storing data about Marina player actor
 typedef struct {
-    /* 0x00 */ s32 unk_00;
-    /* 0x04 */ s32 unk_04;
+    /* 0x00 */ FixedCoord unk_00[2];
     /* 0x08 */ s16 unk_08;
     /* 0x0A */ s8 unk_0A;
     /* 0x0B */ s8 unk_0B;

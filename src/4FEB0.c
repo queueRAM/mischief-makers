@@ -34,6 +34,7 @@ extern s8 D_801373F3;
 s32 func_80049040(u16);
 void func_8005D370(u16, u16);
 void func_8005D3D8(u16);
+u8 func_8001FCA0(u16 arg0, s16 arg1, s16 arg2);
 
 s32 func_8004F2B0(u16 actor_index) {
     s32 pad;
@@ -270,39 +271,40 @@ void func_8004FB30(u16 actor_index, s32 arg1) {
 
 #ifdef NON_MATCHING
 // https://decomp.me/scratch/MFNFc
-s32 func_8004FC68(u16 actor_index, u16 arg1) {
+s32 func_8004FC68(u16 actor_0, u16 actor_1) {
     s16 var_v0;
     s16 temp;
     s32 var_a3;
     s32 var_t0;
 
     var_v0 = D_800D4130[0].unk0;
-    var_t0 =  D_800D413C[0].unk0;
-    if (!(gActors[actor_index].flags & 0x20)) {
-        if ((var_v0 + gActors[arg1].hitboxBX0) < D_800D4130[0].unk2) {
-            var_v0 = D_800D4130[0].unk2 - gActors[arg1].hitboxBX0;
+    var_t0 = D_800D413C[0].unk0;
+    if (!(gActors[actor_0].flags & 0x20)) {
+        if ((var_v0 + gActors[actor_1].hitboxBX0) < D_800D4130[0].unk2) {
+            var_v0 = D_800D4130[0].unk2 - gActors[actor_1].hitboxBX0;
         }
-        var_v0 = var_v0 + gActors[arg1].hitboxBX1;
-        if (gActors[actor_index].unk_140_u8[0] != 0) {
+        var_v0 += gActors[actor_1].hitboxBX1;
+        if (gActors[actor_0].unk_140_u8[0] != 0) {
             var_v0 -= 2;
         }
     }
     else {
-        var_v0 = var_v0 * -1;
-        if (-D_800D4130[0].unk2 < (var_v0 + gActors[arg1].hitboxBX1)) {
-            var_v0 = -D_800D4130[0].unk2 - gActors[arg1].hitboxBX1;
+        var_v0 = -var_v0;
+        if (-D_800D4130[0].unk2 < (var_v0 + gActors[actor_1].hitboxBX1)) {
+            var_v0 = -D_800D4130[0].unk2 - gActors[actor_1].hitboxBX1;
         }
-        var_v0 = var_v0 + gActors[arg1].hitboxBX0;
-        if (gActors[actor_index].unk_140_u8[0] != 0) {
-            var_v0 = var_v0 + 2;
+        var_v0 += gActors[actor_1].hitboxBX0;
+        if (gActors[actor_0].unk_140_u8[0] != 0) {
+            var_v0 += 2;
         }
     }
-    var_a3 = var_t0 + gActors[arg1].hitboxBY1;
+    var_a3 = var_t0 + gActors[actor_1].hitboxBY1;
     if (var_a3 < D_800D413C[0].unk2) {
-        temp = D_800D413C[0].unk2 - gActors[arg1].hitboxBY1;
-        var_a3 = temp + gActors[arg1].hitboxBY1;
+        temp = D_800D413C[0].unk2;
+        temp -= gActors[actor_1].hitboxBY1;
+        var_a3 = temp + gActors[actor_1].hitboxBY1;
     }
-    if (func_8001FCA0(arg1, gActors[actor_index].posX.whole + var_v0, gActors[actor_index].posY.whole + var_a3) & 0x80) {
+    if (func_8001FCA0(actor_1, gActors[actor_0].posX.whole + var_v0, gActors[actor_0].posY.whole + var_a3) & 0x80) {
         return 1;
     }
     return 0;

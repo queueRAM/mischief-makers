@@ -22,6 +22,7 @@ typedef struct {
     /* 0x02 */ s16 unk2;
 } Unk800D4130;
 
+extern ActorFunc2 D_800D3EB0[];
 extern ActorFunc2 D_800D3F70[];
 extern Unk800D4000 D_800D4000;
 extern Unk800D410C* D_800D410C[];
@@ -1815,7 +1816,10 @@ void func_80054FD0(u16 actor_0, u16 actor_1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80055188.s")
+void func_80055188(u16 actor_0) {
+    u16 actor_1 = gActors[actor_0].unk_0D6;
+    D_800D3EB0[gActors[actor_1].unk_0DE](actor_0, actor_1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_800551F8.s")
 

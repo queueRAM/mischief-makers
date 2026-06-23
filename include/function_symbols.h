@@ -24,7 +24,7 @@ extern u16 func_8003D628(u16);
 extern void func_80042DBC(void* arg0);
 extern u8 func_80048C28(s32);
 extern void func_80045D84(u32 arg0, u32 arg1);
-extern void func_80057320(s32, s32);
+extern s32 func_80057320(u16, s16);
 extern s32 func_8005739C(u16 arg0, s16 arg1);
 extern void func_8005A4B0(u16, f32);
 extern void func_8005C098(u16, s32);

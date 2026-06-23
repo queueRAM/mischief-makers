@@ -2069,7 +2069,20 @@ void func_80055C2C(u16, u16);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80057268.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80057320.s")
+s32 func_80057320(u16 actor_index, s16 health_increment) {
+    if (gActors[actor_index].health < 0) {
+        return -1;
+    }
+
+    gActors[actor_index].health += health_increment;
+    if (gActors[actor_index].health > 3000) {
+        gActors[actor_index].health = 3000;
+        return 2;
+    }
+    else {
+        return 1;
+    }
+}
 
 s32 func_8005739C(u16 actor_index, s16 health_decrement) {
     s32 var_a0;

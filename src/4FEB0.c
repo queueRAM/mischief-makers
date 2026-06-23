@@ -30,6 +30,7 @@ extern Unk800D4130 D_800D4130[];
 extern s16 D_800D4134;
 extern s16 D_800D4138;
 extern Unk800D4130 D_800D413C[];
+extern s32 D_800D57E0;
 extern s32 D_800E3630[]; // could be array of structs of length 0x28
 
 extern s16 D_801370D2;
@@ -275,6 +276,7 @@ void func_8004FB30(u16 actor_index, s32 arg1) {
     }
 }
 #else
+void func_8004FB30(u16 actor_index, s32 arg1);
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_8004FB30.s")
 #endif
 
@@ -1891,7 +1893,94 @@ void func_800554AC(u16 actor_0, u16 actor_1) {
 void func_8005552C(s32 arg0, s32 arg1) {
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80055538.s")
+void func_80055538(u16 actor_0, u16 actor_1) {
+    s32 var_v0;
+
+    switch (gActors[actor_0].stateUpper) {
+    case 0:
+        if (gActors[actor_0].flags & 0x810000) {
+            gActors[actor_0].unk_170 = 0x66;
+            gActors[actor_0].var_15C = 0;
+        }
+        else {
+            gActors[actor_0].unk_170 = 0x6A;
+            gActors[actor_0].var_15C = 4;
+        }
+        if (gActors[actor_1].unk_0DE == 0x16) {
+            gActors[actor_0].unk_140_u8[0] = 4;
+            gActors[actor_0].unk_140_u16[1] = 0;
+        }
+        var_v0 = 0;
+        if (gActors[actor_0].unk_140_u8[0] == 0) {
+            var_v0 = 1;
+        }
+        if (gActors[actor_0].unk_140_u8[0] == 2) {
+            var_v0 += 3;
+        }
+        if (gActors[actor_0].unk_140_u8[0] >= 5) {
+            var_v0 += 2;
+        }
+        gActors[actor_0].velocityY.raw = 0;
+        gActors[actor_0].velocityX.raw = 0;
+        gActors[actor_0].var_150 = 0;
+        gActors[actor_0].var_15C += var_v0;
+        gActors[actor_0].unk_170 += var_v0;
+        gActors[actor_0].stateUpper = 1;
+        /* fallthrough */
+    case 1:
+        func_8004F7D8(actor_0);
+        func_8004FB30(actor_0, gActors[actor_0].var_15C);
+        if (func_8004F35C(actor_0, (u32*) &gActors[actor_0].var_150) != 0) {
+            func_800554AC(actor_0, actor_1);
+            func_8004F614(actor_0, gActors[actor_1].unk_0F8.raw, gActors[actor_1].unk_0FC.raw, 0x1E);
+            gActors[actor_0].unk_170 = func_8005D338(actor_0) + 8;
+            D_800D57E0 = 0;
+            if ((s32) gActors[actor_0].unk_140_u8[0] >= 5) {
+                gActors[actor_0].flags &= 0xFF3CFFFF;
+                gActors[actor_0].flags |= 0x20000;
+                if (!(gActors[actor_0].flags & 0x20)) {
+                    gActors[actor_0].velocityX.raw = -0x30000;
+                }
+                else {
+                    gActors[actor_0].velocityX.raw = 0x30000;
+                }
+                if (gActors[actor_0].unk_140_u8[0] == 8) {
+                    gActors[actor_0].velocityX.raw = 0;
+                }
+                gActors[actor_0].velocityY.raw = 0x30000;
+                gActors[actor_0].velocityX.raw = gActors[actor_0].velocityX.raw * gActors->unk_120;
+                gActors[actor_0].velocityY.raw = gActors[actor_0].velocityY.raw * gActors->unk_120;
+            }
+            if (gActors[actor_0].flags & 0x810000) {
+                gActors[actor_0].flags |= 0x4000;
+                gActors[actor_0].state = 3;
+            }
+            else {
+                gActors[actor_0].state = 0x19;
+            }
+        }
+        break;
+    case 2:
+        gActors[actor_0].unk_12C_u16[0] |= 4;
+        if (gActors[actor_0].unk_140_u8[0] < 4) {
+            gActors[actor_0].velocityY.raw = Math_ApproachS32(gActors[actor_0].velocityY.raw, -0x60000, func_80048C94(0x13));
+        }
+        else {
+            gActors[actor_0].velocityY.raw = Math_ApproachS32(gActors[actor_0].velocityY.raw, -0x60000, func_80048C94(0x13) * 0.5);
+        }
+        if (func_800491B8(actor_0, 0, -14) != 0) {
+            gActors[actor_0].state = 5;
+        }
+        else if (func_8005D418(actor_0) != 0) {
+            gActors[actor_0].var_150--;
+            if (gActors[actor_0].var_150 <= 0) {
+                gActors[actor_0].flags ^= 0x20;
+                gActors[actor_0].state = 0x16;
+            }
+        }
+        break;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_800558F8.s")
 

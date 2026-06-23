@@ -846,7 +846,92 @@ void func_80050F3C(u16 actor_index) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80051324.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80051C48.s")
+void func_80051C48(u16 actor_index) {
+    UnkStruct_func_80059F30 sp34;
+    s32 angle;
+    u16 index;
+
+    index = gActors[actor_index].unk_0D6;
+    func_8004F7D8(actor_index);
+    switch (gActors[actor_index].stateUpper) {
+    case 0:
+        if (((D_801373D8 & 0x20) || (func_8004FC68(actor_index, index))) && (gActors[index].unk_0DE != 0x16)) {
+            gActors[actor_index].unk_140_u8[0] = 0;
+            gActors[actor_index].unk_140_u16[1] = 1;
+            func_8005D370(actor_index, 0x23);
+        }
+        else {
+            gActors[actor_index].unk_140_u8[0] = 4;
+            gActors[actor_index].unk_140_u16[1] = 0;
+            func_8005D370(actor_index, 0x22);
+        }
+        gActors[actor_index].unk_17C = 0;
+        gActors[actor_index].stateUpper = 1;
+        /* fallthrough */
+    case 1:
+        gActors[actor_index].velocityX.raw = Math_ApproachS32(gActors[actor_index].velocityX.raw, 0, func_80048C94(0) / 2);
+        if (func_8005D418(actor_index) == 0) {
+            break;
+        }
+        gActors[actor_index].velocityY.raw = func_80048C94(0xF);
+        sp34.posX = gActors[actor_index].posX.whole;
+        sp34.posY = gActors[actor_index].posY.whole + gActors[actor_index].hitboxBY1 + 4;
+        sp34.posZ = gActors[actor_index].posZ.whole + 1;
+        sp34.unk_0C = 0x1AA;
+        sp34.unk_10 = 0;
+        func_80059F30(actor_index, &sp34, 1.0f, 0x14);
+        gActors[actor_index].stateUpper = 0x14;
+        break;
+    case 10:
+        if (gActors[actor_index].unk_140_u8[0] == 0) {
+            func_8005D370(actor_index, 0x23);
+        } else {
+            func_8005D370(actor_index, 0x22);
+        }
+        gActors[actor_index].unk_17C = 0;
+        gActors[actor_index].stateUpper = 0xB;
+        break;
+    case 11:
+        if (func_8005D418(actor_index) == 0) {
+            break;
+        }
+        switch (func_80048C28(1)) {
+        case 4:
+            angle = 0;
+            break;
+        case 6:
+            angle = 0x380;
+            break;
+        case 8:
+            angle = 0x380;
+            break;
+        default:
+            angle = 0x80;
+            break;
+        }
+        gActors[actor_index].velocityX.raw = func_8005C6D0(func_80048C94(0xF) * COS(angle));
+        if (gActors[actor_index].flags & 0x20) {
+            gActors[actor_index].velocityX.raw = -gActors[actor_index].velocityX.raw;
+        }
+        gActors[actor_index].velocityY.raw = func_80048C94(0xF) * SIN(angle);
+        gActors[actor_index].stateUpper = 0x14;
+        break;
+    }
+
+    if (gActors[actor_index].stateUpper == 0x14) {
+        if (gActors[actor_index].unk_140_u8[0] == 0) {
+            gActors[actor_index].unk_170 = 0x26;
+        }
+        else {
+            gActors[actor_index].unk_170 = 0x25;
+        }
+        gActors[actor_index].unk_17C = 4;
+        gActors[actor_index].flags &= 0xFF3CFFFF; \
+        gActors[actor_index].flags |= 0x20000;
+        Sound_PlaySfx(0x24);
+        gActors[actor_index].state = 0x1A;
+    }
+}
 
 void func_80052004(u16 actor_index) {
     u16 index;

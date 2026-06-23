@@ -23,6 +23,7 @@ typedef struct {
 } Unk800D4130;
 
 extern ActorFunc2 D_800D3EB0[];
+extern ActorFunc2 D_800D3F10[];
 extern ActorFunc2 D_800D3F70[];
 extern Unk800D4000 D_800D4000;
 extern Unk800D410C* D_800D410C[];
@@ -2063,7 +2064,13 @@ void func_80055C2C(u16, u16);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80056CCC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80056F54.s")
+void func_80056F54(u16 actor_index) {
+    if (gActors[actor_index].flags & 0x02000000) {
+        func_8005C550(actor_index, 8);
+    }
+    gActors[actor_index].unk_12E_u8 |= 0x81;
+    D_800D3F10[gActors[gActors[actor_index].unk_0D6].unk_0DE](actor_index, gActors[actor_index].unk_0D6);
+}
 
 void func_8005701C(u16 actor_index) {
     u16 index;

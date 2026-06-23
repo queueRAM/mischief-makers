@@ -2071,7 +2071,38 @@ void func_80055C2C(u16, u16);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80057320.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_8005739C.s")
+s32 func_8005739C(u16 actor_index, s16 health_decrement) {
+    s32 var_a0;
+
+    if (actor_index == 0) {
+        if (gActors[actor_index].unk_0DC & 2) {
+            gActors[actor_index].unk_13C_u16[1] = 0;
+        }
+        else {
+            gActors[actor_index].unk_13C_u16[1] = health_decrement / 2;
+        }
+    }
+    if (health_decrement == 0) {
+        return 0;
+    }
+
+    if (gActors[actor_index].health > 0) {
+        gActors[actor_index].health -= health_decrement;
+        var_a0 = 1;
+        if (gActors[actor_index].health < 0) {
+            gActors[actor_index].health = 0;
+            var_a0 = (actor_index != 0) ? 3 : 2;
+        }
+    }
+    else {
+        if (actor_index != 0) {
+            return 3;
+        }
+        var_a0 = (gActors[actor_index].health == 0) ? 3 : 4;
+        gActors[actor_index].health -= health_decrement;
+    }
+    return var_a0;
+}
 
 s32 func_800574B4(u16 actor_index) {
     if (gActors[actor_index].health < 0) {

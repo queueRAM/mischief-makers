@@ -31,7 +31,6 @@ extern s32 D_800E3630[]; // could be array of structs of length 0x28
 
 extern s16 D_801370D2;
 extern u16 D_801373D8;
-extern s32 D_801373E4;
 extern s16 D_801373EE;
 extern s8 D_801373F3;
 
@@ -1490,11 +1489,11 @@ void func_80052CD0(u16 actor_0, u16 actor_1) {
             var_t0 = 0;
             if ((gActors[actor_0].hitboxBY1 + gActors[actor_0].posY.whole < gActors[actor_1].hitboxBY1 + gActors[actor_1].posY.whole) && 
                 (gActors[actor_0].hitboxBY0 + gActors[actor_0].posY.whole < gActors[actor_1].hitboxBY0 + gActors[actor_1].posY.whole)) {
-                D_801373E4 = D_801373E0.unk_00[1].raw - offset;
+                D_801373E0.unk_00[1].raw -= offset;
             }
             if ((gActors[actor_1].posY.whole + gActors[actor_1].hitboxBY0 < gActors[actor_0].posY.whole + gActors[actor_0].hitboxBY0) && 
                 (gActors[actor_1].posY.whole + gActors[actor_1].hitboxBY1 < gActors[actor_0].posY.whole + gActors[actor_0].hitboxBY1)) {
-                D_801373E4 = D_801373E0.unk_00[1].raw + offset;
+                D_801373E0.unk_00[1].raw += offset;
             }
         }
         offset = 0x20000;
@@ -1518,10 +1517,10 @@ void func_80052CD0(u16 actor_0, u16 actor_1) {
                 gActors[actor_0].flags |= 0x10000;
             }
             else if (D_801373E0.unk_00[1].raw < var_t0) {
-                D_801373E4 = D_801373E0.unk_00[1].raw + offset;
+                D_801373E0.unk_00[1].raw += offset;
             }
             else {
-                D_801373E4 = D_801373E0.unk_00[1].raw - offset;
+                D_801373E0.unk_00[1].raw -= offset;
             }
         }
         gActors[actor_0].posX.raw = gActors[actor_1].posX.raw - D_801373E0.unk_00[0].raw;
@@ -1701,10 +1700,10 @@ void func_800536CC(u16 actor_0, u16 actor_1) {
         D_801373E0.unk_00[1].raw = sp28;
     }
     else if (D_801373E0.unk_00[1].raw < sp28) {
-        D_801373E4 = D_801373E0.unk_00[1].raw + step;
+        D_801373E0.unk_00[1].raw += step;
     }
     else {
-        D_801373E4 = D_801373E0.unk_00[1].raw - step;
+        D_801373E0.unk_00[1].raw -= step;
     }
     gActors[actor_0].posX.raw = gActors[actor_1].posX.raw - D_801373E0.unk_00[0].raw;
     func_8002877C(actor_0);
@@ -1791,10 +1790,10 @@ void func_80053B28(u16 actor_0, u16 actor_1) {
         D_801373E0.unk_00[1].raw = sp28;
     }
     else if (D_801373E0.unk_00[1].raw < sp28) {
-        D_801373E4 = D_801373E0.unk_00[1].raw + step;
+        D_801373E0.unk_00[1].raw += step;
     }
     else {
-        D_801373E4 = D_801373E0.unk_00[1].raw - step;
+        D_801373E0.unk_00[1].raw -= step;
     }
     gActors[actor_0].posX.raw = gActors[actor_1].posX.raw - D_801373E0.unk_00[0].raw;
     func_8002877C(actor_0);
@@ -1873,10 +1872,10 @@ void func_80053F34(u16 actor_0, u16 actor_1) {
         D_801373E0.unk_00[1].raw = temp_a2;
     }
     else if (D_801373E0.unk_00[1].raw < temp_a2) {
-        D_801373E4 = D_801373E0.unk_00[1].raw + step;
+        D_801373E0.unk_00[1].raw += step;
     }
     else {
-        D_801373E4 = D_801373E0.unk_00[1].raw - step;
+        D_801373E0.unk_00[1].raw -= step;
     }
     gActors[actor_0].posX.raw = gActors[actor_1].posX.raw - D_801373E0.unk_00[0].raw;
     func_8002877C(actor_0);
@@ -1980,8 +1979,6 @@ void func_80054474(u16 actor_0, u16 unused_arg1) {
     }
 }
 
-#ifdef NON_MATCHING
-// https://decomp.me/scratch/PKzT7
 void func_8005457C(u16 actor_0, u16 actor_1) {
     s32 sp34;
     s32 sp30;
@@ -2033,14 +2030,15 @@ void func_8005457C(u16 actor_0, u16 actor_1) {
     else {
         D_801373E0.unk_00[0].raw -= temp_f18;
     }
+
     if (func_8005C6D0(D_801373E0.unk_00[1].raw - sp30) < temp_f18) {
         D_801373E0.unk_00[1].raw = sp30;
     }
     else if (D_801373E0.unk_00[1].raw < sp30) {
-        D_801373E4 = D_801373E0.unk_00[1].raw + temp_f18;
+        D_801373E0.unk_00[1].raw += temp_f18;
     }
     else {
-        D_801373E4 = D_801373E0.unk_00[1].raw - temp_f18;
+        D_801373E0.unk_00[1].raw -= temp_f18;
     }
 
     gActors[actor_0].posX.raw = (gActors[actor_1].posX.raw + (((gActors[actor_1].hitboxBX0 + gActors[actor_1].hitboxBX1) << 0x10) / 2)) - D_801373E0.unk_00[0].raw;
@@ -2051,10 +2049,6 @@ void func_8005457C(u16 actor_0, u16 actor_1) {
     gActors[actor_1].unk_108 = gActors[actor_1].posY.raw;
     gActors[actor_1].unk_10C = gActors[actor_1].posZ.raw;
 }
-#else
-void func_8005457C(u16 actor_0, u16 actor_1);
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_8005457C.s")
-#endif
 
 void func_8005498C(u16 actor_0, u16 actor_1) {
     s32 sp34;

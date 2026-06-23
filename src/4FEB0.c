@@ -2114,7 +2114,10 @@ void func_80058924(u16);
 void func_80058EB0(u16, u16);
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80058EB0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80058F54.s")
+void func_80058F54(u16 actor_0, u16 unused_arg1) {
+    gActors[actor_0].unk_0F8.raw = gActors[actor_0].velocityX.raw;
+    gActors[actor_0].state = 0x2A;
+}
 
 s32 func_80058F9C(u16 actor_index) {
     u16 sp26;

@@ -2109,7 +2109,12 @@ void func_80058924(u16);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80058D3C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80058E44.s")
+void func_80058E44(u16 arg0, u16 arg1) {
+    func_80058924(arg0);
+    gActors[arg0].unk_0F8.raw = -gActors[arg0].unk_0F8.raw;
+    gActors[arg0].unk_0FC.raw = gActors[arg0].unk_0FC.raw;
+    gActors[arg0].state = 0x2B;
+}
 
 void func_80058EB0(u16 actor_0, u16 unused_arg1) {
     if (gActors[actor_0].flags & 0x02000000) {

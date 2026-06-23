@@ -1982,7 +1982,75 @@ void func_80055538(u16 actor_0, u16 actor_1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_800558F8.s")
+void func_800558F8(u16 actor_0, u16 actor_1) {
+    u16 var_v1;
+
+    switch (gActors[actor_0].stateUpper) {
+    case 0:
+        gActors[actor_0].unk_140_u16[1] = 0;
+        var_v1 = func_80048C28(1);
+        if (var_v1 == 0xFF) {
+            if (!(gActors[actor_0].flags & 0x20)) {
+                var_v1 = 4;
+            }
+            else {
+                var_v1 = 12;
+            }
+        }
+        else if ((D_801373D8 & 1) && (var_v1 & 7)) {
+            var_v1 = 16 - var_v1;
+        }
+        if (gActors[actor_0].flags & 0x20) {
+            var_v1 = func_8005C6D0(var_v1 - 16);
+        }
+        gActors[actor_0].var_15C = var_v1;
+        var_v1 /= 2;
+        gActors[actor_0].unk_170 = var_v1 + 118;
+        gActors[actor_0].velocityY.raw = 0;
+        gActors[actor_0].velocityX.raw = 0;
+        gActors[actor_0].var_150 = 0;
+        gActors[actor_0].stateUpper = 1;
+        /* fallthrough */
+    case 1:
+        func_8004F7D8(actor_0);
+        if (func_8004F35C(actor_0, (u32* ) &gActors[actor_0].var_150) != 0) {
+            func_800554AC(actor_0, actor_1);
+            if (gActors[actor_0].var_15C >= 9) {
+                gActors[actor_1].unk_0F8.raw = -gActors[actor_1].unk_0F8.raw;
+            }
+            func_8004F614(actor_0, gActors[actor_1].unk_0F8.raw, gActors[actor_1].unk_0FC.raw, 0x1E);
+            gActors[actor_0].unk_170 = func_8005D338(actor_0) + 8;
+            Sound_StopSfx(0xB4);
+            Sound_StopSfx(0xCA);
+            Sound_PlaySfx(0xB9);
+            D_800D57E0 = 0;
+            if (gActors[actor_0].unk_140_u8[0] >= 5) {
+                gActors[actor_0].flags &= 0xFF3CFFFF;
+                gActors[actor_0].flags |= 0x20000;
+                if (!(gActors[actor_0].flags & 0x20)) {
+                    gActors[actor_0].velocityX.raw = -0x20000;
+                }
+                else {
+                    gActors[actor_0].velocityX.raw = 0x20000;
+                }
+                if (gActors[actor_0].unk_140_u8[0] == 8) {
+                    gActors[actor_0].velocityX.raw = 0;
+                }
+                gActors[actor_0].velocityY.raw = 0x30000;
+                gActors[actor_0].velocityX.raw = gActors[actor_0].velocityX.raw * gActors->unk_120;
+                gActors[actor_0].velocityY.raw = gActors[actor_0].velocityY.raw * gActors->unk_120;
+            }
+            if (gActors[actor_0].flags & 0x810000) {
+                gActors[actor_0].flags |= 0x4000;
+                gActors[actor_0].state = 3;
+            }
+            else {
+                gActors[actor_0].state = 0x16;
+            }
+        }
+        break;
+    }
+}
 
 void func_80055C2C(u16, u16);
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80055C2C.s")

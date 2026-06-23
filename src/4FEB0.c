@@ -2091,8 +2091,9 @@ void func_800575C0(u16);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_8005878C.s")
 
-void func_80058924(u16);
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80058924.s")
+void func_80058924(u16 actor_index) {
+    gActors[actor_index].flags &= 0xFDFFB53F;
+}
 
 void func_8005896C(s32 arg0, s32 arg1) {
 }

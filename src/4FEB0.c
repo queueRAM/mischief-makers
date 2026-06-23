@@ -13,11 +13,6 @@ typedef struct {
 } Unk800D4000;
 
 typedef struct {
-    s8 unk0;
-    s8 unk1;
-} Unk800D410C;
-
-typedef struct {
     /* 0x00 */ s16 unk0;
     /* 0x02 */ s16 unk2;
 } Unk800D4130;
@@ -26,7 +21,7 @@ extern ActorFunc2 D_800D3EB0[];
 extern ActorFunc2 D_800D3F10[];
 extern ActorFunc2 D_800D3F70[];
 extern Unk800D4000 D_800D4000;
-extern Unk800D410C* D_800D410C[];
+extern s8* D_800D410C[];
 extern Unk800D4130 D_800D4130[];
 extern s16 D_800D4134;
 extern s16 D_800D4138;
@@ -252,33 +247,30 @@ s32 func_8004F7D8(u16 actor_index) {
     return sp28;
 }
 
-#ifdef NON_MATCHING
-// https://decomp.me/scratch/JsH8K
-void func_8004FB30(u16 actor_index, s32 arg1) {
-    u16 index1;
+void func_8004FB30(u16 actor_index, s32 index) {
     s32 temp_f16;
-    Unk800D410C* temp_v0;
+    s8* temp_v0;
+    u16 actor_1;
+    s8 temp;
 
-    temp_v0 = D_800D410C[arg1];
-    if (temp_v0 != 0) {
-        index1 = gActors[actor_index].unk_0D6;
-        gActors[index1].unk_104 = gActors[actor_index].posX.raw;
-        gActors[index1].unk_108 = gActors[actor_index].posY.raw;
-        temp_f16 = gActors[0].unk_120 * (temp_v0[gActors[actor_index].unk_170_s8[1]].unk0 << 0x10);
+    temp_v0 = D_800D410C[index];
+    if (temp_v0 != NULL) {
+        actor_1 = gActors[actor_index].unk_0D6;
+        gActors[actor_1].unk_104 = gActors[actor_index].posX.raw;
+        gActors[actor_1].unk_108 = gActors[actor_index].posY.raw;
+        temp_f16 = temp_v0[gActors[actor_index].unk_170_s8[1] * 2] << 0x10;
+        temp_f16 *= gActors->unk_120;
         if (!(gActors[actor_index].flags & 0x20)) {
-            gActors[index1].unk_104 += temp_f16;
+            gActors[actor_1].unk_104 += temp_f16;
         }
         else {
-            gActors[index1].unk_104 -= temp_f16;
+            gActors[actor_1].unk_104 -= temp_f16;
         }
-        temp_f16 = gActors[0].unk_120 * (temp_v0[gActors[actor_index].unk_170_s8[1]].unk1 << 0x10);
-        gActors[index1].unk_108 += temp_f16;
+        temp_f16 = temp_v0[gActors[actor_index].unk_170_s8[1] * 2 + 1] << 0x10;
+        temp_f16 *= gActors->unk_120;
+        gActors[actor_1].unk_108 += temp_f16;
     }
 }
-#else
-void func_8004FB30(u16 actor_index, s32 arg1);
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_8004FB30.s")
-#endif
 
 #ifdef NON_MATCHING
 // https://decomp.me/scratch/MFNFc

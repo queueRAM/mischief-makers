@@ -2073,7 +2073,27 @@ void func_80055C2C(u16, u16);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_8005739C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_800574B4.s")
+s32 func_800574B4(u16 actor_index) {
+    if (gActors[actor_index].health < 0) {
+        return -1;
+    }
+    if (!(gActors[actor_index].unk_0DC & 0x40)) {
+        return -1;
+    }
+    if (D_801373E0.unk_0B != 0) {
+        D_801373E0.unk_0B -= 1;
+        return -2;
+    }
+    if (!(D_801370CE & (gButton_DUp | gButton_DDown | gButton_DLeft | gButton_DRight | gButton_B | gButton_A))) {
+        return 0;
+    }
+    D_801373E0.unk_0A -= 1;
+    if (D_801373E0.unk_0A > 0) {
+        return 0;
+    }
+    gActors[actor_index].state = 0x11;
+    return 1;
+}
 
 s32 func_800575C0(u16 actor_index) {
     if (gActors[actor_index].unk_0DC & 0x1) {

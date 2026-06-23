@@ -2089,7 +2089,46 @@ void func_800575C0(u16);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_800584D4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_8005878C.s")
+void func_8005878C(u16 actor_index) {
+    if (1) { } // fakematch
+    gActors[actor_index].unk_12E_u8 |= 0x41;
+    if (D_801370CE != 0) {
+        gActors[actor_index].unk_170_s8[0] = 0x7F;
+        gActors[actor_index].var_150 -= 10;
+    }
+    if (gActors[actor_index].stateUpper == 0) {
+        func_8005C550(actor_index, -8);
+        if (func_8005D418(actor_index) != 0) {
+            gActors[actor_index].var_150--;
+            if (gActors[actor_index].var_150 <= 0) {
+                if (func_8005D338(actor_index) == 0x9A) {
+                    gActors[actor_index].unk_170 = 0x9C;
+                }
+                if (func_8005D338(actor_index) == 0x9B) {
+                    gActors[actor_index].unk_170 = 0x9D;
+                }
+                gActors[actor_index].unk_17C = 0;
+                gActors[actor_index].unk_17C_s8[1] = 2;
+                func_8005C550(actor_index, 0x1E);
+                gActors[actor_index].stateUpper = 1;
+            }
+        }
+    }
+    else if ((gActors[actor_index].stateUpper == 1) && (func_8005D418(actor_index))) {
+        if (gActors[actor_index].health >= 0) {
+            gActors[actor_index].state = 3;
+        }
+        else if (gGameState == 6) {
+            gGameState = 7;
+            gGameStateSubState = 0;
+            gActors[actor_index].var_150 = gActors[actor_index].flags & ~0x1B80;
+            gActors[actor_index].unk_170 = 0xA4;
+            Sound_PlaySfx(0xB2);
+            gActors[actor_index].stateUpper = 6;
+            gActors[actor_index].stateLower = 1;
+        }
+    }
+}
 
 void func_80058924(u16 actor_index) {
     gActors[actor_index].flags &= 0xFDFFB53F;

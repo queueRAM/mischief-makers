@@ -1674,8 +1674,6 @@ void func_80053358(u16 actor_0, u16 actor_1) {
     }
 }
 
-#ifdef NON_MATCHING
-// https://decomp.me/scratch/r11VD
 void func_800536CC(u16 actor_0, u16 actor_1) {
     s32 sp2C;
     s32 sp28;
@@ -1712,14 +1710,12 @@ void func_800536CC(u16 actor_0, u16 actor_1) {
     func_8002877C(actor_0);
     if (gActors[actor_0].flags_098 & 0xC) {
         gActors[actor_1].posX.raw = gActors[actor_0].posX.raw + D_801373E0.unk_00[0].raw;
-        sp28 = gActors[actor_0].flags_098 & 0xC;
-        gActors[actor_1].flags_098 |= sp28;
+        gActors[actor_1].flags_098 |= gActors[actor_0].flags_098 & 0xC;
     }
-    step = D_801373E0.unk_00[1].raw + gActors[actor_0].posY.raw;
-    if ((gActors[actor_0].flags_098 & 0x10) && (step < gActors[actor_1].posY.raw)) {
-        gActors[actor_1].posY.raw = step;
-        sp28 = gActors[actor_0].flags_098 & 0x10;
-        gActors[actor_1].flags_098 |= sp28;
+    sp28 = gActors[actor_0].posY.raw + D_801373E0.unk_00[1].raw;
+    if ((gActors[actor_0].flags_098 & 0x10) && (sp28 < gActors[actor_1].posY.raw)) {
+        gActors[actor_1].posY.raw = sp28;
+        gActors[actor_1].flags_098 |= gActors[actor_0].flags_098 & 0x10;
     }
     else {
         gActors[actor_0].posY.raw = gActors[actor_1].posY.raw - D_801373E0.unk_00[1].raw;
@@ -1728,10 +1724,6 @@ void func_800536CC(u16 actor_0, u16 actor_1) {
     gActors[actor_1].unk_108 = gActors[actor_1].posY.raw;
     gActors[actor_1].unk_10C = gActors[actor_1].posZ.raw;
 }
-#else
-void func_800536CC(u16 actor_0, u16 actor_1);
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_800536CC.s")
-#endif
 
 void func_8005396C(u16 actor_0, u16 actor_1) {
     gActors[actor_0].unk_12E_u8 |= 0x80;

@@ -30,6 +30,7 @@ extern Unk800D4130 D_800D4130[];
 extern s16 D_800D4134;
 extern s16 D_800D4138;
 extern Unk800D4130 D_800D413C[];
+extern s32 D_800E3630[]; // could be array of structs of length 0x28
 
 extern s16 D_801370D2;
 extern u16 D_801373D8;
@@ -1878,7 +1879,15 @@ void func_8005544C(u16 actor_index) {
     func_80055C2C(actor_index, 0xFFFF);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_800554AC.s")
+void func_800554AC(u16 actor_0, u16 actor_1) {
+    s32 idx;
+
+    if (actor_1 != 0xFFFF) {
+        idx = gActors[actor_0].unk_140_u8[0];
+        gActors[actor_1].unk_0F8.raw = D_800E3630[gActors[actor_1].unk_0CE * 10 + idx];
+        gActors[actor_1].unk_0FC.raw = D_800E3630[gActors[actor_1].unk_0CE * 10 + idx + 1];
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_8005552C.s")
 

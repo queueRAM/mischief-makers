@@ -2062,7 +2062,65 @@ void func_80055C2C(u16, u16);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_800569AC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80056CCC.s")
+void func_80056CCC(u16 actor_0, u16 actor_1) {
+    s32 var_v0;
+    s32 pad;
+
+    switch (gActors[actor_0].stateUpper) {
+    case 0:
+        gActors[actor_0].unk_170 = 0x6A;
+        gActors[actor_0].var_15C = 4;
+        var_v0 = 0;
+        if (gActors[actor_0].unk_140_u8[0] == 0) {
+            var_v0 = 1;
+        }
+        if (gActors[actor_0].unk_140_u8[0] == 2) {
+            var_v0 += 3;
+        }
+        if (gActors[actor_0].unk_140_u8[0] > 4) {
+            var_v0 += 2;
+        }
+        gActors[actor_0].velocityY.raw = 0;
+        gActors[actor_0].velocityX.raw = 0;
+        gActors[actor_0].var_150 = 0;
+        gActors[actor_0].var_15C += var_v0;
+        gActors[actor_0].unk_170 += var_v0;
+        gActors[actor_0].stateUpper = 1;
+        /* fallthrough */
+    case 1:
+        func_800536CC(actor_0, actor_1);
+        if (func_8004F35C(actor_0, (u32* ) &gActors[actor_0].var_150) != 0) {
+            func_800554AC(actor_0, actor_1);
+            func_8004F614(actor_0, gActors[actor_1].unk_0F8.raw, gActors[actor_1].unk_0FC.raw, 0x1E);
+            gActors[actor_0].unk_170 = func_8005D338(actor_0) + 8;
+            D_800D57E0 = 0;
+            if (gActors[actor_0].unk_140_u8[0] > 4) {
+                gActors[actor_0].flags &= 0xFF3CFFFF;
+                gActors[actor_0].flags |= 0x20000;
+                if (!(gActors[actor_0].flags & 0x20)) {
+                    gActors[actor_0].velocityX.raw = -0x30000;
+                }
+                else {
+                    gActors[actor_0].velocityX.raw = 0x30000;
+                }
+                if (gActors[actor_0].unk_140_u8[0] == 8) {
+                    gActors[actor_0].velocityX.raw = 0;
+                }
+                gActors[actor_0].velocityY.raw = 0x30000;
+                gActors[actor_0].velocityX.raw = gActors[actor_0].velocityX.raw * gActors->unk_120;
+                gActors[actor_0].velocityY.raw = gActors[actor_0].velocityY.raw * gActors->unk_120;
+            }
+            if (gActors[actor_0].flags & 0x810000) {
+                gActors[actor_0].flags |= 0x4000;
+                gActors[actor_0].state = 3;
+            }
+            else {
+                gActors[actor_0].state = 0x16;
+            }
+        }
+        break;
+    }
+}
 
 void func_80056F54(u16 actor_index) {
     if (gActors[actor_index].flags & 0x02000000) {

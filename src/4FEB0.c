@@ -2067,7 +2067,22 @@ void func_80055C2C(u16, u16);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_8005701C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80057268.s")
+void func_80057268(u16 actor_index) {
+    s32 pad;
+
+    gActors[actor_index].unk_12E_u8 |= 0x81;
+    gActors[actor_index].velocityX.raw = 0;
+    gActors[actor_index].velocityY.raw = 0;
+    func_8004F514(actor_index, gActors[actor_index].unk_0D6);
+    gActors[actor_index].unk_12F_u8 = 0;
+    D_801370CE &= ~gButton_B;
+    if (gActors[actor_index].flags & 0x810000) {
+        gActors[actor_index].state = 3;
+    }
+    else {
+        gActors[actor_index].state = 0x19;
+    }
+}
 
 s32 func_80057320(u16 actor_index, s16 health_increment) {
     if (gActors[actor_index].health < 0) {

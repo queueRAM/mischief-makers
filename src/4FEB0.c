@@ -2107,7 +2107,28 @@ void func_80058924(u16);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80058CAC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80058D3C.s")
+void func_80058D3C(u16 actor_0, u16 actor_1) {
+    gActors[actor_0].flags &= ~0x4AC0;
+    if (!(gActors[actor_0].flags & 0x20)) {
+        gActors[actor_0].velocityX.raw += gActors[actor_0].unk_0F8.raw;
+    }
+    else {
+        gActors[actor_0].velocityX.raw -= gActors[actor_0].unk_0F8.raw;
+    }
+    if (gActors[actor_0].flags & 0x810000) {
+        if (gActors[actor_0].unk_140_u8[0] == 0) {
+            gActors[actor_0].unk_170 = 0x2C;
+        }
+        else {
+            gActors[actor_0].unk_170 = 0x2B;
+        }
+    }
+    else {
+        gActors[actor_0].velocityY.raw += gActors[actor_1].unk_0FC.raw;
+    }
+    gActors[actor_0].velocityX.raw = Math_ClampLimit(gActors[actor_0].velocityX.raw, 0x60000);
+    gActors[actor_0].velocityY.raw = Math_ClampLimit(gActors[actor_0].velocityY.raw, 0x80000);
+}
 
 void func_80058E44(u16 arg0, u16 arg1) {
     func_80058924(arg0);

@@ -2065,7 +2065,59 @@ void func_80055C2C(u16, u16);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_80056F54.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_8005701C.s")
+void func_8005701C(u16 actor_index) {
+    u16 index;
+    s32 step;
+
+    index = gActors[actor_index].unk_0D6;
+    gActors[actor_index].unk_12E_u8 |= 0x81;
+    func_8005C550(actor_index, 1);
+    switch (gActors[actor_index].stateUpper) {
+    case 0:
+        gActors[actor_index].unk_17C = 0;
+        gActors[actor_index].unk_17C_s8[1] = 3;
+        gActors[actor_index].unk_170 = 0x5F;
+        gActors[actor_index].var_15C = 8;
+        gActors[actor_index].var_150 = 0;
+        gActors[actor_index].stateUpper = 1;
+        /* fallthrough */
+    case 1:
+        if ((gActors[actor_index].unk_170_s8[0] == 0) && (gActors[actor_index].unk_170_s8[1] == 3)) {
+            gActors[actor_index].velocityY.raw = func_80048C94(0xF);
+            gActors[actor_index].flags &= 0xFF3CFFFF; \
+            gActors[actor_index].flags |= 0x20000;
+        }
+        func_8004F7D8(actor_index);
+        func_8004FB30(actor_index, gActors[actor_index].var_15C);
+        if (func_8004F35C(actor_index, (u32* ) &gActors[actor_index].var_150) != 0) {
+            gActors[actor_index].velocityX.raw = gActors[actor_index].velocityX.raw / 2;
+            func_800554AC(actor_index, index);
+            func_8004F614(actor_index, gActors[index].unk_0F8.raw, gActors[index].unk_0FC.raw, 0x32);
+            gActors[index].unk_0DD = 0x1B;
+            gActors[actor_index].unk_170 = 0x60;
+            gActors[actor_index].stateUpper = 2;
+        case 2:
+            if (gActors[actor_index].flags & 0x810000) {
+                step = func_80048C94(0);
+                gActors[actor_index].velocityX.raw = Math_ApproachS32(gActors[actor_index].velocityX.raw, 0, step);
+            }
+            else {
+                step = func_80048C94(0);
+                gActors[actor_index].velocityY.raw = Math_ApproachS32(gActors[actor_index].velocityY.raw, 0, step);
+            }
+            if (func_8005D418(actor_index) != 0) {
+                if (gActors[actor_index].flags & 0x810000) {
+                    gActors[actor_index].flags |= 0x4000;
+                    gActors[actor_index].state = 3;
+                }
+                else {
+                    gActors[actor_index].state = 0x16;
+                }
+            }
+        }
+        break;
+    }
+}
 
 void func_80057268(u16 actor_index) {
     s32 pad;

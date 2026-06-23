@@ -369,7 +369,7 @@ segments:
       - [0x0EC910, .rodata, 42E90]
       - [0x0EC920, rodata] # 438E0?
       - [0x0EC960, rodata] # marina?
-      - [0x0EC9D0, rodata] # 4FEB0?
+      - [0x0EC9D0, .rodata, 4FEB0]
       - [0x0ECAC0, rodata] # 59EA0?
       - [0x0ECB90, rodata] # 5E230?
       - [0x0ECCF0, rodata] # 60CF0?

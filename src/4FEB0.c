@@ -33,9 +33,6 @@ extern s16 D_800D4138;
 extern Unk800D4130 D_800D413C[];
 extern s32 D_800D57E0;
 extern s32 D_800E3630[]; // could be array of structs of length 0x28
-extern f64 D_800EBDD0; // TODO: map .rodata 0.357999999999999985
-extern f64 D_800EBDD8; // TODO: map .rodata 0.699999999999999956
-extern f32 D_800EBEBC; // TODO: map .rodata 0.6000000238
 
 extern s16 D_801370D2;
 extern u16 D_801373D8;
@@ -875,7 +872,7 @@ void func_80051324(u16 actor_index) {
                     gActors[actor_index].velocityY.raw = func_80048C94(0x1C);
                 }
                 gActors[actor_index].var_150 = 0x18;
-                gActors[actor_index].var_158 = func_80048C94(0x13) * D_800EBDD0; // TODO: 0.357999999999999985
+                gActors[actor_index].var_158 = func_80048C94(0x13) * 0.358;
                 gActors[actor_index].unk_170 = 0x55;
                 break;
             case 8:
@@ -1211,7 +1208,7 @@ void func_80052004(u16 actor_index) {
             }
             else if (gActors[actor_index].stateLower == 0x1D) {
                 gActors[actor_index].velocityY.raw = Math_ApproachS32(gActors[actor_index].velocityY.raw, -0x60000, func_80048C94(0x13));
-                if (gActors[actor_index].velocityY.raw < (-func_80048C94(0x1C) * D_800EBDD8)) { // TODO: 0.699999999999999956
+                if (gActors[actor_index].velocityY.raw < (-func_80048C94(0x1C) * 0.7)) {
                     gActors[actor_index].stateLower = 0x1A;
                 }
             }
@@ -3034,7 +3031,7 @@ void func_80058B68(u16 actor_0, u16 unused_arg1) {
         gActors[actor_0].state = 0x34;
     }
     func_8005C098(actor_0, 3);
-    gActors[actor_0].unk_144 = D_800EBEBC; // TODO: 0.6000000238
+    gActors[actor_0].unk_144 = 0.6f;
 }
 
 void func_80058C24(u16 actor_0, u16 unused_arg1) {

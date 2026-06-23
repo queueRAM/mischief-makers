@@ -42,7 +42,7 @@ extern s8 D_801373F3;
 
 s32 func_80049040(u16);
 void func_80055C2C(u16, u16);
-void func_800575C0(u16);
+s32 func_800575C0(u16 actor_index);
 void func_80058924(u16);
 s32 func_8005D370(u16, u16);
 void func_8005D3D8(u16);
@@ -2075,8 +2075,19 @@ void func_80055C2C(u16, u16);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_800574B4.s")
 
-void func_800575C0(u16);
-#pragma GLOBAL_ASM("asm/nonmatchings/4FEB0/func_800575C0.s")
+s32 func_800575C0(u16 actor_index) {
+    if (gActors[actor_index].unk_0DC & 0x1) {
+        return 0;
+    }
+    gActors[actor_index].unk_0DC |= 0x1;
+    if (func_8005C6D0(gActors[actor_index].unk_0F8.raw) < 0x20000) {
+        gActors[actor_index].unk_0F8.raw = 2.0 * gActors[actor_index].unk_0F8.raw;
+    }
+    if (gActors[actor_index].unk_0FC.raw < 0x30000) {
+        gActors[actor_index].unk_0FC.raw = 0x30000;
+    }
+    return 1;
+}
 
 void func_800576A0(u16 actor_index) {
     func_8005C550(actor_index, -0x10);

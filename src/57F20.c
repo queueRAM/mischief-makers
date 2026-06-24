@@ -447,7 +447,7 @@ void func_80057C98(u16 actor_index) {
 }
 
 void func_800584D4(u16 actor_index) {
-    s16 var_v0;
+    s32 var_v0;
     gActors[actor_index].unk_12E_u8 |= 0x41;
     func_8005C550(actor_index, -8);
     switch (gActors[actor_index].stateUpper) {

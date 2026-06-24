@@ -65,7 +65,18 @@ f32 func_8005C6E4(f32 x) {
     return x;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/5D120/func_8005C708.s")
+// rand8_mod
+s32 func_8005C708(s32 arg0) {
+    s8 val;
+    s32 var_v1;
+
+    val = Rand();
+    var_v1 = val;
+    if (arg0 != 0) {
+        var_v1 %= arg0;
+    }
+    return var_v1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/5D120/func_8005C774.s")
 

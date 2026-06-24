@@ -32,7 +32,7 @@ extern void func_80059F30(u16, s32*, f32, s32);
 extern void func_8005A4B0(u16, f32);
 extern void func_8005C098(u16, s32);
 extern void func_8005C250(u16);
-extern void func_8005C520(s8, s32);
+extern void func_8005C520(s8, s8);
 extern s32 func_8005C550(u16 actor_index, s32 arg1);
 extern s32 func_8005C6D0(s32);
 extern s16 func_8005C708(s32);

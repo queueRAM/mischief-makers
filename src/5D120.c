@@ -1,6 +1,10 @@
 #include "common.h"
 
-#pragma GLOBAL_ASM("asm/nonmatchings/5D120/func_8005C520.s")
+void func_8005C520(s8 arg0, s8 arg1) {
+    gActors[0].unk_0DC |= 0x40;
+    D_801373E0.unk_0A = arg0;
+    D_801373E0.unk_0B = arg1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/5D120/func_8005C550.s")
 

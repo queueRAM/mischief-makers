@@ -78,7 +78,18 @@ s32 func_8005C708(s32 arg0) {
     return var_v1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/5D120/func_8005C774.s")
+u16 func_8005C774(s32 arg0) {
+    f32 temp;
+    if (arg0 == 0) {
+        return D_800BE668;
+    }
+    if (arg0 >= 100) {
+        return D_800BE668 + 1;
+    }
+    temp = (D_800BE668 + 1);
+    temp /= (100.0f / arg0);
+    return temp;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/5D120/func_8005C870.s")
 

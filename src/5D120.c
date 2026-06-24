@@ -258,7 +258,9 @@ s32 func_8005D1E8(u16 actor_index) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/5D120/func_8005D338.s")
+u16 func_8005D338(u16 actor_index) {
+    return gActors[actor_index].unk_170_u16[1] & 0x1FFF;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/5D120/func_8005D370.s")
 

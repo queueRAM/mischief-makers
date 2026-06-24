@@ -49,7 +49,12 @@ s32 func_8005C5E0(u16 actor_index) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/5D120/func_8005C6D0.s")
+s32 func_8005C6D0(s32 arg0) {
+    if (arg0 < 0) {
+        arg0 = -arg0;
+    }
+    return arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/5D120/func_8005C6E4.s")
 

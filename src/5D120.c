@@ -146,7 +146,96 @@ s16 func_8005CA98(void) {
     return gCamShakeTime;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/5D120/func_8005CAA8.s")
+void func_8005CAA8(u16 actor_index, s8* arg1) {
+    s32 index;
+    s32 count;
+
+    if (gActors[actor_index].unk_17C_s8[1] != 0) {
+        gActors[actor_index].unk_17C_s8[0] += 1;
+        if (gActors[actor_index].unk_17C_s8[0] >= gActors[actor_index].unk_17C_s8[1]) {
+            gActors[actor_index].unk_17C_s8[0] = 0;
+        }
+    }
+
+    count = 0;
+    if (gActors[actor_index].unk_17C_s8[0] == 0) {
+        index = gActors[actor_index].unk_17C_s16[1] * 4;
+        if (gActors[actor_index].unk_17C_s8[1] == 0) {
+            if (!(gActors[actor_index].flags & 0x20)) {
+                gActors[actor_index].hitboxBX0 = arg1[index + 0];
+                gActors[actor_index].hitboxBX1 = arg1[index + 1];
+            }
+            else {
+                gActors[actor_index].hitboxBX0 = -arg1[index + 1];
+                gActors[actor_index].hitboxBX1 = -arg1[index + 0];
+            }
+            gActors[actor_index].hitboxBY0 = arg1[index + 2];
+            gActors[actor_index].hitboxBY1 = arg1[index + 3];
+            gActors[actor_index].hitboxBX0 *= gActors[0].unk_120;
+            gActors[actor_index].hitboxBX1 *= gActors[0].unk_120;
+            gActors[actor_index].hitboxBY0 *= gActors[0].unk_120;
+            gActors[actor_index].hitboxBY1 *= gActors[0].unk_120;
+        }
+        else {
+            if (!(gActors[actor_index].flags & 0x20)) {
+                if (gActors[actor_index].hitboxBX0 < arg1[index + 0] * gActors[0].unk_120) {
+                    count = 1;
+                    gActors[actor_index].hitboxBX0 += (1 * gActors[0].unk_120);
+                }
+                if (gActors[actor_index].hitboxBX0 > arg1[index + 0] * gActors[0].unk_120) {
+                    count++;
+                    gActors[actor_index].hitboxBX0 += -(1 * gActors[0].unk_120);
+                }
+                if (gActors[actor_index].hitboxBX1 < arg1[index + 1] * gActors[0].unk_120) {
+                    count++;
+                    gActors[actor_index].hitboxBX1 += (1 * gActors[0].unk_120);
+                }
+                if (gActors[actor_index].hitboxBX1 > arg1[index + 1] * gActors[0].unk_120) {
+                    count++;
+                    gActors[actor_index].hitboxBX1 += -(1 * gActors[0].unk_120);
+                }
+            }
+            else {
+                if (gActors[actor_index].hitboxBX0 < -arg1[index + 1] * gActors[0].unk_120) {
+                    count = 1;
+                    gActors[actor_index].hitboxBX0 += (1 * gActors[0].unk_120);
+                }
+                if (gActors[actor_index].hitboxBX0 > -arg1[index + 1] * gActors[0].unk_120) {
+                    count++;
+                    gActors[actor_index].hitboxBX0 += -(1 * gActors[0].unk_120);
+                }
+                if (gActors[actor_index].hitboxBX1 < -arg1[index + 0] * gActors[0].unk_120) {
+                    count++;
+                    gActors[actor_index].hitboxBX1 += (1 * gActors[0].unk_120);
+                }
+                if (gActors[actor_index].hitboxBX1 > -arg1[index + 0] * gActors[0].unk_120) {
+                    count++;
+                    gActors[actor_index].hitboxBX1 += -(1 * gActors[0].unk_120);
+                }
+            }
+            if (gActors[actor_index].hitboxBY0 < arg1[index + 2] * gActors[0].unk_120) {
+                count++;
+                gActors[actor_index].hitboxBY0 += (1 * gActors[0].unk_120);
+            }
+            if (gActors[0].unk_120 * arg1[index + 2] < gActors[actor_index].hitboxBY0) {
+                count++;
+                gActors[actor_index].hitboxBY0 += -(1 * gActors[0].unk_120);
+            }
+            if (gActors[actor_index].hitboxBY1 < arg1[index + 3] * gActors[0].unk_120) {
+                count++;
+                gActors[actor_index].hitboxBY1 += (1 * gActors[0].unk_120);
+            }
+            if (gActors[actor_index].hitboxBY1 > arg1[index + 3] * gActors[0].unk_120) {
+                count++;
+                gActors[actor_index].hitboxBY1 += -(1 * gActors[0].unk_120);
+            }
+        }
+        if (count == 0) {
+            gActors[actor_index].unk_17C_s8[1] = 0;
+            gActors[actor_index].unk_17C_s8[0] = 0;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/5D120/func_8005D1B0.s")
 

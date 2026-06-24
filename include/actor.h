@@ -255,6 +255,7 @@ typedef struct {
     /* 0x178 */ s32 unk_178; // assigned animation/frame table pointers(?) by matched overlays
     union{
         /* 0x17C */ s32 unk_17C;
+        /* 0x17C */ s16 unk_17C_s16[2];
         /* 0x17C */ s8 unk_17C_s8[4];
         /* 0x17C */ ActorFunc pfn_17C; // used by "particle" actors
         /* 0x17C */ Gfx* dlist_17C; // when ACTOR_GFLAG_3DOBJ is set in graphicFlags, field is treated as dlist pointer

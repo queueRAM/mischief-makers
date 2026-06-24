@@ -6,7 +6,23 @@ void func_8005C520(s8 arg0, s8 arg1) {
     D_801373E0.unk_0B = arg1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/5D120/func_8005C550.s")
+s32 func_8005C550(u16 actor_index, s16 arg1) {
+    if (gActors[actor_index].unk_13C_s16[0] == 0) {
+        gActors[actor_index].unk_13C_s16[0] = arg1;
+        return 1;
+    }
+    if (arg1 > 0) {
+        if (gActors[actor_index].unk_13C_s16[0] < arg1) {
+            gActors[actor_index].unk_13C_s16[0] = arg1;
+            return 2;
+        }
+    }
+    else if ((gActors[actor_index].unk_13C_s16[0] < 0) && (arg1 < gActors[actor_index].unk_13C_s16[0])) {
+        gActors[actor_index].unk_13C_s16[0] = arg1;
+        return 3;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/5D120/func_8005C5E0.s")
 

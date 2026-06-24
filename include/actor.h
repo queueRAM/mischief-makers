@@ -216,7 +216,7 @@ typedef struct {
     /* 0x138 */ f32 unk_138;
     union {
         /* 0x13C */ f32 unk_13C_f32;
-        /* 0x13C */ u16 unk_13C_u16[2];
+        /* 0x13C */ s16 unk_13C_s16[2];
     };
     union {
         /* 0x140 */ f32 unk_140_f32;

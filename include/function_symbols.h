@@ -43,7 +43,7 @@ extern s32 func_8005D1E8(u16);
 extern u16 func_8005D338(u16 actor_index);
 extern s32 func_8005D370(u16 actor_index, u16 arg1);
 extern void func_8005D3D8(u16 actor_index);
-extern s32 func_8005D418(u16 actor_index);
+extern u16 func_8005D418(u16 actor_index);
 extern void func_8005DE30(void);
 extern s16 func_8005DEFC(void);
 extern s32 func_8005DF5C(s32 arg0);

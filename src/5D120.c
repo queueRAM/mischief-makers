@@ -241,7 +241,22 @@ u8 func_8005D1B0(u16 actor_index) {
     return gActors[actor_index].unk_0DF & 3;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/5D120/func_8005D1E8.s")
+s32 func_8005D1E8(u16 actor_index) {
+    if (((gActors[actor_index].hitboxAX1 + gActors[actor_index].posX.whole) >= (gActors[0].hitboxBX0 + gActors[0].posX.whole)) &&
+        ((gActors[0].posX.whole + gActors[0].hitboxBX1) >= (gActors[actor_index].posX.whole + gActors[actor_index].hitboxAX0)) &&
+        ((gActors[0].posY.whole + gActors[0].hitboxBY0) >= (gActors[actor_index].posY.whole + gActors[actor_index].hitboxAY1)) &&
+        ((gActors[actor_index].hitboxAY0 + gActors[actor_index].posY.whole) >= (gActors[0].hitboxBY1 + gActors[0].posY.whole))) {
+        return 1;
+    }
+    if ((gActors[0].flags & 0x800) && 
+        ((gActors[actor_index].posX.whole + gActors[actor_index].hitboxAX1) >= (gActors[0].hitboxAX0 + gActors[0].posX.whole)) &&
+        ((gActors[0].posX.whole + gActors[0].hitboxAX1) >= (gActors[actor_index].posX.whole + gActors[actor_index].hitboxAX0)) &&
+        ((gActors[0].posY.whole + gActors[0].hitboxAY0) >= (gActors[actor_index].posY.whole + gActors[actor_index].hitboxAY1)) &&
+        ((gActors[actor_index].hitboxAY0 + gActors[actor_index].posY.whole) >= (gActors[0].hitboxAY1 + gActors[0].posY.whole))) {
+        return 2;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/5D120/func_8005D338.s")
 

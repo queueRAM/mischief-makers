@@ -142,7 +142,9 @@ void func_8005CA34(s32 shake_time, s32 shake_time_div) {
     gCamShakeV = 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/5D120/func_8005CA98.s")
+s16 func_8005CA98(void) {
+    return gCamShakeTime;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/5D120/func_8005CAA8.s")
 

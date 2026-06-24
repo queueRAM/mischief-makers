@@ -24,7 +24,30 @@ s32 func_8005C550(u16 actor_index, s16 arg1) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/5D120/func_8005C5E0.s")
+s32 func_8005C5E0(u16 actor_index) {
+    gActors[actor_index].flags |= 0x1000;
+    gActors[actor_index].flags &= 0xFFFF7FFF;
+    if (gActors[actor_index].unk_13C_s16[0] == 0) {
+        return 0;
+    }
+    gActors[actor_index].flags &= ~0x1000;
+    if (gActors[actor_index].unk_13C_s16[0] > 0) {
+        gActors[actor_index].flags |= 0x8000;
+    }
+    if ((gActors[actor_index].unk_13C_s16[0] == 0x7FFF) || (gActors[actor_index].unk_13C_s16[0] == -0x8000)) {
+        if (func_8005D418(actor_index) != 0) {
+            gActors[actor_index].unk_13C_s16[0] = 0;
+        }
+        return 2;
+    }
+    if (gActors[actor_index].unk_13C_s16[0] < 0) {
+        gActors[actor_index].unk_13C_s16[0]++;
+    }
+    if (gActors[actor_index].unk_13C_s16[0] > 0) {
+        gActors[actor_index].unk_13C_s16[0]--;
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/5D120/func_8005C6D0.s")
 

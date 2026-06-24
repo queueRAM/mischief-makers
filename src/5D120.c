@@ -134,7 +134,13 @@ void func_8005C8A4(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/5D120/func_8005CA34.s")
+void func_8005CA34(s32 shake_time, s32 shake_time_div) {
+    gCamShakeType = 0;
+    gCamShakeTime = shake_time_div;
+    gCamShakeMag = shake_time << 0x10;
+    gCamShakeMagDelta = gCamShakeMag / shake_time_div;
+    gCamShakeV = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/5D120/func_8005CA98.s")
 

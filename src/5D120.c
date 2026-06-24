@@ -1,5 +1,7 @@
 #include "common.h"
 
+extern s16 D_800CCC78[];
+
 void func_8005C520(s8 arg0, s8 arg1) {
     gActors[0].unk_0DC |= 0x40;
     D_801373E0.unk_0A = arg0;
@@ -98,7 +100,39 @@ u8 func_8005C870(u8 arg0) {
     return arg0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/5D120/func_8005C8A4.s")
+void func_8005C8A4(void) {
+    if (gCamShakeTime == 0) {
+        gCamShakeV = 0;
+    }
+    else {
+        if (!(gCamShakeTime & 1)) {
+            gCamShakeV = gCamShakeMag / 0x10000;
+        }
+        else {
+            gCamShakeV = -gCamShakeMag / 0x10000;
+        }
+        gCamShakeTime--;
+        switch (gCamShakeType) {
+        case 1:
+            if (!(gCamShakeTime & 1)) {
+            gCamShakeMag -= gCamShakeMagDelta * 2;
+        }
+            break;
+        case 2:
+            if (!(gCamShakeTime & 2)) {
+                gCamShakeV = func_8005C708(gCamShakeMag / 0x10000);
+            }
+            break;
+        default:
+            gCamShakeMag -= gCamShakeMagDelta;
+            break;
+        }
+        if (((D_800CCC78[8 * gCurrentScene] == 1) && (gCamShakeV < 0)) || 
+            ((D_800CCC78[8 * gCurrentScene] == 2) && (gCamShakeV > 0))) {
+            gCamShakeV = 0;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/5D120/func_8005CA34.s")
 

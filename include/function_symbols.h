@@ -38,7 +38,7 @@ extern s32 func_8005C6D0(s32);
 extern s32 func_8005C708(s32);
 extern u16 func_8005C774(s32);
 extern void func_8005CA34(s32 mag, s32 time); // shake camera vertically.
-extern s32 func_8005D1B0(u16);
+extern u8 func_8005D1B0(u16 actor_index);
 extern s32 func_8005D1E8(u16);
 extern u8 func_8005D338(u16 actor_index);
 extern s32 func_8005D370(u16 actor_index, u16 arg1);

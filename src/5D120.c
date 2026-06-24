@@ -91,7 +91,12 @@ u16 func_8005C774(s32 arg0) {
     return temp;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/5D120/func_8005C870.s")
+u8 func_8005C870(u8 arg0) {
+    if ((arg0 & 0x30) == 0x30) {
+        return arg0 & 0xC0;
+    }
+    return arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/5D120/func_8005C8A4.s")
 

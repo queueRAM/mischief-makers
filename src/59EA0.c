@@ -24,7 +24,67 @@ u16 func_800592A0(u16 actor_index, s32* arg1) {
     return free_actor;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/59EA0/func_800593DC.s")
+void func_800593DC(u16 actor_index) {
+    s16 index;
+    u16 actor_1;
+    s32 pad;
+    s32 sp4C[5];
+
+    sp4C[0] = -0x10;
+    sp4C[1] = -0x40;
+    sp4C[2] = 0xA;
+    actor_1 = func_800592A0(actor_index, sp4C);
+    if (actor_1 == 0) {
+        return;
+    }
+
+    gActors[actor_1].flags &= ~0x20;
+    gActors[actor_1].flags |= 0x8;
+    gActors[actor_1].graphicIndex = 0x128;
+    gActors[actor_1].unk_148 = 0.0f;
+    if (!(D_801373E0.unk_7C & 0x2)) {
+        gActors[actor_1].graphicFlags |= 0x8;
+        gActors[actor_1].var_160 = 0x01000000;
+    }
+    sp4C[0] += 0x10;
+    actor_1 = func_800592A0(actor_index, sp4C);
+    if (actor_1 == 0) {
+        return;
+    }
+
+    gActors[actor_1].flags &= ~0x20;
+    gActors[actor_1].flags |= 0x8;
+    gActors[actor_1].graphicIndex = 0x110;
+    gActors[actor_1].unk_148 = 0.0f;
+    sp4C[0] += 0x10;
+    actor_1 = func_800592A0(actor_index, sp4C);
+    if (actor_1 == 0) {
+        return;
+    }
+
+    gActors[actor_1].flags &= ~0x20;
+    gActors[actor_1].flags |= 0x8;
+    gActors[actor_1].graphicIndex = 0x10E;
+    gActors[actor_1].unk_148 = 0.0f;
+    sp4C[0] = 0;
+    sp4C[1] = -0x28;
+    for (index = D_801373E0.unk_0A; index > 0; index--) {
+        actor_1 = func_800592A0(actor_index, sp4C);
+        if (actor_1 == 0) {
+            return;
+        }
+        gActors[actor_1].graphicFlags |= 0x9;
+        gActors[actor_1].flags &= ~0x20;
+        gActors[actor_1].flags |= 0x8;
+        gActors[actor_1].graphicIndex = 0x12E;
+        gActors[actor_1].unk_148 = 0.0f;
+        gActors[actor_1].scaleX = 0.75f;
+        gActors[actor_1].scaleY = 0.75f;
+        gActors[actor_1].var_160 = 0x03000000;
+        sp4C[1] += 8;
+        sp4C[2] -= 1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/59EA0/func_80059624.s")
 

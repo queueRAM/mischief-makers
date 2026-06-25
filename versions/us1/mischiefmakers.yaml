@@ -110,7 +110,7 @@ segments:
       - [0x049200, c, marina]
       - [0x04FEB0, c]
       - [0x057F20, c]
-      - [0x059EA0, asm]
+      - [0x059EA0, c]
       - [0x05D120, c]
       - [0x05E230, asm]
       - [0x060CF0, asm]

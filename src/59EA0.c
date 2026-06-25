@@ -1,6 +1,28 @@
 #include "common.h"
 
-#pragma GLOBAL_ASM("asm/nonmatchings/59EA0/func_800592A0.s")
+u16 func_800592A0(u16 actor_index, s32* arg1) {
+    u16 free_actor;
+
+    if (actor_index < 0x10) {
+        free_actor = Actor_RangeFindInactive(0x10, 0x2D);
+    }
+    else {
+        free_actor = Actor_RangeFindInactive(0x90, 0xC0);
+    }
+    if (free_actor == 0) {
+        return free_actor;
+    }
+    gActors[free_actor].actorType = 9;
+    func_8001E2D0(free_actor);
+    gActors[free_actor].graphicFlags |= gActors[actor_index].graphicFlags & 0x160;
+    gActors[free_actor].flags |= (gActors[actor_index].flags & 0x28) | 0x80000;
+    gActors[free_actor].colorA = 0xFE;
+    gActors[free_actor].posX.raw = arg1[0] << 0x10;
+    gActors[free_actor].posY.raw = arg1[1] << 0x10;
+    gActors[free_actor].posZ.raw = arg1[2] << 0x10;
+    gActors[free_actor].unk_130 = -1.0f;
+    return free_actor;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/59EA0/func_800593DC.s")
 

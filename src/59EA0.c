@@ -276,7 +276,7 @@ u16 func_80059F30(u16 actor_index, s32* arg1, f32 scale, s32 arg3) {
     return actor_1;
 }
 
-u16 func_8005A068(u16 actor_index, s32* arg1, s32 arg2, f32 scale, s32 arg4) {
+u16 func_8005A068(u16 actor_index, s32* arg1, s32 angle, f32 scale, s32 arg4) {
     u16 actor_1;
 
     actor_1 = func_800592A0(actor_index, arg1);
@@ -293,7 +293,7 @@ u16 func_8005A068(u16 actor_index, s32* arg1, s32 arg2, f32 scale, s32 arg4) {
     }
     gActors[actor_1].scaleX = scale;
     gActors[actor_1].scaleY = scale;
-    gActors[actor_1].var_160 = arg2;
+    gActors[actor_1].var_160 = angle;
     gActors[actor_1].unk_148 = arg4;
     if (arg4 == 0) {
         return actor_1;
@@ -340,7 +340,29 @@ u16 func_8005A1A4(u16 actor_index, s32* arg1, f32 scale) {
     return actor_1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/59EA0/func_8005A320.s")
+u16 func_8005A320(u16 actor_index, s32* arg1, s32 angle, f32 scale) {
+    u16 actor_1;
+
+    arg1[2]--;
+    if (arg1[3] == 0) {
+        arg1[3] = 0x18E;
+    }
+    if (angle == 0) {
+        actor_1 = func_80059F30(actor_index, arg1, scale, 0x14);
+    }
+    else {
+        actor_1 = func_8005A068(actor_index, arg1, angle, scale, 0x14);
+    }
+    if (actor_1 == 0) {
+        return actor_1;
+    }
+    gActors[actor_1].velocityX.raw = SIN(angle / 0x10000) * (0 * scale);
+    gActors[actor_1].velocityY.raw = COS(angle / 0x10000) * -(0 * scale);
+    gActors[actor_1].scaleX = scale / 2;
+    gActors[actor_1].scaleY = scale / 4;
+    gActors[actor_1].unk_11C *= 2;
+    return actor_1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/59EA0/func_8005A4B0.s")
 

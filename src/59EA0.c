@@ -392,7 +392,32 @@ u16 func_8005A4B0(u16 actor_index, f32 scale) {
     return actor_1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/59EA0/func_8005A6D0.s")
+u16 func_8005A6D0(u16 actor_index, s32* arg1, s32 arg2) {
+    u16 actor_1;
+
+    actor_1 = func_800592A0(actor_index, arg1);
+    if (actor_1 == 0) {
+        return actor_1;
+    }
+    gActors[actor_1].graphicFlags |= 0x209;
+    gActors[actor_1].flags &= ~0x20;
+    gActors[actor_1].graphicIndex = 0x166;
+    gActors[actor_1].colorA = 0xA0;
+    gActors[actor_1].flags |= 0x8000;
+    gActors[actor_1].unk_184 = gActors[actor_1].posX.raw;
+    gActors[actor_1].unk_188 = gActors[actor_1].posY.raw;
+    gActors[actor_1].unk_148 = 1.0f;
+    gActors[actor_1].unk_140_f32 = -20.0f;
+    gActors[actor_1].unk_144 = 0.0f;
+    gActors[actor_1].var_160 = arg2;
+    if (arg1[4] == 0) {
+        gActors[actor_1].graphicFlags &= 0xFDFF;
+    }
+    else {
+        gActors[actor_1].unk_18C = arg1[4];
+    }
+    return actor_1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/59EA0/func_8005A7D0.s")
 

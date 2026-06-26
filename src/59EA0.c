@@ -419,7 +419,37 @@ u16 func_8005A6D0(u16 actor_index, s32* arg1, s32 arg2) {
     return actor_1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/59EA0/func_8005A7D0.s")
+u16 func_8005A7D0(u16 actor_index, s32* arg1, f32 arg2, f32 arg3) {
+    u16 actor_1;
+
+    actor_1 = func_800592A0(actor_index, arg1);
+    if (actor_1 == 0) {
+        return actor_1;
+    }
+    gActors[actor_1].graphicFlags |= 0x201;
+    gActors[actor_1].graphicIndex = 0x16C;
+    gActors[actor_1].unk_148 = 60.0f;
+    gActors[actor_1].var_154 = -3;
+    if (arg1[4] == 0) {
+        gActors[actor_1].graphicFlags &= 0xFDFF;
+    }
+    else {
+        gActors[actor_1].unk_18C = arg1[4];
+    }
+    gActors[actor_1].unk_144 = 23.0f;
+    gActors[actor_1].flags |= 0x8000;
+    gActors[actor_1].unk_140_f32 = 0.0f;
+    gActors[actor_1].scaleX = gActors[actor_1].scaleY = 0.0f;
+    gActors[actor_1].unk_184 = gActors[actor_1].posX.raw;
+    gActors[actor_1].unk_188 = gActors[actor_1].posY.raw;
+    arg2 *= 3.0;
+    arg3 *= 3.0;
+    gActors[actor_1].timer_110 = arg2 / 120.0f;
+    gActors[actor_1].unk_114 = arg3 / 30.0f;
+    gActors[actor_1].unk_118 = -gActors[actor_1].unk_114 / 180;
+    gActors[actor_1].unk_11C = -gActors[actor_1].unk_114 / 32;
+    return actor_1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/59EA0/func_8005A930.s")
 

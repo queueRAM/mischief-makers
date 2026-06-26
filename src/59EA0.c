@@ -523,7 +523,8 @@ s32 func_8005A930(Unk_func_8005A930_Arg0* arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/59EA0/func_8005ACA8.s")
+void func_8005ACA8(s32 arg0) {
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/59EA0/func_8005ACB0.s")
 

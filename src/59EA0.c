@@ -306,7 +306,39 @@ u16 func_8005A068(u16 actor_index, s32* arg1, s32 arg2, f32 scale, s32 arg4) {
     return actor_1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/59EA0/func_8005A1A4.s")
+u16 func_8005A1A4(u16 actor_index, s32* arg1, f32 scale) {
+    u16 actor_1;
+
+    actor_1 = func_800592A0(actor_index, arg1);
+    if (actor_1 == 0) {
+        return actor_1;
+    }
+    gActors[actor_1].graphicFlags |= 0x209;
+    gActors[actor_1].graphicIndex = 0x16A;
+    gActors[actor_1].unk_148 = 20.0f;
+    gActors[actor_1].var_154 = -0xA;
+    gActors[actor_1].scaleY = scale * 0.8;
+    gActors[actor_1].scaleX = scale * 0.8;
+    gActors[actor_1].timer_110 = -0.05f;
+    gActors[actor_1].unk_114 = -0.05f;
+    gActors[actor_1].unk_18C = 0x8022D568;
+
+    actor_1 = func_800592A0(actor_index, arg1);
+    if (actor_1 == 0) {
+        return actor_1;
+    }
+    gActors[actor_1].graphicFlags |= 0x209;
+    gActors[actor_1].graphicIndex = 0x1D6;
+    gActors[actor_1].unk_148 = 20.0f;
+    gActors[actor_1].var_154 = -0xA;
+    gActors[actor_1].var_150 = 0x100000;
+    gActors[actor_1].scaleY = scale * 1.0;
+    gActors[actor_1].scaleX = scale * 1.0;
+    gActors[actor_1].unk_114 = -0.05f;
+    gActors[actor_1].timer_110 = -0.05f;
+    gActors[actor_1].unk_18C = 0x8022D4E8;
+    return actor_1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/59EA0/func_8005A320.s")
 

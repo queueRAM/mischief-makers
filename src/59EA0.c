@@ -1,5 +1,24 @@
 #include "common.h"
 
+typedef struct {
+    u8 unk0;
+    u8 red;
+    u8 green;
+    u8 blue;
+    u16 unk4;
+    u8 pad6[2];
+    s32 unk8; // TODO: probably base of s32[5]
+    s32 unkC;
+    u8 pad10[8];
+    s32 unk18;
+    s32 unk1C;
+    f32 unk20;
+} Unk_func_8005A930_Arg0;
+
+extern u16 D_800D82EA;
+extern u16 D_800D84C8[]; // guess
+extern u16 D_800D84CA; // might be &D_800D84C8[1]
+
 u16 func_800592A0(u16 actor_index, s32* arg1) {
     u16 free_actor;
 
@@ -451,7 +470,58 @@ u16 func_8005A7D0(u16 actor_index, s32* arg1, f32 arg2, f32 arg3) {
     return actor_1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/59EA0/func_8005A930.s")
+s32 func_8005A930(Unk_func_8005A930_Arg0* arg0) {
+    f32 temp_f20;
+    s32 temp_f4;
+    s32 temp_v1_2;
+    s32 angle;
+    u16 index;
+    s32 var_s3;
+    u16 actor_index;
+
+    var_s3 = arg0->unk20;
+    Palette_AdjustRgb5551Array(&D_800D82EA, &D_800D84CA, 0xF, arg0->blue / 8, arg0->green / 8, arg0->red / 8);
+    for (index = 0; index < 8; index++) {
+        actor_index = func_800592A0(arg0->unk4, &arg0->unk8);
+        if (actor_index == 0) {
+            return 0;
+        }
+        gActors[actor_index].graphicFlags |= 0x209;
+        gActors[actor_index].flags |= 0x8000;
+        gActors[actor_index].unk_148 = 0.0f;
+        gActors[actor_index].unk_184 = gActors[actor_index].posX.raw;
+        gActors[actor_index].unk_188 = gActors[actor_index].posY.raw;
+        if (gActors[actor_index].flags & 0x20) {
+            gActors[actor_index].unk_140_f32 = 8.0f;
+        }
+        else {
+            gActors[actor_index].unk_140_f32 = -8.0f;
+        }
+        gActors[actor_index].unk_144 = 0.0f;
+        if (arg0->unk18 == 0) {
+            gActors[actor_index].graphicIndex = 0x162;
+        }
+        else {
+            gActors[actor_index].graphicIndex = arg0->unk18;
+        }
+        // TODO: why doesn't `palette_18C` match?
+        // gActors[temp_v0].palette_18C = D_800D84C8;
+        gActors[actor_index].unk_18C = (s32)D_800D84C8;
+        temp_f20 = arg0->unk20 / (((Rand() % arg0->unk0) * 16) + 32);
+        gActors[actor_index].scaleX = temp_f20;
+        temp_v1_2 = (Rand() << 0x10) + arg0->unk1C - 0x800000;
+        gActors[actor_index].var_160 = temp_v1_2;
+        temp_f4 = (16 * temp_f20);
+        angle = temp_v1_2 / 0x10000;
+        arg0->unk8 += (temp_f4 * COS(angle));
+        arg0->unkC += (temp_f4 * SIN(angle));
+        var_s3 -= temp_f4;
+        if (var_s3 < 0) {
+            break;
+        }
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/59EA0/func_8005ACA8.s")
 

@@ -364,7 +364,33 @@ u16 func_8005A320(u16 actor_index, s32* arg1, s32 angle, f32 scale) {
     return actor_1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/59EA0/func_8005A4B0.s")
+u16 func_8005A4B0(u16 actor_index, f32 scale) {
+    s32 sp2C[5];
+    u16 actor_1;
+
+    sp2C[0] = gActors[actor_index].posX.whole;
+    sp2C[1] = gActors[actor_index].posY.whole + gActors[actor_index].hitboxBY1;
+    sp2C[2] = gActors[actor_index].posZ.whole + 1;
+    sp2C[3] = 0x1AC;
+    sp2C[4] = 0;
+    actor_1 = func_80059F30(actor_index, sp2C, (f64)scale, 0x14);
+    if (actor_1 == 0) {
+        return actor_1;
+    }
+    gActors[actor_1].flags &= ~0x20;
+    gActors[actor_1].velocityX.raw = 65536.0f * scale;
+    gActors[actor_1].var_158 = -gActors[actor_1].velocityX.raw / 20;
+    gActors[actor_1].var_15C = 1024.0f * scale;
+    actor_1 = func_80059F30(actor_index, sp2C, (f64)scale, 0x14);
+    if (actor_1 == 0) {
+        return actor_1;
+    }
+    gActors[actor_1].flags |= 0x20;
+    gActors[actor_1].velocityX.raw = -65536.0f * scale;
+    gActors[actor_1].var_15C = 1024.0f * scale;
+    gActors[actor_1].var_158 = -gActors[actor_1].velocityX.raw / 20;
+    return actor_1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/59EA0/func_8005A6D0.s")
 

@@ -620,7 +620,13 @@ void func_8005ACB0(u16 actor_index, u8 arg1, u8 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/59EA0/func_8005B164.s")
+void func_8005B164(u16 actor_index) {
+    func_8005ACB0(actor_index, gActors[actor_index].unk_180_u8[2], gActors[actor_index].unk_180_u8[0]);
+    gActors[actor_index].unk_180_u8[0]++;
+    if (gActors[actor_index].unk_180_u8[0] >= 0x10) {
+        gActors[actor_index].unk_180_u16[0] = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/59EA0/func_8005B1E8.s")
 

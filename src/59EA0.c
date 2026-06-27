@@ -9,7 +9,8 @@ typedef struct {
     u8 pad6[2];
     s32 unk8; // TODO: probably base of s32[5]
     s32 unkC;
-    u8 pad10[8];
+    s32 unk10;
+    u8 pad14[4];
     s32 unk18;
     s32 unk1C;
     f32 unk20;
@@ -838,7 +839,26 @@ void func_8005BA38(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/59EA0/func_8005BBC0.s")
+void func_8005BBC0(u16 actor_index) {
+    Unk_func_8005A930_Arg0 sp1C;
+
+    gActors[actor_index].colorB = 0x7F;
+    gActors[actor_index].colorB = (Rand() & 0x3F) + 0x40;
+    sp1C.unk4 = actor_index;
+    sp1C.unk8 = gActors[actor_index].posX.whole;
+    sp1C.unkC = gActors[actor_index].posY.whole;
+    sp1C.unk10 = gActors[actor_index].posZ.whole + 1;
+    sp1C.unk18 = 0x1EE;
+    sp1C.unk20 = gActors[actor_index].hitboxBY0 + func_8005C708(9);
+    sp1C.unk1C = func_8005C708(0) << 0x12;
+    sp1C.blue = Rand();
+    if (sp1C.blue < 0x80) {
+        sp1C.blue += 0x80;
+    }
+    sp1C.red = sp1C.green = Rand() % sp1C.blue;
+    sp1C.unk0 = 8;
+    func_8005A930(&sp1C);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/59EA0/func_8005BCF8.s")
 

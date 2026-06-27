@@ -919,7 +919,9 @@ void func_8005BFA4(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/59EA0/func_8005C098.s")
+void func_8005C098(u16 actor_index, s32 arg1) {
+    gActors[actor_index].unk_180_u16[0] = arg1;
+}
 
 // unused variant of after-image. uses arrays to store history.
 #pragma GLOBAL_ASM("asm/nonmatchings/59EA0/func_8005C0CC.s")

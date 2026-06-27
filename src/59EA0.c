@@ -950,7 +950,30 @@ u16 func_8005C0CC(u16 actor_index) {
 }
 
 // spawns after-image of Marina while dashing
-#pragma GLOBAL_ASM("asm/nonmatchings/59EA0/func_8005C250.s")
+u16 func_8005C250(u16 actor_index) {
+    u16 actor_1;
+
+    actor_1 = Actor_RangeFindInactive(0x10, 0x2D);
+    if (actor_1 == 0) {
+        return actor_1;
+    }
+    gActors[actor_1].actorType = 0x2E;
+    func_8001E2D0(actor_1);
+    gActors[actor_1].graphicFlags |= (gActors[actor_index].graphicFlags & 0x160) | 0x800;
+    gActors[actor_1].flags |= (gActors[actor_index].flags & 0x28) | 0x80000 | 0x08000000;
+    // fakematch: & 0xFFFF
+    gActors[actor_1].graphicIndex = (((D_800BE6A4 & 0xFFFF) + gCurrentFramebufferIndex) * 2) + 2;
+    gActors[actor_1].posX.raw = gActors[actor_index].posX.raw;
+    gActors[actor_1].posY.raw = gActors[actor_index].posY.raw;
+    gActors[actor_1].posZ.raw = gActors[actor_index].posZ.raw + 0xFFFE8000;
+    gActors[actor_1].var_150 = 0xF;
+    gActors[actor_1].graphicFlags |= 0x10;
+    gActors[actor_1].colorR = 0x7F;
+    gActors[actor_1].colorG = 0x7F;
+    gActors[actor_1].unk_14C = actor_index;
+    gActors[actor_1].state = 1;
+    return actor_1;
+}
 
 // "tick" of actor for Marina's after-image
 #pragma GLOBAL_ASM("asm/nonmatchings/59EA0/func_8005C3C8.s")

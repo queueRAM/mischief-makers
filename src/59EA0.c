@@ -635,7 +635,7 @@ void func_8005B1E8(u16 actor_index) {
     u16 actor_1;
     u8 temp_v0;
 
-    if ((((D_8013745C + 0) + actor_index) % 5) == 0) {
+    if ((((s32)D_8013745C + actor_index) % 5) == 0) {
         if ((actor_index >= 0x10) || gActors[actor_index].unk_0A0) {
             sp2C[0] = gActors[actor_index].posX.whole;
             sp2C[1] = gActors[actor_index].posY.whole + gActors[actor_index].hitboxBY1;
@@ -680,7 +680,51 @@ void func_8005B1E8(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/59EA0/func_8005B3F4.s")
+void func_8005B3F4(u16 actor_index) {
+    s32 sp2C[5];
+    u16 actor_1;
+    u8 temp_v0_2;
+
+    if (((s32)D_8013745C + actor_index) % 4) {
+        return;
+    }
+    if ((actor_index >= 0x10) || gActors[actor_index].unk_0A0) {
+        sp2C[0] = gActors[actor_index].posX.whole + func_8005C708(gButton_RTrig / 2);
+        sp2C[1] = gActors[actor_index].posY.whole + gActors[actor_index].hitboxBY1;
+        sp2C[2] = gActors[actor_index].posZ.whole + 1;
+        actor_1 = func_800592A0(actor_index, sp2C);
+        if (!actor_1) {
+            return;
+        }
+        gActors[actor_1].graphicFlags |= 1;
+        gActors[actor_1].graphicIndex = 0x1C6;
+        gActors[actor_1].var_154 = -0xA;
+        gActors[actor_1].unk_148 = 20.0f;
+        gActors[actor_1].timer_110 = 0.06f;
+        gActors[actor_1].unk_118 = -0.008f;
+        gActors[actor_1].unk_114 = 0.1f;
+        gActors[actor_1].unk_11C = -0.01f;
+        temp_v0_2 = func_8005D1B0(actor_index);
+        switch (temp_v0_2) {
+        default:
+            gActors[actor_1].scaleX = 0.1f;
+            gActors[actor_1].scaleY = 0.1f;
+            break;
+        case 0:
+            gActors[actor_1].scaleX = 0.05f;
+            gActors[actor_1].scaleY = 0.05f;
+            break;
+        case 1:
+            gActors[actor_1].scaleX = 0.1f;
+            gActors[actor_1].scaleY = 0.1f;
+            break;
+        case 2:
+            gActors[actor_1].scaleX = 0.2f;
+            gActors[actor_1].scaleY = 0.2f;
+            break;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/59EA0/func_8005B5FC.s")
 

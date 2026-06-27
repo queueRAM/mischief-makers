@@ -16,6 +16,7 @@ typedef struct {
     f32 unk20;
 } Unk_func_8005A930_Arg0;
 
+extern ActorFunc D_800D3FD0[];
 extern u16 D_800D82EA;
 extern u16 D_800D84C8[]; // guess
 extern u16 D_800D84CA; // might be &D_800D84C8[1]
@@ -894,7 +895,29 @@ void func_8005BCF8(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/59EA0/func_8005BFA4.s")
+void func_8005BFA4(u16 actor_index) {
+    switch (gActors[actor_index].unk_180_u8[3]) {
+    case 4:
+        func_8005B1E8(actor_index);
+        break;
+    case 5:
+        func_8005B3F4(actor_index);
+        break;
+    case 6:
+        func_8005BA38(actor_index);
+        break;
+    case 7:
+        func_8005BBC0(actor_index);
+        break;
+    case 8:
+        func_8005BCF8(actor_index);
+        break;
+    }
+    gActors[actor_index].unk_180_u8[3] = 0;
+    if (gActors[actor_index].unk_180_u8[1] != 0) {
+        D_800D3FD0[gActors[actor_index].unk_180_u8[1]](actor_index);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/59EA0/func_8005C098.s")
 

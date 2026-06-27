@@ -1,10 +1,38 @@
 #include "common.h"
 
+typedef void (*Actor2Func)(u16 actor_0, u16 arg1);
+
+extern Actor2Func D_8019B00C;
+extern Actor2Func D_8019B010;
+extern Actor2Func D_8019B014;
+
+#ifdef NON_MATCHING
+// https://decomp.me/scratch/Hzrpy
+void func_8005D630(u16 arg0, u16 arg1) {
+    D_8019B00C(arg0, 0);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/5E230/func_8005D630.s")
+#endif
 
+
+#ifdef NON_MATCHING
+// https://decomp.me/scratch/RtXvt
+void func_8005D664(u16 arg0, u16 arg1) {
+    D_8019B010(arg0, arg1);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/5E230/func_8005D664.s")
+#endif
 
+#ifdef NON_MATCHING
+// https://decomp.me/scratch/F4HIF
+void func_8005D6A0(u16 arg0, u16 arg1) {
+    D_8019B014(arg0, arg1);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/5E230/func_8005D6A0.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/5E230/func_8005D6DC.s")
 

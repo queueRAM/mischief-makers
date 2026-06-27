@@ -21,7 +21,12 @@ extern u16 D_800D82EA;
 extern u16 D_800D84C8[]; // guess
 extern u16 D_800D84CA; // might be &D_800D84C8[1]
 
+extern s16 D_801370D0;
+extern u16 D_801370D8[];
+extern s16 D_801371D8[];
+extern s16 D_801372D8[];
 extern s32 D_8013745C;
+extern u16 D_80137480[];
 
 u16 func_800592A0(u16 actor_index, s32* arg1) {
     u16 free_actor;
@@ -976,4 +981,33 @@ u16 func_8005C250(u16 actor_index) {
 }
 
 // "tick" of actor for Marina's after-image
-#pragma GLOBAL_ASM("asm/nonmatchings/59EA0/func_8005C3C8.s")
+void func_8005C3C8(u16 actor_index) {
+    s32 temp_v0;
+    s32 temp_t1;
+
+    switch (gActors[actor_index].state) {
+    case 0:
+        temp_v0 = (D_801370D0 - gActors[actor_index].var_158);
+        temp_t1 = temp_v0 & 0x7F;
+        gActors[actor_index].graphicIndex = D_801370D8[temp_t1];
+        if ((D_80137480[(D_800BE6A4 & 0xFFFF7FFF) + gCurrentFramebufferIndex] & 0x8000) == 0) {
+            gActors[actor_index].flags &= ~0x20;
+        }
+        else {
+            gActors[actor_index].flags |= 0x20;
+        }
+        gActors[actor_index].posX.whole = D_801371D8[temp_t1] - gScreenPosCurrentX.whole;
+        gActors[actor_index].posY.whole = D_801372D8[temp_t1] - gScreenPosCurrentY.whole;
+        gActors[actor_index].var_150--;
+        if (gActors[actor_index].var_150 == 0) {
+            gActors[actor_index].flags = 0;
+        }
+        break;
+    case 1:
+        gActors[actor_index].colorA -= gActors[actor_index].var_150;
+        if (gActors[actor_index].colorA < gActors[actor_index].var_150) {
+            gActors[actor_index].flags = 0;
+        }
+        break;
+    }
+}

@@ -924,7 +924,30 @@ void func_8005C098(u16 actor_index, s32 arg1) {
 }
 
 // unused variant of after-image. uses arrays to store history.
-#pragma GLOBAL_ASM("asm/nonmatchings/59EA0/func_8005C0CC.s")
+u16 func_8005C0CC(u16 actor_index) {
+    gActors[0x2D].actorType = gActors[0x2E].actorType = gActors[0x2F].actorType = 0x2E;
+    func_8001E2D0(0x2D);
+    func_8001E2D0(0x2E);
+    func_8001E2D0(0x2F);
+    gActors[0x2D].graphicFlags |= (gActors[actor_index].graphicFlags & 0x160) | 0x800;
+    gActors[0x2E].graphicFlags |= (gActors[actor_index].graphicFlags & 0x160) | 0x800;
+    gActors[0x2F].graphicFlags |= (gActors[actor_index].graphicFlags & 0x160) | 0x800;
+    gActors[0x2D].flags |= (gActors[actor_index].flags & 8) | 0x08000000;
+    gActors[0x2E].flags |= (gActors[actor_index].flags & 8) | 0x08000000;
+    gActors[0x2F].flags |= (gActors[actor_index].flags & 8) | 0x08000000;
+    gActors[0x2D].var_150 = 0x14;
+    gActors[0x2E].var_150 = 0x19;
+    gActors[0x2F].var_150 = 0x1E;
+    gActors[0x2D].var_158 = 0x14;
+    gActors[0x2E].var_158 = 0xF;
+    gActors[0x2F].var_158 = 0xA;
+    gActors[0x2D].colorA = 0x40;
+    gActors[0x2E].colorA = 0x80;
+    gActors[0x2F].colorA = 0xC0;
+    gActors[0x2D].unk_14C = gActors[0x2E].unk_14C = gActors[0x2F].unk_14C = actor_index;
+    gActors[0x2D].state = gActors[0x2E].state = gActors[0x2F].state = 0;
+    return actor_index;
+}
 
 // spawns after-image of Marina while dashing
 #pragma GLOBAL_ASM("asm/nonmatchings/59EA0/func_8005C250.s")

@@ -195,7 +195,9 @@ s32 func_8005DFC8(s32 arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/5E230/func_8005E09C.s")
+void func_8005E09C(s32 arg0, s32 arg1) {
+    D_801783F8[arg0] = arg1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/5E230/func_8005E0B0.s")
 

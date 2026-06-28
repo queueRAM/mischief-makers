@@ -2,7 +2,7 @@
 
 typedef void (*Actor2Func)(u16 actor_0, u16 arg1);
 
-extern s16 D_800D5820;
+extern u16 D_800D5820;
 
 extern s8 D_801782DC;
 extern s16 D_801782E0;
@@ -18,6 +18,8 @@ extern u16 D_80178438; // end of D_80178418
 extern u16 D_8017843A;
 extern u16 D_8017843C;
 extern u16 D_8017843E;
+extern s16 D_80178440;
+extern s16 D_80178442;
 
 #define D_8019B000 ((Actor2Func*)0x8019B000)
 #define D_80192020 ((Actor2Func*)0x80192020)
@@ -370,7 +372,91 @@ void func_8005E260(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/5E230/func_8005E56C.s")
+void func_8005E56C(u16 actor_index) {
+    s16 index;
+    u16 actor_1;
+
+    actor_1 = gActors[actor_index].unk_0D6;
+    switch (gActors[actor_index].stateLower) {
+    case 0:
+        gActors[actor_index].graphicFlags |= 0x11;
+        gActors[actor_index].graphicIndex = 0x134;
+        gActors[actor_index].colorA = 0xD8;
+        gActors[actor_index].unk_0DB = 0x17;
+        gActors[actor_index].health = 1;
+        gActors[actor_index].damage = 0;
+        gActors[actor_index].hitboxAY0 = 0xC; \
+        gActors[actor_index].hitboxAY1 = -0xC;
+        gActors[actor_index].unk_0DF = 0;
+        gActors[actor_index].timer_110 = 0.0f;
+        if (gActors[actor_index].unk_104 < 0) {
+            gActors[actor_index].flags |= 0x20;
+            gActors[actor_index].hitboxAX0 = -0x14; \
+            gActors[actor_index].hitboxAX1 = 8;
+        }
+        else {
+            gActors[actor_index].flags &= ~0x20;
+            gActors[actor_index].hitboxAX0 = -8; \
+            gActors[actor_index].hitboxAX1 = 0x14;
+        }
+        gActors[actor_index].state = 1;
+        /* fallthrough */
+    case 1:
+        gActors[actor_index].posX.raw = gActors[actor_1].posX.raw;
+        gActors[actor_index].posY.raw = gActors[actor_1].posY.raw;
+        gActors[actor_index].posZ.raw = gActors[actor_1].posZ.raw;
+        gActors[actor_index].posX.raw += gActors[actor_index].unk_104;
+        gActors[actor_index].posY.raw += gActors[actor_index].unk_108;
+        gActors[actor_index].posZ.raw += gActors[actor_index].unk_10C;
+        gActors[actor_index].timer_110 += 0.1;
+        if (gActors[actor_index].timer_110 >= 1.0) {
+            gActors[actor_index].timer_110 = 1.0f;
+            gActors[actor_index].flags |= 0x200;
+        }
+        func_8005E1CC(actor_index, gActors[actor_index].timer_110);
+        if (gActors[actor_1].flags_098 & 0x40000) {
+            gActors[actor_1].flags_098 |= 0x100000;
+            if ((gActors[actor_index].stateLower < 2) && (D_800D5820 == 0)) {
+                if (gActors[actor_index].flags_098 & 1) {
+                    if ((gButtonPress & gButton_LTrig) || (gButtonPress & gButton_RTrig)) {
+                        gActors[actor_index].flags &= ~0x200;
+                        gActors[actor_index].state = 2;
+                        Sound_PlaySfx(0x10D);
+                        D_80178440 = gPlayerPosX.whole;
+                        D_80178442 = gPlayerPosY.whole;
+                        gActors[actor_1].flags_098 &= 0xFFEFFFFF;
+                    }
+                }
+            }
+        }
+        else {
+            gActors[actor_1].flags_098 &= 0xFFEFFFFF;
+            gActors[actor_index].state = 3;
+        }
+        break;
+    case 2:
+        index = 0;
+        func_8005DFC8(((UnkActor_150*)(&gActors[actor_index].var_150))[index].unk2);
+        index++;
+        while (index < 0x10) {
+            func_8005DF5C(((UnkActor_150*)(&gActors[actor_index].var_150))[index].unk2);
+            index++;
+        }
+        D_800D5820 = actor_1;
+        gActors[actor_index].state = 3;
+        break;
+    case 3:
+        func_8005E1CC(actor_index, gActors[actor_index].timer_110);
+        if (gActors[actor_index].timer_110 > 0.0f) {
+            gActors[actor_index].timer_110 -= 0.1;
+        }
+        else {
+            gActors[actor_index].flags = 0;
+            gActors[actor_index].state = 4;
+        }
+        break;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/5E230/func_8005E8F8.s")
 

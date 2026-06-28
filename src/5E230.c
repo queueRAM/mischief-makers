@@ -143,7 +143,10 @@ s16 func_8005DF30(void) {
     return D_801783F8[0];
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/5E230/func_8005DF40.s")
+void func_8005DF40(s16 arg0, s16 arg1) {
+    D_801783F4 = arg0;
+    D_801783F6 = arg1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/5E230/func_8005DF5C.s")
 

@@ -2,6 +2,8 @@
 
 typedef void (*Actor2Func)(u16 actor_0, u16 arg1);
 
+extern s16 D_800D5820;
+
 extern s8 D_801782DC;
 extern s16 D_801783EE;
 extern s16 D_801783F0;
@@ -148,7 +150,21 @@ void func_8005DF40(s16 arg0, s16 arg1) {
     D_801783F6 = arg1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/5E230/func_8005DF5C.s")
+s32 func_8005DF5C(s32 arg0) {
+   s32 var_v1;
+
+    D_800D5820 = 0;
+    D_800D5830 = 0;
+    D_800D5834 = 0x46;
+    for (var_v1 = 0; var_v1 < 0x10; var_v1++) {
+        if (D_80178418[var_v1] == 0) {
+            D_801783F8[var_v1] = 0;
+            D_80178418[var_v1] = arg0;
+            break;
+        }
+    }
+    return var_v1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/5E230/func_8005DFC8.s")
 

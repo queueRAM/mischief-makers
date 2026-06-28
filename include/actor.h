@@ -235,7 +235,10 @@ typedef struct {
     // NOTE: trying to use unions for these variables for different datatypes (u8[4],u16[2])
     //  may cause mismatch due to "narrowing"
 
-    /* 0x150 */ s32 var_150;
+    union {
+        /* 0x150 */ s32 var_150;
+        /* 0x150 */ s16 var_150_s16[2];
+    };
     /* 0x154 */ s32 var_154;
     /* 0x158 */ s32 var_158;
     /* 0x15C */ s32 var_15C;

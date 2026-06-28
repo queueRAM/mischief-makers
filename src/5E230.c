@@ -5,6 +5,8 @@ typedef void (*Actor2Func)(u16 actor_0, u16 arg1);
 extern s16 D_800D5820;
 
 extern s8 D_801782DC;
+extern s16 D_801782E0;
+extern s16 D_801782E2;
 extern s16 D_801783EE;
 extern s16 D_801783F0;
 extern s16 D_801783F2;
@@ -20,6 +22,9 @@ extern u16 D_8017843E;
 extern Actor2Func D_8019B00C;
 extern Actor2Func D_8019B010;
 extern Actor2Func D_8019B014;
+
+void func_8005EC20(s16, s16);
+void func_800831D0(s16, s16, s16, s16);
 
 #ifdef NON_MATCHING
 // https://decomp.me/scratch/Hzrpy
@@ -199,19 +204,15 @@ void func_8005E09C(s32 arg0, s32 arg1) {
     D_801783F8[arg0] = arg1;
 }
 
-#ifdef NON_MATCHING
-void func_8005EC20(s16, s16);                   /* extern */
-void func_800831D0(s16, s16, s16, s16);                /* extern */
-extern s16 D_801782E0;
-extern s16 D_801782E2;
-
 void func_8005E0B0(s16 arg0, s16 arg1, s32 arg2) {
     if (arg2 == 2) {
         func_8005EC20(arg0, arg1);
     }
     else if (arg0 > 0) {
-        if ((arg0 < 0x81) && (D_801782E0 != 1)) {
+        if (arg0 < 0x81) {
             switch (D_801782E0) {
+            case 1:
+                break;
             case 2:
                 arg0 += 0x7C;
                 break;
@@ -228,9 +229,6 @@ void func_8005E0B0(s16 arg0, s16 arg1, s32 arg2) {
         }
     }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/5E230/func_8005E0B0.s")
-#endif
 
 void func_8005E1CC(u16 actor_index, f32 arg1) {
     f32 temp_f0;
@@ -246,6 +244,7 @@ void func_8005E1CC(u16 actor_index, f32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/5E230/func_8005E8F8.s")
 
+void func_8005EC20(s16, s16);                   /* extern */
 #pragma GLOBAL_ASM("asm/nonmatchings/5E230/func_8005EC20.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/5E230/func_8005EE24.s")

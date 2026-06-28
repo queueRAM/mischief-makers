@@ -129,7 +129,15 @@ void func_8005DE30(void) {
     D_801783F6 = 0xC;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/5E230/func_8005DEFC.s")
+s16 func_8005DEFC(void) {
+    s16 var_v1;
+
+    var_v1 = D_80178418[0];
+    if (var_v1 != 0) {
+        var_v1 |= D_801783F8[0] & 0x8000;
+    }
+    return var_v1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/5E230/func_8005DF30.s")
 

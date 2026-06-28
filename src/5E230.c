@@ -232,7 +232,13 @@ void func_8005E0B0(s16 arg0, s16 arg1, s32 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/5E230/func_8005E0B0.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/5E230/func_8005E1CC.s")
+void func_8005E1CC(u16 actor_index, f32 arg1) {
+    f32 temp_f0;
+
+    temp_f0 = arg1 / 5.0f;
+    gActors[actor_index].scaleX = arg1 + (temp_f0 * COS(gActiveFrames * 0x20));
+    gActors[actor_index].scaleY = arg1 + (temp_f0 * SIN(gActiveFrames * 0x20));
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/5E230/func_8005E260.s")
 

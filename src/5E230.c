@@ -199,7 +199,38 @@ void func_8005E09C(s32 arg0, s32 arg1) {
     D_801783F8[arg0] = arg1;
 }
 
+#ifdef NON_MATCHING
+void func_8005EC20(s16, s16);                   /* extern */
+void func_800831D0(s16, s16, s16, s16);                /* extern */
+extern s16 D_801782E0;
+extern s16 D_801782E2;
+
+void func_8005E0B0(s16 arg0, s16 arg1, s32 arg2) {
+    if (arg2 == 2) {
+        func_8005EC20(arg0, arg1);
+    }
+    else if (arg0 > 0) {
+        if ((arg0 < 0x81) && (D_801782E0 != 1)) {
+            switch (D_801782E0) {
+            case 2:
+                arg0 += 0x7C;
+                break;
+            case 3:
+                arg0 += 0xCD;
+                break;
+            }
+        }
+        if (arg2 != 0) {
+            func_8005EC20(arg0, arg1);
+        }
+        else {
+            func_800831D0(arg1 % 32, arg1 / 32, arg0, D_801782E2);
+        }
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/5E230/func_8005E0B0.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/5E230/func_8005E1CC.s")
 

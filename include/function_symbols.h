@@ -169,7 +169,7 @@ extern void Camera_UpdateViewBounds(void);
 extern s32 func_80046D5C(void);
 extern s32 Cutscene_CheckSkipInput(void);
 extern void func_80047714(s32 arg0, u16 arg1, u16 arg2, u16 arg3);
-extern void func_8005DFC8(s32 arg0);
+extern s32 func_8005DFC8(s32 arg0);
 extern void func_8008105C(u16 actor_index, void* arg1, void* arg2);
 extern void func_80081478(u16 actor_index, void* arg1, s32 arg2);
 extern void func_80081790(u16 actor_index, void* arg1);

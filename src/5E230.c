@@ -12,7 +12,7 @@ extern s16 D_801783F4;
 extern s16 D_801783F6;
 extern s16 D_801783F8[];
 extern s16 D_80178418[];
-extern u16 D_80178438;
+extern u16 D_80178438; // end of D_80178418
 extern u16 D_8017843A;
 extern u16 D_8017843C;
 extern u16 D_8017843E;
@@ -166,7 +166,34 @@ s32 func_8005DF5C(s32 arg0) {
     return var_v1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/5E230/func_8005DFC8.s")
+s32 func_8005DFC8(s32 arg0) {
+    s32 index;
+
+    if (func_8005DEFC() == 0) {
+        return func_8005DF5C(arg0);
+    }
+    index = 1;
+    if (D_801783F0 == 0) {
+        index = 0;
+    }
+    if (D_801783F0 == 1) {
+        D_801783F0 = 2;
+    }
+    if (D_801783F0 == 2) {
+        D_801783F2 = -1;
+    }
+    for (; index < 0x10; index++) {
+        D_801783F8[index] = 0;
+        D_80178418[index] = arg0;
+        arg0 = 0;
+    }
+    if (D_801783F0 == 0) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/5E230/func_8005E09C.s")
 

@@ -573,7 +573,71 @@ u16 func_8005EC20(s16 arg0, s16 arg1, s32 arg2) {
     gActors[actor_index].unk_14C = D_80178418[0];
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/5E230/func_8005EE24.s")
+void func_8005EE24(u16 actor_index) {
+    if (gActors[actor_index].unk_14C != D_80178418[0]) {
+        gActors[actor_index].flags = 0;
+        return;
+    }
+    switch (gActors[actor_index].stateLower) {
+    case 0:
+        if (D_801783F0 == 2) {
+            gActors[actor_index].stateLower = 1;
+        }
+        break;
+    case 1:
+        if (D_801783F0 == 3) {
+            gActors[actor_index].var_150 = 0;
+            gActors[actor_index].stateUpper = 1;
+            gActors[actor_index].scaleX = 1.0f;
+        }
+        if (D_801783F0 == 1) {
+            gActors[actor_index].flags = 0;
+        }
+        break;
+    case 10:
+        if (gActors[actor_index].stateUpper == 0) {
+            gActors[actor_index].stateUpper = 0xA;
+        }
+        if (D_801783F0 >= 2) {
+            gActors[actor_index].stateLower = 0xB;
+        }
+        break;
+    case 11:
+        if (D_801783F0 != 2) {
+            gActors[actor_index].flags = 0;
+        }
+        break;
+    }
+    switch (gActors[actor_index].stateUpper) {
+    case 0:
+        gActors[actor_index].scaleX += gActors[actor_index].timer_110;
+        if (gActors[actor_index].scaleX >= 1.5) {
+            gActors[actor_index].scaleX = 1.5f;
+            gActors[actor_index].var_150 = 0xF;
+            gActors[actor_index].stateUpper = 1;
+        }
+        break;
+    case 1:
+        if (gActors[actor_index].var_150 != 0) {
+            gActors[actor_index].var_150--;
+        }
+        else {
+            gActors[actor_index].scaleX += gActors[actor_index].unk_114;
+            if (gActors[actor_index].scaleX <= 1.0) {
+                gActors[actor_index].scaleX = 1.0f;
+                gActors[actor_index].var_150 = D_801782E2;
+                D_801782E2 = gActors[actor_index].var_154;
+                func_8005E0B0(gActors[actor_index].var_158, gActors[actor_index].var_15C, 0);
+                D_801782E2 = gActors[actor_index].var_150;
+                gActors[actor_index].flags = 0;
+            }
+        }
+        break;
+    default:
+        break;
+    }
+    gActors[actor_index].scaleY = gActors[actor_index].scaleX;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/5E230/func_8005F088.s")
 

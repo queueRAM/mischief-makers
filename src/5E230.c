@@ -3,13 +3,18 @@
 typedef void (*Actor2Func)(u16 actor_0, u16 arg1);
 
 extern s32 D_800D1954[];
-extern u16 D_800D5820;
 extern s16 D_800E1474;
 
+extern s8* D_801782D8;
 extern s8 D_801782DC;
 extern s16 D_801782DE;
 extern s16 D_801782E0;
 extern s16 D_801782E2;
+extern s16 D_801782E8[];
+
+extern s16 D_801783E8;
+extern s16 D_801783EA;
+extern s16 D_801783EC;
 extern s16 D_801783EE;
 extern s16 D_801783F0;
 extern s16 D_801783F2;
@@ -24,11 +29,16 @@ extern u16 D_8017843E;
 extern s16 D_80178440;
 extern s16 D_80178442;
 
+extern s16 D_800D5838[];
+extern s8* D_800D73C0[];
+
 #define D_8019B000 ((Actor2Func*)0x8019B000)
 #define D_80192020 ((Actor2Func*)0x80192020)
 #define D_80192030 ((Actor2Func*)0x80192030)
 #define D_80192060 ((Actor2Func*)0x80192060)
 #define D_801A6840 ((Actor2Func*)0x801A6840)
+
+#define D_801C1000 ((s32*)0x801C1000)
 
 u16 func_8005EC20(s16, s16, s32);
 
@@ -786,4 +796,270 @@ void func_8005F088(void) {
     }
 }
 
+#ifdef NON_MATCHING
+// https://decomp.me/scratch/q4YUZ
+void func_8005F6D4(void) {
+    s16 var_a1;
+    s16 var_s2;
+    s32 temp_t0;
+    s32 temp_t1;
+    s32 var_s6;
+    s16 var_s1;
+
+    if ((D_800D5820 != 0) && (D_800D5824 & 0x7000) &&
+        (((D_80178440 + 0x20) < gPlayerPosX.whole) || (gPlayerPosX.whole < (D_80178440 - 0x20)) ||
+         ((D_80178442 + 0x20) < gPlayerPosY.whole) || (gPlayerPosY.whole < (D_80178442 - 0x20)) ||
+         (func_80040A64()))) {
+        func_8005DFC8(0);
+    }
+
+    D_800D5824 = 0;
+    switch (D_801783F0) {
+    case 0:
+        if (D_80178418[0] != 0) {
+            if (D_800D5820 != 0) {
+                if (gActors->posY.whole >= 9) {
+                    D_801783F6 = -0x30;
+                }
+                else {
+                    D_801783F6 = 0x34;
+                }
+            }
+            D_800D582C = 0;
+            D_800D5828 = 0;
+            D_800D5824 = 0x4000;
+            D_801783EA = 0;
+            D_801783E8 = 0;
+            D_801783EC = 0;
+            D_801783EE = 2;
+            if (D_801783F8[0] & 0x2000) {
+                D_801782D8 = D_800D73C0[D_80178418[0]];
+            }
+            else {
+                D_801782D8 = (s8*)(D_801C1000[D_80178418[0]] - D_801C1000[0] + 0x801C1000);
+            }
+            var_s2 = D_801782D8[D_801783E8++] & 0xF;
+            D_801782DC = var_s2;
+            D_801782DE = 0;
+            D_801782E0 = 1;
+            D_801782E2 = 0;
+            func_8008310C();
+            D_801783F0 = 1;
+            D_801783F2 = 0;
+        }
+        break;
+    case 1:
+        D_800D5824 = 0x1000;
+        if (!(D_801782DC & 0x40)) {
+            if ((D_80178438 != 0) && (gActors[D_80178438].stateLower != 1)) {
+                break;
+            }
+        }
+        else {
+            D_801783EC = 0;
+        }
+        var_s2 = 0;
+        if (D_800D5828 >= 2) {
+            if (D_801783F2 != 0) {
+                var_s2 = gButtonHold & (gButton_LTrig | gButton_RTrig);
+            }
+            else if (gButtonHold & (gButton_LTrig | gButton_RTrig)) {
+                D_801783F2 = 1;
+            }
+        }
+        if ((D_801782DC & 0xF) == 1) {
+            var_s2 = 0;
+        }
+        if (var_s2 != 0) {
+            D_801783EC = 0;
+        }
+        if (D_801783EC != 0) {
+            D_801783EC--;
+        }
+        else {
+            D_801783EC = D_801783EE;
+            var_s6 = 0;
+            do
+            {
+                var_s2 = 0;
+                var_s1 = D_801782D8[D_801783E8++];
+                if (var_s1 < 0) {
+                    var_s2 = 1;
+                    switch (var_s1) {
+                    case -1:
+                        if ((D_801782DC & 0xF) == 1) {
+                            D_801783EC = 0x78;
+                        }
+                        D_801783F8[0] |= 0x4000;
+                        if (D_801782D8[D_801783E8] == -1) {
+                            D_801783F8[0] |= 0x8000;
+                            D_800D5824 = 0x800;
+                        }
+                        D_801783F0 = 2;
+                        var_s2 = 0;
+                        break;
+                    case -2:
+                        D_801783EA /= 32;
+                        D_801783EA++;
+                        D_801783EA *= 32;
+                        break;
+                    case -3:
+                        D_801783EC = D_801783EE = D_801782D8[D_801783E8++];
+                        break;
+                    case -4:
+                        D_801782DE = 0x1F4;
+                        D_801782DE += D_801782D8[D_801783E8++];
+                        if (D_801782DE < 0x1F4) {
+                            D_801782DE = 0;
+                        }
+                        break;
+                    case -5:
+                        D_801782E0 = D_801782D8[D_801783E8++];
+                        break;
+                    case -6:
+                        D_801782E2 = D_801782D8[D_801783E8++];
+                        break;
+                    case -7:
+                        var_s6 = 1;
+                        break;
+                    case -8:
+                        D_801783F8[0] = D_801782D8[D_801783E8++];
+                        break;
+                    case -9:
+                        temp_t0 = D_801782D8[D_801783E8++];
+                        var_s1 = D_800D5838[temp_t0];
+                        var_s6 = 2;
+                        var_s2 = 0;
+                        break;
+                    default:
+                        var_s1 = (((var_s1 & 0x7F) << 8) + ((u8*)D_801782D8)[D_801783E8++] + 0x102); // TODO: why is D_801782D8 u8 here?
+                        var_s2 = 0;
+                        break;
+                    }
+                }
+                if (var_s2 == 0) {
+                    if (var_s1 != 0) {
+                        D_800D5828++;
+                        if (D_8017843C != 0) {
+                            // TODO: check this goto cleanup
+                            if ((D_801783F2 != 1) ||
+                                !((gButtonHold & gButton_LTrig) || (gButtonHold & gButton_RTrig)) ||
+                                !(D_800D5828 & 3)) {
+                                switch (gActors[D_8017843C].graphicIndex) {
+                                default:
+                                    Sound_PlaySfx2(0x77);
+                                    break;
+                                case 0x202:
+                                case 0x220:
+                                case 0x224:
+                                case 0x226:
+                                case 0x228:
+                                case 0x22A:
+                                    Sound_PlaySfx2(0x79);
+                                    break;
+                                case 0x1F4:
+                                case 0x1F6:
+                                case 0x1F8:
+                                case 0x1FA:
+                                case 0x232:
+                                    Sound_PlaySfx2(0x10F);
+                                    break;
+                                case 0x1FC:
+                                case 0x1FE:
+                                case 0x200:
+                                case 0x218:
+                                case 0x21A:
+                                case 0x230:
+                                    Sound_PlaySfx2(0x110);
+                                    break;
+                                case 0x204:
+                                case 0x206:
+                                case 0x208:
+                                    Sound_PlaySfx2(0x112);
+                                    break;
+                                case 0x20A:
+                                case 0x20C:
+                                case 0x20E:
+                                    Sound_PlaySfx2(0x111);
+                                    break;
+                                case 0x210:
+                                case 0x212:
+                                case 0x214:
+                                case 0x216:
+                                    Sound_PlaySfx2(0x113);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    func_8005E0B0(var_s1, D_801783EA, var_s6);
+                    D_801782E8[D_801783EA++] = var_s1;
+                    var_s6 = 0;
+                }
+            } while (var_s2 || ((D_801782DC & 0x40) && (D_801783F0 != 2)));
+        }
+        break;
+    case 2:
+        if (!(D_801782DC & 0xF)) {
+            if (!(gButtonPress & (gButton_LTrig | gButton_RTrig)) && (D_801783F2 != -1)) {
+                D_800D5824 = 0x2000;
+                D_801783F2 = 0;
+                break;
+            }
+        }
+        else {
+            D_801783EC--;
+            if (D_801783EC > 0) {
+                break;
+            }
+        }
+        var_s1 = D_801782D8[D_801783E8];
+        D_801783EC = 0;
+        if ((var_s1 == -1) || (D_801783F2 == -1)) {
+            D_800D5824 = 0x8000;
+            Sound_PlaySfx(0x10E);
+            if (D_80178438 != 0) {
+                gActors[D_80178438].state = 2;
+            }
+            if (D_8017843A != 0) {
+                gActors[D_8017843A].state = 2;
+            }
+            if (D_8017843C != 0) {
+                gActors[D_8017843C].state = 5;
+            }
+            D_801783F0 = 3;
+        }
+        else {
+            func_8008310C();
+            D_800D582C++;
+            D_800D5828 = 0;
+            D_800D5824 = 0x4000;
+            D_801783F8[0] &= 0xBFFF;
+            D_801783F0 = 1;
+            D_801783EA = 0;
+        }
+        break;
+    case 3:
+        if ((D_80178438 == 0) && (D_8017843A == 0) && (D_8017843C == 0)) {
+            var_a1 = 0;
+            if (D_80178418[1] != 0) {
+                for (var_a1 = 0; var_a1 < 0xF; var_a1++) {
+                    D_801783F8[var_a1] = D_801783F8[var_a1 + 1];
+                    D_80178418[var_a1] = D_80178418[var_a1 + 1];
+                }
+            }
+            D_801783F8[var_a1] = 0;
+            D_80178418[var_a1] = 0;
+            D_801783F0 = 0;
+            D_801783EA = 0;
+            D_800D5820 = 0;
+        }
+        break;
+    }
+    if (D_801783F0 > 0) {
+        func_8005F088();
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/5E230/func_8005F6D4.s")
+#endif

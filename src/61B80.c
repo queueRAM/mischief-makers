@@ -926,7 +926,28 @@ void func_800648C4(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_80064AA0.s")
+void func_80064AA0(u16 duration, void* arg1) {
+    u16 actor_index = 0xC0;
+
+    gActors[actor_index].actorType = 0x74;
+    func_8001E2D0(actor_index);
+    gActors[actor_index].posX.whole = 0;
+    gActors[actor_index].posY.whole = 0;
+    if (duration == 1) {
+        gActors[actor_index].var_154 = 1;
+    }
+    else if (duration & 0x8000) {
+        gActors[actor_index].var_154 = (duration & 0x7FFF) + 2;
+        Sound_StartFade(0x81, duration & 0x7FFF);
+        gActors[actor_index].var_15C = gMusicSequenceId;
+    }
+    else {
+        gActors[actor_index].var_154 = duration + 2;
+        Sound_StartFade(0x81, duration);
+        gActors[actor_index].var_15C = 0;
+    }
+    gActors[actor_index].var_158 = (s32)arg1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_80064B60.s")
 

@@ -58,7 +58,6 @@ extern s16 D_800E13FC[];
 
 extern u32 D_801374DC; // time duration
 
-extern u16 gRedGems;
 extern s16 D_801781C0[]; // SFX volumes stored during pause
 extern u16 D_801781C8;
 extern u16 D_801781CA;

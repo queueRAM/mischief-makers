@@ -39,7 +39,6 @@ extern s32 D_800D2514[];
 extern s32 D_800D258C[];
 extern u16 D_800D25BC[]; // grouped by step count 5 (0xA bytes)
 extern s32 D_800D26E0[];
-extern s16 D_800D26F4[];
 extern u16 D_800D2714[];
 extern s16 D_800D271C[];
 extern u8 D_800D2750[];
@@ -86,7 +85,6 @@ extern s32 D_800E357C; // nearest actor delta Y
 extern u16 D_800E3580; // nearest actor index, updated in Actor_NearestFromList
 extern s32 D_80137444;
 extern u16 D_80137450;
-extern u16 gRedGems;
 
 extern Unk800D1788 D_800D1788[];
 extern u16 D_800D17FC[]; // text palette
@@ -116,7 +114,6 @@ u16 func_8003F9E0(f32, s16, s16, s16);
 void SpawnParticle_RingSparkle(u16 unused_arg0, s32 unused_arg1, f32 scale, s16 pos_x, s16 pos_y, s16 pos_z);
 u16 SpawnParticle_RingWaveGreen(f32 arg0, s16 x, s16 y, s16 z);
 u16 SpawnParticle_RingWaveYellow(f32 arg0, s16 x, s16 y, s16 z);
-u16 SpawnParticle_RingWaveRed(f32 arg0, s16 x, s16 y, s16 z);
 u16 SpawnParticle_RingWaveBlue(f32 arg0, s16 x, s16 y, s16 z);
 u16 func_8003FF68(u16 actor_index, f32 scale);
 void func_80040E08(u16 actor_index, u16 arg1);

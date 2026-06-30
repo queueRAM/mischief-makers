@@ -1092,6 +1092,16 @@ void func_80065178(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_80065218.s")
+void func_80065218(void) {
+    D_800D5820 = 0;
+    D_800D5834 = 0x100;
+    if (gPortraits[0x40].posY.whole > 0) {
+        func_8005DF40(-3, 0x3C);
+        return;
+    }
+    else {
+        func_8005DF40(-3, -0x2C);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_80065270.s")

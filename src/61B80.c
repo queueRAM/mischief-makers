@@ -662,18 +662,27 @@ void func_80062F84(u16 actor_index) {
     }
 }
 
-void func_800630E8(u16 arg0) {
-    if ((gActors[arg0].unk_0D8 < 0x30) && (func_800486F4() == 4) && (func_80012AB4(gActors[arg0].posX.whole + 9, gActors[arg0].posY.whole) != 0)) {
-        if (func_80012AB4(gActors[arg0].posX.whole, gActors[arg0].posY.whole) == 0x36) {
-            gActors[arg0].state = 0x60;
+void func_800630E8(u16 actor_index) {
+    if ((gActors[actor_index].unk_0D8 < 0x30) && (func_800486F4() == 4) && (func_80012AB4(gActors[actor_index].posX.whole + 9, gActors[actor_index].posY.whole) != 0)) {
+        if (func_80012AB4(gActors[actor_index].posX.whole, gActors[actor_index].posY.whole) == 0x36) {
+            gActors[actor_index].state = 0x60;
         }
         else {
-            gActors[arg0].state = 0x61;
+            gActors[actor_index].state = 0x61;
         }
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_800631A0.s")
+void func_800631A0(u16 actor_index) {
+    if ((gActors[actor_index].unk_0D8 < 0x30) && (func_800486F4() == 0xC) && (func_80012AB4(gActors[actor_index].posX.whole - 9, gActors[actor_index].posY.whole) != 0)) {
+        if (func_80012AB4(gActors[actor_index].posX.whole, gActors[actor_index].posY.whole) == 0x36) {
+            gActors[actor_index].state = 0x62;
+        }
+        else {
+            gActors[actor_index].state = 0x63;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_80063258.s")
 

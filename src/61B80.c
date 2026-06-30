@@ -1,4 +1,5 @@
 #include "common.h"
+#include "debug_level_select.h"
 
 typedef struct {
     u8 unk0[0x20];
@@ -982,7 +983,43 @@ void func_80064B60(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_80064CB4.s")
+void func_80064CB4(u16 actor_index) {
+    s32 pad0;
+    u16* vals;
+    u16 pad1;
+
+    gActors[actor_index].posX.raw = gActors[actor_index + 1].posX.raw;
+    gActors[actor_index].posY.raw = gActors[actor_index + 1].posY.raw;
+    switch (gActors[actor_index].state) {
+    case 0:
+        gActors[actor_index].state++;
+        /* fallthrough */
+    case 1:
+        if (((gActors[actor_index + 1].flags_098 & 0x200) && (gActors[actor_index + 1].flags_098 & 0x20000) && (gActors[actor_index].unk_0D8 & 0x100)) ||
+            ((gActors[actor_index + 1].flags == 0) && !(gActors[actor_index].unk_0D8 & 0x100))) {
+            vals = &D_800D2690[(gActors[actor_index].unk_0D8 & 0xFF) * 3];
+            if ((vals[2] == 8) && (vals[0] == 0x32) && YellowGem_GetFlag(gCurrentStage)) {
+                gActors[actor_index].flags = 0;
+            }
+            else {
+                gActors[actor_index].actorType = vals[2];
+                func_8001E2D0(actor_index);
+                gActors[actor_index].timer_110 = vals[0];
+                gActors[actor_index].unk_0D8 = vals[1];
+                gActors[actor_index].posZ.whole = gActors[actor_index + 1].posZ.whole - 1;
+                if (gActors[actor_index].actorType == 8) {
+                    gActors[actor_index].var_150 = 0x78;
+                    gActors[actor_index].velocityY.raw = 0x40000;
+                    Sound_PlaySfxAtActor2(0x51, actor_index);
+                }
+                else {
+                    Sound_PlaySfxAtActor2(0x116, actor_index);
+                }
+            }
+        }
+        break;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_80064EB4.s")
 

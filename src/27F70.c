@@ -38,7 +38,6 @@ extern s32 D_800D24F4[];
 extern s32 D_800D2514[];
 extern s32 D_800D258C[];
 extern u16 D_800D25BC[]; // grouped by step count 5 (0xA bytes)
-extern u16 D_800D2690[]; // grouped by step count 3 (0x6 bytes)
 extern s32 D_800D26E0[];
 extern s16 D_800D26F4[];
 extern u16 D_800D2714[];

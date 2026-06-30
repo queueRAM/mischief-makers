@@ -792,7 +792,20 @@ void func_800641CC(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_80064328.s")
+s32 func_80064328(u16 actor_index) {
+    gActors[actor_index].scaleX += gActors[actor_index].unk_114 * 8.0f;
+    gActors[actor_index].scaleY = gActors[actor_index].scaleX;
+    gActors[actor_index].unk_174 += 1;
+    gActors[actor_index].colorA += 4;
+    if (gActors[actor_index].colorA == 0xA0) {
+        gActors[actor_index].unk_114 = gActors[actor_index].scaleX / 320.0f;
+        gActors[actor_index].unk_118 = gActors[actor_index].scaleY;
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_800643CC.s")
 

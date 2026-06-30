@@ -372,7 +372,10 @@ u8 func_80062A34(u16 actor_index) {
             (func_80012AB4(gActors[actor_index].posX.whole, gActors[actor_index].posY.whole + 8) != 0x36));
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_80062AC0.s")
+u8 func_80062AC0(u16 actor_index) {
+    return ((func_80012AB4(gActors[actor_index].posX.whole, gActors[actor_index].posY.whole) == 0x36) &&
+            (func_80012AB4(gActors[actor_index].posX.whole, gActors[actor_index].posY.whole - 8) != 0x36));
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_80062B4C.s")
 

@@ -1,7 +1,20 @@
 #include "common.h"
 
+typedef struct {
+    u8 unk0[0x20];
+} Unk_Struct_u8_20;
+
+#define D_803402D0 ((Unk_Struct_u8_20*)0x803402D0)
+#define D_803406D0 ((Unk_Struct_u8_20*)0x803406D0)
+#define D_80340DE0 ((Unk_Struct_u8_20*)0x80340DE0)
+#define D_803409E0 ((Unk_Struct_u8_20*)0x803409E0)
+
 extern s32 D_800D74A0[];
 extern u16 D_800D7508[];
+
+extern u16 D_80178450;
+extern u16 D_80178452;
+extern u16 D_80178454;
 
 void func_80060F80(u16 arg0) {
 }
@@ -137,7 +150,211 @@ void func_800615BC(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_80061624.s")
+void func_80061624(u16 actor_index) {
+    s32 temp_f6;
+    s16 temp_v0;
+    s16 index;
+    s16 jndex;
+    s32 pad0;
+    s32 pad1;
+    s32 pad2;
+    s32 pad3;
+
+    switch (gActors[actor_index].state) {
+        case 0x0:
+            gActors[actor_index].graphicTimer = 0;
+            temp_f6 = (s32) gActors[actor_index].timer_110;
+            gActors[actor_index].var_150 = temp_f6 & 0xFF00;
+            gActors[actor_index].var_154 = temp_f6 & 0xFF;
+            switch (gActors[actor_index].var_154) {
+                case 0:
+                default:
+                    goto sw_1_case_0;
+                case 1:
+                    goto sw_1_case_1;
+                case 3:
+                    goto sw_1_case_3;
+                case 4:
+                    goto sw_1_case_4;
+                case 5:
+                    goto sw_1_case_5;
+                case 6:
+                    goto sw_1_case_6;
+                case 7:
+                    goto sw_1_case_7;
+                case 8:
+                    goto sw_1_case_8;
+            }
+            break;
+
+        sw_1_case_8:
+            gActors[actor_index].graphicIndex = ((s32) ((s32) gActors[actor_index].var_150 / 128) % 8) + 0x2000;
+            goto dummy_case_5;
+        sw_1_case_0:
+            gActors[actor_index].graphicFlags = 0x900;
+            gActors[actor_index].flags |= 0x18;
+            gActors[actor_index].unk_188 = 0;
+            gActors[actor_index].posZ.whole = -0x200;
+            gActors[actor_index].graphicIndex = 0x2002;
+            gActors[actor_index].state = 0x10;
+            gActors[actor_index].posX.whole = ((gActors[actor_index].var_150 - gScreenPosCurrentX.whole) & 0x3FF) - 0x1E0;
+        case 0x10:
+            gActors[actor_index].posX.raw -= D_800BE73C;
+            gActors[actor_index].posX.whole = ((gActors[actor_index].posX.whole + 0x1E0) & 0x3FF) - 0x1E0;
+            gActors[actor_index].posY.whole = 0x253 - gScreenPosCurrentY.whole;
+            break;
+        sw_1_case_1:
+            gActors[actor_index].graphicFlags = 0x900;
+            gActors[actor_index].flags |= 8;
+            gActors[actor_index].unk_188 = 0;
+            gActors[actor_index].posZ.whole = -0x100;
+            gActors[actor_index].graphicIndex = 0x2000;
+            gActors[actor_index].state = 0x20;
+            gActors[actor_index].var_158 = 0;
+            gActors[actor_index].colorA = 0x80;
+            D_80178450 = 2;
+            D_80178452 = 0xA5;
+            D_80178454 = 0xD;
+        case 0x20:
+            gActors[actor_index].posY.whole = 0x116 - ((gScreenPosCurrentY.whole * 7) / 8);
+            gActors[actor_index].posX.whole = ((gActors[actor_index].var_150 - gScreenPosCurrentX.whole) & 0x3FF) - 0x200;
+            if (actor_index != 0x90) {
+                gActors[actor_index].var_158 += D_80178450;
+                for (index = 0; index < 0x20; index++) {
+                    temp_v0 = (SIN(gActors[actor_index].var_158 + (index * D_80178452)) * D_80178454) + index;
+                    if (index && index) {
+                    }
+                    temp_v0 &= 0x1F;
+                    for (jndex = 0; jndex < 0x20; jndex++) {
+                        D_803402D0[index].unk0[jndex] = D_803406D0[temp_v0].unk0[jndex];
+                    }
+                }
+            }
+            break;
+        sw_1_case_3:
+            func_80061450(actor_index);
+            gActors[actor_index].posX.whole = gActors[actor_index].var_150;
+            gActors[actor_index].posZ.whole = -0x100;
+            gActors[actor_index].state = 0x30;
+        case 0x30:
+            func_800612D8(actor_index);
+            func_800614D4(actor_index);
+            break;
+        
+        case 0x31:
+            func_800612D8(actor_index);
+            func_80061554(actor_index);
+            break;
+        
+        case 0x32:
+            func_800612D8(actor_index);
+            func_800615BC(actor_index);
+            break;
+        sw_1_case_4:
+            func_80061450(actor_index);
+            gActors[actor_index].posZ.whole = -0xC0;
+            gActors[actor_index].state = 0x40;
+        
+        case 0x40:
+            gActors[actor_index].posY.whole = ((gActors[actor_index].var_150 - gScreenPosCurrentY.whole) & 0x7FF) - 0x400;
+            func_800614D4(actor_index);
+            break;
+        
+        case 0x41:
+            gActors[actor_index].posY.whole = ((gActors[actor_index].var_150 - gScreenPosCurrentY.whole) & 0x7FF) - 0x400;
+            func_80061554(actor_index);
+            break;
+        
+        case 0x42:
+            gActors[actor_index].posY.whole = ((gActors[actor_index].var_150 - gScreenPosCurrentY.whole) & 0x7FF) - 0x400;
+            func_800615BC(actor_index);
+            break;
+        sw_1_case_5:
+            gActors[actor_index].graphicIndex = (gActors[actor_index].var_150 / 128) + 0x200A;
+        dummy_case_5:
+            gActors[actor_index].graphicFlags = 0x900;
+            gActors[actor_index].unk_188 = 0;
+            gActors[actor_index].posZ.whole = -0x1F0;
+            gActors[actor_index].var_150 = gActors[actor_index].var_150 / 2;
+            gActors[actor_index].state = 0x50;
+        case 0x50:
+            gActors[actor_index].posY.whole = 0x120 - gScreenPosCurrentY.whole;
+            if (gCurrentScene == 6) {
+                gActors[actor_index].posX.whole = ((gActors[actor_index].var_150 - gScreenPosCurrentX.whole) & 0x3FF) - 0x200;
+                if (gLookatEyeZ == 448.0f) {
+                    if ((gActors[actor_index].posX.whole < -0x100) || (gActors[actor_index].posX.whole >= 0x101)) {
+                        gActors[actor_index].flags &= ~1;
+                        break;
+                    }
+                    gActors[actor_index].flags |= 1;
+                    break;
+                }
+                gActors[actor_index].flags |= 1;
+                break;
+            }
+                
+            gActors[actor_index].posX.whole = ((gActors[actor_index].var_150 - gScreenPosCurrentX.whole) & 0x1FF) - 0x100;
+            break;
+        sw_1_case_6:
+            gActors[actor_index].graphicFlags = 0x910;
+            gActors[actor_index].flags |= 8;
+            gActors[actor_index].unk_188 = 0;
+            gActors[actor_index].posZ.whole = -0x120;
+            gActors[actor_index].graphicIndex = 0x2002;
+            gActors[actor_index].var_158 = 0;
+            gActors[actor_index].colorA = 0xC0;
+            gActors[actor_index].colorR = 0x80;
+            gActors[actor_index].colorG = 0x80;
+            D_80178450 = 2;
+            D_80178452 = 0xA5;
+            D_80178454 = 0xD;
+            gActors[actor_index].state = 0x60;
+        case 0x60:
+            gActors[actor_index].posY.whole = 0x116 - ((s32) (gScreenPosCurrentY.whole * 7) / 8);
+            gActors[actor_index].posX.whole = ((gActors[actor_index].var_150 - gScreenPosCurrentX.whole) & 0x3FF) - 0x200;
+            if (actor_index != 0x92) {
+                gActors[actor_index].var_158 += D_80178450;
+                for (index = 0; index < 0x20; index++) {
+                    temp_v0 = (SIN(gActors[actor_index].var_158 + (index * D_80178452)) * D_80178454) + index;
+                    if (index && index) { // fakematch
+                    }
+                    temp_v0 &= 0x1F;
+                    for (jndex = 0; jndex < 0x20; jndex++) {
+                        D_80340DE0[index].unk0[jndex] = D_803409E0[temp_v0].unk0[jndex];
+                    }
+                }
+            }
+            break;
+        sw_1_case_7:
+            gActors[actor_index].unk_164 = 1;
+            func_80061450(actor_index);
+            gActors[actor_index].posX.whole = gActors[actor_index].var_150;
+            gActors[actor_index].posZ.whole = -0x100;
+            gActors[actor_index].state = 0x70;
+        case 0x70:
+            func_800612D8(actor_index);
+            func_80061350(actor_index);
+            break;
+        
+        case 0x71:
+            func_800612D8(actor_index);
+            if (gActors[actor_index].var_15C != 0) {
+                func_80061350(actor_index);
+            }
+            func_80061554(actor_index);
+            break;
+        
+        case 0x72:
+            func_800612D8(actor_index);
+            if (gActors[actor_index].var_15C != 0) {
+                func_80061350(actor_index);
+            }
+            func_800615BC(actor_index);
+            break;
+        default:
+            break;
+    }
+}
 
 void func_80061E98(u16 actor_index) {
     u16 index;

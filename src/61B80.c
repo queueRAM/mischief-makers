@@ -129,7 +129,13 @@ void func_80061554(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_800615BC.s")
+void func_800615BC(u16 actor_index) {
+    gActors[actor_index].colorA--;
+    if (gActors[actor_index].colorA == 0) {
+        gActors[actor_index].flags &= ~1;
+        gActors[actor_index].state -= 2;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_80061624.s")
 

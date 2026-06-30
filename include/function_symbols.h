@@ -110,6 +110,7 @@ extern void func_80039134(u16 actor_index);
 extern void SpawnCrosshair(u16 arg0, u16 actor_index);
 extern u16 func_8003EEC0(f32, s16 x, s16 y, s16 z);
 extern void func_8003F138(f32 arg0, s16 arg1, s16 arg2, s16 arg3);
+extern u16 func_8003FF68(u16 actor_index, f32 scale);
 extern void func_80040858(u16 actor_index);
 extern s32 func_80040A64(void);
 extern void func_80042E28(s32 arg0);

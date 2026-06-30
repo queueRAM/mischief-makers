@@ -139,7 +139,76 @@ void func_800615BC(u16 actor_index) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_80061624.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_80061E98.s")
+void func_80061E98(u16 actor_index) {
+    u16 index;
+    s16 temp_limit;
+    switch (gActors[actor_index].state) {
+    case 0:
+        gActors[actor_index].graphicFlags |= 0x801;
+        gActors[actor_index].flags |= 0x2000;
+        gActors[actor_index].posZ.whole = -8;
+        gActors[actor_index].unk_188 = 0;
+        gActors[actor_index].scaleX = gActors[actor_index].timer_110 / 64;
+        gActors[actor_index].hitboxBX0 = gActors[actor_index].scaleX * -32.0f;
+        gActors[actor_index].hitboxBX1 = gActors[actor_index].scaleX * 32.0f;
+        gActors[actor_index].hitboxBY0 = 8;
+        gActors[actor_index].hitboxBY1 = 0;
+        gActors[actor_index].state++;
+        switch (gActors[actor_index].unk_0D8 & 0x30) {
+        case 0: 
+            gActors[actor_index].graphicIndex = 0x380C;
+            break;
+        case 16:
+            gActors[actor_index].graphicIndex = 0x380E;
+            break;
+        case 32:
+            gActors[actor_index].graphicIndex = 0x3810;
+            break;
+        }
+        switch (gActors[actor_index].unk_0D8 & 0xF) {
+        case 1:
+        case 5:
+            gActors[actor_index].colorB = 0x7F; \
+            gActors[actor_index].colorR = 0; \
+            gActors[actor_index].colorG = 0; \
+            break;
+        case 2:
+        case 6:
+            gActors[actor_index].colorR = 0x7F; \
+            gActors[actor_index].colorG = 0; \
+            gActors[actor_index].colorB = 0; \
+            break;
+        case 3:
+        case 7:
+            gActors[actor_index].colorR = 0x7F; \
+            gActors[actor_index].colorB = 0x7F; \
+            gActors[actor_index].colorG = 0; \
+            break; \
+        case 4:
+        case 8:
+            gActors[actor_index].colorG = 0x7F; \
+            gActors[actor_index].colorR = 0; \
+            gActors[actor_index].colorB = 0; \
+            break;
+        }
+        if ((gActors[actor_index].unk_0D8 & 0xF) >= 5) {
+            gActors[actor_index].graphicFlags |= 0x10;
+        }
+        break;
+    case 1:
+        if (gActors[actor_index].flags_098 & 0x80) {
+            gActors[actor_index].var_158 = 1;
+        }
+        // fakematch: temp = 0x148
+        if ((D_800D28E4 >= 0xA) && (D_800D28E4 < 0x14) && ((gScreenPosCurrentY.whole + gActors[actor_index].posY.whole) < (temp_limit = 0x148))) {
+            gActors[actor_index + 1].flags = 0;
+            gActors[actor_index + 0].flags = 0;
+            index = func_8003FF68(actor_index, 1.0f);
+            gActors[index].unk_188 = gActors[actor_index].posY.raw + FIXED_UNIT(-8.0);
+        }
+        break;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_80062174.s")
 

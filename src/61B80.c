@@ -949,7 +949,38 @@ void func_80064AA0(u16 duration, void* arg1) {
     gActors[actor_index].var_158 = (s32)arg1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_80064B60.s")
+void func_80064B60(u16 actor_index) {
+    switch (gActors[actor_index].state) {
+    case 0:
+        if (gActors[actor_index].var_154-- == 0) {
+            Actor_LoadSpawnTable((void* ) gActors[actor_index].var_158);
+            Sound_PlayMusic(0x1E);
+            D_800BE5F4.unk_00_u32 = 0xE;
+            gActors[actor_index].var_154 = 0x168;
+            gActors[actor_index].state += 1;
+        }
+        break;
+    case 1:
+        if (gActors[actor_index].var_154-- == 0) {
+            if (gActors[actor_index].var_15C != 0) {
+                if (gCurrentScene == 0x34) {
+                    if (D_800D28E4 == 1) {
+                        Sound_PlayMusic(gActors[actor_index].var_15C);
+                    }
+                }
+                else {
+                    Sound_PlayMusic(gActors[actor_index].var_15C);
+                }
+            }
+            gActors[actor_index].flags = 0;
+            gStageCinemaState++;
+        }
+        if (gActors[actor_index].var_154 == 0x15E) {
+            Sound_PlaySfx(0x136);
+        }
+        break;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_80064CB4.s")
 

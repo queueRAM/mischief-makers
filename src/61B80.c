@@ -807,7 +807,28 @@ s32 func_80064328(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_800643CC.s")
+void func_800643CC(u16 actor_index) {
+    func_800384FC(actor_index, 0x8000, 0x800, -(Rand() & 3), (Rand() & 3));
+    func_80038600(actor_index, 0x8000, 0x400, -(Rand() & 1), (Rand() & 1));
+    switch (gActors[actor_index].var_15C) {
+    case 0:
+        if (func_80064328(actor_index) != 0) {
+            gActors[actor_index].var_15C++;
+        }
+        break;
+    case 1:
+        if (gActiveFrames & 1) {
+            gActors[actor_index].unk_174++;
+        }
+        gActors[actor_index].colorA--;
+        gActors[actor_index].scaleX -= gActors[actor_index].unk_114;
+        gActors[actor_index].scaleY -= gActors[actor_index].unk_114;
+        if (gActors[actor_index].colorA == 0x00) {
+            gActors[actor_index].flags = 0;
+        }
+        break;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_80064528.s")
 

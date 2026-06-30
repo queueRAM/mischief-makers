@@ -108,7 +108,18 @@ void func_80061450(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_800614D4.s")
+void func_800614D4(u16 actor_index) {
+    if (gActors[0x90].var_15C != 0) {
+        if (!(gActors[actor_index].flags & 1)) {
+            gActors[actor_index].flags |= 1;
+            gActors[actor_index].colorA = 0;
+            gActors[actor_index].state += 1;
+        }
+        else {
+            gActors[actor_index].state += 2;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_80061554.s")
 

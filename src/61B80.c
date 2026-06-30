@@ -869,7 +869,24 @@ void func_800645F4(u16 actor_index) {
     gActors[actor_index].flags |= 4;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_8006475C.s")
+void func_8006475C(u16 actor_index) {
+    u16 index;
+
+    func_80038C94(actor_index);
+    switch (gActors[actor_index].state) {
+    case 0:
+        func_80038E1C(actor_index);
+        index = gActors[actor_index].unk_0D8 * 2;
+        gActors[actor_index].unk_114 = D_800D2504[index + 0];
+        gActors[actor_index].unk_140_f32 = D_800D2504[index + 1];
+        // fallthrough
+    case 1:
+        func_80038704(actor_index);
+        func_80038868(actor_index, gActors[actor_index].unk_114);
+        break;
+    }
+    func_80038D1C(actor_index);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_800648C4.s")
 

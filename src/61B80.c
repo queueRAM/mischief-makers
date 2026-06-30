@@ -266,7 +266,15 @@ void func_800623C0(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_8006242C.s")
+void func_8006242C(u16 actor_index) {
+    gActors[actor_index].unk_17C += gActors[actor_index].unk_178;
+    gActors[actor_index].velocityX.raw = SIN(gActors[actor_index].unk_17C) * gActors[actor_index].var_15C;
+    gActors[actor_index].velocityY.raw = COS(gActors[actor_index].unk_17C) * gActors[actor_index].var_15C;
+    if (gActors[actor_index].unk_17C == gActors[actor_index].unk_174) {
+        gActors[actor_index].state = gActors[actor_index].unk_16C;
+        func_800623C0(actor_index);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_80062524.s")
 

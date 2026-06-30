@@ -712,7 +712,11 @@ void func_800633C4(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_80063418.s")
+void func_80063418(u16 actor_index) {
+    if ((gActors[actor_index].posY.whole - 0xC0) > gActors[0].posY.whole) {
+        gActors[actor_index].state = 0x7E;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_8006346C.s")
 

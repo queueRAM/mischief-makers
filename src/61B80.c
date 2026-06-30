@@ -357,7 +357,10 @@ void func_80062874(u16 actor_index, u16 arg1, u16 arg2, s32 arg3, s32 arg4) {
     func_8006242C(actor_index);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_8006291C.s")
+u8 func_8006291C(u16 actor_index) {
+    return ((func_80012AB4(gActors[actor_index].posX.whole, gActors[actor_index].posY.whole) == 0x36) &&
+            (func_80012AB4(gActors[actor_index].posX.whole + 8, gActors[actor_index].posY.whole) != 0x36));
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_800629A8.s")
 

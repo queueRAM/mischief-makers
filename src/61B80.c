@@ -11,6 +11,7 @@ typedef struct {
 
 extern s32 D_800D74A0[];
 extern u16 D_800D7508[];
+extern s16 D_800E1450;
 
 extern u16 D_80178450;
 extern u16 D_80178452;
@@ -731,7 +732,28 @@ void func_80063FF4(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_800640A0.s")
+void func_800640A0(u16 actor_index) {
+    func_8002AC30(actor_index, 8);
+    gActors[actor_index].graphicList = &D_800E1450;
+    gActors[actor_index].graphicTimer = 1;
+    func_8006CD5C(actor_index);
+    gActors[actor_index].colorA = 0x50;
+    gActors[actor_index].unk_114 = gActors[actor_index].scaleX / 160.0f;
+    gActors[actor_index].scaleX = 0.0f;
+    gActors[actor_index].scaleY = 0.0f;
+    gActors[actor_index].var_150 = gActors[actor_index].timer_110;
+    gActors[actor_index].graphicFlags = 0x201;
+    if (gActors[actor_index].unk_0D8 & 1) {
+        gActors[actor_index].flags = 0x3;
+    }
+    else {
+        gActors[actor_index].flags = 0x23;
+    }
+    gActors[actor_index].posZ.whole = 8;
+    gActors[actor_index].unk_178 = gActors[actor_index].unk_170 = gActors[actor_index].posX.whole + gScreenPosCurrentX.whole;
+    gActors[actor_index].unk_17C = gActors[actor_index].unk_174 = gActors[actor_index].posY.whole + gScreenPosCurrentY.whole;
+    gActors[actor_index].state = 0x10;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_800641CC.s")
 

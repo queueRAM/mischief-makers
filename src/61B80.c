@@ -286,7 +286,19 @@ void func_80062524(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_80062624.s")
+void func_80062624(u16 actor_index) {
+    if ((gActors[actor_index].unk_0D8 < 0x30) && (gActors[actor_index].flags_098 & 0x200) &&
+        (gActors[actor_index].flags_098 & 0x20000) && (gActors[actor_index].state >= 0x68)) {
+        if (((gActors[actor_index].velocityX.raw < 0) && (func_800486F4() == 4)) || 
+            ((gActors[actor_index].velocityX.raw > 0) && (func_800486F4() == 12)) ||
+            ((gActors[actor_index].velocityY.raw < 0) && (func_800486F4() == 0)) || 
+            ((gActors[actor_index].velocityY.raw > 0) && (func_800486F4() == 8))) {
+            gActors[actor_index].state = 0x23;
+            gActors[actor_index].unk_180 = gActors[actor_index].velocityX.raw;
+            gActors[actor_index].unk_184 = gActors[actor_index].velocityY.raw;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_8006275C.s")
 

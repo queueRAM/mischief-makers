@@ -1,6 +1,7 @@
 #include "common.h"
 
 extern s32 D_800D74A0[];
+extern u16 D_800D7508[];
 
 void func_80060F80(u16 arg0) {
 }
@@ -96,7 +97,16 @@ void func_80061350(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_80061450.s")
+void func_80061450(u16 actor_index) {
+    gActors[actor_index].graphicFlags = 0x900;
+    gActors[actor_index].flags |= 0x18;
+    gActors[actor_index].unk_188 = 0;
+    gActors[actor_index].graphicIndex = D_800D7508[gActors[actor_index].unk_0D8];
+    gActors[actor_index].colorA = 0x80;
+    if (actor_index >= 0x92) {
+        gActors[actor_index].flags &= ~1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_800614D4.s")
 

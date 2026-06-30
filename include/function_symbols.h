@@ -105,6 +105,7 @@ extern s32 func_8002F154(u16 arg0, u16 arg1, u16 arg2);
 extern void SpawnGemRing(u16 arg0);
 extern void func_80030A24(u16 actor_index);
 extern void func_80033204(u16 arg0, u16 arg1, u16 arg2, f32 arg3, u16 arg4);
+extern s16 func_8003526C(u16 actor_index, u16 arg1, u16 arg2, u16 arg3, u16 arg4);
 extern void func_800369A0(u16 actor_index, u16 arg1, u16* arg2);
 extern void func_80039134(u16 actor_index);
 extern void SpawnCrosshair(u16 arg0, u16 actor_index);

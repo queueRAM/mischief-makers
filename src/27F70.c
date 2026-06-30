@@ -109,7 +109,6 @@ void Actor_Clamp_0FC(u16 actor_index, s32 max_val);
 void func_80030B0C(u16);
 void func_80031D58(u16 arg0, u16 arg1);
 void SpawnParticle_SineUp(s16 x, s16 y, s16 z, u16 arg3);
-s16 func_8003526C(u16 actor_index, u16 arg1, u16 arg2, u16 arg3, u16 arg4);
 void func_800358DC(u16 actor_index);
 void func_80035A20(u16 actor_index);
 u16 func_8003D68C(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 pos_x, s32 pos_y, s32 pos_z, u16 red, u16 green, u16 blue);

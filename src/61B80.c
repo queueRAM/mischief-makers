@@ -720,7 +720,16 @@ void func_80063418(u16 actor_index) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_8006346C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_80063FF4.s")
+void func_80063FF4(u16 actor_index) {
+    gActors[actor_index].unk_180 = gActors[actor_index].posX.whole + gScreenPosCurrentX.whole;
+    gActors[actor_index].unk_184 = gActors[actor_index].posY.whole + gScreenPosCurrentY.whole;
+    if (gActors[actor_index].state != 0) {
+        if (func_8003526C(actor_index, 0x8400, 0, 0, 0x67) >= 0) {
+            gActors[actor_index].state = 2;
+            gActors[actor_index].flags = 2;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_800640A0.s")
 

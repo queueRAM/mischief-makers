@@ -105,8 +105,7 @@ void func_80061350(u16 actor_index) {
         gActors[actor_index].colorB = gActors[0x90].colorB;
         gActors[actor_index].colorA = gActors[0x90].colorA;
     }
-    else
-    {
+    else {
         gActors[actor_index].colorR = Math_ApproachS32(gActors[actor_index].colorR, 0, 4);
         gActors[actor_index].colorG = Math_ApproachS32(gActors[actor_index].colorG, 0, 4);
         gActors[actor_index].colorB = Math_ApproachS32(gActors[actor_index].colorB, 0, 4);
@@ -207,6 +206,7 @@ void func_80061624(u16 actor_index) {
             gActors[actor_index].posX.whole = ((gActors[actor_index].posX.whole + 0x1E0) & 0x3FF) - 0x1E0;
             gActors[actor_index].posY.whole = 0x253 - gScreenPosCurrentY.whole;
             break;
+
         sw_1_case_1:
             gActors[actor_index].graphicFlags = 0x900;
             gActors[actor_index].flags |= 8;
@@ -235,6 +235,7 @@ void func_80061624(u16 actor_index) {
                 }
             }
             break;
+
         sw_1_case_3:
             func_80061450(actor_index);
             gActors[actor_index].posX.whole = gActors[actor_index].var_150;
@@ -244,35 +245,36 @@ void func_80061624(u16 actor_index) {
             func_800612D8(actor_index);
             func_800614D4(actor_index);
             break;
-        
+
         case 0x31:
             func_800612D8(actor_index);
             func_80061554(actor_index);
             break;
-        
+
         case 0x32:
             func_800612D8(actor_index);
             func_800615BC(actor_index);
             break;
+
         sw_1_case_4:
             func_80061450(actor_index);
             gActors[actor_index].posZ.whole = -0xC0;
             gActors[actor_index].state = 0x40;
-        
         case 0x40:
             gActors[actor_index].posY.whole = ((gActors[actor_index].var_150 - gScreenPosCurrentY.whole) & 0x7FF) - 0x400;
             func_800614D4(actor_index);
             break;
-        
+
         case 0x41:
             gActors[actor_index].posY.whole = ((gActors[actor_index].var_150 - gScreenPosCurrentY.whole) & 0x7FF) - 0x400;
             func_80061554(actor_index);
             break;
-        
+
         case 0x42:
             gActors[actor_index].posY.whole = ((gActors[actor_index].var_150 - gScreenPosCurrentY.whole) & 0x7FF) - 0x400;
             func_800615BC(actor_index);
             break;
+
         sw_1_case_5:
             gActors[actor_index].graphicIndex = (gActors[actor_index].var_150 / 128) + 0x200A;
         dummy_case_5:
@@ -288,17 +290,20 @@ void func_80061624(u16 actor_index) {
                 if (gLookatEyeZ == 448.0f) {
                     if ((gActors[actor_index].posX.whole < -0x100) || (gActors[actor_index].posX.whole >= 0x101)) {
                         gActors[actor_index].flags &= ~1;
-                        break;
                     }
-                    gActors[actor_index].flags |= 1;
-                    break;
+                    else {
+                        gActors[actor_index].flags |= 1;
+                    }
                 }
-                gActors[actor_index].flags |= 1;
-                break;
+                else {
+                    gActors[actor_index].flags |= 1;
+                }
             }
-                
-            gActors[actor_index].posX.whole = ((gActors[actor_index].var_150 - gScreenPosCurrentX.whole) & 0x1FF) - 0x100;
+            else {
+                gActors[actor_index].posX.whole = ((gActors[actor_index].var_150 - gScreenPosCurrentX.whole) & 0x1FF) - 0x100;
+            }
             break;
+
         sw_1_case_6:
             gActors[actor_index].graphicFlags = 0x910;
             gActors[actor_index].flags |= 8;
@@ -329,6 +334,7 @@ void func_80061624(u16 actor_index) {
                 }
             }
             break;
+
         sw_1_case_7:
             gActors[actor_index].unk_164 = 1;
             func_80061450(actor_index);
@@ -339,7 +345,7 @@ void func_80061624(u16 actor_index) {
             func_800612D8(actor_index);
             func_80061350(actor_index);
             break;
-        
+
         case 0x71:
             func_800612D8(actor_index);
             if (gActors[actor_index].var_15C != 0) {
@@ -347,7 +353,7 @@ void func_80061624(u16 actor_index) {
             }
             func_80061554(actor_index);
             break;
-        
+
         case 0x72:
             func_800612D8(actor_index);
             if (gActors[actor_index].var_15C != 0) {
@@ -1274,21 +1280,21 @@ void func_800648C4(u16 actor_index) {
         break;
     case 16:
         if ((gActors[actor_index].posX.whole >= -0x17F) && (gActors[actor_index].posX.whole <= 0x17F) &&
-            (gActors[actor_index].posY.whole >= -0xDF) && (gActors[actor_index].posY.whole < 0xE0)) {
+            (gActors[actor_index].posY.whole >= -0xDF) && (gActors[actor_index].posY.whole <= 0xDF)) {
             Sound_PlaySfxAtActorPanning(gActors[actor_index].unk_0D8, actor_index);
             gActors[actor_index].state++;
         }
         break;
     case 17:
-        if ((gActors[actor_index].posX.whole < -0x190) || (gActors[actor_index].posX.whole >= 0x191) || 
-            (gActors[actor_index].posY.whole < -0xF0) || (gActors[actor_index].posY.whole >= 0xF1)) {
+        if ((gActors[actor_index].posX.whole <= -0x191) || (gActors[actor_index].posX.whole >= 0x191) ||
+            (gActors[actor_index].posY.whole <= -0xF1) || (gActors[actor_index].posY.whole >= 0xF1)) {
             Sound_StopSfx(gActors[actor_index].unk_0D8);
             gActors[actor_index].state--;
         }
         break;
     case 32:
-        if ((gActors[actor_index].posX.whole >= -0x17F) && (gActors[actor_index].posX.whole < 0x180) && 
-            (gActors[actor_index].posY.whole >= -0xDF) && (gActors[actor_index].posY.whole < 0xE0)) {
+        if ((gActors[actor_index].posX.whole >= -0x17F) && (gActors[actor_index].posX.whole <= 0x17F) &&
+            (gActors[actor_index].posY.whole >= -0xDF) && (gActors[actor_index].posY.whole <= 0xDF)) {
             gActors[actor_index].var_154--;
             if (gActors[actor_index].var_154 == 0) {
                 gActors[actor_index].var_154 = gActors[actor_index].var_150;

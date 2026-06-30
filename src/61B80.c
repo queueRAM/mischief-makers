@@ -12,6 +12,7 @@ typedef struct {
 
 extern s32 D_800D74A0[];
 extern u16 D_800D7508[];
+extern u16* D_800D7560[];
 extern s16 D_800E1450;
 
 extern u16 D_80178450;
@@ -1030,7 +1031,51 @@ void func_80064EB4(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_80064F4C.s")
+void func_80064F4C(u16 actor_index) {
+    s32 index;
+
+    switch (gActors[actor_index].unk_174) {
+    case 0:
+        if (!(func_80073320(actor_index) & 0x8000)) {
+            func_80067E9C(actor_index);
+            index = gActors[actor_index].unk_0D8 & 0xF;
+            if (index == 9) {
+                if (func_8004089C((actor_index + 0x8000), D_800D7560[index]) == 0x800) {
+                    Sound_StartFade(0x81, 0x3C);
+                    gActors[actor_index].unk_174 += 1;
+                    return;
+                }
+            }
+            else if (gCurrentScene == 0x48) {
+                if ((func_8004089C((actor_index + 0x8000), D_800D7560[index]) == 0x800) && (gActors[actor_index].unk_16C == 0)) {
+                    gActors[actor_index].unk_16C = 1;
+                    gActors[actor_index].unk_0D8 += 3;
+                }
+            }
+            else {
+                func_8004089C((actor_index + 0x8000), D_800D7560[index]);
+            }
+            if ((func_80029B00(0x80, 0x50, -0x50) != 0) && (D_800E3584 & 0xC0000)) {
+                gActors[actor_index].state = 0x70;
+            }
+        }
+        break;
+    case 1:
+        func_80064EB4(actor_index);
+        if (gAudioFadeMode != 0x81) {
+            gAudioFadeMode = 0;
+            Sound_PlayMusic(0x1E);
+            gActors[actor_index].var_150 |= 0x1000;
+            D_800D2924 = D_800BE56C.whole = 0xE12;
+            D_800BE5F4.unk_00_u32 = 0xE;
+            gActors[actor_index].unk_174 += 1;
+        }
+        break;
+    case 2:
+        func_80064EB4(actor_index);
+        break;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_80065178.s")
 

@@ -54,7 +54,6 @@ extern u16 D_800D28F0;
 extern u32 D_800D28FC;
 extern s16 D_800D291C;
 extern s16 D_800D2920;
-extern s16 D_800D2924;
 extern u16 D_800D2950;
 extern u16 D_800D2954;
 extern s16 gNoHit; // set to current HP at start of stage. set to -1 when hit

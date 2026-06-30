@@ -51,7 +51,6 @@ extern u16 D_800D28E4;
 extern u16 D_800D2918;
 extern u16 D_800D291C;
 extern u16 D_800D2920;
-extern u16 D_800D2924;
 extern u16 D_800D2978[];
 
 extern s16 gGraphicListGemIcon[];

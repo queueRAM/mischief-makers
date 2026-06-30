@@ -257,7 +257,14 @@ void func_80062360(u16 actor_index) {
     gActors[actor_index].velocityY.raw = 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_800623C0.s")
+void func_800623C0(u16 actor_index) {
+    if (gActors[actor_index].state <= 0x64) {
+        func_80062360(actor_index);
+    }
+    else {
+        func_80062300(actor_index);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_8006242C.s")
 

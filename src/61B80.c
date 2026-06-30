@@ -80,7 +80,21 @@ void func_800612D8(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_80061350.s")
+void func_80061350(u16 actor_index) {
+    if (actor_index != 0x90) {
+        gActors[actor_index].colorR = gActors[0x90].colorR;
+        gActors[actor_index].colorG = gActors[0x90].colorG;
+        gActors[actor_index].colorB = gActors[0x90].colorB;
+        gActors[actor_index].colorA = gActors[0x90].colorA;
+    }
+    else
+    {
+        gActors[actor_index].colorR = Math_ApproachS32(gActors[actor_index].colorR, 0, 4);
+        gActors[actor_index].colorG = Math_ApproachS32(gActors[actor_index].colorG, 0, 4);
+        gActors[actor_index].colorB = Math_ApproachS32(gActors[actor_index].colorB, 0, 4);
+        gActors[actor_index].colorA = Math_ApproachS32(gActors[actor_index].colorA, 0x60, 4);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_80061450.s")
 

@@ -252,7 +252,10 @@ void func_80062300(u16 actor_index) {
     gActors[actor_index].velocityX.raw = 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_80062360.s")
+void func_80062360(u16 actor_index) {
+    gActors[actor_index].posY.raw = (((gActors[actor_index].posY.raw + gScreenPosCurrentY.raw) & 0xFFF00000) - gScreenPosCurrentY.raw) + 0x80000;
+    gActors[actor_index].velocityY.raw = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/61B80/func_800623C0.s")
 

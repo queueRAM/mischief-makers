@@ -894,13 +894,11 @@ void DebugMenu_UpdateCursorFlash(void) {
         }
     }
 
-    index = 0;
-    do {
+    for (index = 0; index < 8; index++) {
         if (cursor_index != index) {
             cursor_colors[index] = 0x3F;
         }
-        index++;
-    } while (index < 8);
+    }
 }
 
 void GameState_Intro(void) {

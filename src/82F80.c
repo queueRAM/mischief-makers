@@ -16,7 +16,20 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/82F80/func_800831D0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/82F80/func_80083358.s")
+void func_80083358(s16 arg0, s16 arg1, u16* arg2, s16 arg3) {
+    if (*arg2 < 0xA1) {
+        arg0 *= 2;
+    }
+    while (*arg2 != 0x8FFF) {
+        if (*arg2 == 0) {
+            arg2++;
+            arg0++;
+        }
+        else {
+            func_800831D0(arg0++, arg1, *arg2++ - 0x50, arg3);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/82F80/func_80083454.s")
 

@@ -10,7 +10,17 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/82F80/func_80082F10.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/82F80/func_8008310C.s")
+void func_8008310C(void) {
+    u16 index;
+    s32* var_v0;
+
+    var_v0 = (s32*)0x8027EEE8;
+    for (index = 0; index < 0x300; index++) {
+        var_v0[0] = 0;
+        var_v0[1] = 0;
+        var_v0 += 2;
+    }
+}
 
 void func_80083140(s16 arg0, s16 arg1) {
     u16 index;

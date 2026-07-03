@@ -35,10 +35,23 @@ void func_80083358(s16 arg0, s16 arg1, u16* arg2, s16 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/82F80/func_80083488.s")
 
+extern void func_80083518(s16, s16, s16, s16);
 #pragma GLOBAL_ASM("asm/nonmatchings/82F80/func_80083518.s")
 
-void func_800836A0(s16, s16, u16*, s16);
-#pragma GLOBAL_ASM("asm/nonmatchings/82F80/func_800836A0.s")
+void func_800836A0(s16 arg0, s16 arg1, u16* arg2, s16 arg3) {
+    if (*arg2 < 0xA1) {
+        arg0 = arg0 * 2;
+    }
+    while (*arg2 != 0x8FFF) {
+        if (*arg2 == 0) {
+            arg2++;
+            arg0++;
+        }
+        else {
+            func_80083518(arg0++, arg1, *arg2++ - 0x50, arg3);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/82F80/func_8008379C.s")
 

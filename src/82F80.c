@@ -12,6 +12,7 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/82F80/func_8008310C.s")
 
+void func_80083140(s16, s16);
 #pragma GLOBAL_ASM("asm/nonmatchings/82F80/func_80083140.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/82F80/func_800831D0.s")
@@ -33,6 +34,7 @@ void func_80083358(s16 arg0, s16 arg1, u16* arg2, s16 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/82F80/func_80083454.s")
 
+void func_80083488(s16, s16, s16);
 #pragma GLOBAL_ASM("asm/nonmatchings/82F80/func_80083488.s")
 
 void func_80083518(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
@@ -88,4 +90,11 @@ void func_80083810(s16 arg0, s16 arg1, u16* arg2, s16 arg3) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/82F80/func_80083878.s")
+void func_80083878(s16 arg0, s16 arg1) {
+    if (arg1 < 3) {
+        func_80083140(arg0, arg1);
+    }
+    else {
+        func_80083488(arg0, arg1 - 3, arg1);
+    }
+}

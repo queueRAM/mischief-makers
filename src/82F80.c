@@ -12,8 +12,17 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/82F80/func_8008310C.s")
 
-void func_80083140(s16, s16);
-#pragma GLOBAL_ASM("asm/nonmatchings/82F80/func_80083140.s")
+void func_80083140(s16 arg0, s16 arg1) {
+    u16 index;
+    s32* var_v0;
+
+    var_v0 = (s32*)(((arg0 % 8) * 8) + ((arg0 / 8) << 0xA) + (arg1 << 0xB) + 0x8027EEE8);
+    for (index = 0; index < 0x10; index++) {
+        var_v0[0] = 0;
+        var_v0[1] = 0;
+        var_v0 += 0x10;
+    }
+}
 
 void func_800831D0(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
     u16 index;

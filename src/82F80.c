@@ -35,8 +35,32 @@ void func_80083358(s16 arg0, s16 arg1, u16* arg2, s16 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/82F80/func_80083488.s")
 
-extern void func_80083518(s16, s16, s16, s16);
-#pragma GLOBAL_ASM("asm/nonmatchings/82F80/func_80083518.s")
+void func_80083518(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
+    u16 var_t0;
+    s32* var_a0;
+    s32* var_v1;
+    s32 temp = arg3 * 0x44444444;
+
+    if (arg2 < 0x51) {
+        var_v1 = (s32*)((arg2 << 6) + 0x802524A8);
+        var_a0 = (s32*)(((arg0 % 16) * 4) + ((arg0 / 16) << 0xA) + (arg1 << 0xB) + 0x8027CEE8);
+        for (var_t0 = 0; var_t0 < 0x10; var_t0++) {
+            *var_a0 = *var_v1 + temp;
+            var_v1 += 1;
+            var_a0 += 0x10;
+        }
+    }
+    else {
+        var_v1 = (s32*)((arg2 << 7) + 0x80252468);
+        var_a0 = (s32*)(((arg0 % 8) * 8) + ((arg0 / 8) << 0xA) + (arg1 << 0xB) + 0x8027CEE8);
+        for (var_t0 = 0; var_t0 < 0x10; var_t0++) {
+            var_a0[0] = var_v1[0] + temp;
+            var_a0[1] = var_v1[1] + temp;
+            var_v1 += 2;
+            var_a0 += 0x10;
+        }
+    }
+}
 
 void func_800836A0(s16 arg0, s16 arg1, u16* arg2, s16 arg3) {
     if (*arg2 < 0xA1) {

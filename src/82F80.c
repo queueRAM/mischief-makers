@@ -3,14 +3,17 @@
 
 extern s32 D_800BE6D0;
 extern s32 D_800BE6D4;
+extern s32 D_800BE6DC;
 
 extern Gfx D_800E3590[];
 extern Gfx D_800E35E0[];
 
 extern u16 D_801374F0[];
 extern u16 D_80137580[];
+extern u16 D_80137610[];
 extern u8* D_8013769C;
 extern u8* D_801376A0;
+extern u8* D_801376A4;
 extern u8 D_801376A8[];
 extern u8 D_801376AC[];
 extern u8 D_801376B0[];
@@ -22,8 +25,11 @@ extern Gfx D_80178470[];
 extern Gfx D_80179A90[];
 extern Gfx D_8017B0B0[];
 extern Gfx D_8017C6D0[];
+extern Gfx D_8017DCF0[];
+extern Gfx D_8017F310[];
 extern s32 D_80180930[];
 extern s32 D_80180B60[];
+extern s32 D_80180D90[];
 extern s32 D_80180FC0;
 
 #ifdef NON_MATCHING
@@ -162,6 +168,7 @@ void func_80082820(Gfx* arg0, s32 arg1[][10], u8* arg2, u8 arg3) {
     gDPPipeSync(gDisplayListHead++);
 }
 #else
+void func_80082820(Gfx* arg0, s32* arg1, u8* arg2, u8 arg3);
 #pragma GLOBAL_ASM("asm/nonmatchings/82F80/func_80082820.s")
 #endif
 
@@ -213,7 +220,42 @@ void func_80082E04(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/82F80/func_80082E04.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_80082F10(void) {
+    Gfx* var_a0;
+    s32 index;
+
+    D_80180FC0 = 0x80380600;
+    if (gDrawBackground != 0) {
+        if (D_800BE6FC != 0) {
+            for (index = 0; index < 0x46; index++) {
+                D_80180D90[index] = ((D_80137610[index] << 5) << 5) + D_80180FC0;// fakematch? `x << 10` -> `(x << 5) << 5`
+            }
+            if (gCurrentFramebufferIndex != 0) {
+                var_a0 = D_8017DCF0;
+            }
+            else {
+                var_a0 = D_8017F310;
+            }
+            func_80082820(var_a0, D_80180D90, D_801376A4, 2);
+        }
+        else {
+            for (index = 0; index < 0x46; index++) {
+                D_80180D90[index] = ((D_80137610[index] << 5) << 5) + D_80180FC0;// fakematch? `x << 10` -> `(x << 5) << 5`
+            }
+            if (gCurrentFramebufferIndex != 0) {
+                var_a0 = D_8017DCF0;
+            }
+            else {
+                var_a0 = D_8017F310;
+            }
+            func_80082380(var_a0, D_800BE6DC, D_800BE6E0, D_80180D90, D_801376A4, 2);
+        }
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/82F80/func_80082F10.s")
+#endif
 
 void func_8008310C(void) {
     u16 index;

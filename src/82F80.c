@@ -1,11 +1,16 @@
 #include "common.h"
 #include "boot.h"
 
+extern s32 D_800BE6D0;
+extern s32 D_800BE6D4;
+
 extern Gfx D_800E3590[];
 extern Gfx D_800E35E0[];
 
 extern u16 D_801374F0[];
-extern u16* D_8013769C;
+extern u16 D_80137580[];
+extern u8* D_8013769C;
+extern u8* D_801376A0;
 extern u8 D_801376A8[];
 extern u8 D_801376AC[];
 extern u8 D_801376B0[];
@@ -15,7 +20,10 @@ extern u8 D_801376BC[];
 
 extern Gfx D_80178470[];
 extern Gfx D_80179A90[];
+extern Gfx D_8017B0B0[];
+extern Gfx D_8017C6D0[];
 extern s32 D_80180930[];
+extern s32 D_80180B60[];
 extern s32 D_80180FC0;
 
 #ifdef NON_MATCHING
@@ -174,14 +182,36 @@ void func_80082CFC(void) {
         else {
             var_a0 = D_80179A90;
         }
-        func_80082380(var_a0, D_800BE6C4, D_800BE6C8, D_80180930, (u8* ) D_8013769C, 0);
+        func_80082380(var_a0, D_800BE6C4, D_800BE6C8, D_80180930, D_8013769C, 0);
     }
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/82F80/func_80082CFC.s")
 #endif
 
+#ifdef NON_MATCHING
+// https://decomp.me/scratch/ARjUe
+void func_80082E04(void) {
+    Gfx* var_a0;
+    s32 index;
+
+    if (gDrawEnvLayer) {
+        for (index = 0; index < 0x46; index++) {
+            D_80180B60[index] = ((D_80137580[index] << 7) << 3) + D_80180FC0; // fakematch? `x << 10` -> `(x << 3) << 7`
+        }
+
+        if (gCurrentFramebufferIndex != 0) {
+            var_a0 = D_8017B0B0;
+        }
+        else {
+            var_a0 = D_8017C6D0;
+        }
+        func_80082380(var_a0, D_800BE6D0, D_800BE6D4, D_80180B60, D_801376A0, 1);
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/82F80/func_80082E04.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/82F80/func_80082F10.s")
 

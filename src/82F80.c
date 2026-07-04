@@ -3,12 +3,20 @@
 
 extern Gfx D_800E3590[];
 extern Gfx D_800E35E0[];
+
+extern u16 D_801374F0[];
+extern u16* D_8013769C;
 extern u8 D_801376A8[];
 extern u8 D_801376AC[];
 extern u8 D_801376B0[];
 extern u8 D_801376B4[];
 extern u8 D_801376B8[];
 extern u8 D_801376BC[];
+
+extern Gfx D_80178470[];
+extern Gfx D_80179A90[];
+extern s32 D_80180930[];
+extern s32 D_80180FC0;
 
 #ifdef NON_MATCHING
 // https://decomp.me/scratch/SJ5vt
@@ -74,6 +82,7 @@ void func_80082380(Gfx* arg0, s32 arg1, s32 arg2, s32 arg3[][10], u8* arg4, u8 a
     gDPPipeSync(gDisplayListHead++);
 }
 #else
+void func_80082380(Gfx* arg0, s32 arg1, s32 arg2, s32* arg3, u8* arg4, u8 arg5);
 #pragma GLOBAL_ASM("asm/nonmatchings/82F80/func_80082380.s")
 #endif
 
@@ -148,7 +157,29 @@ void func_80082820(Gfx* arg0, s32 arg1[][10], u8* arg2, u8 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/82F80/func_80082820.s")
 #endif
 
+#ifdef NON_MATCHING
+// https://decomp.me/scratch/5l9JK
+void func_80082CFC(void) {
+    Gfx* var_a0;
+    s32 index;
+
+    if (gDrawMidground) {
+        for (index = 0; index < 0x46; index++) {
+            D_80180930[index] = ((D_801374F0[index] << 3) << 7) + D_80180FC0; // fakematch `x << 10` -> `(x << 3) << 7`
+        }
+
+        if (gCurrentFramebufferIndex != 0) {
+            var_a0 = D_80178470;
+        }
+        else {
+            var_a0 = D_80179A90;
+        }
+        func_80082380(var_a0, D_800BE6C4, D_800BE6C8, D_80180930, (u8* ) D_8013769C, 0);
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/82F80/func_80082CFC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/82F80/func_80082E04.s")
 

@@ -179,7 +179,7 @@ s32 func_8008EDB0(u16 actor_index) {
         case 21:
         case 22:
         case 23:
-            return 0;
+            return FALSE;
         case 2:
         case 3:
         case 4:
@@ -212,10 +212,10 @@ s32 func_8008EDB0(u16 actor_index) {
             gActors[actor_index].health = 0;
             break;
         }
-        return 1;
+        return TRUE;
     }
     else {
-        return 0;
+        return FALSE;
     }
 }
 
@@ -228,14 +228,23 @@ s32 func_8008EEF8(u16 actor_index) {
         gActors[actor_index].flags |= ACTOR_FLAG_UNK17;
         gActors[actor_index].velocityX.raw = 0;
         gActors[actor_index].velocityY.raw = 0;
-        return 1;
+        return TRUE;
     }
     else {
-        return 0;
+        return FALSE;
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_8008EFA8.s")
+s32 func_8008EFA8(u16 actor_index) {
+    if (((u16)gActors[actor_index].var_110 & 0x80) == 0) {
+        if (gActors[actor_index].health == 0) {
+            gActors[actor_index].state = 0x250;
+            gActors[actor_index].iFrames = 0x2710;
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
 
 s32 func_8008F094(u16 actor_index, u16 arg1) {
     gActors[actor_index].health -= arg1;

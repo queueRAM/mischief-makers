@@ -18,10 +18,6 @@ u8 func_8001FCA0(u16 arg0, s32 arg1, s32 arg2); // arg1/arg2: s16 -> s32
 
 extern void func_8008105C(u16 actor_index, void* arg1, void* arg2);
 
-extern s32 func_8008EDB0(u16 actor_index);
-extern s32 func_8008EEF8(u16 actor_index);
-extern s32 func_8008EFA8(u16 actor_index);
-extern s32 func_8008F168(u16 actor_index);
 extern void func_8008FB20(u16 actor_index);
 extern void func_8008FD08(u16 actor_index);
 extern void func_80090064(u16 actor_index);
@@ -295,7 +291,27 @@ void func_8008F294(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_8008F2E8.s")
+u16 func_8008F2E8(u16 actor_0, u16 actor_1) {
+    u16 index;
+    s32 temp;
+    s32 temp_t5;
+    s32 x;
+    s32 y;
+
+    temp_t5 = (gActors[actor_1].flags & ACTOR_FLAG_FLIPPED) ? (0x200 - gActors[actor_1].var_150) : gActors[actor_1].var_150;
+    temp_t5 = (temp_t5 + 0x40) & 0x380;
+    index = 0;
+    x = (COS(temp_t5) * 524288.0f * gActors[actor_1].scaleX) + gActors[actor_1].posX.raw;
+    y = (SIN(temp_t5) * 524288.0f * gActors[actor_1].scaleX) + gActors[actor_1].posY.raw;
+    temp = temp_t5 << 0x10;
+    if (gActors[actor_0 + 2].unk_180 == 0) {
+        index = Actor_RangeFindInactive(0x70, 0x7A);
+        if (index != 0) {
+            func_8002DB0C(index, 0, temp, x, y, gActors[actor_1].posZ.raw);
+        }
+    }
+    return index;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_8008F498.s")
 

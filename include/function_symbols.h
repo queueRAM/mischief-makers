@@ -120,6 +120,7 @@ extern u32 func_80029B00(s16 arg0, s16 arg1, s16 arg2);
 extern u32 func_80029B74(s16 arg0);
 extern s32 func_800298D0(s32 arg0, s32 arg1, s32 arg2);
 extern u16 func_80029FB8(u16 actor_index, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
+extern void Actor_Clamp_0F8(u16 actor_index, s32 max_val);
 extern void Actor_Clamp_0F8_0FC(u16 actor_index, s32 max_val);
 extern void Actor_SetHitboxA(u16 actor_index, s16 val);
 extern void func_8002EBB8(u16 actor_index, s16 pos_x, s16 pos_y, s32 vel_x, s32 vel_y);

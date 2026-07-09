@@ -11,6 +11,7 @@ extern u8 D_800E93C4[];
 extern u8 D_800E95E8[];
 extern u8 D_800E961C[];
 extern u8 D_800E8C08[];
+extern u16 D_800E8D8C[];
 
 // TODO: func_8001FCA0 only matches if arg1/arg2 are `s16`, but only matches below as `s32`
 u8 func_8001FCA0(u16 arg0, s32 arg1, s32 arg2); // arg1/arg2: s16 -> s32
@@ -144,7 +145,20 @@ void func_8008EB44(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_8008EBF0.s")
+void func_8008EBF0(u16 actor_index) {
+    func_8008EB44(actor_index);
+    Actor_Clamp_0F8(actor_index, FIXED_UNIT(2.0));
+    if (gActors[actor_index].flags & ACTOR_FLAG_UNK17) {
+        gActors[actor_index].state = 0x1F0;
+        gActors[actor_index].unk_0FC.raw = FIXED_UNIT(1.5);
+        gActors[actor_index + 5].unk_180 = (s32)D_800E8D8C;
+    }
+    else {
+        gActors[actor_index].state = 0x1E0;
+        gActors[actor_index].unk_0FC.raw = 0;
+        gActors[actor_index + 5].unk_180 = (s32)D_800E8D8C;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_8008ECDC.s")
 

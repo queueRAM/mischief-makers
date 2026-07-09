@@ -14,6 +14,11 @@ extern u8 D_800E961C[];
 extern u8 D_800E8C08[];
 extern u16 D_800E8D8C[];
 extern f32 D_800E90E8[];
+extern u16 D_800E9210[];
+extern u16 D_800E921C[];
+extern u16 D_800E9224[];
+
+extern u16 D_80335ED4;
 
 // TODO: func_8001FCA0 only matches if arg1/arg2 are `s16`, but only matches below as `s32`
 u8 func_8001FCA0(u16 arg0, s32 arg1, s32 arg2); // arg1/arg2: s16 -> s32
@@ -387,7 +392,7 @@ void func_8008F7E0(u16 actor_index) {
     }
 }
 
-void func_8008FA50(s32 arg0_unused, u16 actor_index, u16* graphic_indices) {
+void func_8008FA50(u16 arg0_unused, u16 actor_index, u16* graphic_indices) {
     s32 var_a0;
     u16 index;
 
@@ -403,7 +408,32 @@ void func_8008FA50(s32 arg0_unused, u16 actor_index, u16* graphic_indices) {
     gActors[actor_index].graphicIndex = graphic_indices[index - 1];
 }
 
+#ifdef NON_MATCHING
+// https://decomp.me/scratch/zcfS0
+void func_8008FB20(u16 arg0) {
+    f32 temp_f0;
+    f32 temp_f2;
+
+    temp_f0 = gActors[arg0].unk_168 / 10000.0f;
+    temp_f2 = temp_f0 * 0.7;
+    func_80032E60(arg0 + 8, 0x182A, 0x300, 3.0f * temp_f0, -1, temp_f2, temp_f2);
+    gActors[arg0].colorR = 0x18;
+    gActors[arg0].colorG = 0x18;
+    gActors[arg0].colorB = 0x18;
+    Actor_SetColorRgb(arg0 + 8, 0);
+    Actor_SetColorRgb(arg0 + 0xB, 0);
+    Actor_SetColorRgb(arg0 + 0x13, 0);
+    Actor_SetColorRgb(arg0 + 0x15, 0);
+    Actor_SetColorRgb(arg0 + 0x17, 0);
+    func_8008FA50(arg0, arg0 + 3, D_800E9210);
+    func_8008FA50(arg0, arg0 + 7, D_800E921C);
+    func_8008FA50(arg0, arg0 + 0xB, D_800E9224);
+    D_80335ED4 = func_8004571C();
+    gActors[arg0 + 3].unk_138 = -gActors[arg0 + 3].var_154 / 0x10000;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_8008FB20.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_8008FD08.s")
 

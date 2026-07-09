@@ -345,7 +345,14 @@ void func_8008F498(u16 actor_index, u16 list_index) {
     gActors[actor_index + 0x17].scaleY = gActors[actor_index + 0x11].scaleY;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_8008F734.s")
+void func_8008F734(u16 actor_index) {
+    if (gActors[actor_index].unk_16C & 0x100) {
+        gActors[actor_index + 0xA].unk_13C_f32 = 12.0f;
+    }
+    else if (gActors[actor_index].unk_16C & 0x200) {
+        gActors[actor_index + 0xA].unk_13C_f32 = 5.0f;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_8008F7E0.s")
 

@@ -387,7 +387,21 @@ void func_8008F7E0(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_8008FA50.s")
+void func_8008FA50(s32 arg0_unused, u16 actor_index, u16* graphic_indices) {
+    s32 var_a0;
+    u16 index;
+
+    gActors[actor_index].unk_138 = -gActors[actor_index].var_154 / FIXED_UNIT(1.0);
+    var_a0 = 0;
+    for (index = 0; graphic_indices[index] != 0; index++) {
+        if (gActors[actor_index].var_154 < var_a0) {
+            gActors[actor_index].graphicIndex = graphic_indices[index];
+            return;
+        }
+        var_a0 += FIXED_UNIT(4.0);
+    }
+    gActors[actor_index].graphicIndex = graphic_indices[index - 1];
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_8008FB20.s")
 

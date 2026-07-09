@@ -109,7 +109,15 @@ void func_8008E918(u16 actor_index) {
     func_80081790(actor_index, D_800E8BEC);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_8008E948.s")
+s32 func_8008E948(u16 actor_index) {
+    u16 actor_1;
+
+    actor_1 = (u16)gActors[actor_index + 2].var_110;
+    if ((actor_1 != PLAYER_INDEX) && (gActors[actor_1].flags_098 & ACTOR_FLAG3_UNK0)) {
+        return TRUE;
+    }
+    return FALSE;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_8008EA4C.s")
 

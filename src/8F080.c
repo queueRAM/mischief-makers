@@ -219,7 +219,21 @@ s32 func_8008EDB0(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_8008EEF8.s")
+s32 func_8008EEF8(u16 actor_index) {
+    if (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK9) {
+        Sound_PlaySfxAtActor2(0x2F, actor_index);
+        func_8008EA4C(actor_index);
+        gActors[actor_index].state = 0x1B0;
+        gActors[actor_index].flags &= ~(ACTOR_FLAG_UNK16 | ACTOR_FLAG_UNK9 | ACTOR_FLAG_UNK7);
+        gActors[actor_index].flags |= ACTOR_FLAG_UNK17;
+        gActors[actor_index].velocityX.raw = 0;
+        gActors[actor_index].velocityY.raw = 0;
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_8008EFA8.s")
 

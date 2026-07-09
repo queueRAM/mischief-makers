@@ -160,7 +160,16 @@ void func_8008EBF0(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_8008ECDC.s")
+void func_8008ECDC(u16 actor_index) {
+    func_8008EB44(actor_index);
+    gActors[actor_index].state = 0x200;
+    gActors[actor_index + 5].unk_180 = (s32)D_800E8D8C;
+    Actor_Clamp_0F8(actor_index, 0x40000);
+    gActors[actor_index].unk_0FC.raw = 0x28000;
+    gActors[actor_index].flags |= ACTOR_FLAG_UNK17;
+    gActors[actor_index].flags &= ~ACTOR_FLAG_UNK16; \
+    gActors[actor_index].flags_098 &= ~ACTOR_FLAG3_UNK5;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_8008EDB0.s")
 

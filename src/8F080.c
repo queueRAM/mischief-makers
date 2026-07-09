@@ -12,6 +12,7 @@ extern u8 D_800E95E8[];
 extern u8 D_800E961C[];
 extern u8 D_800E8C08[];
 extern u16 D_800E8D8C[];
+extern f32 D_800E90E8[];
 
 // TODO: func_8001FCA0 only matches if arg1/arg2 are `s16`, but only matches below as `s32`
 u8 func_8001FCA0(u16 arg0, s32 arg1, s32 arg2); // arg1/arg2: s16 -> s32
@@ -313,7 +314,36 @@ u16 func_8008F2E8(u16 actor_0, u16 actor_1) {
     return index;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_8008F498.s")
+void func_8008F498(u16 actor_index, u16 list_index) {
+    gActors[actor_index + 0x1].scaleX *= D_800E90E8[list_index++];
+    gActors[actor_index + 0x1].scaleY *= D_800E90E8[list_index++];
+    gActors[actor_index + 0x3].scaleX *= D_800E90E8[list_index++];
+    gActors[actor_index + 0x3].scaleY *= D_800E90E8[list_index++];
+    gActors[actor_index + 0x4].scaleX *= D_800E90E8[list_index++];
+    gActors[actor_index + 0x4].scaleY *= D_800E90E8[list_index++];
+    gActors[actor_index + 0x5].scaleX *= D_800E90E8[list_index++];
+    gActors[actor_index + 0x5].scaleY *= D_800E90E8[list_index++];
+    gActors[actor_index + 0x7].scaleX *= D_800E90E8[list_index++];
+    gActors[actor_index + 0x7].scaleY *= D_800E90E8[list_index++];
+    gActors[actor_index + 0xD].scaleX *= D_800E90E8[list_index++];
+    gActors[actor_index + 0xD].scaleY *= D_800E90E8[list_index++];
+    gActors[actor_index + 0xF].scaleX *= D_800E90E8[list_index++];
+    gActors[actor_index + 0xF].scaleY *= D_800E90E8[list_index++];
+    gActors[actor_index + 0x11].scaleX *= D_800E90E8[list_index++];
+    gActors[actor_index + 0x11].scaleY *= D_800E90E8[list_index++];
+    gActors[actor_index + 0x8].scaleX = gActors[actor_index + 0x4].scaleX;
+    gActors[actor_index + 0x9].scaleX = gActors[actor_index + 0x5].scaleX;
+    gActors[actor_index + 0xB].scaleX = gActors[actor_index + 0x7].scaleX;
+    gActors[actor_index + 0x8].scaleY = gActors[actor_index + 0x4].scaleY;
+    gActors[actor_index + 0x9].scaleY = gActors[actor_index + 0x5].scaleY;
+    gActors[actor_index + 0xB].scaleY = gActors[actor_index + 0x7].scaleY;
+    gActors[actor_index + 0x13].scaleX = gActors[actor_index + 0xD].scaleX;
+    gActors[actor_index + 0x15].scaleX = gActors[actor_index + 0xF].scaleX;
+    gActors[actor_index + 0x17].scaleX = gActors[actor_index + 0x11].scaleX;
+    gActors[actor_index + 0x13].scaleY = gActors[actor_index + 0xD].scaleY;
+    gActors[actor_index + 0x15].scaleY = gActors[actor_index + 0xF].scaleY;
+    gActors[actor_index + 0x17].scaleY = gActors[actor_index + 0x11].scaleY;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_8008F734.s")
 

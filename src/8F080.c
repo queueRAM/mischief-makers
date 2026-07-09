@@ -1,6 +1,7 @@
 #include "common.h"
 #include "actor.h"
 
+extern s16 D_800E5E48[];
 extern u8 D_800E8BEC[];
 extern u8 D_800E9654[];
 extern u8 D_800E9634[];
@@ -354,7 +355,37 @@ void func_8008F734(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_8008F7E0.s")
+void func_8008F7E0(u16 actor_index) {
+    u16 temp_v0;
+    if (gActors[actor_index].state >= 0x101) {
+        gActors[actor_index].posZ.raw = 0xEFFF;
+        gActors[actor_index + 1].unk_180 &= ~0x800300; // 1.0x180
+        if (!((u16)gActors[actor_index].var_110 & 0x1000)) {
+            temp_v0 = func_8002877C(actor_index);
+            if (temp_v0 != 0) {
+                if (temp_v0 & 1) {
+                    gActors[actor_index + 1].unk_180 |= 0x100;
+                }
+                else {
+                    gActors[actor_index + 1].unk_180 |= 0x200;
+                }
+            }
+        }
+        D_800E3580 = 0;
+        func_8002AA20(actor_index, 0);
+        if (gActors[actor_index].iFrames > 0) {
+            gActors[actor_index].iFrames--;
+        }
+        func_800819A8(actor_index, D_800E5E48);
+        gActors[actor_index + 1].unk_12C = gActors[actor_index].unk_168 / 10000.0f;
+        gActors[actor_index + 1].unk_12C *= gActors[actor_index].unk_120;
+    }
+    else if (gActors[actor_index].state != 0) {
+        func_800819A8(actor_index, D_800E5E48);
+        gActors[actor_index + 1].unk_12C = gActors[actor_index].unk_168 / 10000.0f;
+        gActors[actor_index + 1].unk_12C *= gActors[actor_index].unk_120;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_8008FA50.s")
 

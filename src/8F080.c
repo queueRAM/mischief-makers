@@ -12,8 +12,10 @@ extern u8 D_800E95E8[];
 extern u8 D_800E961C[];
 extern u8 D_800E8C08[];
 
+// TODO: func_8001FCA0 only matches if arg1/arg2 are `s16`, but only matches below as `s32`
+u8 func_8001FCA0(u16 arg0, s32 arg1, s32 arg2); // arg1/arg2: s16 -> s32
+
 extern void func_8008105C(u16 actor_index, void* arg1, void* arg2);
-extern void func_80091BDC(u16 actor_index);
 
 extern s32 func_8008EDB0(u16 actor_index);
 extern s32 func_8008EEF8(u16 actor_index);
@@ -26,7 +28,46 @@ extern void func_800902B0(u16 actor_index);
 extern void func_80090558(u16 actor_index);
 extern s32 func_80092FD4(u16);
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_8008E480.s")
+s32 func_8008E480(u16 actor_index) {
+    f32 temp_f4;
+    s32 y;
+    s32 x;
+    u8 temp_s3;
+    u8 temp_t4;
+    u16 index;
+
+    x = (30.0f * gActors[actor_index + 1].unk_130) + gActors[actor_index].posX.whole;
+    y = gActors[actor_index].hitboxBY1 + gActors[actor_index].posY.whole + 1;
+    for (index = 0; index != 3; index++) {
+        if (func_8001FCA0(actor_index, x, y) & 0x80) {
+            break;
+        }
+        y += 0xF;
+    }
+    
+    if (index != 3) {
+        y = gActors[actor_index].hitboxBY0 + 8;
+        for (index = 6; index > 0; index--) {
+            if ((func_8001FCA0(actor_index, gActors[actor_index].posX.whole, gActors[actor_index].posY.whole + y) & 0x80)) {
+                break;
+            }
+            temp_s3 = func_8001FCA0(actor_index, gActors[actor_index].posX.whole + (gActors[actor_index + 1].unk_130 * 31.0f), gActors[actor_index].posY.whole + y) & 0x80;
+            temp_t4 = func_8001FCA0(actor_index, gActors[actor_index].posX.whole + (gActors[actor_index + 1].unk_130 * 16.0f), gActors[actor_index].posY.whole + y) & 0x80;
+            if ((temp_s3 == 0) && (temp_t4 == 0)) {
+                gActors[actor_index].state = 0x170;
+                y += 8;
+                temp_f4 = 32.0f;
+                temp_f4 *= y * 0x10;
+                temp_f4 = ((sqrtf((temp_f4) + 16.0f) - 4.0f) / 8);
+                gActors[actor_index + 2].unk_180 = (gActors[actor_index + 1].unk_130 * 98304.0f);
+                gActors[actor_index + 3].unk_180 = (temp_f4 * 17408.0f);
+                return FALSE;
+            }
+            y += 0x10;
+        }
+    }
+    return TRUE;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_8008E790.s")
 
@@ -158,6 +199,7 @@ void func_80091524(u16 actor_index) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_800919C8.s")
 
+void func_80091BDC(u16 actor_index);
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80091BDC.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80091C90.s")

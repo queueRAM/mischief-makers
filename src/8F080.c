@@ -171,7 +171,53 @@ void func_8008ECDC(u16 actor_index) {
     gActors[actor_index].flags_098 &= ~ACTOR_FLAG3_UNK5;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_8008EDB0.s")
+s32 func_8008EDB0(u16 actor_index) {
+    s32 pad;
+    if ((gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK1) && !(gActors[actor_index].flags & ACTOR_FLAG_UNK15)) {
+        switch (gActors[actor_index].unk_0DD) {
+        case 20:
+        case 21:
+        case 22:
+        case 23:
+            return 0;
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        default:
+            func_8008EBF0(actor_index);
+            Sound_PlaySfxAtActor2(0x9D, actor_index);
+            break;
+        case 6:
+        case 7:
+        case 8:
+            func_8008ECDC(actor_index);
+            Sound_PlaySfxAtActor2(0x9D, actor_index);
+            break;
+        case 9:
+        case 10:
+        case 11:
+            func_8008ECDC(actor_index);
+            Sound_PlaySfxAtActor2(0x9D, actor_index);
+            break;
+        case 12:
+        case 13:
+        case 14:
+            func_8008ECDC(actor_index);
+            Sound_PlaySfxAtActor2(0x9D, actor_index);
+            break;
+        case 19:
+            Sound_PlaySfxAtActor2(0x9D, actor_index);
+            gActors[actor_index].flags = 0;
+            gActors[actor_index].health = 0;
+            break;
+        }
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_8008EEF8.s")
 

@@ -386,7 +386,7 @@ segments:
       - [0x0EDC50, rodata] # 82920?
       - [0x0EDC70, rodata, osd_debug_text]
       - [0x0EDCE0, rodata] # 84BB0?
-      - [0x0EDEF0, rodata] # 8F080?
+      - [0x0EDEF0, .rodata, 8F080]
       - [0x0EE100, rodata, stage_end_screen]
       # libultra
       - [0x0EE200, .rodata, ultralib/io/viswapbuf]

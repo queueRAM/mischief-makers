@@ -17,6 +17,7 @@ extern u16 D_800E8A48[];
 extern u16 D_800E8AA8[];
 extern u16 D_800E8B98[];
 extern u16 D_800E8BD0[];
+extern u16 D_800E8C08[];
 extern u16 D_800E8C18[];
 extern u16 D_800E8C2C[];
 extern u16 D_800E8C7C[];
@@ -26,19 +27,21 @@ extern u16 D_800E8D1C[];
 extern u16 D_800E8D3C[];
 extern u16 D_800E8D4C[];
 extern u16 D_800E8D60[];
+extern u16 D_800E8D8C[];
 extern u16 D_800E8DB8[];
 extern u16 D_800E8DCC[];
 extern u16 D_800E8E38[];
 extern u16 D_800E8F60[];
 extern u16 D_800E8FA4[];
-extern u16 D_800E8C08[];
-extern u16 D_800E8D8C[];
 extern f32 D_800E90E8[];
 extern u16 D_800E91E8[];
 extern u16 D_800E91F0[];
 extern u16 D_800E9210[];
 extern u16 D_800E921C[];
 extern u16 D_800E9224[];
+extern u16 D_800E922C[];
+extern u16 D_800E9248[];
+extern u16 D_800E9260[];
 
 extern s16 D_801826B0;
 
@@ -1167,7 +1170,7 @@ void func_800930AC(u16 arg0) {
 void func_800930E4(u32 arg0) {
 }
 
-void func_800930EC(s32 arg0_unused, void* arg1) {
+void func_800930EC(u16 actor_index, void* arg1) {
     if (D_801826B0 < 0) {
         D_801826B0 = 0;
     }
@@ -1180,7 +1183,22 @@ void func_800930EC(s32 arg0_unused, void* arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_800931CC.s")
+void func_800931CC(u16 actor_index) {
+    switch (gActors[actor_index].state) {
+    case 0xE3:
+    case 0xE4:
+        func_800930EC(actor_index, D_800E922C);
+        break;
+    case 0xE7:
+    case 0xE8:
+        func_800930EC(actor_index, D_800E9248);
+        break;
+    case 0xEB:
+    case 0xED:
+        func_800930EC(actor_index, D_800E9260);
+        break;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80093274.s")
 

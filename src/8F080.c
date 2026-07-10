@@ -23,6 +23,8 @@ extern u16 D_800E8D1C[];
 extern u16 D_800E8D3C[];
 extern u16 D_800E8D4C[];
 extern u16 D_800E8D60[];
+extern u16 D_800E8DB8[];
+extern u16 D_800E8DCC[];
 extern u16 D_800E8F60[];
 extern u16 D_800E8FA4[];
 extern u16 D_800E8C08[];
@@ -930,7 +932,29 @@ void func_800922D8(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_800923C8.s")
+void func_800923C8(u16 actor_index) {
+    func_80040858(actor_index);
+    if (func_8008F220(actor_index) == 0) {
+        switch (gActors[actor_index].state) {
+        case 0x200:
+            if (gActors[actor_index].iFrames < 4) {
+                gActors[actor_index].state++;
+                func_80081790(actor_index, D_800E8DB8);
+                gActors[actor_index].velocityX.raw = gActors[actor_index].unk_0F8.raw;
+                gActors[actor_index].velocityY.raw = gActors[actor_index].unk_0FC.raw;
+            }
+            break;
+        case 0x201:
+            if (func_800911D8(actor_index) == 2) {
+                gActors[actor_index].state = 0x210;
+                Sound_PlaySfxAtActor2(0x94, actor_index);
+                func_80081790(actor_index, D_800E8DCC);
+                gActors[actor_index + 1].var_110 = 40.0f;
+            }
+            break;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_800924F8.s")
 

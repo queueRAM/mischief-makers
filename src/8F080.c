@@ -13,6 +13,8 @@ extern u8 D_800E95E8[];
 extern u8 D_800E961C[];
 extern u16 D_800E8A08[];
 extern u16 D_800E8A48[];
+extern u16 D_800E8AA8[];
+extern u16 D_800E8F60[];
 extern u16 D_800E8FA4[];
 extern u8 D_800E8C08[];
 extern u16 D_800E8D8C[];
@@ -522,8 +524,8 @@ void func_80090CDC(u16 actor_index) {
         }
         /* fallthrough */
     case 0x131:
-        gActors[actor_index].velocityX.raw = Math_ApproachS32(gActors[actor_index + 2].unk_180, 0, gActors[actor_index + 1].unk_12C * 8192.0f);
-        gActors[actor_index + 2].unk_180 = Math_ApproachS32(gActors[actor_index + 2].unk_180, 0, gActors[actor_index + 1].unk_12C * 1024.0f);
+        gActors[actor_index].velocityX.raw = Math_ApproachS32(gActors[actor_index + 2].unk_180, 0, gActors[actor_index + 1].unk_12C * FIXED_UNIT(0.125));
+        gActors[actor_index + 2].unk_180 = Math_ApproachS32(gActors[actor_index + 2].unk_180, 0, gActors[actor_index + 1].unk_12C * FIXED_UNIT(0.015625));
         if (gActors[actor_index].unk_16C & 1) {
             gActors[actor_index + 2].unk_180 = (77824.0f * gActors[actor_index + 1].unk_12C) * gActors[actor_index + 1].unk_130;
         }
@@ -532,7 +534,36 @@ void func_80090CDC(u16 actor_index) {
 }
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80090F48.s")
+void func_80090F48(u16 actor_index) {
+    if (func_8008F168(actor_index)) {
+        return;
+    }
+
+    switch (gActors[actor_index].state) {
+    case 0x140:
+        gActors[actor_index].state++;
+        gActors[actor_index].velocityX.raw = 0;
+        if ((gActors[actor_index + 1].var_0D8 == 2) || (gActors[actor_index + 1].var_0D8 == 3) || (gActors[actor_index + 1].var_0D8 == 5)) {
+            func_80081790(actor_index, D_800E8F60);
+        }
+        else {
+            func_80081790(actor_index, D_800E8AA8);
+        }
+        /* fallthrough */
+    case 0x141:
+        gActors[actor_index].velocityX.raw = Math_ApproachS32(gActors[actor_index].velocityX.raw, 0, gActors[actor_index + 1].unk_12C * FIXED_UNIT(0.0078125));
+        if (gActors[actor_index].unk_16C & 1) {
+            gActors[actor_index].velocityX.raw = FIXED_UNIT(2.0);
+        }
+        if (gActors[actor_index].unk_16C & 2) {
+            gActors[actor_index].velocityX.raw = FIXED_UNIT(2.5);
+        }
+        if (gActors[actor_index].unk_16C & 3) {
+            gActors[actor_index].velocityX.raw = (gActors[actor_index + 1].unk_12C * gActors[actor_index + 1].unk_130) * gActors[actor_index].velocityX.raw;
+        }
+        break;
+    }
+}
 
 void func_80091158(u16 actor_index) {
     gActors[actor_index].velocityX.raw = Math_ApproachS32(gActors[actor_index].velocityX.raw, 0, 0x800);

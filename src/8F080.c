@@ -25,6 +25,7 @@ extern u16 D_800E8D4C[];
 extern u16 D_800E8D60[];
 extern u16 D_800E8DB8[];
 extern u16 D_800E8DCC[];
+extern u16 D_800E8E38[];
 extern u16 D_800E8F60[];
 extern u16 D_800E8FA4[];
 extern u16 D_800E8C08[];
@@ -276,7 +277,8 @@ s32 func_8008F094(u16 actor_index, u16 arg1) {
     return func_8008EFA8(actor_index);
 }
 
-void func_8008F108(u16 actor_index) {
+// needs return to match some callers
+s32 func_8008F108(u16 actor_index) {
     gActors[actor_index].velocityX.raw = Math_ApproachS32(gActors[actor_index].velocityX.raw, 0, FIXED_UNIT(1.0));
 }
 
@@ -956,7 +958,19 @@ void func_800923C8(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_800924F8.s")
+void func_800924F8(u16 actor_index) {
+    func_80040858(actor_index);
+    if (func_8008F168(actor_index) == 0) {
+        if (gActors[actor_index].state == 0x210) {
+            func_8008F108(actor_index);
+            gActors[actor_index + 1].var_110 -= 1.0f;
+            if (gActors[actor_index + 1].var_110 < 0.0f) {
+                gActors[actor_index].state = 0x220;
+                func_80081790(actor_index, D_800E8E38);
+            }
+        }
+    }
+}
 
 void func_800925D8(u16 actor_index) {
     if (func_8008F168(actor_index) == 0) {

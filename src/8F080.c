@@ -1253,7 +1253,13 @@ s32 func_8009349C(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_8009351C.s")
+void func_8009351C(u16 actor_index) {
+    gActors[actor_index].posY.raw += D_800BE73C * gActors[actor_index].unk_11C;
+    gActors[actor_index].var_150--;
+    if (gActors[actor_index].var_150 < 0) {
+        gActors[actor_index].flags = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_800935B8.s")
 

@@ -109,42 +109,40 @@ s32 func_8008E480(u16 actor_index) {
     return TRUE;
 }
 
-#ifdef NON_MATCHING
-// https://decomp.me/scratch/RkfHg
-u16 func_8008E790(u16 arg0, u16 arg1, u16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6) {
-    u16 var_a2;
+u16 func_8008E790(u16 actor_index, u16 state_1, u16 state_2, s16 arg3, s16 arg4, s16 arg5, s16 arg6) {
     u16 temp_v0;
-    s32 pad;
 
-    temp_v0 = func_80029FB8(arg0, arg3, arg4, arg5, arg6);
-    var_a2 = arg1;
+    temp_v0 = func_80029FB8(actor_index, arg3, arg4, arg5, arg6);
     if (temp_v0 & 0x8000) {
-        if ((((gActors[arg0].flags & 0x20) == 0) && (temp_v0 & 1)) || 
-            (((gActors[arg0].flags & 0x20) != 0) && !(temp_v0 & 1))) {
-            var_a2 = arg2;
+        if (((gActors[actor_index].flags & 0x20) == 0 && (temp_v0 & 1) != 0) || 
+            ((gActors[actor_index].flags & 0x20) != 0 && (temp_v0 & 1) == 0)) {
+            state_1 = state_2;
         }
-        if ((gActors[arg0].state == 0x111) || (gActors[arg0].state == 0x131) || (gActors[arg0].state == 0x141)) {
-            if (arg2 != var_a2) {
-                if ((func_8008E480(arg0)) && (gActors[arg0].state != (var_a2 + 1))) {
-                    gActors[arg0].state = var_a2;
+        switch (gActors[actor_index].state) {
+        case 0x111:
+        case 0x131:
+        case 0x141:
+            if (state_1 != state_2) {
+                if ((func_8008E480(actor_index)) && (gActors[actor_index].state != (state_1 + 1))) {
+                    gActors[actor_index].state = state_1;
                 }
             }
-            else if (gActors[arg0].state != (var_a2 + 1)) {
-                gActors[arg0].state = var_a2;
+            else if (gActors[actor_index].state != (state_1 + 1)) {
+                gActors[actor_index].state = state_1;
             }
+            break;
         }
     }
     else {
-        if ((gActors[arg0].state == 0x131) || (gActors[arg0].state == 0x141)) {
-            gActors[arg0].state = 0x110;
+        switch (gActors[actor_index].state) {
+        case 0x131:
+        case 0x141:
+            gActors[actor_index].state = 0x110;
+            break;
         }
     }
     return temp_v0;
 }
-#else
-u16 func_8008E790(u16 arg0, u16 arg1, u16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6);
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_8008E790.s")
-#endif
 
 void func_8008E918(u16 actor_index) {
     func_80081790(actor_index, D_800E8BEC);

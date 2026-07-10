@@ -1,6 +1,8 @@
 #include "common.h"
 #include "actor.h"
 
+extern u16 D_800D98F4[];
+extern u16 D_800D99A4[];
 extern s16 D_800E5E48[];
 extern u16 D_800E8BEC[];
 extern u16 D_800E9034[];
@@ -48,6 +50,8 @@ extern u16 D_800E92E4[];
 extern u16 D_800E9300[];
 
 extern s16 D_801826B0;
+extern u16 D_801826B4;
+extern f32 D_801826B8;
 
 extern u16 D_80335ED4;
 
@@ -1283,7 +1287,33 @@ void func_80093654(u16 actor_index) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80093704.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80093C10.s")
+
+void func_80093C10(u16 actor_index) {
+    u16 actor;
+
+    actor = Actor_RangeFindInactive_90ToC0();
+    if (actor != 0) {
+        gActors[actor].actorType = 0x34;
+        Actor_Initialize(actor);
+        gActors[actor].graphicFlags = ACTOR_GFLAG_PALETTE | ACTOR_GFLAG_UNK8 | ACTOR_GFLAG_ROTZ | ACTOR_GFLAG_SCALE;
+        gActors[actor].flags = ACTOR_FLAG_FREEZE_POS | ACTOR_FLAG_ACTIVE | ACTOR_FLAG_DRAW;
+        gActors[actor].graphicIndex = 0xC8;
+        gActors[actor].scaleX = 10.0f;
+        gActors[actor].scaleY = D_801826B8;
+        gActors[actor].posX.whole = 0;
+        gActors[actor].posY.whole = 0;
+        gActors[actor].posZ.whole = gActors[actor_index].posZ.whole + 4;
+        gActors[actor].colorA = D_801826B4;
+        gActors[actor].rotateZ = 90.0f;
+        if (gActiveFrames & 1) {
+            gActors[actor].palette_18C = D_800D99A4;
+        }
+        else {
+            gActors[actor].palette_18C = D_800D98F4;
+        }
+        func_80031D58(actor_index, actor);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80093D38.s")
 

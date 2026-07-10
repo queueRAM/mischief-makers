@@ -14,6 +14,7 @@ extern u8 D_800E961C[];
 extern u16 D_800E8A08[];
 extern u16 D_800E8A48[];
 extern u16 D_800E8AA8[];
+extern u16 D_800E8B98[];
 extern u16 D_800E8BD0[];
 extern u16 D_800E8F60[];
 extern u16 D_800E8FA4[];
@@ -613,7 +614,38 @@ void func_80091300(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_800913C0.s")
+void func_800913C0(u16 actor_index) {
+    if (func_8008F220(actor_index) != 0) {
+        return;
+    }
+
+    switch (gActors[actor_index].state) {
+    case 0x170:
+        gActors[actor_index].state++;
+        gActors[actor_index].velocityX.raw = 0;
+        func_80081790(actor_index, D_800E8B98);
+        /* fallthrough */
+    case 0x171:
+        if (gActors[actor_index].unk_16C & 1) {
+            gActors[actor_index].state++;
+            gActors[actor_index].flags &= ~ACTOR_FLAG_UNK16;
+            gActors[actor_index].flags |= ACTOR_FLAG_UNK17;
+            gActors[actor_index].velocityX.raw = gActors[actor_index + 2].unk_180;
+            gActors[actor_index].velocityY.raw = gActors[actor_index + 3].unk_180;
+        }
+        break;
+    case 0x172:
+        if (gActors[actor_index].velocityY.raw < 0) {
+            gActors[actor_index].state++;
+            func_80081790(actor_index, D_800E8BD0);
+        }
+        func_800911D8(actor_index);
+        break;
+    case 0x173:
+        func_800911D8(actor_index);
+        break;
+    }
+}
 
 void func_80091524(u16 actor_index) {
     if (func_8008F168(actor_index) == 0) {

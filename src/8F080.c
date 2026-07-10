@@ -5,14 +5,23 @@ extern u16 D_800D98F4[];
 extern u16 D_800D99A4[];
 extern u16 D_800DB67C[];
 extern u16 D_800DB87C[];
+
 extern s16 D_800E2364[];
-extern s16 D_800E5E48[];
-extern u16 D_800E8BEC[];
+extern u16 D_800E5E48[];
+extern u16 D_800E5B00[];
+extern u16 D_800E5B8C[];
+extern u16 D_800E5C18[];
+extern u16 D_800E5CA4[];
+extern u16 D_800E5D30[];
+extern u16 D_800E5DBC[];
+extern u16 D_800E8820[];
+extern u16 D_800E89D4[];
 extern u16 D_800E8A08[];
 extern u16 D_800E8A48[];
 extern u16 D_800E8AA8[];
 extern u16 D_800E8B98[];
 extern u16 D_800E8BD0[];
+extern u16 D_800E8BEC[];
 extern u16 D_800E8C08[];
 extern u16 D_800E8C18[];
 extern u16 D_800E8C2C[];
@@ -30,6 +39,7 @@ extern u16 D_800E8E38[];
 extern u16 D_800E8F60[];
 extern u16 D_800E8FA4[];
 extern u16 D_800E9034[];
+extern u16* D_800E905C[];
 extern f32 D_800E90E8[];
 extern u16 D_800E91E8[];
 extern u16 D_800E91F0[];
@@ -611,7 +621,62 @@ void func_80090558(u16 actor_index) {
 }
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_800907E4.s")
+void func_800907E4(u16 actor_index) {
+    u16 index;
+
+    gActors[actor_index].posZ.whole = 1;
+    gActors[actor_index].graphicFlags = ACTOR_GFLAG_SCALE;
+    gActors[actor_index].flags = ACTOR_FLAG_UNK16 | ACTOR_FLAG_UNK12 | ACTOR_FLAG_UNK10 | ACTOR_FLAG_ACTIVE | ACTOR_FLAG_DRAW;
+    gActors[actor_index].unk_0CE = 0xA;
+    switch (gActors[actor_index + 1].var_0D8) {
+    case 0:
+        gActors[actor_index].graphicFlags |= ACTOR_GFLAG_PALETTE;
+        gActors[actor_index].palette_18C = (u16*)0x80202C90;
+        func_8008105C(actor_index, D_800E5E48, D_800E5B00);
+        break;
+    case 1:
+        gActors[actor_index].palette_18C = NULL;
+        func_8008105C(actor_index, D_800E5E48, D_800E5B8C);
+        break;
+    case 2:
+        gActors[actor_index].palette_18C = NULL;
+        func_8008105C(actor_index, D_800E5E48, D_800E5C18);
+        break;
+    case 3:
+        gActors[actor_index].palette_18C = NULL;
+        func_8008105C(actor_index, D_800E5E48, D_800E5D30);
+        break;
+    case 4:
+        gActors[actor_index].palette_18C = NULL;
+        func_8008105C(actor_index, D_800E5E48, D_800E5DBC);
+        break;
+    case 5:
+        gActors[actor_index].palette_18C = NULL;
+        func_8008105C(actor_index, D_800E5E48, D_800E5CA4);
+        break;
+    }
+    if (gActors && gActors) {} // fakematch
+    gActors[actor_index].unk_178 = (s32) D_800E8820;
+    func_80081478(actor_index, D_800E5E48, 1);
+    func_80081790(actor_index, D_800E89D4);
+    func_800819A8(actor_index, D_800E5E48);
+    gActors[actor_index].colorA = 0xFE;
+    gActors[actor_index + 0xA].unk_180 = gActors[actor_index].posX.whole + (0, gScreenPosCurrentX.whole);
+    gActors[actor_index + 0xB].unk_180 = gActors[actor_index].posY.whole + (0, gScreenPosCurrentY.whole);
+    if (gActors[actor_index].graphicFlags & ACTOR_GFLAG_PALETTE) {
+        index = ((gActors[actor_index].var_0D8 & 0x1F0) / 16) * 5;
+        gActors[actor_index + 0x1].palette_18C = D_800E905C[index + 0];
+        gActors[actor_index + 0x3].palette_18C = D_800E905C[index + 0];
+        gActors[actor_index + 0x4].palette_18C = D_800E905C[index + 1];
+        gActors[actor_index + 0x8].palette_18C = D_800E905C[index + 1];
+        gActors[actor_index + 0x7].palette_18C = D_800E905C[index + 2];
+        gActors[actor_index + 0xB].palette_18C = D_800E905C[index + 2];
+        gActors[actor_index + 0xF].palette_18C = D_800E905C[index + 3];
+        gActors[actor_index + 0x15].palette_18C = D_800E905C[index + 3];
+        gActors[actor_index + 0x11].palette_18C = D_800E905C[index + 4];
+        gActors[actor_index + 0x17].palette_18C = D_800E905C[index + 4];
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80090A88.s")
 

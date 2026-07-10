@@ -36,6 +36,8 @@ extern u16 D_800E8D8C[];
 extern u16 D_800E8DB8[];
 extern u16 D_800E8DCC[];
 extern u16 D_800E8E38[];
+extern u16 D_800E8EAC[];
+extern u16 D_800E8F4C[];
 extern u16 D_800E8F60[];
 extern u16 D_800E8FA4[];
 extern u16 D_800E9034[];
@@ -678,7 +680,35 @@ void func_800907E4(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80090A88.s")
+void func_80090A88(u16 actor_index) {
+    if (func_8008F168(actor_index) == 0) {
+        switch (gActors[actor_index].state) {
+        case 0x110:
+            gActors[actor_index].state++;
+            gActors[actor_index].flags |= ACTOR_FLAG_UNK12;
+            switch (gActors[actor_index + 1].var_0D8) {
+                case 3:
+                case 5:
+                    func_80081790(actor_index, D_800E8EAC);
+                break;
+                case 2:
+                    func_80081790(actor_index, D_800E8F4C);
+                break;
+                default:
+                    func_80081790(actor_index, D_800E89D4);
+                break;
+            }
+            gActors[actor_index + 2].unk_180 = 0;
+            // fallthrough
+        case 0x111:
+            if (gActors[actor_index + 2].unk_180 < 0x7FFF) {
+                gActors[actor_index + 2].unk_180++;
+            }
+            func_8008F108(actor_index);
+            break;
+        }
+    }
+}
 
 void func_80090BFC(u16 actor_index) {
     if (func_8008F168(actor_index) != 0) {

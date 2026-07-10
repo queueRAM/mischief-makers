@@ -879,7 +879,36 @@ void func_80092028(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80092114.s")
+void func_80092114(u16 actor_index) {
+    func_80040858(actor_index);
+    if (func_8008F168(actor_index) == 0) {
+        switch (gActors[actor_index].state) {
+        case 0x1E0:
+            if (gActors[actor_index].iFrames < 4) {
+                gActors[actor_index].state++;
+                func_80081790(actor_index, (u16*)gActors[actor_index + 5].unk_180); // TODO: unk_180 used as pointer
+                gActors[actor_index].velocityX.raw = gActors[actor_index].unk_0F8.raw;
+                gActors[actor_index].velocityY.raw = gActors[actor_index].unk_0FC.raw;
+            }
+            gActors[actor_index + 1].var_110 = 0.0f;
+            break;
+        case 0x1E1:
+            if (gActors[actor_index].unk_16C & 1) {
+                gActors[actor_index + 1].var_110 = 1.0f;
+            }
+            if (gActors[actor_index + 1].var_110 != 0.0f) {
+                gActors[actor_index].velocityX.raw = Math_ApproachS32(gActors[actor_index].velocityX.raw, 0, FIXED_UNIT(0.1875));
+            }
+            else {
+                gActors[actor_index].velocityX.raw = Math_ApproachS32(gActors[actor_index].velocityX.raw, 0, FIXED_UNIT(0.015625));
+            }
+            if (gActors[actor_index].unk_11C < 0.0f) {
+                gActors[actor_index].state = 0x110;
+            }
+            break;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_800922D8.s")
 

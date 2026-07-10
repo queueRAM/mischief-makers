@@ -1351,7 +1351,21 @@ void func_80094EB8(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80094F24.s")
+void func_80094F24(u16 arg0, s32 arg1) {
+    u16 actor_index;
+
+    if ((gActiveFrames % 7) == 0) {
+        actor_index = Actor_RangeFindInactive(0x50, 0xC0);
+        if (actor_index != 0) {
+            gActors[actor_index].actorType = 0x6C;
+            Actor_Initialize(actor_index);
+            gActors[actor_index].var_150 = arg0;
+            if ((gActiveFrames % 14) == 0) {
+                gActors[actor_index].var_110 = 1.0f;
+            }
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80094FE4.s")
 

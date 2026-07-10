@@ -1272,7 +1272,14 @@ void func_800935B8(u16 actor_index, u16 arg1) {
     gActors[actor_1].var_0D8 = arg1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80093654.s")
+void func_80093654(u16 actor_index) {
+    f32 temp_f0;
+    f32 scale;
+
+    temp_f0 = gActors[actor_index].unk_168 / 10000;
+    scale = temp_f0 * 0.75;
+    func_80032E60(actor_index + 0xB, 0x1098, 0, 4.0f * temp_f0, -1, scale, scale);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80093704.s")
 

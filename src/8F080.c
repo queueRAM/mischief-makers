@@ -5,15 +5,6 @@ extern u16 D_800D98F4[];
 extern u16 D_800D99A4[];
 extern s16 D_800E5E48[];
 extern u16 D_800E8BEC[];
-extern u16 D_800E9034[];
-extern u8 D_800E9654[];
-extern u8 D_800E9634[];
-extern u8 D_800E9700[];
-extern u8 D_800E9720[];
-extern u8 D_800E9414[];
-extern u8 D_800E93C4[];
-extern u8 D_800E95E8[];
-extern u8 D_800E961C[];
 extern u16 D_800E8A08[];
 extern u16 D_800E8A48[];
 extern u16 D_800E8AA8[];
@@ -35,6 +26,7 @@ extern u16 D_800E8DCC[];
 extern u16 D_800E8E38[];
 extern u16 D_800E8F60[];
 extern u16 D_800E8FA4[];
+extern u16 D_800E9034[];
 extern f32 D_800E90E8[];
 extern u16 D_800E91E8[];
 extern u16 D_800E91F0[];
@@ -48,6 +40,15 @@ extern u16 D_800E92C4[];
 extern u16 D_800E92E0[];
 extern u16 D_800E92E4[];
 extern u16 D_800E9300[];
+extern ActorFunc D_800E9320[];
+extern u8 D_800E9414[];
+extern u8 D_800E9654[];
+extern u8 D_800E9634[];
+extern u8 D_800E9700[];
+extern u8 D_800E9720[];
+extern u8 D_800E93C4[];
+extern u8 D_800E95E8[];
+extern u8 D_800E961C[];
 
 extern s16 D_801826B0;
 extern u16 D_801826B4;
@@ -1317,7 +1318,13 @@ void func_80093C10(u16 actor_index) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80093D38.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80094C5C.s")
+void func_80094C5C(u16 actor_index) {
+    func_8008F7E0(actor_index);
+    if (gActors[actor_index].state < 0x4000) {
+        D_800E9320[gActors[actor_index].state / 16](actor_index);
+    }
+    func_80090558(actor_index);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80094CF8.s")
 

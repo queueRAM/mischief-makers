@@ -1242,7 +1242,16 @@ s32 func_80093410(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_8009349C.s")
+s32 func_8009349C(u16 actor_index) {
+    gActors[actor_index + 6].unk_180 = Math_ApproachS32(gActors[actor_index + 6].unk_180, 0, 6);
+    if (gActors[actor_index + 6].unk_180 == 0) {
+        return TRUE;
+    }
+    else {
+        func_8009333C(actor_index);
+        return FALSE;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_8009351C.s")
 

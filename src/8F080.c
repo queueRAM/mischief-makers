@@ -812,7 +812,50 @@ void func_80091C90(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80091D28.s")
+void func_80091D28(u16 actor_index) {
+    if (func_8008F220(actor_index) == 0) {
+        switch (gActors[actor_index].state) {
+        case 0x1C0:
+            gActors[actor_index].state++;
+            gActors[actor_index + 1].var_110 = 10.0f;
+            // fallthrough
+        case 0x1C1:
+            gActors[actor_index].unk_170 -= FIXED_UNIT(48.0);
+            if ((gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK0) || 
+                ((gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK2) && (gActors[actor_index].velocityX.raw < 0)) || 
+                ((gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK3) && (gActors[actor_index].velocityX.raw > 0))) {
+                gActors[actor_index].velocityX.raw = -(f32) gActors[actor_index].velocityX.raw * 0.75;
+                gActors[actor_index].velocityY.raw = (f32) gActors[actor_index].velocityY.raw * 0.75;
+                Sound_PlaySfxAtActor2(0x2D, actor_index);
+                func_8008F094(actor_index, 0x32);
+            }
+            if (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK4) {
+                if (gActors[actor_index].velocityY.raw > 0) {
+                    gActors[actor_index].velocityX.raw = -(f32) gActors[actor_index].velocityX.raw * 0.75;
+                    gActors[actor_index].velocityY.raw = -gActors[actor_index].velocityY.raw;
+                    Sound_PlaySfxAtActor2(0x2D, actor_index);
+                    func_8008F094(actor_index, 0x32);
+                }
+            }
+            if (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK5) {
+                if (gActors[actor_index].velocityY.raw < 0) {
+                    gActors[actor_index].unk_0F8.raw = gActors[actor_index].velocityX.raw / 2;
+                    gActors[actor_index].unk_0FC.raw = FIXED_UNIT(2.0);
+                    func_8008ECDC(actor_index);
+                    Sound_PlaySfxAtActor2(0x2D, actor_index);
+                    func_8008F094(actor_index, 0x32);
+                }
+            }
+            if (gActors[actor_index + 1].var_110 != 0.0f) {
+                gActors[actor_index + 1].var_110 -= 1.0f;
+            }
+            else {
+                func_80091158(actor_index);
+            }
+            break;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80092028.s")
 

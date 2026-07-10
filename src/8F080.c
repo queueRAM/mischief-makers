@@ -778,8 +778,26 @@ void func_800919C8(u16 actor_index) {
     }
 }
 
-void func_80091BDC(u16 actor_index);
+#ifdef NON_MATCHING
+// https://decomp.me/scratch/3UMF9
+void func_80091BDC(u16 arg0) {
+    s32 temp_v0;
+
+    func_80040858(arg0);
+    temp_v0 = func_800291AC(arg0, 0x1C0, 0x214A3, 0x150, 0x21423);
+    switch (temp_v0) {
+    case 0:
+        gActors[arg0].posZ.raw = gActors[arg0].unk_10C - 0x10000;
+        break;
+    case 1:
+    case 2:
+    case 3:
+        break;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80091BDC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80091C90.s")
 

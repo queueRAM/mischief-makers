@@ -16,6 +16,8 @@ extern u16 D_800E8A48[];
 extern u16 D_800E8AA8[];
 extern u16 D_800E8B98[];
 extern u16 D_800E8BD0[];
+extern u16 D_800E8D1C[];
+extern u16 D_800E8D3C[];
 extern u16 D_800E8F60[];
 extern u16 D_800E8FA4[];
 extern u8 D_800E8C08[];
@@ -656,15 +658,15 @@ void func_80091524(u16 actor_index) {
 }
 
 s32 func_8009159C(u16 actor_index) {
-    u16 temp_a3;
+    u16 actor_7;
     u16 parent;
 
-    temp_a3 = actor_index + 7;
-    if (func_80028C08(temp_a3) != 0) {
-        parent = gActors[temp_a3].parentIndex;
-        gActors[parent].unk_104 = gActors[temp_a3].posX.raw;
-        gActors[parent].unk_108 = gActors[temp_a3].posY.raw;
-        gActors[parent].unk_10C = gActors[temp_a3].posZ.raw - 1;
+    actor_7 = actor_index + 7;
+    if (func_80028C08(actor_7) != 0) {
+        parent = gActors[actor_7].parentIndex;
+        gActors[parent].unk_104 = gActors[actor_7].posX.raw;
+        gActors[parent].unk_108 = gActors[actor_7].posY.raw;
+        gActors[parent].unk_10C = gActors[actor_7].posZ.raw - 1;
         gActors[parent].flags_098 |= ACTOR_FLAG3_UNK9;
         gActors[parent].parentIndex = actor_index + 7;
         return TRUE;
@@ -675,7 +677,45 @@ s32 func_8009159C(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80091664.s")
+void func_80091664(u16 actor_index) {
+    u16 actor_7;
+
+    if (func_8008F168(actor_index) == 0) {
+        switch (gActors[actor_index].state) {
+        case 0x180:
+            gActors[actor_index].state++;
+            gActors[actor_index].velocityX.raw = 0;
+            func_80081790(actor_index, D_800E8D1C);
+            /* fallthrough */
+        case 0x181:
+            actor_7 = actor_index + 7;
+            if (gActors[actor_index].unk_16C & 2) {
+                gActors[actor_index + 2].var_110 = actor_7;
+                gActors[actor_7].flags |= ACTOR_FLAG_UNK11;
+                Actor_SetHitboxA(actor_7, gActors[actor_index + 1].unk_12C * 7.0f);
+            }
+            if ((gActors[actor_7].flags_098 & ACTOR_FLAG3_UNK8) && (actor_index != gActors[actor_7].parentIndex) && !(gActors[gActors[actor_7].parentIndex].unk_0DF & 0x40)) {
+                gActors[actor_index].state = 0x190;
+                gActors[actor_7].flags &= ~ACTOR_FLAG_UNK11;
+                func_8009159C(actor_index);
+            }
+            else if (gActors[actor_index].unk_11C < 0.0f) {
+                gActors[actor_index].state++;
+                func_80081790(actor_index, D_800E8D3C);
+                gActors[actor_7].flags &= ~ACTOR_FLAG_UNK11;
+            }
+            break;
+        case 0x182:
+            if (gActors[actor_index].unk_11C < 0.0f) {
+                gActors[actor_index].state = 0x110;
+            }
+            break;
+        }
+    }
+    else {
+        func_8008EA4C(actor_index);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_800918D4.s")
 

@@ -3,6 +3,7 @@
 
 extern u16 D_800D98F4[];
 extern u16 D_800D99A4[];
+extern u16 D_800DB87C[];
 extern s16 D_800E2364[];
 extern s16 D_800E5E48[];
 extern u16 D_800E8BEC[];
@@ -31,6 +32,8 @@ extern u16 D_800E9034[];
 extern f32 D_800E90E8[];
 extern u16 D_800E91E8[];
 extern u16 D_800E91F0[];
+extern u16 D_800E91F8[];
+extern u16 D_800E9204[];
 extern u16 D_800E9210[];
 extern u16 D_800E921C[];
 extern u16 D_800E9224[];
@@ -502,7 +505,36 @@ void func_8008FD08(u16 actor_index) {
     gActors[actor_index + 0x2].unk_138 = -1.0f;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80090064.s")
+void func_80090064(u16 actor_index) {
+    gActors[actor_index + 0x4].scaleX *= 0.8;
+    gActors[actor_index + 0x4].scaleY = gActors[actor_index + 0x4].scaleX;
+    gActors[actor_index + 0x8].scaleX *= 0.8;
+    gActors[actor_index + 0x8].scaleY = gActors[actor_index + 0x8].scaleX;
+    gActors[actor_index + 0x5].scaleX *= 0.7;
+    gActors[actor_index + 0x9].scaleX *= 0.7;
+    gActors[actor_index + 0x7].scaleX *= 0.75;
+    gActors[actor_index + 0x7].scaleY *= 0.7;
+    gActors[actor_index + 0xB].scaleX *= 0.75;
+    gActors[actor_index + 0xB].scaleY *= 0.7;
+    gActors[actor_index + 0xF].scaleY *= 1.3;
+    gActors[actor_index + 0x15].scaleY *= 1.3;
+    func_8008FA50(actor_index, actor_index + 0x7, D_800E91F8);
+    func_8008FA50(actor_index, actor_index + 0xB, D_800E9204);
+    if (gActors[actor_index].palette_18C == NULL) {
+        gActors[actor_index + 0x4].graphicFlags |= ACTOR_GFLAG_PALETTE;
+        gActors[actor_index + 0x7].graphicFlags |= ACTOR_GFLAG_PALETTE;
+        gActors[actor_index + 0x8].graphicFlags |= ACTOR_GFLAG_PALETTE;
+        gActors[actor_index + 0xB].graphicFlags |= ACTOR_GFLAG_PALETTE;
+        gActors[actor_index + 0x4].palette_18C = D_800DB87C;
+        gActors[actor_index + 0x7].palette_18C = D_800DB87C;
+        gActors[actor_index + 0x8].palette_18C = D_800DB87C;
+        gActors[actor_index + 0xB].palette_18C = D_800DB87C;
+    }
+    gActors[actor_index + 0x3].unk_138 = -gActors[actor_index + 0x3].var_154 / FIXED_UNIT(1.0);
+    gActors[actor_index + 0x2].unk_138 = -2.0f;
+    gActors[actor_index + 0x6].unk_138 = -2.0f;
+    gActors[actor_index + 0xA].unk_138 = -2.0f;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_800902B0.s")
 

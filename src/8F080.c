@@ -910,7 +910,24 @@ void func_80092114(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_800922D8.s")
+void func_800922D8(u16 actor_index) {
+    func_80040858(actor_index);
+    if (func_8008F220(actor_index) == 0) {
+        switch (gActors[actor_index].state) {
+        case 0x1F0:
+            if (gActors[actor_index].iFrames < 4) {
+                gActors[actor_index].state++;
+                func_80081790(actor_index, (u16*)gActors[actor_index + 5].unk_180);
+                gActors[actor_index].velocityX.raw = gActors[actor_index].unk_0F8.raw;
+                gActors[actor_index].velocityY.raw = gActors[actor_index].unk_0FC.raw;
+            }
+            break;
+        case 0x1F1:
+            func_800911D8(actor_index);
+            break;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_800923C8.s")
 

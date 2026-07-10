@@ -3,6 +3,7 @@
 
 extern u16 D_800D98F4[];
 extern u16 D_800D99A4[];
+extern s16 D_800E2364[];
 extern s16 D_800E5E48[];
 extern u16 D_800E8BEC[];
 extern u16 D_800E8A08[];
@@ -1408,11 +1409,45 @@ void func_80095FC8(u16 actor_index) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80096104.s")
 
+void func_800962C4(u16);
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_800962C4.s")
 
+void func_80096478(u16);
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80096478.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_8009672C.s")
+void func_8009672C(u16 actor_index) {
+    s32 x;
+    s32 y;
+
+    x = gActors[actor_index].posX.whole + gScreenPosCurrentX.whole;
+    gActors[actor_index].unk_180 = x;
+    y = gActors[actor_index].posY.whole + gScreenPosCurrentY.whole;
+    gActors[actor_index].unk_184 = y;
+    gActors[actor_index].scaleY = gActors[actor_index].scaleX;
+    switch (gActors[actor_index].state) {
+    case 0:
+        gActors[actor_index].state++;
+        gActors[actor_index].graphicFlags = ACTOR_GFLAG_SCALE;
+        gActors[actor_index].flags = ACTOR_FLAG_ACTIVE | ACTOR_FLAG_DRAW;
+        gActors[actor_index].graphicList = D_800E2364;
+        gActors[actor_index].graphicTimer = 1;
+        gActors[actor_index].unk_164 = x;
+        gActors[actor_index].unk_168 = y;
+        gActors[actor_index].scaleX = 0.6f;
+        gActors[actor_index].scaleY = 0.6f;
+        /* fallthrough */
+    case 1:
+        if (gActiveFrames & 8) {
+            gActors[actor_index].flags |= ACTOR_FLAG_FLIPPED;
+        }
+        else {
+            gActors[actor_index].flags &= ~ACTOR_FLAG_FLIPPED;
+        }
+        func_80096478(actor_index);
+        func_800962C4(actor_index);
+        break;
+    }
+}
 
 void func_8009685C(u16 actor_index) {
     gActors[actor_index].graphicFlags = ACTOR_GFLAG_SCALE;

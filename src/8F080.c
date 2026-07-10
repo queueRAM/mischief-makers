@@ -1425,7 +1425,19 @@ void func_800968EC(u16 actor_index) {
     func_800819A8(actor_index, D_800E9654);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_8009691C.s")
+void func_8009691C(u16 actor_index) {
+    s32 pad;
+    switch (gActors[actor_index].state) {
+    case 0:
+        func_8009685C(actor_index);
+        gActors[actor_index].state = 1;
+        gActors[actor_index].unk_168 = gActors[actor_index].var_110;
+        /* fallthrough */
+    case 1:
+        func_800968EC(actor_index);
+        break;
+    }
+}
 
 void func_800969CC(u16 actor_index) {
     func_80090558(actor_index);

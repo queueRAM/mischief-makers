@@ -1339,7 +1339,11 @@ void func_80094D84(u16 actor_index, u16 arg1) {
                   gActors[actor_index + 11].unk_180 + 0x28, gActors[actor_index + 11].unk_180 - 0x28);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80094E10.s")
+void func_80094E10(u16* arg0, u16 arg1) {
+    if (func_80029B00(0x50, 0x40, -0x40)) {
+        func_800406A4(arg0, arg1, gActors[arg1 + 1].unk_130 * 26.0f, 0x10, 0xA);
+    }
+}
 
 void func_80094EB8(u16 actor_index) {
     if (func_80029B00(0x50, 0x40, -0x40)) {

@@ -3,6 +3,7 @@
 
 extern s16 D_800E5E48[];
 extern u16 D_800E8BEC[];
+extern u16 D_800E9034[];
 extern u8 D_800E9654[];
 extern u8 D_800E9634[];
 extern u8 D_800E9700[];
@@ -943,7 +944,67 @@ void func_800925D8(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80092660.s")
+void func_80092660(u16 actor_index) {
+    switch (gActors[actor_index].state) {
+    case 0x250:
+        func_80040858(actor_index);
+        gActors[actor_index].state++;
+        gActors[actor_index].flags &= ~ACTOR_FLAG_UNK16;
+        gActors[actor_index].flags |= ACTOR_FLAG_UNK17;
+        gActors[actor_index + 2].unk_180 = 0xDC;
+        func_80081790(actor_index, D_800E9034);
+        SpawnParticle_RingWaveRed(1.5f, gActors[actor_index].posX.whole, gActors[actor_index].posY.whole, gActors[actor_index].posZ.whole + 10);
+        func_8003EEC0(2.0f, gActors[actor_index].posX.whole, gActors[actor_index].posY.whole, gActors[actor_index].posZ.whole + 10);
+        // fallthrough
+
+    case 0x251:
+        gActors[actor_index + 2].unk_180--;
+        if (gActors[actor_index + 2].unk_180 < 0) {
+            gActors[actor_index].state++;
+            gActors[actor_index].flags = 0;
+            gActors[actor_index].actorType = 0;
+            func_80081720(actor_index, D_800E5E48, 3);
+            return;
+        }
+    
+        if (((gActors[actor_index].velocityX.raw > 0) && (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK3)) || 
+            ((gActors[actor_index].velocityX.raw < 0) && (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK2))) {
+            gActors[actor_index].velocityX.raw = -gActors[actor_index].velocityX.raw;
+        }
+        if ((gActors[actor_index].velocityY.raw > 0) && (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK4)) {
+            gActors[actor_index].velocityY.raw = -gActors[actor_index].velocityY.raw;
+        }
+        if ((gActors[actor_index].velocityY.raw < 0) && (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK5)) {
+            func_80081790(actor_index, D_800E9034);
+            gActors[actor_index].velocityY.raw = FIXED_UNIT(8.0) - ((Rand() & 3) << 0x10);
+            if (func_80029B74(0x60) != 0) {
+                gActors[actor_index].velocityX.raw = ((Rand() & 3) * FIXED_UNIT(0.75)) + FIXED_UNIT(0.5);
+                if (Rand() & 1) {
+                    gActors[actor_index].velocityX.raw = -gActors[actor_index].velocityX.raw;
+                }
+            }
+            else {
+                gActors[actor_index].velocityX.raw = ((Rand() & 3) * FIXED_UNIT(0.75)) + FIXED_UNIT(0.5);
+                if (gActors->posX.whole < gActors[actor_index].posX.whole) {
+                    gActors[actor_index].velocityX.raw = -gActors[actor_index].velocityX.raw;
+                }
+            }
+            if (gActors[actor_index].velocityX.raw > 0) {
+                gActors[actor_index].flags &= ~ACTOR_FLAG_FLIPPED;
+            }
+            else {
+                gActors[actor_index].flags |= ACTOR_FLAG_FLIPPED;
+            }
+        }
+        else {
+            gActors[actor_index].unk_170 += FIXED_UNIT(64.0);
+            func_80091158(actor_index);
+        }
+        BossDeathExplode(0, actor_index, 1.5f, 1.5f);
+        break;
+    }
+    gActors[actor_index].flags &= ~(ACTOR_FLAG_UNK12 | ACTOR_FLAG_UNK10);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_800929B8.s")
 

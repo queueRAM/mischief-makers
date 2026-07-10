@@ -1138,7 +1138,23 @@ void func_80092F2C(u16 actor_src, u16 actor_dst) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80092FD4.s")
+s32 func_80092FD4(u16 actor_index) {
+    u16 index;
+    u16* vals;
+
+    vals = (u16*)gActors[actor_index + 2].unk_180;
+    for (index = 0; (vals[index] & 0x8000) == 0; index++) {
+        if ((func_8005DEFC() & 0x7FFF) == vals[index]) {
+            if ((vals[index + 1] & 0x8000)) {
+                return 2;
+            }
+            else {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
 
 void func_800930AC(u16 arg0) {
     if (func_80092FD4(arg0)) {

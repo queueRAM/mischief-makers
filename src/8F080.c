@@ -2,7 +2,7 @@
 #include "actor.h"
 
 extern s16 D_800E5E48[];
-extern u8 D_800E8BEC[];
+extern u16 D_800E8BEC[];
 extern u8 D_800E9654[];
 extern u8 D_800E9634[];
 extern u8 D_800E9700[];
@@ -566,13 +566,33 @@ void func_80090F48(u16 actor_index) {
 }
 
 void func_80091158(u16 actor_index) {
-    gActors[actor_index].velocityX.raw = Math_ApproachS32(gActors[actor_index].velocityX.raw, 0, 0x800);
+    gActors[actor_index].velocityX.raw = Math_ApproachS32(gActors[actor_index].velocityX.raw, 0, FIXED_UNIT(0.03125));
     if (gActors[actor_index].velocityY.raw > FIXED_UNIT(-6.5)) {
         gActors[actor_index].velocityY.raw -= FIXED_UNIT(0.265625);
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_800911D8.s")
+s32 func_800911D8(u16 actor_index) {
+    func_80091158(actor_index);
+    if (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK5) {
+        if (gActors[actor_index].velocityY.raw < 0) {
+            if (gActors[actor_index].velocityY.raw < FIXED_UNIT(-3.75)) {
+                gActors[actor_index].state = 0x160;
+                func_80081790(actor_index, D_800E8BEC);
+            }
+            else {
+                gActors[actor_index].state = 0x110;
+            }
+            gActors[actor_index].flags &= ~ACTOR_FLAG_UNK17;
+            gActors[actor_index].flags |= ACTOR_FLAG_UNK16;
+            gActors[actor_index].velocityX.raw = (f32) gActors[actor_index].velocityX.raw * 0.3;
+            gActors[actor_index].velocityY.raw = 0;
+            gActors[actor_index].unk_170 = 0;
+            return 2;
+        }
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80091300.s")
 

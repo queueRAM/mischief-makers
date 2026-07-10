@@ -1225,7 +1225,11 @@ void func_80093274(u16 actor_index, u16 arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_8009333C.s")
+void func_8009333C(u16 actor_index) {
+    s32 pad;
+    func_8003D68C(0x2800, 0, -gActors[actor_index + 6].unk_180, -0x98, 0x98, 0, 0x680000, 0x01200000, 0, 0, 0);
+    func_8003D68C(0x2800, gActors[actor_index + 6].unk_180_s16[1], 0, -0x98, 0x98, 0, 0xFF980000, 0x01200000, 0, 0, 0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80093410.s")
 

@@ -95,7 +95,6 @@ void SpawnParticle_SineUp(s16 x, s16 y, s16 z, u16 arg3);
 s16 Clanpot_AddItemCheck3(u16 actor_index, u16 arg1, u16 arg2, u16 arg3, u16 arg4);
 void func_800358DC(u16 actor_index);
 void ClanpotIcon_State1(u16 actor_index);
-u16 func_8003D68C(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 pos_x, s32 pos_y, s32 pos_z, u16 red, u16 green, u16 blue);
 void func_8003ED48(u16 unused_arg0, s32 arg1, s16 x, s16 y, s16 z);
 u16 SpawnParticle_HeartBubble(f32 scale, s16 pos_x, s16 pos_y, s16 pos_z);
 void func_8003F9CC(f32, s32, s32, s32);

@@ -276,7 +276,7 @@ typedef struct {
     };
     union {
         /* 0x180 */ s32 unk_180;
-        /* 0x180 */ u16 unk_180_u16[2];
+        /* 0x180 */ s16 unk_180_s16[2];
         /* 0x180 */ u8 unk_180_u8[4];
     };
     union {

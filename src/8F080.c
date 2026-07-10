@@ -40,6 +40,8 @@ extern u16 D_800E9210[];
 extern u16 D_800E921C[];
 extern u16 D_800E9224[];
 
+extern s16 D_801826B0;
+
 extern u16 D_80335ED4;
 
 // TODO: func_8001FCA0 only matches if arg1/arg2 are `s16`, but only matches below as `s32`
@@ -1165,7 +1167,18 @@ void func_800930AC(u16 arg0) {
 void func_800930E4(u32 arg0) {
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_800930EC.s")
+void func_800930EC(s32 arg0_unused, void* arg1) {
+    if (D_801826B0 < 0) {
+        D_801826B0 = 0;
+    }
+    if (D_801826B0 > 0xFF) {
+        D_801826B0 = 0xFF;
+    }
+    if (D_801826B0 != 0) {
+        func_8007EA14(arg1, 0x2910, 0, 0xFFB00000, 0x01800000, 0, 0, 0x10, 0x10, D_801826B0, 0, 1.0f);
+        func_8007EF58(arg1, 0x2901, 0, 0xFFB00000, 0x017FFFFF, D_801826B0, 1.1f, 1.1f);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_800931CC.s")
 

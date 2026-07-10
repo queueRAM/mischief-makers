@@ -655,7 +655,25 @@ void func_80091524(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_8009159C.s")
+s32 func_8009159C(u16 actor_index) {
+    u16 temp_a3;
+    u16 parent;
+
+    temp_a3 = actor_index + 7;
+    if (func_80028C08(temp_a3) != 0) {
+        parent = gActors[temp_a3].parentIndex;
+        gActors[parent].unk_104 = gActors[temp_a3].posX.raw;
+        gActors[parent].unk_108 = gActors[temp_a3].posY.raw;
+        gActors[parent].unk_10C = gActors[temp_a3].posZ.raw - 1;
+        gActors[parent].flags_098 |= ACTOR_FLAG3_UNK9;
+        gActors[parent].parentIndex = actor_index + 7;
+        return TRUE;
+    }
+    else {
+        gActors[actor_index].state = 0x110;
+        return FALSE;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80091664.s")
 

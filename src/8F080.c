@@ -1969,7 +1969,112 @@ void func_80094F24(u16 arg0, s32 arg1_unused) {
     }
 }
 
+#ifdef NON_MATCHING
+// https://decomp.me/scratch/PpDbA
+void func_80094FE4(u16 arg0) {
+    f32 temp_f2;
+    u16 temp_a1;
+    s32 var_v0;
+
+    if (gActors[gActors[arg0].var_150].state == 0xF5) {
+        gActors[arg0].flags = 0;
+        return;
+    }
+
+    switch (gActors[arg0].state) {
+    case 0:
+        gActors[arg0].state++;
+        gActors[arg0].graphicFlags = 0x307;
+        gActors[arg0].flags = 0xB;
+        gActors[arg0].graphicIndex = 0x1A8;
+        gActors[arg0].var_154 = 0x02000000;
+        gActors[arg0].var_158 = 0xC00000;
+        gActors[arg0].unk_170 = -0x400000;
+        gActors[arg0].unk_174 = -0x500000;
+        gActors[arg0].unk_17C = 0x8000;
+        gActors[arg0].colorA = 0;
+        gActors[arg0].rotateX = 90.0f;
+        gActors[arg0].scaleX = 2.0f;
+        /* fallthrough */
+    case 1:
+        gActors[arg0].var_158 = Math_ApproachS32(gActors[arg0].var_158, 0x400000, 0x12492);
+        gActors[arg0].unk_170 = Math_ApproachS32(gActors[arg0].unk_170, 0, 0x9249);
+        gActors[arg0].unk_174 = Math_ApproachS32(gActors[arg0].unk_174, 0, 0xB6DB);
+        gActors[arg0].colorA = Math_ApproachS32(gActors[arg0].colorA, 0xFF, 8);
+        gActors[arg0].unk_178 = Math_ApproachS32(gActors[arg0].unk_178, -0x49249, gActors[arg0].unk_17C);
+        if (gActors[arg0].unk_170 == 0) {
+            gActors[arg0].state++;
+        }
+        goto default_case;
+    case 3:
+        gActors[arg0].colorA = Math_ApproachS32(gActors[arg0].colorA, 0, 8);
+        if (gActors[arg0].colorA == 0) {
+            gActors[arg0].flags = 0;
+            return;
+        }
+        // fallthrough
+    case 2:
+        gActors[arg0].var_158 -= 0x8000;
+        gActors[arg0].unk_17C += 0x100;
+        gActors[arg0].unk_178 = Math_ApproachS32(gActors[arg0].unk_178, -0x200000, gActors[arg0].unk_17C);
+        gActors[arg0].unk_174 += 0x20000;
+        if (gActors[arg0].unk_178 <= -0x180000) {
+            gActors[arg0].state = 3;
+        }
+        // fallthrough
+    default:
+default_case:
+        var_v0 = (gActors[arg0].posZ.whole - gActors[gActors[arg0].var_150].posZ.whole) / 2;
+        if (var_v0 < 0) {
+            var_v0 = -var_v0;
+        }
+        if (var_v0 >= 0x80) {
+            var_v0 = 0x7F;
+        }
+        gActors[arg0].colorR = (u8) var_v0;
+        if (gActors[arg0].posZ.whole >= gActors[gActors[arg0].var_150].posZ.whole) {
+            gActors[arg0].graphicFlags &= 0xFFEF;
+        }
+        else {
+            gActors[arg0].graphicFlags |= 0x10;
+        }
+        gActors[arg0].colorG = (u8) var_v0;
+        gActors[arg0].colorB = (u8) var_v0;
+        if ((u16)gActors[arg0].var_110) {
+            if (gActiveFrames & 2) {
+                gActors[arg0].palette_18C = (u16*)0x8022D528;
+            }
+            else {
+                gActors[arg0].palette_18C = (u16*)0x8022D4E8;
+            }
+        }
+        else if (gActiveFrames & 2) {
+            gActors[arg0].palette_18C = (u16*)0x8022D548;
+        }
+        else {
+            gActors[arg0].palette_18C = (u16*)0x8022D568;
+        }
+        gActors[arg0].rotateX = Math_ApproachF32(gActors[arg0].rotateX, 0.0f, 0.5f);
+        gActors[arg0].var_154 += gActors[arg0].unk_178;
+        var_v0 = gActors[arg0].var_154 / 0x10000;
+        temp_a1 = var_v0; // fakematch going through var_v0?
+        temp_f2 = (f32) gActors[arg0].var_158;
+        gActors[arg0].posX.raw = (gActors[gActors[arg0].var_150].posX.raw + gActors[arg0].unk_170) + (COS(temp_a1) * temp_f2);
+        gActors[arg0].rotateY = ((temp_a1 + 0x100) & 0x3FF) * 0.3515625;
+        if ((u16)gActors[arg0].var_110) {
+            gActors[arg0].posX.raw = -gActors[arg0].posX.raw;
+            gActors[arg0].rotateY = 0.0f - gActors[arg0].rotateY;
+        }
+        gActors[arg0].posY.raw = gActors[gActors[arg0].var_150].posY.raw + gActors[arg0].unk_174;
+        gActors[arg0].posZ.raw = gActors[gActors[arg0].var_150].posZ.raw + (SIN(temp_a1) * temp_f2);
+        gActors[arg0].scaleX = Math_ApproachF32(gActors[arg0].scaleX, 1.0f, 0.01f);
+        gActors[arg0].scaleY = gActors[arg0].scaleX;
+        break;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80094FE4.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_800955F4.s")
 

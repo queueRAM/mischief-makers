@@ -571,7 +571,45 @@ void func_800902B0(u16 actor_index) {
     gActors[actor_index + 0xA].unk_138 = -2.0f;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80090558.s")
+void func_80090558(u16 actor_index) {
+    s32 pad;
+    switch (gActors[actor_index + 1].var_0D8) {
+    case 0:
+        func_8008F734(actor_index);
+        func_8008FA50(actor_index, actor_index + 0x7, D_800E91F8);
+        func_8008FA50(actor_index, actor_index + 0xB, D_800E9204);
+        gActors[actor_index + 3].unk_138 = -gActors[actor_index + 3].var_154 / FIXED_UNIT(1.0);
+        break;
+    case 1:
+        func_8008FB20(actor_index);
+        break;
+    case 2:
+        func_8008FD08(actor_index);
+        break;
+    case 3:
+        func_80090064(actor_index);
+        break;
+    case 5:
+        func_800902B0(actor_index);
+        break;
+    default:
+        break;
+    }
+    if (gActors[actor_index].flags & ACTOR_FLAG_FLIPPED) {
+        gActors[actor_index + 1].unk_130 = -1.0f;
+        gActors[actor_index].unk_138 = 1.0f;
+    }
+    else {
+        gActors[actor_index + 1].unk_130 = 1.0f;
+        gActors[actor_index].unk_138 = 0.0f;
+    }
+    gActors[actor_index].hitboxBY0 = gActors[actor_index + 1].unk_12C * 18.0f;
+    gActors[actor_index].hitboxBY1 = gActors[actor_index + 1].unk_12C * -16.0f;
+    gActors[actor_index].hitboxBX0 = gActors[actor_index + 1].unk_12C * -8.0f;
+    gActors[actor_index].hitboxBX1 = gActors[actor_index + 1].unk_12C * 8.0f;
+    gActors[actor_index].flags_098 &= ~(ACTOR_FLAG3_UNK21 | ACTOR_FLAG3_UNK10 | ACTOR_FLAG3_UNK9);
+}
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_800907E4.s")
 

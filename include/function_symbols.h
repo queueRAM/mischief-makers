@@ -147,6 +147,7 @@ extern void Spikeball_UpdateHitbox(u16 actor_index);
 extern void Spikeball_State0(u16 actor_index);
 extern void SpawnCrosshair(u16 arg0, u16 actor_index);
 extern void BossDeathExplode(s32 arg0, u16 actor_index, f32 scale_x, f32 scale_y);
+extern void SpawnParticle_RingSparkle(u16 unused_arg0, s32 unused_arg1, f32 scale, s16 pos_x, s16 pos_y, s16 pos_z);
 extern u16 func_8003D68C(s32 graphic_flag, s16 by0, s16 by1, s16 bx0, s16 bx1, s32 pos_x, s32 pos_y, s32 pos_z, u16 red, u16 green, u16 blue);
 extern u16 func_8003EEC0(f32, s16 x, s16 y, s16 z);
 extern void func_8003F138(f32 arg0, s16 arg1, s16 arg2, s16 arg3);

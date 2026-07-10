@@ -1,6 +1,7 @@
 #include "common.h"
 #include "actor.h"
 
+extern u16 D_800D9284[];
 extern u16 D_800D98F4[];
 extern u16 D_800D99A4[];
 extern u16 D_800DB67C[];
@@ -68,6 +69,7 @@ extern u8 D_800E95E8[];
 extern u8 D_800E961C[];
 
 extern s16 D_801826B0;
+extern u16 D_801826B2;
 extern u16 D_801826B4;
 extern f32 D_801826B8;
 
@@ -1479,8 +1481,77 @@ void func_80093654(u16 actor_index) {
     func_80032E60(actor_index + 0xB, 0x1098, 0, 4.0f * temp_f0, -1, scale, scale);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80093704.s")
+#ifdef NON_MATCHING
+void func_80093704(u16 arg0) {
+    u16 temp_s1;
+    f32 temp_f2;
 
+    temp_s1 = Actor_RangeFindInactive_90ToC0();
+    if (temp_s1 != 0) {
+        gActors[temp_s1].actorType = 0x34;
+        Actor_Initialize(temp_s1);
+        gActors[temp_s1].flags = 0xB;
+        gActors[temp_s1].posX.whole = 0;
+        gActors[temp_s1].posY.whole = 0;
+        if (gActors[arg0].state >= 0xF6) {
+            gActors[temp_s1].graphicFlags = 0x311;
+            gActors[temp_s1].graphicIndex = 0xDA;
+            gActors[temp_s1].palette_18C = D_800D9284;
+            gActors[temp_s1].posZ.whole = -0x20;
+            gActors[temp_s1].scaleX = 13.0f;
+            gActors[temp_s1].scaleY = 13.0f;
+        }
+        else {
+            gActors[temp_s1].graphicFlags = 0x319;
+            gActors[temp_s1].graphicIndex = 0xC8;
+            gActors[temp_s1].palette_18C = D_800D99A4;
+            gActors[temp_s1].rotateZ = 90.0f;
+            gActors[temp_s1].scaleX = 11.0f;
+            gActors[temp_s1].scaleY = 12.0f;
+            if ((gActiveFrames % 12) == 0) {
+                SpawnParticle_RingSparkle(arg0, 0, 0.4f, (f32)(0x80 - Rand()) * 0.75, (f32)(0x80 - Rand()) * 0.75, 0x80);
+            }
+            gActors[temp_s1].posZ.whole = 0x100;
+        }
+        gActors[temp_s1].colorR = gActors[arg0 + 8].unk_180 / 32;
+        gActors[temp_s1].colorB = gActors[temp_s1].colorG = (gActors[arg0 + 8].unk_180 / 16) & 0xFF;
+        gActors[temp_s1].colorA = D_801826B2;
+        if (gActors[arg0].flags != 0) {
+            func_80031D58(arg0, temp_s1);
+        }
+        else {
+            gActors[temp_s1].unk_148 = 120.0f;
+        }
+    }
+    if ((gActors[arg0].state < 0xF5) && ((gActiveFrames % 6) == 0)) {
+        temp_s1 = Actor_RangeFindInactive_90ToC0();
+        if (temp_s1 != 0) {
+            gActors[temp_s1].actorType = 0x6F;
+            Actor_Initialize(temp_s1);
+            gActors[temp_s1].graphicFlags |= 0x309;
+            gActors[temp_s1].flags = 0xB;
+            gActors[temp_s1].graphicIndex = 0xC8;
+            gActors[temp_s1].palette_18C = D_800D98F4;
+            gActors[temp_s1].posX.whole = (f32)(0x80 - Rand()) * 1.25;
+            gActors[temp_s1].posY.whole = ((f32)(0x80 - Rand()) * 0.7) - (D_800BE73C / 4096);
+            temp_f2 = (f32) (Rand() & 0x3F);
+            gActors[temp_s1].posZ.whole = -64.0f - temp_f2;
+            gActors[temp_s1].unk_118 = temp_f2 / 16;
+            temp_f2 = (64.0f - temp_f2) / 16;
+            gActors[temp_s1].unk_11C = temp_f2;
+            gActors[temp_s1].scaleX = temp_f2 * 4.0;
+            gActors[temp_s1].scaleY = temp_f2 * 0.4;
+            gActors[temp_s1].colorA = 0x60;
+            gActors[temp_s1].colorR = 0x7F;
+            gActors[temp_s1].var_150 = 0x10;
+            gActors[temp_s1].unk_114 = temp_f2 * 0.2;
+            gActors[temp_s1].rotateZ = 90.0f;
+        }
+    }
+}
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80093704.s")
+#endif
 
 void func_80093C10(u16 actor_index) {
     u16 actor;

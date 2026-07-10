@@ -445,32 +445,27 @@ void func_8008FA50(u16 arg0_unused, u16 actor_index, u16* graphic_indices) {
     gActors[actor_index].graphicIndex = graphic_indices[index - 1];
 }
 
-#ifdef NON_MATCHING
-// https://decomp.me/scratch/zcfS0
-void func_8008FB20(u16 arg0) {
+void func_8008FB20(u16 actor_index) {
     f32 temp_f0;
-    f32 temp_f2;
+    f32 scale;
 
-    temp_f0 = gActors[arg0].unk_168 / 10000.0f;
-    temp_f2 = temp_f0 * 0.7;
-    func_80032E60(arg0 + 8, 0x182A, 0x300, 3.0f * temp_f0, -1, temp_f2, temp_f2);
-    gActors[arg0].colorR = 0x18;
-    gActors[arg0].colorG = 0x18;
-    gActors[arg0].colorB = 0x18;
-    Actor_SetColorRgb(arg0 + 8, 0);
-    Actor_SetColorRgb(arg0 + 0xB, 0);
-    Actor_SetColorRgb(arg0 + 0x13, 0);
-    Actor_SetColorRgb(arg0 + 0x15, 0);
-    Actor_SetColorRgb(arg0 + 0x17, 0);
-    func_8008FA50(arg0, arg0 + 3, D_800E9210);
-    func_8008FA50(arg0, arg0 + 7, D_800E921C);
-    func_8008FA50(arg0, arg0 + 0xB, D_800E9224);
-    D_80335ED4 = func_8004571C();
-    gActors[arg0 + 3].unk_138 = -gActors[arg0 + 3].var_154 / 0x10000;
+    temp_f0 = gActors[actor_index].unk_168 / 10000.0f;
+    scale = temp_f0 * 0.7;
+    func_80032E60(actor_index + 8, 0x182A, 0x300, 3.0f * temp_f0, -1, scale, scale);
+    gActors[actor_index].colorR = 0x18;
+    gActors[actor_index].colorG = 0x18;
+    gActors[actor_index].colorB = 0x18;
+    Actor_SetColorRgb(actor_index + 8, 0);
+    Actor_SetColorRgb(actor_index + 0xB, 0);
+    Actor_SetColorRgb(actor_index + 0x13, 0);
+    Actor_SetColorRgb(actor_index + 0x15, 0);
+    Actor_SetColorRgb(actor_index + 0x17, 0);
+    func_8008FA50(actor_index, actor_index + 3, D_800E9210);
+    func_8008FA50(actor_index, actor_index + 7, D_800E921C);
+    func_8008FA50(actor_index, actor_index + 0xB, D_800E9224);
+    *((u16*)0x80335ED4) = func_8004571C();
+    gActors[actor_index + 3].unk_138 = -gActors[actor_index + 3].var_154 / FIXED_UNIT(1.0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_8008FB20.s")
-#endif
 
 void func_8008FD08(u16 actor_index) {
     f32 scale;

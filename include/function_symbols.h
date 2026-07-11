@@ -132,6 +132,8 @@ extern s32 func_8002F154(u16 arg0, u16 arg1, u16 arg2);
 extern s32 GemCollect_Static(u16 actor_index);
 extern void SpawnGemRing(u16 arg0);
 extern void func_80030A24(u16 actor_index);
+extern void func_80030B0C(u16);
+extern void func_80030B84(u16);
 extern void func_80031D58(u16 actor_0, u16 actor_1);
 extern u16 func_80032E60(u16 actor_index0, u16 arg1, u16 arg2, f32 arg3, s16 pos_z, f32 scale_x, f32 scale_y);
 extern void func_800330A4(u16 actor_index0, u16 actor_index1, u16 arg2, f32 arg3);

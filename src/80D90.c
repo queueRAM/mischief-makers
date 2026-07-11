@@ -63,7 +63,21 @@ void func_80080FF8(u16 base_actor_index, s16* vals) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/80D90/func_80081478.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/80D90/func_80081584.s")
+void func_80081584(u16 actor_index, s16* vals, void* arg2) {
+    u16 actor_1;
+
+    for (; *vals != 0x7FFF; vals += 5) {
+        actor_1 = *vals + actor_index;
+        gActors[actor_1].graphicFlags |= ACTOR_GFLAG_PALETTE;
+        gActors[actor_1].colorR = gActors[actor_index].colorR;
+        gActors[actor_1].colorG = gActors[actor_index].colorG;
+        gActors[actor_1].colorB = gActors[actor_index].colorB;
+        if (gActors[actor_1].graphicIndex != 0) {
+            gActors[actor_1].palette_18C = arg2;
+        }
+        
+    }
+}
 
 void func_80081644(u16 base_actor_index, s16* vals) {
     u16 actor_index;

@@ -2335,8 +2335,50 @@ void func_800962C4(u16 actor_index) {
     gActors[actor_index].velocityY.raw = Math_ApproachS32(gActors[actor_index].velocityY.raw, SIN(angle) * 65536.0f, FIXED_UNIT(0.125));
 }
 
-void func_80096478(u16);
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80096478.s")
+void func_80096478(u16 actor_index) {
+    u16 actor_1;
+    u16 index;
+
+    if (gActors[actor_index].unk_188 != 0) {
+        gActors[actor_index].unk_178 = Math_ApproachS32(gActors[actor_index].unk_178, 50, 6);
+        if (gActors[actor_index].unk_178 == 50) {
+            gActors[actor_index].unk_188 = 0;
+        }
+    }
+    else {
+        gActors[actor_index].unk_178 = Math_ApproachS32(gActors[actor_index].unk_178, 10, 10);
+        if (gActors[actor_index].unk_178 == 10) {
+            gActors[actor_index].unk_188++;
+        }
+    }
+    
+    for (index = 0; index < 2; index++) {
+        actor_1 = SpawnParticle_List_90C0_16(gGraphicListBlank, gActors[actor_index].posX.whole, gActors[actor_index].posY.whole, gActors[actor_index].posZ.whole);
+        if (actor_1 != 0) {
+            gActors[actor_1].graphicFlags = ACTOR_GFLAG_ROTZ | ACTOR_GFLAG_SCALE;
+            gActors[actor_1].graphicIndex = 0x132;
+            gActors[actor_1].scaleY = (gActors[actor_index].unk_178 / 30.0f) * 0.6;
+            gActors[actor_1].scaleX = 1.2f;
+            gActors[actor_1].colorA = 0xC0;
+            if (index == 0) {
+                gActors[actor_1].unk_134 = -4.0f;
+                gActors[actor_1].flags |= ACTOR_FLAG_UNK15;
+                gActors[actor_1].var_160 = 0x01000000;
+            }
+            else {
+                gActors[actor_1].unk_134 = 4.0f;
+                gActors[actor_1].flags |= ACTOR_FLAG_UNK15 | ACTOR_FLAG_FLIPPED;
+                gActors[actor_1].var_160 = 0x03000000;
+            }
+            gActors[actor_1].unk_130 = actor_index;
+            gActors[actor_1].unk_14C = gActors[actor_index].actorType;
+            gActors[actor_1].unk_138 = 6.0f;
+            gActors[actor_1].unk_144 = 4.0f;
+            gActors[actor_1].unk_13C_f32 = -1.0f;
+            gActors[actor_1].unk_148 = 0.0f;
+        }
+    }
+}
 
 void func_8009672C(u16 actor_index) {
     s32 x;

@@ -1,6 +1,5 @@
 #include "common.h"
 #include "actor.h"
-#include "cosine.h"
 
 extern u16 D_800D1C04[];
 extern u16 D_800D9284[];
@@ -2320,8 +2319,21 @@ void func_80096104(u16 actor_index) {
     gActors[actor_index].flags_098 = 0;
 }
 
-void func_800962C4(u16);
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_800962C4.s")
+void func_800962C4(u16 actor_index) {
+    s32 angle;
+
+    if (gActiveFrames & 0xF) {
+        gActors[actor_index].unk_170 = gActors[actor_index].unk_164 + (Rand() & 0x7F);
+        gActors[actor_index].unk_174 = gActors[actor_index].unk_168 + (Rand() & 0x7F);
+    }
+    gActors[actor_index].unk_16C = func_800298D0(
+        Math_Atan2(gActors[actor_index].unk_170 - gActors[actor_index].unk_180,
+                   gActors[actor_index].unk_174 - gActors[actor_index].unk_184) * FIXED_UNIT(1.0),
+                   gActors[actor_index].unk_16C, FIXED_UNIT(24.0));
+    angle = gActors[actor_index].unk_16C / FIXED_UNIT(1.0);
+    gActors[actor_index].velocityX.raw = Math_ApproachS32(gActors[actor_index].velocityX.raw, COS(angle) * 98304.0f, FIXED_UNIT(0.125));
+    gActors[actor_index].velocityY.raw = Math_ApproachS32(gActors[actor_index].velocityY.raw, SIN(angle) * 65536.0f, FIXED_UNIT(0.125));
+}
 
 void func_80096478(u16);
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80096478.s")

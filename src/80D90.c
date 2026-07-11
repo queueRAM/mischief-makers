@@ -26,7 +26,26 @@ void func_80080818(u16 actor_index, s16* vals) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/80D90/func_80080AEC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/80D90/func_80080ED4.s")
+void func_80080ED4(u16 base_actor_index, s16* vals) {
+    s16* vals_it;
+    s32 vals_index;
+    u16 actor_1;
+    u16 actor_2;
+
+    for (vals_it = vals; *vals_it != 0x7FFF; vals_it += 5) {
+        actor_1 = *vals_it + base_actor_index;
+        gActors[actor_1].unk_178 = gActors[actor_1].unk_174;
+        gActors[actor_1].unk_17C = gActors[actor_1].var_154;
+    }
+
+    for (vals_it = vals; *vals_it != 0x7FFF; vals_it += 5) {
+        actor_1 = vals_it[0] + base_actor_index;
+        vals_index = (vals_it[4] / 2) * 5;
+        actor_2 = vals[vals_index] + base_actor_index;
+        gActors[actor_1].unk_174 = gActors[actor_2].unk_178;
+        gActors[actor_1].var_154 = gActors[actor_2].unk_17C;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/80D90/func_80080FF8.s")
 

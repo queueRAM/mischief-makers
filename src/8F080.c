@@ -1491,9 +1491,11 @@ void func_80093654(u16 actor_index) {
 }
 
 #ifdef NON_MATCHING
+// https://decomp.me/scratch/eCTeD
 void func_80093704(u16 arg0) {
-    u16 temp_s1;
     f32 temp_f2;
+    s32 pad;
+    u16 temp_s1;
 
     temp_s1 = Actor_RangeFindInactive_90ToC0();
     if (temp_s1 != 0) {
@@ -1523,7 +1525,8 @@ void func_80093704(u16 arg0) {
             gActors[temp_s1].posZ.whole = 0x100;
         }
         gActors[temp_s1].colorR = gActors[arg0 + 8].unk_180 / 32;
-        gActors[temp_s1].colorB = gActors[temp_s1].colorG = (gActors[arg0 + 8].unk_180 / 16) & 0xFF;
+        gActors[temp_s1].colorG = (gActors[arg0 + 8].unk_180 / 16);
+        gActors[temp_s1].colorB = gActors[temp_s1].colorG;
         gActors[temp_s1].colorA = D_801826B2;
         if (gActors[arg0].flags != 0) {
             func_80031D58(arg0, temp_s1);
@@ -1546,14 +1549,13 @@ void func_80093704(u16 arg0) {
             temp_f2 = (f32) (Rand() & 0x3F);
             gActors[temp_s1].posZ.whole = -64.0f - temp_f2;
             gActors[temp_s1].unk_118 = temp_f2 / 16;
-            temp_f2 = (64.0f - temp_f2) / 16;
-            gActors[temp_s1].unk_11C = temp_f2;
-            gActors[temp_s1].scaleX = temp_f2 * 4.0;
-            gActors[temp_s1].scaleY = temp_f2 * 0.4;
+            gActors[temp_s1].unk_11C = (64.0f - temp_f2) / 16;
+            gActors[temp_s1].scaleX = gActors[temp_s1].unk_11C * 4.0;
+            gActors[temp_s1].scaleY = gActors[temp_s1].unk_11C * 0.4;
             gActors[temp_s1].colorA = 0x60;
             gActors[temp_s1].colorR = 0x7F;
             gActors[temp_s1].var_150 = 0x10;
-            gActors[temp_s1].unk_114 = temp_f2 * 0.2;
+            gActors[temp_s1].unk_114 = gActors[temp_s1].unk_11C * 0.2;
             gActors[temp_s1].rotateZ = 90.0f;
         }
     }

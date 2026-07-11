@@ -71,6 +71,8 @@ extern u16 D_800E92E0[];
 extern u16 D_800E92E4[];
 extern u16 D_800E9300[];
 extern ActorFunc D_800E9320[];
+extern u16 D_800E93BC;
+extern u16 D_800E93C0;
 extern u8 D_800E9414[];
 extern u8 D_800E9654[];
 extern u8 D_800E9634[];
@@ -2076,7 +2078,76 @@ default_case:
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80094FE4.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_800955F4.s")
+void func_800955F4(u16 actor_index) {
+    s32 pad;
+    if (gButtonPress & gButton_CUp) {
+        D_800E93BC++;
+        if (D_800E93BC >= 5) {
+            D_800E93BC = 0;
+        }
+        gActors[actor_index].state = 0;
+    }
+    if (gButtonPress & gButton_CLeft) {
+        D_800E93C0++;
+        if (D_800E93C0 >= 4) {
+            D_800E93C0 = 0;
+        }
+    }
+    gActors[actor_index + 1].var_0D8 = D_800E93BC;
+    func_80094C5C(actor_index);
+    func_8008F498(actor_index, D_800E93C0 * 0x10);
+    switch (gActors[actor_index].state) {
+    case 0x0:
+        gActors[actor_index].state = 0x110;
+        break;
+    case 0x111:
+        if (gButtonPress & gButton_B) {
+            gActors[actor_index].state = 0x180;
+            gActors[actor_index + 2].unk_180 = FIXED_UNIT(4.0);
+            gActors[actor_index + 3].unk_180 = FIXED_UNIT(8.0);
+        }
+        if (gButtonPress & gButton_A) {
+            gActors[actor_index].state = 0x170;
+            gActors[actor_index + 2].unk_180 = 0;
+            gActors[actor_index + 3].unk_180 = FIXED_UNIT(6.5);
+        }
+        if ((gButtonHold & gButton_DLeft) || (gButtonHold & gButton_DRight)) {
+            if (((gActors[actor_index].flags & ACTOR_FLAG_FLIPPED) && (gButtonHold & gButton_DRight)) || 
+                (((gActors[actor_index].flags & ACTOR_FLAG_FLIPPED) == 0) && ( gButtonHold & gButton_DLeft))) {
+                gActors[actor_index].state = 0x120;
+            }
+            else {
+                gActors[actor_index].state = 0x140;
+                gActors[actor_index + 3].unk_180 = 0;
+            }
+        }
+        break;
+    case 0x131:
+        if (gButtonHold & gButton_DLeft) {
+            gActors[actor_index].flags |= ACTOR_FLAG_FLIPPED;
+            gActors[actor_index + 1].unk_130 = -1.0f;
+        }
+        else if (gButtonHold & gButton_DRight) {
+            gActors[actor_index].flags &= ~ACTOR_FLAG_FLIPPED;
+            gActors[actor_index + 1].unk_130 = 1.0f;
+        }
+        else {
+            gActors[actor_index].state = 0x110;
+        }
+        break;
+    case 0x141:
+        if (gButtonHold & gButton_DLeft) {
+            gActors[actor_index].flags |= ACTOR_FLAG_FLIPPED;
+        }
+        else if (gButtonHold & gButton_DRight) {
+            gActors[actor_index].flags &= ~ACTOR_FLAG_FLIPPED;
+        }
+        else {
+            gActors[actor_index].state = 0x110;
+        }
+        break;
+    }
+}
 
 void func_80095928(u16 actor_index) {
     s32 pad;

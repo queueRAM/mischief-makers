@@ -47,7 +47,15 @@ void func_80080ED4(u16 base_actor_index, s16* vals) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/80D90/func_80080FF8.s")
+void func_80080FF8(u16 base_actor_index, s16* vals) {
+    u16 actor_index;
+
+    for (; *vals != 0x7FFF; vals += 5) {
+        actor_index = vals[0] + base_actor_index;
+        gActors[actor_index].unk_174 = gActors[actor_index].unk_178;
+        gActors[actor_index].var_154 = gActors[actor_index].unk_17C;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/80D90/func_8008105C.s")
 

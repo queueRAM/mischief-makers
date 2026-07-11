@@ -2269,7 +2269,56 @@ void func_80096058(u16 actor_index) {
     gActors[actor_index + 0xD].scaleY = 0.5f;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80096104.s")
+void func_80096104(u16 actor_index) {
+    switch (gActors[actor_index].state) {
+    case 0x0:
+        func_80095FC8(actor_index);
+        gActors[actor_index].state = 1;
+        gActors[actor_index].flags |= ACTOR_FLAG_UNK12 | ACTOR_FLAG_UNK10;
+        gActors[actor_index].health = 0x64;
+        gActors[actor_index].hitboxBY0 = 0x10;
+        gActors[actor_index].hitboxBY1 = -0x10;
+        gActors[actor_index].hitboxBX0 = -0x10;
+        gActors[actor_index].hitboxBX1 = 0x10;
+        /* fallthrough */
+    case 0x1:
+        func_80096058(actor_index);
+        if (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK9) {
+            gActors[actor_index].state = 0x80;
+            gActors[actor_index].flags = ACTOR_FLAG_ACTIVE | ACTOR_FLAG_DRAW;
+        }
+        else if ((gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK1) && (gActors[actor_index].unk_0DD == 0x14) &&
+                 (func_800358CC(actor_index, gActors[actor_index].parentIndex))) {
+            gActors[actor_index].state = 0x100;
+        }
+        else {
+            SpawnParticle_SineUpHeart(gActors[actor_index].posX.whole, gActors[actor_index].posY.whole + 8,  gActors[actor_index].posZ.whole + 1);
+        }
+        break;
+    case 0x80:
+        gActors[actor_index].velocityX.raw = 0;
+        gActors[actor_index].velocityY.raw = 0;
+        if (gActors[actor_index].flags_098) {} // fakematch
+        if (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK9) {
+            gActors[actor_index].posX.raw = gActors[actor_index].unk_104;
+            gActors[actor_index].posY.raw = gActors[actor_index].unk_108;
+        }
+        else {
+            gActors[actor_index].state = 1;
+            gActors[actor_index].flags = ACTOR_FLAG_UNK12 | ACTOR_FLAG_UNK10 | ACTOR_FLAG_ACTIVE | ACTOR_FLAG_DRAW;
+        }
+        func_80096058(actor_index);
+        break;
+    case 0x100:
+        if (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK9) {
+            gActors[actor_index].state = 1;
+            gActors[actor_index].flags = ACTOR_FLAG_UNK12 | ACTOR_FLAG_UNK10 | ACTOR_FLAG_ACTIVE | ACTOR_FLAG_DRAW;
+        }
+        func_80096058(actor_index);
+        break;
+    }
+    gActors[actor_index].flags_098 = 0;
+}
 
 void func_800962C4(u16);
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_800962C4.s")

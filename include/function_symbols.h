@@ -38,6 +38,7 @@ extern void Actor_SetHitboxB(u16 actor_index, s16 val);
 extern u16 SpawnParticle_List_90C0_16(s16* graphic_list, s32 pos_x, s32 pos_y, s32 pos_z);
 extern u16 SpawnParticle_Image_90C0_16(u16 graphic_index, s32 pos_x, s32 pos_y, s32 pos_z);
 extern u16 SpawnParticle_RingWaveRed(f32 arg0, s16 x, s16 y, s16 z);
+extern void SpawnParticle_SineUpHeart(s16 arg0, s16 arg1, s16 arg2);
 extern void Actor_ClearRange_30To90(void);
 extern u16 SpawnAreaClear(u16);
 extern void func_80042D84(u16 arg0);
@@ -136,6 +137,7 @@ extern u16 func_80032E60(u16 actor_index0, u16 arg1, u16 arg2, f32 arg3, s16 pos
 extern void func_800330A4(u16 actor_index0, u16 actor_index1, u16 arg2, f32 arg3);
 extern void func_80033204(u16 arg0, u16 arg1, u16 arg2, f32 arg3, u16 arg4);
 extern void func_800340CC(u16 actor_index, s16 arg1, u16 arg2);
+extern s32 func_800358CC(u16 arg0, u16 arg1);
 extern void Clanpot_SetMixedItem(u16 actor_index, u16 arg1, u16* arg2);
 extern void ActorUpdate_Spikeball_Static(u16 actor_index);
 extern s16 Clanpot_AddItemCheck3(u16 actor_index, u16 arg1, u16 arg2, u16 arg3, u16 arg4);

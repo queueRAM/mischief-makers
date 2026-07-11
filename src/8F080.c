@@ -1,5 +1,6 @@
 #include "common.h"
 #include "actor.h"
+#include "cosine.h"
 
 extern u16 D_800D1C04[];
 extern u16 D_800D9284[];
@@ -2175,7 +2176,81 @@ void func_80095A10(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80095A8C.s")
+void func_80095A8C(u16 actor_index) {
+    u16 actor_1;
+    u32 angle;
+
+    gActors[actor_index].unk_14C += 1.0f;
+    switch (gActors[actor_index].state) {
+    case 0x0:
+        gActors[actor_index].state++;
+        gActors[actor_index].graphicFlags = ACTOR_GFLAG_UNK8 | ACTOR_GFLAG_ROTZ | ACTOR_GFLAG_SCALE;
+        gActors[actor_index].flags = ACTOR_FLAG_FREEZE_POS | ACTOR_FLAG_ACTIVE | ACTOR_FLAG_DRAW;
+        gActors[actor_index].graphicIndex = 0x1098;
+        switch (gActors[actor_index].var_0D8) {
+        case 0:
+            gActors[actor_index].scaleX = 0.8f;
+            gActors[actor_index].posX.whole = 0;
+            break;
+        case 1:
+            gActors[actor_index].state = 0x100;
+            gActors[actor_index].posZ.whole = 0xC0;
+            gActors[actor_index].posY.whole = -0x30;
+            gActors[actor_index].velocityY.raw = FIXED_UNIT(2.0);
+            gActors[actor_index].scaleX = 4.0f;
+            break;
+        case 2:
+            gActors[actor_index].state = 0x110;
+            gActors[actor_index].flags &= ~ACTOR_FLAG_DRAW;
+            break;
+        }
+        break;
+    case 1:
+        break;
+    case 0x100:
+        gActors[actor_index].posX.whole = 0;
+        gActors[actor_index].scaleX = Math_ApproachF32(gActors[actor_index].scaleX, 1.5f, 0.03f);
+        if (gActors[actor_index].scaleX <= 1.6) {
+            gActors[actor_index].rotateZ += gActors[actor_index].unk_114;
+            gActors[actor_index].unk_114 = Math_ApproachF32(gActors[actor_index].unk_114, 30.0f, 0.1f);
+            func_80095A10(actor_index);
+            gActors[actor_index].velocityY.raw = Math_ApproachS32(gActors[actor_index].velocityY.raw, 0, FIXED_UNIT(0.25));
+            gActors[actor_index].colorR = Math_ApproachS32(gActors[actor_index].colorR, 0x7F, 1);
+        }
+        else {
+            gActors[actor_index].posZ.whole--;
+            gActors[actor_index].velocityY.raw -= FIXED_UNIT(0.03125);
+        }
+        if ((gActiveFrames & 7) == 0) {
+            angle = (f32) (gActors[actor_index].rotateZ / RadStep) + COSPiOver2;
+            // fakematch: & 0xFFFF
+            SpawnParticle_RingSparkle(actor_index & 0xFFFF, 0, gActors[actor_index].scaleX * 0.5, 
+                gActors[actor_index].posX.whole + ((COS(angle) * gActors[actor_index].scaleX * 983040.0f) / 65536.0f), 
+                gActors[actor_index].posY.whole + ((SIN(angle) * gActors[actor_index].scaleX * 983040.0f) / 65536.0f), 
+                gActors[actor_index].posZ.whole + 0x10);
+        }
+        break;
+    case 0x101:
+        gActors[actor_index].rotateZ += gActors[actor_index].unk_114;
+        gActors[actor_index].velocityY.raw += FIXED_UNIT(0.125);
+        func_80095A10(actor_index);
+        break;
+    case 0x110:
+        gActors[actor_index].flags |= ACTOR_FLAG_DRAW;
+        actor_1 = (u16)gActors[actor_index].var_110 + 0xB;
+        gActors[actor_index].scaleX = gActors[(u16)gActors[actor_index].var_110].unk_168 / 10000;
+        gActors[actor_index].scaleX *= 0.75;
+        func_800330A4(actor_index, actor_1, 0, gActors[actor_index].scaleX * 4.0f);
+        gActors[actor_index].posZ.whole = gActors[actor_1].posZ.whole - 1;
+        break;
+    case 0x111:
+        gActors[actor_index].rotateZ = 0.0f;
+        break;
+    }
+    gActors[actor_index].colorG = gActors[actor_index].colorR;
+    gActors[actor_index].colorB = gActors[actor_index].colorR;
+    gActors[actor_index].scaleY = gActors[actor_index].scaleX;
+}
 
 void func_80095FC8(u16 actor_index) {
     gActors[actor_index].graphicFlags = ACTOR_GFLAG_SCALE;

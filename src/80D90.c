@@ -65,7 +65,14 @@ void func_80080FF8(u16 base_actor_index, s16* vals) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/80D90/func_80081584.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/80D90/func_80081644.s")
+void func_80081644(u16 base_actor_index, s16* vals) {
+    u16 actor_index;
+
+    for (; *vals != 0x7FFF; vals += 5) {
+        actor_index = *vals + base_actor_index;
+        gActors[actor_index].graphicFlags &= ~ACTOR_GFLAG_PALETTE;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/80D90/func_800816AC.s")
 

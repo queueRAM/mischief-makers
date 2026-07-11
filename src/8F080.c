@@ -74,7 +74,7 @@ extern u16 D_800E9300[];
 extern ActorFunc D_800E9320[];
 extern u16 D_800E93BC;
 extern u16 D_800E93C0;
-extern u8 D_800E9414[];
+extern u16 D_800E9414[];
 extern u8 D_800E9654[];
 extern u8 D_800E9634[];
 extern u8 D_800E9700[];
@@ -2259,7 +2259,15 @@ void func_80095FC8(u16 actor_index) {
     func_80081790(actor_index, D_800E95E8);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80096058.s")
+void func_80096058(u16 actor_index) {
+    func_800819A8(actor_index, D_800E9414);
+    func_800817D8(actor_index, 3, 4);
+    func_800817D8(actor_index, 5, 4);
+    func_800817D8(actor_index, 9, 4);
+    func_800817D8(actor_index, 0xB, 4);
+    gActors[actor_index + 0x7].scaleY = 0.5f;
+    gActors[actor_index + 0xD].scaleY = 0.5f;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/8F080/func_80096104.s")
 

@@ -206,6 +206,7 @@ extern void func_80081584(u16, u16*);
 extern void func_80081644(u16, u16*);
 extern void func_800816AC(u16 actor_index, void* arg1, s32 arg2);
 extern void func_80081720(u16 arg0, void* arg1, s32 arg2);
+extern void func_800817D8(u16, s32, s32);
 extern void func_8008310C(void);
 extern void func_800831D0(s16, s16, s16, s16);
 extern void func_80083454(void);

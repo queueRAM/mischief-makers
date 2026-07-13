@@ -18,6 +18,7 @@ extern u16 D_800D294C;
 extern u16 gGuestActorIndex;
 extern s16 gNoHit;
 extern u16 D_800D8588[]; // all-white palette
+extern u16 D_800D9AE4[];
 extern s16 D_800E13FC[];
 extern u16 D_800E3580;
 extern u32 D_800E3584; // nearest actor facing

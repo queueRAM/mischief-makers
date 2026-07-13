@@ -106,8 +106,22 @@ u16 func_8007D0F4(u16 actor_index, u16* text, s16 pos_x, s16 pos_y, u16 arg4) {
     return free_actor;
 }
 
+u16 func_8007D1E8(u16 actor_index, u16* text, s16 off_x, s16 off_y, u16 arg4, u16* palette) {
+    u16 actor;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/7D8E0/func_8007D1E8.s")
+    actor = SpawnTextBubble(actor_index, text, off_x, off_y, (s32) arg4);
+    if (actor != 0) {
+        gActors[actor].graphicFlags |= ACTOR_GFLAG_PALETTE;
+        gActors[actor].graphicFlags &= ~ACTOR_GFLAG_UNK8;
+        if (palette != 0) {
+            gActors[actor].palette_18C = palette;
+        }
+        else {
+            gActors[actor].palette_18C = D_800D9AE4;
+        }
+    }
+    return actor;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/7D8E0/func_8007D290.s")
 

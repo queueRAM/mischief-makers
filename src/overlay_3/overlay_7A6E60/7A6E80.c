@@ -36,7 +36,6 @@ typedef struct Overlay_7A6E60_Init_Record {
 } Overlay_7A6E60_Init_Record; /* sizeof = 0x0C */
 
 extern void* D_800D1968[];
-extern u16 D_800D9AE4[];
 extern u8 D_800D9AF4[];
 extern u8 D_800D9B04[];
 extern u8 D_800D9B14[];

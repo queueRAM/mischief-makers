@@ -55,7 +55,6 @@ extern u16 D_800D8608[];
 extern u16 D_800D8628[];
 extern u16 D_800D86A0[];
 extern u16 D_800D86D8[]; // guess
-extern u16 D_800D9AE4[];
 extern u8 D_800D9AF4[];
 extern u16 D_800D9B64[];
 extern s16 D_800E14C8[];

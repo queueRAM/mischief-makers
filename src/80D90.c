@@ -369,8 +369,76 @@ void func_800818C0(u16 actor_index, u16 actor_offset, s16 scale) {
         ((gActors[actor_index + actor_offset].var_154 / FIXED_UNIT(1.0)) + scale);
 }
 
-void func_800819A8(u16 actor_index, s16* arg1);
-#pragma GLOBAL_ASM("asm/nonmatchings/80D90/func_800819A8.s")
+// this function is cursed
+// - needs variables all on same line to match
+// - infitely loops with a break
+// - recursively calls itself
+void func_800819A8(u16 actor_index, s16* arg1) {\
+    u16* var_a3;\
+    u16* temp_a2;\
+    s32 temp_toggle;\
+    s32 pad[3];\
+    s32 temp_s2;\
+    u32 var_v0;\
+    for (;;) {
+        gActors[actor_index].unk_16C = 0;
+        var_a3 = (u16*)gActors[actor_index].unk_174;
+        var_v0 = (u32)gActors[actor_index].unk_124;
+        temp_a2 = (u16*)((uintptr_t)var_a3 + (var_v0 * 2));
+        gActors[actor_index].unk_11C -= 1.0f;
+        if (gActors[actor_index].unk_11C <= 0.0f) {
+            switch (temp_a2[3]) {
+            default:
+                func_80080818(actor_index, arg1);
+                func_800801D8(actor_index, arg1, &var_a3[var_v0] + 3);
+                gActors[actor_index].unk_124 += 3.0f;
+                break;
+            case 0x7FFB:
+                gActors[actor_index].unk_13C_f32 = 0.0f;
+                gActors[actor_index].unk_124 += 1.0f;
+                actor_index += 0;
+                continue;
+            case 0x7FFC:
+                temp_toggle = (s32)gActors[actor_index].unk_13C_f32;
+                gActors[actor_index].unk_13C_f32 = temp_toggle ^ 1;
+                gActors[actor_index].unk_124 += 1.0f;
+                actor_index += 0;
+                continue;
+            case 0x7FFD:
+                temp_s2 = temp_a2[4];
+                gActors[actor_index].unk_124 += 2.0f;
+                func_800819A8(actor_index, arg1);
+                gActors[actor_index].unk_16C = temp_s2;
+                return;
+            case 0x7FFE:
+                if (((var_a3[0] & 0xFFFF) == (var_a3[0] * 0)) && (var_a3[1] == 0)) {
+                    var_a3 += 3;
+                    gActors[actor_index].unk_124 = 3.0f;
+                }
+                else {
+                    gActors[actor_index].unk_124 = 0.0f;
+                }
+                func_800801D8(actor_index, arg1, var_a3);
+                actor_index += 0;
+                continue;
+            case 0x7FFF:
+                gActors[actor_index].unk_11C = -1.0f;
+                break;
+            }
+            func_800805B8(actor_index, arg1);
+            func_800808D0(actor_index, arg1);
+            func_80080AEC(actor_index, arg1);
+            break;
+        }
+        else {
+            func_80080818(actor_index, arg1);
+            func_800805B8(actor_index, arg1);
+            func_800808D0(actor_index, arg1);
+            func_80080AEC(actor_index, arg1);
+            break;
+        }
+    }
+}
 
 void func_80081CBC(u32 arg0, u32 arg1) {
 }

@@ -445,7 +445,9 @@ void func_8007DF44(u16 actor_index) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/7D8E0/func_8007EA14.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/7D8E0/func_8007EE14.s")
+void func_8007EE14(void* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, void* arg5) {
+    func_8007EA14(arg0, arg1, arg2, arg3, arg4, arg5, 0x7F, 0x7F, 0x7F, 0xFF, 0, 1.0f);
+}
 
 u16 func_8007EE70(u32 graphic_flags, s32 pos_x, s32 pos_y, s32 pos_z, f32 scale_x, f32 scale_y) {
     u16 actor_index;

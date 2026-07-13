@@ -1,11 +1,11 @@
 #define Actor_Initialize_RET void
 #include "common.h"
 #include "actor.h"
-#include "Alphabet.h"
 #include "input.h"
 #include "music.h"
 #include "stage.h"
 #include "28EF0.h"
+#include "7D8E0.h"
 
 extern u16* D_800D1810[]; // palettes of particles.
 extern u16 D_800D1898[]; // "からっぽ..."/"Empty.."

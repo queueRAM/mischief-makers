@@ -3,8 +3,11 @@
 #include "common.h"
 #include "7D8E0.h"
 
+extern u16 D_800D9A54[];
+
 extern u8 D_800E0F00[];
 extern s16 D_800E0F08[]; // x,y pairs used in func_8007D384
+extern u16* D_800E0F88[];
 
 void func_8007CCE0(u32 val) {
     u16 count;
@@ -175,7 +178,60 @@ void func_8007D520(u16 actor_index) {
     gActors[actor_index].flags = 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/7D8E0/func_8007D554.s")
+void func_8007D554(u16 actor_index) {
+    u16* vals;
+    u16 free_actor;
+    u16 x;
+    s16 y;
+    u16 graphic_flags;
+    u16 var_s5;
+    u16 command;
+
+    if (gActors[actor_index].state == 0) {
+        gActors[actor_index].state++;
+        gActors[actor_index].colorA = 0;
+        gActors[actor_index].scaleY = 0.0f;
+    }
+    graphic_flags = 0;
+    vals = D_800E0F88[(u16)gActors[actor_index].var_110];
+    y = 0;
+    x = 0;
+    while (vals[0] != 0x8FFF) {
+        for (; vals[0] >= 0x8001; vals++) {
+            command = vals[0];
+            switch (command & 0x7F00) {
+            case 0x100:
+                var_s5 = command & 0xFF;
+                graphic_flags = ACTOR_GFLAG_PALETTE;
+                break;
+            case 0x200:
+                gActors[actor_index].var_158 = command & 0xFF;
+                break;
+            case 0x4000:
+                x += command & 0xFF;
+                break;
+            case 0x400:
+                x = 0;
+                y -= 0x13;
+                break;
+            }
+        }
+        
+        free_actor = func_8007D290(actor_index);
+        if (free_actor != 0) {
+            gActors[free_actor].graphicFlags |= graphic_flags;
+            gActors[free_actor].palette_18C = &D_800D9A54[var_s5];
+            gActors[free_actor].graphicIndex = (vals[0] * 2) + 0x2D2;
+            gActors[free_actor].posX.whole = gActors[actor_index].posX.whole + (gActors[actor_index].scaleX * x);
+            gActors[free_actor].posY.whole = gActors[actor_index].posY.whole + (gActors[actor_index].scaleY * y);
+            x += gActors[actor_index].var_158;
+            vals++;
+        }
+        else {
+            break;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/7D8E0/func_8007D880.s")
 

@@ -193,7 +193,6 @@ extern void func_8005E09C(s32 arg0, s32 arg1);
 extern void func_80067E9C(u16 actor_index);
 extern void func_8007325C(u16 actor_index);
 extern s32 func_80073320(u16 actor_index); // return could be u16
-extern void func_8007D384(u16, u16);
 
 extern u16 SpawnTextBubble(u16, u16*, s16, s16, s32);
 extern void func_8007EA14(void*, u16, s16, s32, s32, void*, s32, s32, s32, s32, s32, f32);

@@ -233,7 +233,46 @@ void func_8007D554(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/7D8E0/func_8007D880.s")
+void func_8007D880(u16 actor_index, f32 arg1) {
+    f32 var_f26;
+    f32 var_f20;
+    u16 free_actor;
+    u16 command;
+    u16* vals;
+
+    var_f20 = 0.0f;
+    for (vals = D_800E0F88[gActors[actor_index].var_150]; (command = vals[0]) != 0x8FFF; vals++) {
+        if (command & 0x8000) {
+            var_f20 += arg1 / 2.5;
+        }
+        else {
+            var_f20 += arg1;
+        }
+    }
+    
+    gActors[actor_index].scaleX = gActors[actor_index].scaleY * (var_f20 / (arg1 * 0.9));
+    var_f20 = gActors[actor_index].scaleY * (-(var_f20 - arg1) / 2);
+    var_f26 = gActors[actor_index].scaleY * arg1;
+    for (vals = D_800E0F88[gActors[actor_index].var_150]; (command = vals[0]) != 0x8FFF; vals++) {
+        if (command & 0x8000) {
+            var_f20 += (arg1 / 2.5) * gActors[actor_index].scaleY;
+        }
+        else {
+            free_actor = func_8007D290(actor_index);
+            if (free_actor != 0) {
+                gActors[free_actor].graphicFlags |= 1;
+                gActors[free_actor].graphicIndex = (command * 2) + 0x2D2;
+                gActors[free_actor].posX.whole = gActors[actor_index].posX.whole + var_f20;
+                gActors[free_actor].posY.whole = gActors[actor_index].posY.whole;
+                gActors[free_actor].colorA = (f32)gActors[actor_index].colorA * 2.0;
+                var_f20 += var_f26;
+            }
+            else {
+                break;
+            }
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/7D8E0/func_8007DB84.s")
 

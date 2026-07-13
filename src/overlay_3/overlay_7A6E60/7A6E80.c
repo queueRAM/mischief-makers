@@ -358,7 +358,6 @@ extern void OverlayABI_Slot2_fn31_u16(u16 actor_index);
 extern void func_80067E50(u16 actor_index, void* arg1);
 extern s32 func_800734C4(u16 actor_index, s32 arg1);
 extern void func_8007CD68(u16 actor_index, u16 graphic_flags, s16 position_x, s16 position_y, u16 var_150, u16 var_154, s32 var_15C);
-extern void func_8007DF44(void);
 
 void func_801B0900_7A6E80(u16 actor_index);
 s32 func_801B09B4_7A6F34(u16 arg0, s16 arg1);

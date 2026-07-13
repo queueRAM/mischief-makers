@@ -1,6 +1,21 @@
 #include "common.h"
 
-#pragma GLOBAL_ASM("asm/nonmatchings/7D8E0/func_8007CCE0.s")
+extern s8 D_800E0F00[];
+
+void func_8007CCE0(u32 val) {
+    u16 count;
+    u32 tens_place;
+
+    if (val > 99999999) {
+        val = 99999999;
+    }
+    tens_place = 10000000;
+    for (count = 0; count < 8; ) {
+        D_800E0F00[count++] = val / tens_place;
+        val %= tens_place;
+        tens_place /= 10;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/7D8E0/func_8007CD68.s")
 

@@ -196,7 +196,6 @@ extern s32 func_80073320(u16 actor_index); // return could be u16
 
 extern u16 SpawnTextBubble(u16, u16*, s16, s16, s32);
 extern void func_8007EA14(void*, u16, s16, s32, s32, void*, s32, s32, s32, s32, s32, f32);
-extern void func_8007EF58(void*, u16, s16, s32, s32, s32, f32, f32);
 extern void func_8008310C(void);
 extern void func_800831D0(s16, s16, s16, s16);
 extern void func_80083454(void);

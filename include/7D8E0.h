@@ -19,4 +19,6 @@ void func_8007CFE0(u16 actor_index, u16 arg1, s16 pos_x, s16 pos_y, u16 arg4, u1
 u16 func_8007D0F4(u16 actor_index, u16* text, s16 off_x, s16 off_y, u16 arg4);
 void func_8007D384(u16 arg0, u16 xy_index);
 
+void func_8007EF58(u16* vals, u32 graphic_flags, s32 pos_x, s32 pos_y, s32 pos_z, u16 alpha, f32 scale_x, f32 scale_y);
+
 #endif

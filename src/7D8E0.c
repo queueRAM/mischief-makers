@@ -213,7 +213,33 @@ u16 func_8007EE70(u32 graphic_flags, s32 pos_x, s32 pos_y, s32 pos_z, f32 scale_
     return actor_index;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/7D8E0/func_8007EF58.s")
+void func_8007EF58(u16* vals, u32 graphic_flags, s32 pos_x, s32 pos_y, s32 pos_z, u16 alpha, f32 scale_x, f32 scale_y) {
+    f32 scale_numerator;
+    f32 scale_denominator;
+    u16 actor_index;
+
+    if (graphic_flags & ACTOR_GFLAG_UNK8) {
+        scale_denominator = 16.0f;
+    }
+    else {
+        scale_denominator = 8.0f;
+    }
+
+    scale_numerator = 0.0f;
+    for (; vals[0] != 0x8FFF; vals++) {
+        if (vals[0] & 0x8000) {
+            scale_numerator += scale_denominator / 2.5;
+        }
+        else {
+            scale_numerator += scale_denominator;
+        }
+    }
+    scale_x = (scale_numerator / (scale_denominator * 0.9)) * scale_x;
+    actor_index = func_8007EE70(graphic_flags, pos_x, pos_y, pos_z, scale_x, scale_y);
+    if (actor_index != 0) {
+        gActors[actor_index].colorA = alpha;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/7D8E0/func_8007F078.s")
 

@@ -274,7 +274,45 @@ void func_8007D880(u16 actor_index, f32 arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/7D8E0/func_8007DB84.s")
+void func_8007DB84(u16 actor_index) {
+    f32 temp_f0;
+    u16 index;
+    u16 count;
+    s32 var_s3;
+    s16 angle;
+    u16 free_actor;
+
+    gActors[actor_index].var_158 += gActors[actor_index].var_160;
+    gActors[actor_index].var_160 = 0;
+    if (gActors[actor_index].var_158 < 0) {
+        gActors[actor_index].var_158 = 0;
+    }
+    if (gActors[actor_index].var_15C < gActors[actor_index].var_158) {
+        gActors[actor_index].var_158 = gActors[actor_index].var_15C;
+    }
+    func_8007CCE0(gActors[actor_index].var_158);
+    var_s3 = FALSE;
+    index = 8 - gActors[actor_index].unk_14C;
+    angle = FROM_FIXED(gActors[actor_index].unk_188);
+    for (count = 0; count < gActors[actor_index].unk_14C; count++, index++) {
+        free_actor = func_8007D290(actor_index);
+        if (free_actor != 0) {
+            temp_f0 = ((((gActors[actor_index].unk_14C / 2) - (gActors[actor_index].unk_14C - count)) * 9.0f) * gActors[actor_index].scaleX) + (gActors[actor_index].scaleX * 4.5);
+            gActors[free_actor].posX.raw = (temp_f0 * (65536.0f * COS(angle))) + gActors[actor_index].posX.raw;
+            gActors[free_actor].posY.raw = (temp_f0 * (65536.0f * SIN(angle))) + gActors[actor_index].posY.raw;
+            gActors[free_actor].graphicIndex = (D_800E0F00[index] * 2) + 0x2D2;
+            if ((index >= 7) || (D_800E0F00[index] != 0) || var_s3) {
+                var_s3 = TRUE;
+            }
+            else {
+                gActors[free_actor].unk_18C += 8;
+            }
+        }
+        else {
+            break;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/7D8E0/func_8007DF44.s")
 

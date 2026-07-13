@@ -25,5 +25,6 @@ void func_8007DB84(u16 actor_index);
 void func_8007DF44(u16 actor_index);
 void func_8007EA14(void*, s32, s32, s32, s32, void*, s32, s32, s32, s32, s32, f32);
 void func_8007F37C(u16 actor_index);
+void func_8007F078(u16 actor_index);
 
 #endif

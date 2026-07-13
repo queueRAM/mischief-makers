@@ -503,7 +503,45 @@ void func_8007EF58(u16* vals, u32 graphic_flags, s32 pos_x, s32 pos_y, s32 pos_z
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/7D8E0/func_8007F078.s")
+void func_8007F078(u16 actor_index) {
+    u16 portrait_index;
+
+    portrait_index = gActors[actor_index].var_154;
+    switch (gActors[actor_index].state) {
+    case 0:
+        gActors[actor_index].unk_120 -= 1.0f;
+        if (gActors[actor_index].unk_120 < 0.0f) {
+            gActors[actor_index].state++;
+            gPortraits[portrait_index].flags = ACTOR_FLAG_ACTIVE | ACTOR_FLAG_DRAW;
+            gPortraits[portrait_index].graphicIndex = 0x2D0;
+            gPortraits[portrait_index].posX.whole = gActors[actor_index].posX.whole;
+            gPortraits[portrait_index].posY.whole = gActors[actor_index].posY.whole;
+            gPortraits[portrait_index].scaleX = gActors[actor_index].unk_124 / 16;
+            gPortraits[portrait_index].scaleY = 0.0f;
+        }
+        break;
+    case 1:
+        gPortraits[portrait_index].scaleY = Math_ApproachF32(gPortraits[portrait_index].scaleY, gActors[actor_index].unk_128 / 16, 0.2f);
+        if ((gActors[actor_index].unk_16C != 0) && ((gButtonPress & gButton_B) || (gButtonPress & gButton_A))) {
+            gActors[actor_index].state++;
+        }
+        else {
+            gActors[actor_index].unk_11C -= 1.0f;
+            if (gActors[actor_index].unk_11C < 0.0f) {
+                gActors[actor_index].state++;
+            }
+        }
+        break;
+    case 2:
+        gPortraits[portrait_index].scaleY -= 0.2;
+        if (gPortraits[portrait_index].scaleY < 0.0f) {
+            gActors[actor_index].flags = 0;
+            gPortraits[portrait_index].flags = 0;
+        }
+        break;
+    }
+    gActors[portrait_index].colorA = (u8) ((128.0f / (gActors[actor_index].unk_128 / 16)) * gActors[portrait_index].scaleY);
+}
 
 void func_8007F37C(u16 actor_index) {
     s32 pad;

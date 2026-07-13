@@ -23,7 +23,7 @@ void func_8007EF58(u16* vals, u32 graphic_flags, s32 pos_x, s32 pos_y, s32 pos_z
 
 void func_8007DB84(u16 actor_index);
 void func_8007DF44(u16 actor_index);
-void func_8007EA14(void*, s32, s32, s32, s32, void*, s32, s32, s32, s32, s32, f32);
+void func_8007EA14(u16* str, s32 graphic_flags, s32 pos_x, s32 pos_y, s32 pos_z, u16* palette, u8 red, u8 green, u8 blue, u16 alpha, s16 angle, f32 scale);
 void func_8007F37C(u16 actor_index);
 void func_8007F078(u16 actor_index);
 

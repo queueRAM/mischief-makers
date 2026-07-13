@@ -443,7 +443,76 @@ void func_8007DF44(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/7D8E0/func_8007EA14.s")
+void func_8007EA14(u16* str, s32 graphic_flags, s32 pos_x, s32 pos_y, s32 pos_z, u16* palette, u8 red, u8 green, u8 blue, u16 alpha, s16 angle, f32 scale) {
+    f32 var_f22;
+    s32 sp70;
+    u16 sp86;
+    u16 temp_a0;
+    u16* str_it;
+    f32 x_off;
+    u16 var_s4;
+
+    var_f22 = -1.0f;
+    for (str_it = str; *str_it != 0x8FFF; str_it++) {
+        var_f22 += 1.0f;
+    }
+
+    sp70 = graphic_flags & ACTOR_GFLAG_UNK8;
+    sp86 = (sp70) ? 0x10 : 0x8;
+    if (sp86 == 0x10) {
+        x_off = pos_x - (var_f22 * 327680.0f);
+    }
+
+    for (str_it = str, var_s4 = 0; str_it[0] != 0x8FFF; str_it++, var_s4++) {
+        if ((str_it[0] & 0x4000) == 0) {
+            temp_a0 = Actor_RangeFindInactive_90ToC0();
+            if (temp_a0 != 0) {
+                gActors[temp_a0].actorType = 0x34;
+                Actor_Initialize(temp_a0);
+                gActors[temp_a0].graphicFlags = graphic_flags & ~(ACTOR_GFLAG_3DOBJ | ACTOR_GFLAG_UNK8);
+                gActors[temp_a0].flags = ACTOR_FLAG_FREEZE_POS | ACTOR_FLAG_ACTIVE | ACTOR_FLAG_DRAW;
+                gActors[temp_a0].graphicIndex = (str_it[0] * 2) + 0x2D2;
+                if (sp86 == 0x10) {
+                    gActors[temp_a0].posX.raw = x_off;
+                    x_off += Text_GetWidth2(str_it) << 0x10;
+                    gActors[temp_a0].posY.raw = pos_y;
+                }
+                else {
+                    x_off = ((var_f22 / 2) - (var_f22 - var_s4)) * sp86 * scale;
+                    gActors[temp_a0].posX.raw = (COS(angle) * 65536.0f * x_off) + pos_x;
+                    gActors[temp_a0].posY.raw = (SIN(angle) * 65536.0f * x_off) + pos_y;
+                }
+                gActors[temp_a0].posZ.raw = pos_z;
+                if (sp70) {
+                    gActors[temp_a0].scaleX = scale;
+                    gActors[temp_a0].scaleY = scale;
+                    gActors[temp_a0].colorA = alpha;
+                    gActors[temp_a0].colorR = red;
+                    gActors[temp_a0].rotateZ = INDEX_TO_DEG(angle);
+                    gActors[temp_a0].colorG = green;
+                    gActors[temp_a0].colorB = blue;
+                }
+                else {
+                    gActors[temp_a0].palette_18C = palette;
+                }
+                if (graphic_flags & ACTOR_GFLAG_3DOBJ) {
+                    gActors[temp_a0].unk_138_arr[4] = 1.0f;
+                }
+                else {
+                    gActors[temp_a0].unk_138_arr[4] = 0.0f;
+                }
+            }
+            else {
+                break;
+            }
+        }
+        else {
+            if (sp86 == 0x10) {
+                x_off += 917504.0f;
+            }
+        }
+    }
+}
 
 void func_8007EE14(void* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, void* arg5) {
     func_8007EA14(arg0, arg1, arg2, arg3, arg4, arg5, 0x7F, 0x7F, 0x7F, 0xFF, 0, 1.0f);

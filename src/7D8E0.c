@@ -187,7 +187,31 @@ void func_8007D520(u16 actor_index) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/7D8E0/func_8007EE14.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/7D8E0/func_8007EE70.s")
+u16 func_8007EE70(u32 graphic_flags, s32 pos_x, s32 pos_y, s32 pos_z, f32 scale_x, f32 scale_y) {
+    u16 actor_index;
+
+    actor_index = Actor_RangeFindInactive_90ToC0();
+    if (actor_index != 0) {
+        gActors[actor_index].actorType = 0x34;
+        Actor_Initialize(actor_index);
+        gActors[actor_index].graphicFlags = graphic_flags & 0xDFFF;
+        gActors[actor_index].flags = ACTOR_FLAG_ACTIVE | ACTOR_FLAG_DRAW;
+        gActors[actor_index].graphicIndex = 0x2D0;
+        gActors[actor_index].posX.raw = pos_x;
+        gActors[actor_index].posY.raw = pos_y;
+        gActors[actor_index].posZ.raw = pos_z;
+        gActors[actor_index].scaleX = scale_x;
+        gActors[actor_index].scaleY = scale_y;
+        gActors[actor_index].colorA = 0xC0;
+        if (graphic_flags & ACTOR_GFLAG_3DOBJ) {
+            gActors[actor_index].unk_148 = 1.0f;
+        }
+        else {
+            gActors[actor_index].unk_148 = 0.0f;
+        }
+    }
+    return actor_index;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/7D8E0/func_8007EF58.s")
 

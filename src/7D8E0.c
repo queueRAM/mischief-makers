@@ -123,7 +123,31 @@ u16 func_8007D1E8(u16 actor_index, u16* text, s16 off_x, s16 off_y, u16 arg4, u1
     return actor;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/7D8E0/func_8007D290.s")
+u16 func_8007D290(u16 actor_index) {
+    u16 free_actor;
+
+    free_actor = Actor_RangeFindInactive_90ToC0();
+    if (free_actor != 0) {
+        gActors[free_actor].actorType = 0x34;
+        Actor_Initialize(free_actor);
+        if (gActors[actor_index].unk_18C != 0) {
+            gActors[free_actor].graphicFlags = ACTOR_GFLAG_UNK11 | ACTOR_GFLAG_PALETTE;
+        }
+        else {
+            gActors[free_actor].graphicFlags = ACTOR_GFLAG_UNK11;
+        }
+        gActors[free_actor].flags = ACTOR_FLAG_ACTIVE | ACTOR_FLAG_DRAW;
+        gActors[free_actor].posZ.raw = gActors[actor_index].posZ.raw + 1;
+        gActors[free_actor].unk_18C = gActors[actor_index].unk_18C;
+        if (free_actor < actor_index) {
+            gActors[free_actor].unk_148 = 0.0f;
+        }
+        else {
+            gActors[free_actor].unk_148 = 1.0f;
+        }
+    }
+    return free_actor;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/7D8E0/func_8007D384.s")
 

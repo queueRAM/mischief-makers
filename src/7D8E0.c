@@ -1,4 +1,5 @@
 #include "common.h"
+#define FUNC_8007CFE0_EXT_ARGS , u16 arg6
 #include "7D8E0.h"
 
 extern u8 D_800E0F00[];
@@ -55,7 +56,17 @@ void func_8007CEB8(u16 actor_index, u16 arg1, s16 pos_x, s16 pos_y, u16 arg4, u1
     gActors[actor_index].unk_16C = arg8 & 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/7D8E0/func_8007CFE0.s")
+void func_8007CFE0(u16 actor_index, u16 arg1, s16 pos_x, s16 pos_y, u16 arg4, u16 arg5, u16 arg6) {
+    gActors[actor_index].actorType = 0x26;
+    Actor_Initialize(actor_index);
+    gActors[actor_index].flags |= ACTOR_FLAG_FREEZE_POS | ACTOR_FLAG_ACTIVE;
+    gActors[actor_index].posX.whole = pos_x;
+    gActors[actor_index].posY.whole = pos_y;
+    gActors[actor_index].var_110 = arg1;
+    gActors[actor_index].unk_114 = arg5;
+    gActors[actor_index].unk_118 = arg4;
+    gActors[actor_index].unk_16C = arg6 & 1;
+}
 
 // spawns a text box over an actor for a few moments.
 // ...in the japanese version.

@@ -17,7 +17,17 @@ void func_8007CCE0(u32 val) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/7D8E0/func_8007CD68.s")
+void func_8007CD68(u16 actor_index, u16 arg1, s16 pos_x, s16 pos_y, u16 arg4, u16 arg5, s32 arg6) {
+    gActors[actor_index].actorType = 0x29;
+    Actor_Initialize(actor_index);
+    gActors[actor_index].flags = ACTOR_FLAG_FREEZE_POS | ACTOR_FLAG_ACTIVE;
+    gActors[actor_index].posX.whole = pos_x;
+    gActors[actor_index].posY.whole = pos_y;
+    gActors[actor_index].var_150 = arg4;
+    gActors[actor_index].var_154 = arg1;
+    gActors[actor_index].var_15C = arg6;
+    gActors[actor_index].unk_14C = arg5;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/7D8E0/func_8007CE24.s")
 

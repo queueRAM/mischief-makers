@@ -92,8 +92,8 @@ u16 func_8007D0F4(u16 actor_index, u16* text, s16 pos_x, s16 pos_y, u16 arg4) {
     if (free_actor != 0) {
         gActors[free_actor].actorType = 0x35;
         Actor_Initialize(free_actor);
-        gActors[free_actor].graphicFlags = 0x901;
-        gActors[free_actor].flags = 2;
+        gActors[free_actor].graphicFlags = ACTOR_GFLAG_UNK11 | ACTOR_GFLAG_UNK8 | ACTOR_GFLAG_SCALE;
+        gActors[free_actor].flags = ACTOR_FLAG_ACTIVE;
         gActors[free_actor].colorA = 0;
         gActors[free_actor].var_150 = (s32)text;
         gActors[free_actor].var_154 = actor_index;
@@ -456,7 +456,7 @@ u16 func_8007EE70(u32 graphic_flags, s32 pos_x, s32 pos_y, s32 pos_z, f32 scale_
     if (actor_index != 0) {
         gActors[actor_index].actorType = 0x34;
         Actor_Initialize(actor_index);
-        gActors[actor_index].graphicFlags = graphic_flags & 0xDFFF;
+        gActors[actor_index].graphicFlags = graphic_flags & ~ACTOR_GFLAG_3DOBJ;
         gActors[actor_index].flags = ACTOR_FLAG_ACTIVE | ACTOR_FLAG_DRAW;
         gActors[actor_index].graphicIndex = 0x2D0;
         gActors[actor_index].posX.raw = pos_x;

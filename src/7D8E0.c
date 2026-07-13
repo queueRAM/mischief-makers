@@ -4,6 +4,7 @@
 #include "7D8E0.h"
 
 extern u8 D_800E0F00[];
+extern s16 D_800E0F08[]; // x,y pairs used in func_8007D384
 
 void func_8007CCE0(u32 val) {
     u16 count;
@@ -149,7 +150,16 @@ u16 func_8007D290(u16 actor_index) {
     return free_actor;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/7D8E0/func_8007D384.s")
+void func_8007D384(u16 arg0, u16 xy_index) {
+    u16 free_actor;
+    u16 index;
+
+    free_actor = Actor_RangeFindInactive_90ToC0();
+    if (free_actor != 0) {
+        index = xy_index & 0x7FFF;
+        func_8007CFE0(free_actor, arg0, D_800E0F08[index + 4], D_800E0F08[index + 5], 0, 0xF0, 1);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/7D8E0/func_8007D3EC.s")
 

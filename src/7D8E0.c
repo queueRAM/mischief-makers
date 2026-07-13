@@ -505,6 +505,40 @@ void func_8007EF58(u16* vals, u32 graphic_flags, s32 pos_x, s32 pos_y, s32 pos_z
 
 #pragma GLOBAL_ASM("asm/nonmatchings/7D8E0/func_8007F078.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/7D8E0/func_8007F37C.s")
+void func_8007F37C(u16 actor_index) {
+    s32 pad;
+    switch (gActors[actor_index].state) {
+    case 0:
+        gActors[actor_index].unk_118 -= 1.0f;
+        if (gActors[actor_index].unk_118 < 0.0f) {
+            func_8007D554(actor_index);
+        }
+        break;
+    case 1:
+        gActors[actor_index].colorA = Math_ApproachS32(gActors[actor_index].colorA, 0xFF, 0x20);
+        gActors[actor_index].scaleY = Math_ApproachF32(gActors[actor_index].scaleY, 1.0f, 0.1f);
+        func_8007D554(actor_index);
+        if ((gActors[actor_index].unk_16C != 0) && ((gButtonPress & gButton_B) || (gButtonPress & gButton_A))) {
+            gActors[actor_index].state++;
+        }
+        else {
+            gActors[actor_index].unk_114 -= 1.0f;
+            if (gActors[actor_index].unk_114 < 0.0f) {
+                gActors[actor_index].state++;
+            }
+        }
+        break;
+    case 2:
+        gActors[actor_index].scaleY -= 0.2;
+        gActors[actor_index].colorA -= 0x20;
+        if (gActors[actor_index].scaleY < 0.0f) {
+            func_8007D520(actor_index);
+        }
+        else {
+            func_8007D554(actor_index);
+        }
+        break;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/7D8E0/func_8007F560.s")

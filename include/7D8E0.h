@@ -16,4 +16,6 @@ void func_8007CEB8(u16 actor_index, u16 arg1, s16 pos_x, s16 pos_y, u16 arg4, u1
 #endif
 void func_8007CFE0(u16 actor_index, u16 arg1, s16 pos_x, s16 pos_y, u16 arg4, u16 arg5 FUNC_8007CFE0_EXT_ARGS);
 
+u16 func_8007D0F4(u16 actor_index, u16* text, s16 off_x, s16 off_y, u16 arg4);
+
 #endif

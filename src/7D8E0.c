@@ -1,5 +1,6 @@
-#include "common.h"
 #define FUNC_8007CFE0_EXT_ARGS , u16 arg6
+#define Actor_Initialize_RET void
+#include "common.h"
 #include "7D8E0.h"
 
 extern u8 D_800E0F00[];
@@ -80,7 +81,31 @@ u16 SpawnTextBubble(u16 index, u16* text, s16 off_x, s16 off_y, s32 arg4) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/7D8E0/func_8007D0F4.s")
+u16 func_8007D0F4(u16 actor_index, u16* text, s16 pos_x, s16 pos_y, u16 arg4) {
+    u16 free_actor;
+
+    free_actor = Actor_RangeFindInactive(0x8C, 0x90);
+    if (free_actor != 0) {
+        gActors[free_actor].actorType = 0x35;
+        Actor_Initialize(free_actor);
+        gActors[free_actor].graphicFlags = 0x901;
+        gActors[free_actor].flags = 2;
+        gActors[free_actor].colorA = 0;
+        gActors[free_actor].var_150 = (s32)text;
+        gActors[free_actor].var_154 = actor_index;
+        gActors[free_actor].unk_114 = (f32) (arg4 & 0x7FFF);
+        gActors[free_actor].unk_118 = (f32) (arg4 & 0x8000);
+        gActors[free_actor].var_158 = pos_x;
+        gActors[free_actor].var_15C = pos_y;
+        gActors[free_actor].posX.whole = pos_x;
+        gActors[free_actor].posY.whole = pos_y;
+        gActors[free_actor].posZ.raw = 0x800000;
+        gActors[free_actor].scaleX = 0.0f;
+        gActors[free_actor].scaleY = 0.0f;
+    }
+    return free_actor;
+}
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/7D8E0/func_8007D1E8.s")
 

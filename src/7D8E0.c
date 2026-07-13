@@ -167,7 +167,9 @@ void func_8007D3EC(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/7D8E0/func_8007D438.s")
+void func_8007D438(u16 actor_index, u16 alpha) {
+    gActors[actor_index].colorA = gActors[actor_index].scaleY * alpha;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/7D8E0/func_8007D520.s")
 

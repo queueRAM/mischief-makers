@@ -1,14 +1,78 @@
 #include "common.h"
 #include "actor.h"
 #include "common_structs.h"
+#include "28EF0.h"
 #include "80D90.h"
 
 void func_80080190(u16 actor_index) {
-    gActors[actor_index].flags_098 &= ~0x200600;
+    gActors[actor_index].flags_098 &= ~(ACTOR_FLAG3_UNK21 | ACTOR_FLAG3_UNK10 | ACTOR_FLAG3_UNK9);
 }
 
-void func_800801D8(u16 arg0, s16* arg1, u16* arg2);
-#pragma GLOBAL_ASM("asm/nonmatchings/80D90/func_800801D8.s")
+void func_800801D8(u16 base_actor_index, s16* vals, u16* arg2) {
+    s32 temp_s1;
+    s32 temp_t7;
+    s32 var_s6;
+    s32 var_v0;
+    u16* array_base;
+    u16* var_s5;
+    u16** array;
+    u16 var_s7;
+    u16 actor_index;
+    s32 mask;
+    s32 sp58;
+    s32 sp54;
+
+    array = (u16**)(gActors[base_actor_index].unk_178);
+    array_base = array[arg2[0]];
+    sp58 = arg2[1] * gActors[base_actor_index].unk_120;
+    sp54 = arg2[2] * gActors[base_actor_index].unk_120;
+    temp_t7 = TO_FIXED(array_base[0]);
+    gActors[base_actor_index].var_160 = (temp_t7 - gActors[base_actor_index].var_158) / sp58;
+    temp_t7 = TO_FIXED(array_base[1]);
+    gActors[base_actor_index].unk_164 = (temp_t7 - gActors[base_actor_index].var_15C) / sp58;
+    array_base += 2;
+
+    for (var_s7 = 0; vals[0] != 0x7FFF; vals += 5, var_s7 += 2) {
+        actor_index = vals[0] + base_actor_index;
+        if (gActors[base_actor_index].unk_13C_f32 != 0.0f) {
+            var_s5 = &array_base[vals[4]];
+        }
+        else {
+            var_s5 = &array_base[var_s7];
+        }
+        temp_s1 = gActors[actor_index].unk_174;
+        temp_t7 = TO_FIXED(var_s5[0]);
+        var_s6 = temp_t7 - temp_s1;
+        if (gActors[actor_index].unk_188 & 0x200) {
+            mask = 0x03FFFFFF;
+            if (func_8002995C(temp_t7, temp_s1) > 0) {
+                var_v0 = (temp_s1 + 0xFF000000) & mask;
+            }
+            else {
+                var_v0 = (temp_s1 + 0x01000000) & mask;
+            }
+        }
+        else {
+            var_v0 = TO_FIXED(vals[3]);
+        }
+        if (var_s6 != 0) {
+            if (var_s6 > 0) {
+                if ((var_v0 < temp_t7) && (temp_s1 < var_v0)) {
+                    var_s6 += 0xFC000000;
+                }
+                if (1) {} // fakematch
+            }
+            else if ((temp_t7 < var_v0) && (var_v0 < temp_s1)) {
+                var_s6 += 0x04000000;
+            }
+        }
+        temp_s1 = gActors[actor_index].var_154;
+        gActors[actor_index].unk_164 = var_s6 / sp58;
+        temp_t7 = TO_FIXED(var_s5[1]);
+        gActors[actor_index].unk_168 = (temp_t7 - temp_s1) / sp58;
+    }
+    gActors[base_actor_index].unk_11C = sp58 - sp54;
+}
 
 void func_800805B8(u16 base_actor_index, s16* vals) {
     u16 actor_1;
@@ -114,7 +178,7 @@ void func_80080AEC(u16 base_actor_index, s16* vals) {
         dy = gActors[base_actor_index].var_158;
     }
     dz = gActors[base_actor_index].var_15C;
-    if (gActors[base_actor_index].graphicFlags & 1) {
+    if (gActors[base_actor_index].graphicFlags & ACTOR_GFLAG_SCALE) {
         temp_f0 = gActors[base_actor_index].unk_168;
         temp_f0 /= 10000.0f;
         dy = (s32) (dy * temp_f0);

@@ -514,8 +514,8 @@ void func_8007EA14(u16* str, s32 graphic_flags, s32 pos_x, s32 pos_y, s32 pos_z,
     }
 }
 
-void func_8007EE14(void* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, void* arg5) {
-    func_8007EA14(arg0, arg1, arg2, arg3, arg4, arg5, 0x7F, 0x7F, 0x7F, 0xFF, 0, 1.0f);
+void func_8007EE14(u16* str, s32 graphic_flags, s32 pos_x, s32 pos_y, s32 pos_z, u16* palette) {
+    func_8007EA14(str, graphic_flags, pos_x, pos_y, pos_z, palette, 0x7F, 0x7F, 0x7F, 0xFF, 0, 1.0f);
 }
 
 u16 func_8007EE70(u32 graphic_flags, s32 pos_x, s32 pos_y, s32 pos_z, f32 scale_x, f32 scale_y) {
@@ -658,7 +658,7 @@ void func_8007F560(u16 actor_index) {
     s32 graphic_flags;
 
     gActors[actor_index].unk_114 -= 1.0f;
-    if ((gActors[actor_index].unk_114 < 0.0f) || !(gActors[gActors[actor_index].var_154].flags & 2)) {
+    if ((gActors[actor_index].unk_114 < 0.0f) || !(gActors[gActors[actor_index].var_154].flags & ACTOR_FLAG_ACTIVE)) {
         gActors[actor_index].colorA = Math_ApproachS32(gActors[actor_index].colorA, 0, 0x20);
         if (gActors[actor_index].colorA == 0) {
             gActors[actor_index].flags = 0;
@@ -681,7 +681,7 @@ void func_8007F560(u16 actor_index) {
     }
     
     str = (u16*)gActors[actor_index].var_150;
-    if (gActors[actor_index].flags & 0x100) {
+    if (gActors[actor_index].flags & ACTOR_FLAG_UNK8) {
         scale_denominator = 16;
     }
     else {
@@ -698,7 +698,7 @@ void func_8007F560(u16 actor_index) {
     }
 
     gActors[actor_index].scaleX = gActors[actor_index].scaleY * (scale_numerator / (scale_denominator * 0.9));
-    if (gActors[actor_index].graphicFlags & 0x100) {
+    if (gActors[actor_index].graphicFlags & ACTOR_GFLAG_UNK8) {
         graphic_flags = gActors[actor_index].graphicFlags | ACTOR_GFLAG_3DOBJ | ACTOR_GFLAG_UNK11 | ACTOR_GFLAG_SCALE;
         func_8007EA14((u16* ) gActors[actor_index].var_150, graphic_flags, x, y, z, NULL, gActors[actor_index].colorR, gActors[actor_index].colorG, gActors[actor_index].colorB, 0xFF, 0, gActors[actor_index].scaleY);
     }

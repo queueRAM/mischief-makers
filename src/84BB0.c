@@ -6,6 +6,8 @@
 extern u16 D_800E3D20[]; // array of graphic indices, used in func_80084974
 extern u8 D_800E3D2C[];
 extern u16 D_800E3D4C[]; // array of graphic indices, used in func_800853C8
+extern f32 D_800E3DBC[];
+extern s16 D_800E3DDC[];
 
 // forward declarations
 void func_800859C4(u16);
@@ -566,7 +568,20 @@ s32 func_80085BAC(u16 actor_index) {
     return FALSE;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80085D00.s")
+
+void func_80085D00(u16 arg0) {
+    f32 temp_f0;
+
+    temp_f0 = D_800E3DBC[gActors[arg0].var_0D8];
+    gActors[arg0].hitboxBY0 = D_800E3DDC[0] * temp_f0;
+    gActors[arg0].hitboxBY1 = D_800E3DDC[1] * temp_f0;
+    gActors[arg0].hitboxBX0 = D_800E3DDC[2] * temp_f0;
+    gActors[arg0].hitboxBX1 = D_800E3DDC[3] * temp_f0;
+    gActors[arg0].hitboxAY0 = gActors[arg0].hitboxBY0 - 1;
+    gActors[arg0].hitboxAY1 = gActors[arg0].hitboxBY1 + 1;
+    gActors[arg0].hitboxAX0 = gActors[arg0].hitboxBX0 + 1;
+    gActors[arg0].hitboxAX1 = gActors[arg0].hitboxBX1 - 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80085E60.s")
 

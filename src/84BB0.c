@@ -14,7 +14,7 @@ extern s32 D_800E3DE4[];
 // .bss
 extern u32 D_80182020[];
 extern s32 D_80182120[];
-extern s16 D_80182220[];
+extern u16 D_80182220[];
 
 // forward declarations
 void func_800859C4(u16);
@@ -677,14 +677,52 @@ u16 func_800860FC(u16 actor_index);
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_800860FC.s")
 #endif
 
-void func_800862CC(u16 arg0, s16 arg1, s16 arg2) {
-    if (gActors[arg0].unk_18C < 0x40) {
-        D_80182120[gActors[arg0].unk_18C] = gScreenPosCurrentY.whole + ((arg1 + gScreenPosCurrentX.whole) << 0x10) + arg2;
-        gActors[arg0].unk_18C++;
+void func_800862CC(u16 actor_index, s16 x, s16 y) {
+    if (gActors[actor_index].unk_18C < 0x40) {
+        D_80182120[gActors[actor_index].unk_18C] = gScreenPosCurrentY.whole + ((x + gScreenPosCurrentX.whole) << 0x10) + y;
+        gActors[actor_index].unk_18C++;
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80086360.s")
+s32 func_80086360(u16 actor_index, s16 x, s16 y, s32* arg3) {
+    u16 index;
+    u16 sp2C;
+    u16 sp2A;
+    u8 temp_v0;
+
+    if (((gActors[actor_index].posX.whole - 0x30) >= x) || (x >= (gActors[actor_index].posX.whole + 0x30)) || 
+        ((gActors[actor_index].posY.whole - 0x30) >= y) || (y >= (gActors[actor_index].posY.whole + 0x30))) {
+        return FALSE;
+    }
+
+    sp2C = ((x - gActors[actor_index].posX.whole) + 0x40) & 0xF0;
+    sp2A = ((y - gActors[actor_index].posY.whole) + 0x40) & 0xF0;
+    temp_v0 = func_80012AB4(x, y);
+    if (temp_v0 == 0xF8) {
+        if (temp_v0 == 0xF8) {
+            func_80083FB0(x, y);
+        }
+        D_80182020[*arg3] = gScreenPosCurrentY.whole + ((x + gScreenPosCurrentX.whole) << 0x10) + y;
+        func_80012044(x, y, 0x34);
+        func_800862CC(actor_index, x, y);
+        *arg3 += 1;
+        *arg3 &= 0x3F;
+        return TRUE;
+    }
+
+    if (temp_v0 == 0x00) {
+        index = (sp2C >> 1) + (sp2A >> 4);
+        if (D_80182220[index] != 0) {
+            return FALSE;
+        }
+        D_80182020[*arg3] = gScreenPosCurrentY.whole + ((x + gScreenPosCurrentX.whole) << 0x10) + y;
+        D_80182220[index] = 1;
+        *arg3 += 1;
+        *arg3 &= 0x3F;
+        return TRUE;
+    }
+    return FALSE;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_800865BC.s")
 

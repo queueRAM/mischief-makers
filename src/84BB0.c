@@ -286,7 +286,19 @@ void func_80084E7C(u16 actor_index) {
     gActors[actor_index].unk_130 = 0.08f;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80084F38.s")
+void func_80084F38(u16 actor_index) {
+    s16 angle;
+
+    gActors[actor_index].var_158 = Math_ApproachS32(gActors[actor_index].var_158, 0, 0x400);
+    gActors[actor_index].var_15C = Math_ApproachS32(gActors[actor_index].var_15C, -0x4000, 0x4000);
+    if (func_800842AC(&gActors[actor_index].unk_16C, &gActors[actor_index].unk_138_arr[5], &gActors[actor_index].unk_128, &gActors[actor_index].unk_130)) {
+        gActors[actor_index].unk_130 = (Rand() * 0.0001) + 0.04;
+    }
+    angle = (f32) gActors[actor_index].unk_138_arr[5] * 2.84; // * 2.84 almost DEG_TO_INDEX
+    gActors[actor_index].velocityX.raw = (s32) (gActors[actor_index].var_158 + (COS(angle) * 131072.0f));
+    gActors[actor_index].velocityY.raw = (s32) (gActors[actor_index].var_15C + (SIN(angle) * 8192.0f));
+    gActors[actor_index].rotateZ = gActors[actor_index].unk_138_arr[5] - 270.0f;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80085108.s")
 

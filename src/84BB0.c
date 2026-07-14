@@ -349,7 +349,15 @@ void func_80085300(u16 actor_index) {
     gActors[actor_index].hitboxBX1 = 6;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80085350.s")
+void func_80085350(u16 actor_index) {
+    if (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK9) {
+        gActors[actor_index].state = 2;
+        gActors[actor_index].flags = ACTOR_FLAG_UNK17 | ACTOR_FLAG_ACTIVE | ACTOR_FLAG_DRAW;
+        gActors[actor_index].velocityX.raw = 0;
+        gActors[actor_index].velocityY.raw = 0;
+        Sound_PlaySfxAtActor2(0x2F, actor_index);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_800853C8.s")
 

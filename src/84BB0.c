@@ -1470,7 +1470,9 @@ void ActorUpdate_Spikeball_78(u16 actor_index) {
     gActors[actor_index].flags |= ACTOR_FLAG_UNK17;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_800886E0.s")
+void func_800886E0(u16 actor_index) {
+    gActors[actor_index].graphicFlags |= ACTOR_GFLAG_UNK11;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80088720.s")
 

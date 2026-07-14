@@ -300,7 +300,20 @@ void func_80084F38(u16 actor_index) {
     gActors[actor_index].rotateZ = gActors[actor_index].unk_138_arr[5] - 270.0f;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80085108.s")
+// same implementation as func_800846A8
+s32 func_80085108(u16 actor_index) {
+    if (gActors[actor_index].velocityY.raw <= 0) {
+        if (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK5) {
+            gActors[actor_index].state = 1;
+            gActors[actor_index].flags &= ~ACTOR_FLAG_UNK17;
+            gActors[actor_index].flags |= ACTOR_FLAG_UNK16;
+            gActors[actor_index].velocityX.raw = 0;
+            gActors[actor_index].velocityY.raw = 0;
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80085194.s")
 

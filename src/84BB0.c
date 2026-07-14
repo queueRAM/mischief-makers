@@ -7,6 +7,7 @@
 extern u16 D_800E3D20[]; // array of graphic indices, used in func_80084974
 extern u8 D_800E3D2C[];
 extern u16 D_800E3D4C[]; // array of graphic indices, used in func_800853C8
+extern s16 D_800E3DA0[];
 extern f32 D_800E3DBC[];
 extern s16 D_800E3DDC[];
 extern s32 D_800E3DE4[];
@@ -831,7 +832,27 @@ void func_80086900(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80086A20.s")
+
+void func_80086A20(u16 actor_index) {
+    u16 new_actor_index;
+
+    if (!(gActiveFrames & 3)) {
+        new_actor_index = SpawnParticle_List_90C0_16(
+            D_800E3DA0,
+            gActors[actor_index].posX.whole + (gActors[actor_index].scaleX * 6.0f), 
+            gActors[actor_index].posY.whole + (gActors[actor_index].scaleY * 16.0f), 
+            gActors[actor_index].posZ.whole
+        );
+        if (new_actor_index != 0) {
+            gActors[new_actor_index].graphicFlags = ACTOR_GFLAG_UNK4;
+            gActors[new_actor_index].colorR = 0;
+            gActors[new_actor_index].colorG = 0x94;
+            gActors[new_actor_index].colorB = 0xB4;
+            gActors[new_actor_index].colorA = 0xE6;
+            gActors[new_actor_index].posZ.raw = gActors[actor_index].posZ.raw + 1;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80086B74.s")
 

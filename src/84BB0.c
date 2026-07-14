@@ -7,6 +7,9 @@
 #include "28EF0.h"
 #include "7D8E0.h"
 
+// TODO: func_8001FCA0 only matches if arg1/arg2 are `s16`, but only matches below as `s32`
+u8 func_8001FCA0(u16 actor_index, s32 x, s32 y);
+
 extern u16 D_800D9B64[]; // palette
 
 extern u8 D_800E0F00[];
@@ -1345,7 +1348,34 @@ void func_80087EAC(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80088010.s")
+void func_80088010(u16 actor_index) {
+    switch (gActors[actor_index].var_15C) {
+    case 0:
+        if (func_80029B00(gActors[actor_index].var_160, gActors[actor_index].unk_164, gActors[actor_index].unk_168)) {
+            func_80087EAC(actor_index);
+            gActors[actor_index].unk_16C = 1;
+            gActors[actor_index].var_15C++;
+        }
+        break;
+    case 1:
+        gActors[actor_index].unk_16C--;
+        if (gActors[actor_index].unk_16C < 0) {
+            gActors[actor_index].var_15C++;
+        }
+        break;
+    case 2:
+        if (gActors[actor_index].velocityY.raw > FIXED_UNIT(-4.0)) {
+            gActors[actor_index].velocityY.raw -= FIXED_UNIT(0.1875);
+        }
+        if (func_8001FCA0(actor_index, gActors[actor_index].posX.whole + gActors[actor_index].hitboxAX0, gActors[actor_index].posY.whole + gActors[actor_index].hitboxAY1) ||
+            func_8001FCA0(actor_index, gActors[actor_index].posX.whole + gActors[actor_index].hitboxAX1, gActors[actor_index].posY.whole + gActors[actor_index].hitboxAY1)) {
+            gActors[actor_index].velocityX.raw = 0;
+            gActors[actor_index].velocityY.raw = 0;
+            func_800390BC(actor_index);
+        }
+        break;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/ActorUpdate_Spikeball_77.s")
 

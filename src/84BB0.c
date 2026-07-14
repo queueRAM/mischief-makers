@@ -10,8 +10,16 @@
 // TODO: func_8001FCA0 only matches if arg1/arg2 are `s16`, but only matches below as `s32`
 u8 func_8001FCA0(u16 actor_index, s32 x, s32 y);
 
-extern u16 D_800D9B64[]; // palette
+typedef struct ActorUnk190 {
+    s32 actorType;
+    s32 unk_04;
+    s32 unk_08;
+    s32 velocityX;
+    s32 velocityY;
+    s32 unk_14;
+} ActorUnk_800E44C0; // size = 0x18
 
+extern u16 D_800D9B64[]; // palette
 
 extern u8 D_800E0F00[];
 extern u16 D_800E3D20[]; // array of graphic indices, used in func_80084974
@@ -32,6 +40,7 @@ extern s32 D_800E41C4[];
 extern s32 D_800E42F0[];
 extern s16 D_800E42F4[];
 extern s32* D_800E4440[];
+extern ActorUnk_800E44C0* D_800E44C0[];
 
 // .bss
 extern u32 D_80182020[];
@@ -1929,7 +1938,56 @@ void func_80089A10(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80089EF8.s")
+s32 func_80089EF8(u16 actor_index) {
+    ActorUnk_800E44C0* init_data;
+    u16 free_actor;
+    u16 index;
+
+    if (gActors[actor_index].unk_17C == 0xFF) {
+        return FALSE;
+    }
+
+    if (gActors[actor_index].unk_190 != NULL) {
+        init_data = (ActorUnk_800E44C0*) gActors[actor_index].unk_190;
+    }
+    else {
+        init_data = D_800E44C0[(u16)gActors[actor_index].var_0D8];
+    }
+    init_data += gActors[actor_index].unk_17C;
+    gActors[actor_index].unk_174++;
+    if (gActors[actor_index].unk_174 >= gActors[actor_index].unk_178) {
+        free_actor = Actor_RangeFindInactive(0x30, 0x90);
+        if (free_actor != 0) {
+            gActors[free_actor].actorType = init_data->actorType;
+            Actor_Initialize(free_actor);
+            gActors[free_actor].var_110 = init_data->unk_04;
+            gActors[free_actor].var_0D8 = init_data->unk_08;
+            gActors[free_actor].velocityX.raw = init_data->velocityX;
+            gActors[free_actor].velocityY.raw = init_data->velocityY;
+            gActors[free_actor].posX.whole = gActors[actor_index].posX.whole;
+            gActors[free_actor].posY.whole = gActors[actor_index].posY.whole + 0x30;
+            gActors[free_actor].posZ.whole = gActors[actor_index].posZ.whole + 1;
+        }
+        gActors[actor_index].unk_174 = 0;
+        gActors[actor_index].unk_178 = init_data->unk_14;
+        if (gActors[actor_index].unk_16C == 0) {
+            gActors[actor_index].unk_16C = 1;
+        }
+        init_data++;
+        if (init_data->actorType < 0) {
+            gActors[actor_index].unk_17C += (init_data->actorType / 6) + 1;
+        }
+        else if (init_data->actorType == 0) {
+            gActors[actor_index].unk_17C = 0xFF;
+        }
+        else {
+            gActors[actor_index].unk_17C++;
+        }
+        return TRUE;
+    }
+    return FALSE;
+}
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008A0F4.s")
 

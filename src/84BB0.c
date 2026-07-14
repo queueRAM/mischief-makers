@@ -951,7 +951,41 @@ void func_80086B74(u16 actor_index) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_800896AC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/DiggingSpot_SpawnActor.s")
+void DiggingSpot_SpawnActor(u16 actor_0, u16 actor_1, s32* vals) {
+    s32* vals_ptr;
+
+    vals_ptr = &vals[gActors[actor_0].var_15C];
+    if (vals_ptr[0] == 0) {
+        return;
+    }
+
+    gActors[actor_1].flags = ACTOR_FLAG_ACTIVE | ACTOR_FLAG_DRAW;
+    gActors[actor_1].actorType = *vals_ptr++;
+    gActors[actor_1].var_110 = *vals_ptr++;
+    gActors[actor_1].var_0D8 = *vals_ptr++;
+    gActors[actor_0].unk_164 = *vals_ptr++;
+    if (gActors[actor_1].actorType == 8) {
+        gActors[actor_1].health = 0;
+        gActors[actor_1].posY.whole += 16;
+        if (Rand() & 1) {
+            gActors[actor_1].velocityX.raw = FIXED_UNIT(3.0);
+        }
+        else {
+            gActors[actor_1].velocityX.raw = FIXED_UNIT(-3.0);
+        }
+    }
+    if (gActors[actor_0].unk_164 == 1) {
+        gActors[actor_0].unk_168 = gActors[actor_0].var_160;
+    }
+    gActors[actor_0].var_15C += 4;
+    if (vals_ptr[0] < 0) {
+        gActors[actor_0].var_15C += vals_ptr[0];
+    }
+    gActors[actor_0].var_158 = vals_ptr[0];
+    if (vals_ptr[0] == 0) {
+        gActors[actor_0].flags = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/DiggingSpot_SpawnActorCheck.s")
 

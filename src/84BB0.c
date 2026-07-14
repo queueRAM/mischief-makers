@@ -16,6 +16,7 @@ extern s32 D_800E3DE4[];
 extern u32 D_80182020[];
 extern u32 D_80182120[];
 extern u16 D_80182220[];
+extern u32 D_801822A0[][0x40];
 
 // forward declarations
 void func_800859C4(u16);
@@ -854,7 +855,27 @@ void func_80086A20(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80086B74.s")
+void func_80086B74(u16 actor_index) {
+    u16 index_s0;
+    u16 index_v1;
+
+    func_80085F08(actor_index);
+    func_80085F78(actor_index);
+    for (index_s0 = 0; index_s0 < 0x200; index_s0++) {
+        if (func_800865BC(actor_index) == 0) {
+            func_80085F08(actor_index);
+            if (gActors[actor_index].unk_18C == 0) {
+                return;
+            }
+            for (index_v1 = 0; index_v1 < gActors[actor_index].unk_18C; index_v1++) {
+                D_801822A0[gActors[actor_index].var_154][gActors[actor_index].unk_178] = D_80182120[index_v1];
+                gActors[actor_index].unk_178++;
+            }
+            gActors[actor_index].unk_178 = gActors[actor_index].unk_18C;
+            break;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/ActorUpdate_Clanbomb.s")
 

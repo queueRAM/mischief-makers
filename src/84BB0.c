@@ -1504,7 +1504,26 @@ void func_80088944(u16 actor_index) {
     gActors[actor_index].unk_188 = (SIN(angle) * gActors[actor_index].var_160) * -2.0f;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80088A54.s")
+void func_80088A54(u16 actor_index) {
+    s32 color;
+
+    if (gActors[actor_index].var_158 != 0) {
+        gActors[actor_index].graphicFlags &= ~ACTOR_GFLAG_UNK4;
+        return;
+    }
+
+    gActors[actor_index].graphicFlags |= ACTOR_GFLAG_UNK4;
+    if (gActors[actor_index].var_15C > FIXED_UNIT(512.0)) {
+        gActors[actor_index].colorR = 0;
+        gActors[actor_index].colorG = 0;
+        gActors[actor_index].colorB = 0;
+    }
+    else {
+        color = (gActors[actor_index].var_15C > FIXED_UNIT(256.0)) ? FIXED_UNIT(512.0) - gActors[actor_index].var_15C : gActors[actor_index].var_15C;
+        gActors[actor_index].colorG = gActors[actor_index].colorR = color >> 0x11;
+        gActors[actor_index].colorB = gActors[actor_index].colorR;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80088B08.s")
 

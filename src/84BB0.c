@@ -1488,7 +1488,9 @@ void func_800887B0(u16 actor_index) {
     gActors[actor_index].flags |= ACTOR_FLAG_UNK12 | ACTOR_FLAG_UNK10 | ACTOR_FLAG_UNK9 | ACTOR_FLAG_UNK8 | ACTOR_FLAG_UNK7;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_800887F0.s")
+void func_800887F0(u16 actor_index) {
+    gActors[actor_index].flags &= ~(ACTOR_FLAG_UNK12 | ACTOR_FLAG_UNK10 | ACTOR_FLAG_UNK9 | ACTOR_FLAG_UNK8 | ACTOR_FLAG_UNK7);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80088834.s")
 

@@ -724,7 +724,44 @@ s32 func_80086360(u16 actor_index, s16 x, s16 y, s32* arg3) {
     return FALSE;
 }
 
+#ifdef NON_MATCHING
+// https://decomp.me/scratch/MPqE5
+s32 func_800865BC(u16 arg0) {
+    s32 sp60;
+    s32 var_s3;
+    s32 var_s4;
+    s16 temp_s0;
+    s16 temp_s1;
+
+    sp60 = gActors[arg0].unk_178;
+    var_s3 = FALSE;
+    for (var_s4 = gActors[arg0].unk_174; var_s4 != gActors[arg0].unk_178; var_s4++, var_s4 &= 0x3F) {
+        if (D_80182020[var_s4] == -1) {
+            continue;
+        }
+        temp_s0 = (D_80182020[var_s4] >> 0x10) - gScreenPosCurrentX.whole;
+        temp_s1 = D_80182020[var_s4] - gScreenPosCurrentY.whole;
+        if (func_80086360(arg0, temp_s0 - 0x10, temp_s1, &sp60)) {
+            var_s3 = TRUE;
+        }
+        if (func_80086360(arg0, temp_s0 + 0x10, temp_s1, &sp60)) {
+            var_s3 = TRUE;
+        }
+        if (func_80086360(arg0, temp_s0, temp_s1 + 0x10, &sp60)) {
+            var_s3 = TRUE;
+        }
+        if (func_80086360(arg0, temp_s0, temp_s1 - 0x10, &sp60)) {
+            var_s3 = TRUE;
+        }
+        D_80182020[var_s4] = -1;
+    }
+    gActors[arg0].unk_174 = gActors[arg0].unk_178;
+    gActors[arg0].unk_178 = sp60;
+    return var_s3;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_800865BC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80086790.s")
 

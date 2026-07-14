@@ -160,7 +160,12 @@ s32 func_800848A0(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80084924.s")
+void func_80084924(u16 actor_index) {
+    gActors[actor_index].hitboxBY0 = 12; \
+    gActors[actor_index].hitboxBY1 = -4; \
+    gActors[actor_index].hitboxBX0 = -4; \
+    gActors[actor_index].hitboxBX1 = 4;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80084974.s")
 

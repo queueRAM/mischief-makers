@@ -8,6 +8,7 @@ extern u8 D_800E3D2C[];
 extern u16 D_800E3D4C[]; // array of graphic indices, used in func_800853C8
 extern f32 D_800E3DBC[];
 extern s16 D_800E3DDC[];
+extern s32 D_800E3DE4[];
 
 // forward declarations
 void func_800859C4(u16);
@@ -589,7 +590,10 @@ void func_80085E60(u16 actor_index) {
     gActors[actor_index].scaleY = scale;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80085EB0.s")
+void func_80085EB0(u16 actor_index) {
+    gActors[actor_index].unk_0F8.raw = D_800E3DE4[gActors[actor_index].var_0D8 * 2 + 0];
+    gActors[actor_index].unk_0FC.raw = D_800E3DE4[gActors[actor_index].var_0D8 * 2 + 1];
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80085F08.s")
 

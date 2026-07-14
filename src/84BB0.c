@@ -25,6 +25,7 @@ extern f32 D_800E3DBC[];
 extern s16 D_800E3DDC[];
 extern s32 D_800E3DE4[];
 extern s32 D_800E3E24[];
+extern s32 D_800E41A4[];
 
 // .bss
 extern u32 D_80182020[];
@@ -1377,7 +1378,29 @@ void func_80088010(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/ActorUpdate_Spikeball_77.s")
+void ActorUpdate_Spikeball_77(u16 actor_index) {
+    u16 index;
+
+    D_800E3580 = 0;
+    func_8002AA20(actor_index, 0);
+    Spikeball_Update(actor_index);
+    switch (gActors[actor_index].state) {
+    case 0:
+        Spikeball_State0(actor_index);
+        index = gActors[actor_index].var_0D8 * 4;
+        gActors[actor_index].var_160 = D_800E41A4[index + 1];
+        gActors[actor_index].unk_164 = D_800E41A4[index + 2];
+        gActors[actor_index].unk_168 = D_800E41A4[index + 3];
+        gActors[actor_index].unk_114 = D_800E41A4[index + 0];
+        // fallthrough
+    case 1:
+        func_80088010(actor_index);
+        Spikeball_State1End(actor_index, gActors[actor_index].unk_114);
+        break;
+        
+    }
+    Spikeball_UpdateHitbox(actor_index);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_800882E8.s")
 

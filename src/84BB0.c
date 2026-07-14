@@ -1493,14 +1493,16 @@ void func_800887F0(u16 actor_index) {
 }
 
 void func_80088834(u16 actor_index) {
-    s16 angle;
-
-    angle = FROM_FIXED(gActors[actor_index].var_15C) & 0x3FF;
+    s16 angle = FROM_FIXED(gActors[actor_index].var_15C) & 0x3FF;
     gActors[actor_index].posX.whole = ((COS(angle) * gActors[actor_index].var_160) + gActors[actor_index].unk_170) - (0, gScreenPosCurrentX.whole);
     gActors[actor_index].unk_188 = (SIN(angle) * gActors[actor_index].var_160) * -3.0f;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80088944.s")
+void func_80088944(u16 actor_index) {
+    s16 angle = FROM_FIXED(gActors[actor_index].var_15C) & 0x3FF;
+    gActors[actor_index].posY.whole = ((COS(angle) * gActors[actor_index].var_160) + gActors[actor_index].unk_174) - (0, gScreenPosCurrentY.whole);
+    gActors[actor_index].unk_188 = (SIN(angle) * gActors[actor_index].var_160) * -2.0f;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80088A54.s")
 

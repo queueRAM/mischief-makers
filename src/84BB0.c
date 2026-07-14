@@ -1324,7 +1324,26 @@ void ActorUpdate_Spikeball_OrbitXY(u16 actor_index) {
     Spikeball_UpdateHitbox(actor_index);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80087EAC.s")
+void func_80087EAC(u16 actor_index) {
+    u16 index;
+    u16 particle_index;
+
+    for (index = 0; index != 2; index++) {
+        particle_index = SpawnParticle_Image_90C0_16(0x1D6, gActors[actor_index].posX.whole, gActors[actor_index].posY.whole, 4);
+        if (particle_index != 0) {
+            gActors[particle_index].graphicFlags = ACTOR_GFLAG_ROTZ | ACTOR_GFLAG_SCALE;
+            gActors[particle_index].var_154 = -16;
+            gActors[particle_index].scaleX = 0.25f;
+            gActors[particle_index].scaleY = 2.0f;
+            if (index != 0) {
+                gActors[particle_index].var_160 = FIXED_UNIT(256.0);
+            }
+            gActors[particle_index].unk_114 = 0.2f;
+            gActors[particle_index].var_150 = FIXED_UNIT(64.0);
+            Actor_SetColorRgb(particle_index, 0x7F);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80088010.s")
 

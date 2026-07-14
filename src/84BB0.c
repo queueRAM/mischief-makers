@@ -61,7 +61,35 @@ s32 func_800842AC(s32* arg0, f32* arg1, f32* arg2, f32* arg3) {
     return result;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_800843E0.s")
+void func_800843E0(u16 actor_index) {
+    s32 pad0;
+    s32 pad1;
+
+    gActors[actor_index].var_15C = gActors[actor_index].velocityX.raw;
+    gActors[actor_index].var_160 = gActors[actor_index].velocityY.raw;
+    if (gActors[actor_index].velocityX.raw < 0) {
+        gActors[actor_index].var_154 = 0;
+    }
+    else if (gActors[actor_index].velocityX.raw > 0) {
+        gActors[actor_index].var_154 = 1;
+    }
+    else {
+        gActors[actor_index].var_154 = Rand() & 1;
+    }
+    if (gActors[actor_index].var_154 != 0) {
+        gActors[actor_index].unk_114 = 295.0f;
+    }
+    else {
+        gActors[actor_index].unk_114 = 255.0f;
+    }
+    gActors[actor_index].unk_11C = 0.08f;
+    if (gActors[actor_index].var_154 != 0) {
+        gActors[actor_index].unk_16C = 0;
+    }
+    else {
+        gActors[actor_index].unk_16C = 1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_800844B8.s")
 

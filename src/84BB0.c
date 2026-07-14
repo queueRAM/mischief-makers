@@ -3,6 +3,7 @@
 
 extern u16 D_800E3D20[]; // array of graphic indices, used in func_80084974
 extern u8 D_800E3D2C[];
+extern u16 D_800E3D4C[]; // array of graphic indices, used in func_800853C8
 
 void func_80083FB0(s16 x, s16 y) {
     u16 actor_index;
@@ -359,7 +360,108 @@ void func_80085350(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_800853C8.s")
+void func_800853C8(u16 actor_index) {
+    u16 temp_v1;
+    u16 index;
+    s32 flags;
+
+    flags = ACTOR_FLAG_UNK17 | ACTOR_FLAG_UNK12 | ACTOR_FLAG_ACTIVE | ACTOR_FLAG_DRAW;
+    if (Clanpot_AddItemCheck3(actor_index, 0, 0, 0, gActors[actor_index].graphicIndex) >= 0) {
+        gActors[actor_index].state = 0xA;
+        gActors[actor_index].flags = ACTOR_FLAG_ACTIVE;
+    }
+    index = gActors[actor_index].var_110;
+    gActors[actor_index].posZ.raw = FIXED_UNIT(1.0);
+    switch (gActors[actor_index].state) {
+    case 0:
+        gActors[actor_index].state++;
+        gActors[actor_index].graphicFlags = ACTOR_GFLAG_ROTZ;
+        gActors[actor_index].flags = flags;
+        if (gActors[actor_index].var_110 >= 0.0f) {
+            gActors[actor_index].graphicIndex = D_800E3D4C[index & 0xF];
+        }
+        gActors[actor_index].unk_178 = gActors[actor_index].var_0D8 & 1;
+        gActors[actor_index].unk_0DF = 0x40;
+        func_80084D18(actor_index);
+        func_80085300(actor_index);
+        /* fallthrough */
+    case 1:
+        gActors[actor_index].rotateZ = 0.0f;
+        if (func_800846A8(actor_index) == 0) {
+            gActors[actor_index].state = 6;
+        }
+        func_80085350(actor_index);
+        break;
+    case 2:
+        temp_v1 = func_800291AC(actor_index, 3, flags, 6, flags);
+        if (temp_v1 == 2) {
+            gActors[actor_index].unk_114 = 20.0f;
+            gActors[actor_index].unk_0F8.raw = gActors[actor_index].unk_0F8.raw / 24;
+            gActors[actor_index].unk_0FC.raw /= 24;
+            gActors[actor_index].unk_0FC.raw -= 0x800;
+            if (gActors[actor_index].velocityX.raw < 0) {
+                gActors[actor_index].var_154 = 1;
+            }
+            func_80085300(actor_index);
+        }
+        if (temp_v1 == 3) {
+            func_80085300(actor_index);
+        }
+        break;
+    case 3:
+        gActors[actor_index].unk_114 -= 1.0f;
+        gActors[actor_index].velocityX.raw -= gActors[actor_index].unk_0F8.raw;
+        gActors[actor_index].velocityY.raw -= gActors[actor_index].unk_0FC.raw;
+        if (gActors[actor_index].unk_114 < 0.0f) {
+            gActors[actor_index].state += 3;
+        }
+        func_800852CC(actor_index);
+        func_80085350(actor_index);
+        break;
+    case 4:
+        gActors[actor_index].velocityY.raw -= FIXED_UNIT(0.0390625);
+        if (gActors[actor_index].velocityY.raw < FIXED_UNIT(-1.5)) {
+            gActors[actor_index].state += 1;
+        }
+        if (gActors[actor_index].var_154 != 0) {
+            gActors[actor_index].velocityX.raw -= FIXED_UNIT(0.01953125);
+        } else {
+            gActors[actor_index].velocityX.raw += FIXED_UNIT(0.01953125);
+        }
+        func_800852CC(actor_index);
+        func_80085350(actor_index);
+        break;
+    case 5:
+        gActors[actor_index].velocityY.raw += FIXED_UNIT(0.0390625);
+        if (gActors[actor_index].velocityY.raw > 0) {
+            gActors[actor_index].state -= 1;
+            gActors[actor_index].var_154 ^= 1;
+        }
+        if (gActors[actor_index].var_154 != 0) {
+            gActors[actor_index].velocityX.raw += FIXED_UNIT(0.01953125);
+        }
+        else {
+            gActors[actor_index].velocityX.raw -= FIXED_UNIT(0.01953125);
+        }
+        func_800852CC(actor_index);
+        func_80085350(actor_index);
+        break;
+    case 6:
+        func_80084E7C(actor_index);
+        gActors[actor_index].state += 1;
+        /* fallthrough */
+    case 7:
+        func_80084F38(actor_index);
+        func_80085350(actor_index);
+        func_800852CC(actor_index);
+        break;
+    case 10:
+        func_80085350(actor_index);
+        break;
+    }
+    gActors[actor_index].flags_098 &= ~(ACTOR_FLAG3_UNK21 | ACTOR_FLAG3_UNK10 | ACTOR_FLAG3_UNK9);
+    func_800840A4(actor_index);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80085844.s")
 

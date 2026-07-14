@@ -570,20 +570,24 @@ s32 func_80085BAC(u16 actor_index) {
 
 
 void func_80085D00(u16 arg0) {
-    f32 temp_f0;
+    f32 scale;
 
-    temp_f0 = D_800E3DBC[gActors[arg0].var_0D8];
-    gActors[arg0].hitboxBY0 = D_800E3DDC[0] * temp_f0;
-    gActors[arg0].hitboxBY1 = D_800E3DDC[1] * temp_f0;
-    gActors[arg0].hitboxBX0 = D_800E3DDC[2] * temp_f0;
-    gActors[arg0].hitboxBX1 = D_800E3DDC[3] * temp_f0;
+    scale = D_800E3DBC[gActors[arg0].var_0D8];
+    gActors[arg0].hitboxBY0 = D_800E3DDC[0] * scale;
+    gActors[arg0].hitboxBY1 = D_800E3DDC[1] * scale;
+    gActors[arg0].hitboxBX0 = D_800E3DDC[2] * scale;
+    gActors[arg0].hitboxBX1 = D_800E3DDC[3] * scale;
     gActors[arg0].hitboxAY0 = gActors[arg0].hitboxBY0 - 1;
     gActors[arg0].hitboxAY1 = gActors[arg0].hitboxBY1 + 1;
     gActors[arg0].hitboxAX0 = gActors[arg0].hitboxBX0 + 1;
     gActors[arg0].hitboxAX1 = gActors[arg0].hitboxBX1 - 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80085E60.s")
+void func_80085E60(u16 actor_index) {
+    f32 scale = D_800E3DBC[gActors[actor_index].var_0D8];
+    gActors[actor_index].scaleX = scale;
+    gActors[actor_index].scaleY = scale;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80085EB0.s")
 

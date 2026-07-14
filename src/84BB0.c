@@ -337,7 +337,10 @@ void func_80085194(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_800852CC.s")
+void func_800852CC(u16 actor_index) {
+    func_80085108(actor_index);
+    func_80085194(actor_index);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80085300.s")
 

@@ -2176,7 +2176,25 @@ void ActorUpdate_DiggingSpot(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008AA28.s")
+s32 func_8008AA28(u16 actor_index) {
+    u16 var_s1;
+
+    if (gActors[actor_index].var_0D8 == 1) {
+        var_s1 = func_80012AB4(gActors[actor_index].posX.whole, gActors[actor_index].posY.whole);
+    }
+    else {
+        var_s1 = func_80012AB4(gActors[actor_index].posX.whole - 8, gActors[actor_index].posY.whole + 8);
+        var_s1 |= func_80012AB4(gActors[actor_index].posX.whole + 8, gActors[actor_index].posY.whole + 8);
+        var_s1 |= func_80012AB4(gActors[actor_index].posX.whole + 8, gActors[actor_index].posY.whole - 8);
+        var_s1 |= func_80012AB4(gActors[actor_index].posX.whole - 8, gActors[actor_index].posY.whole - 8);
+    }
+    if (var_s1 == 0) {
+        return TRUE;
+    }
+    else {
+        return FALSE;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008AB68.s")
 

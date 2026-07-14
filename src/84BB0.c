@@ -13,6 +13,7 @@ extern s32 D_800E3DE4[];
 
 // .bss
 extern u32 D_80182020[];
+extern s32 D_80182120[];
 extern s16 D_80182220[];
 
 // forward declarations
@@ -676,7 +677,12 @@ u16 func_800860FC(u16 actor_index);
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_800860FC.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_800862CC.s")
+void func_800862CC(u16 arg0, s16 arg1, s16 arg2) {
+    if (gActors[arg0].unk_18C < 0x40) {
+        D_80182120[gActors[arg0].unk_18C] = gScreenPosCurrentY.whole + ((arg1 + gScreenPosCurrentX.whole) << 0x10) + arg2;
+        gActors[arg0].unk_18C++;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80086360.s")
 

@@ -20,6 +20,7 @@ typedef struct ActorUnk190 {
 } ActorUnk_800E44C0; // size = 0x18
 
 extern u16 D_800D9B64[]; // palette
+extern u16 D_800DE188[]; // palette
 
 extern u8 D_800E0F00[];
 extern u16 D_800E3D20[]; // array of graphic indices, used in func_80084974
@@ -2236,7 +2237,35 @@ void func_8008AB68(u16 actor_index) {
     gActors[actor_index].unk_170--;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008AD3C.s")
+void func_8008AD3C(u16 actor_index) {
+    switch (gActors[actor_index].state) {
+    case 0:
+        gActors[actor_index].graphicFlags |= ACTOR_GFLAG_UNK11 | ACTOR_GFLAG_PALETTE | ACTOR_GFLAG_SCALE;
+        gActors[actor_index].flags |= ACTOR_FLAG_DRAW;
+        gActors[actor_index].graphicTimer = 1;
+        gActors[actor_index].posZ.whole = -8;
+        gActors[actor_index].unk_188 = 0;
+        gActors[actor_index].palette_18C = D_800DE188;
+        if (gActors[actor_index].var_0D8 == 1) {
+            gActors[actor_index].graphicList = D_800E44DC;
+        }
+        else {
+            gActors[actor_index].graphicList = D_800E44C8;
+        }
+        gActors[actor_index].var_150 = gActors[actor_index].var_110;
+        gActors[actor_index].unk_178 = gActors[actor_index].var_150 & 0xFF;
+        gActors[actor_index].state++;
+        /* fallthrough */
+    case 1:
+        func_8008A0F4(actor_index);
+        if (func_8008AA28(actor_index)) {
+            gActors[actor_index].flags = 0;
+        }
+        break;
+    }
+    gActors[actor_index].flags_098 &= ~(ACTOR_FLAG3_UNK21 | ACTOR_FLAG3_UNK10 | ACTOR_FLAG3_UNK9);
+    func_8008AB68(actor_index);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008AE78.s")
 

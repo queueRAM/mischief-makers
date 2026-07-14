@@ -26,6 +26,7 @@ extern s16 D_800E3DDC[];
 extern s32 D_800E3DE4[];
 extern s32 D_800E3E24[];
 extern s32 D_800E41A4[];
+extern s32 D_800E41B4[];
 
 // .bss
 extern u32 D_80182020[];
@@ -1446,7 +1447,28 @@ void func_80088518(u16 actor_index) {
     gActors[actor_index].velocityX.raw = gActors[actor_index].var_160;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/ActorUpdate_Spikeball_78.s")
+void ActorUpdate_Spikeball_78(u16 actor_index) {
+    u16 index;
+
+    Spikeball_Update(actor_index);
+    switch (gActors[actor_index].state) {
+    case 0:
+        Spikeball_State0(actor_index);
+        index = gActors[actor_index].var_0D8 * 4;
+        gActors[actor_index].var_160 = D_800E41B4[index + 1];
+        gActors[actor_index].unk_164 = D_800E41B4[index + 2];
+        gActors[actor_index].unk_168 = D_800E41B4[index + 3];
+        gActors[actor_index].unk_114 = D_800E41B4[index + 0];
+        func_80088518(actor_index);
+        /* fallthrough */
+    case 1:
+        func_80088408(actor_index);
+        Spikeball_State1End(actor_index, gActors[actor_index].unk_114);
+        break;
+    }
+    Spikeball_UpdateHitbox(actor_index);
+    gActors[actor_index].flags |= ACTOR_FLAG_UNK17;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_800886E0.s")
 

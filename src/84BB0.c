@@ -1,3 +1,4 @@
+#include "PR/ultratypes.h"
 #define Actor_Initialize_RET void
 #include "common.h"
 #include "28EF0.h"
@@ -511,7 +512,15 @@ void func_800859C4(u16 actor_index) {
     Sound_PlaySfxAtActor2(0x43, actor_index);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80085A4C.s")
+s32 func_80085A4C(u16 actor_index) {
+    if (ABS(gActors[actor_index].velocityX.raw) > FIXED_UNIT(1.0)) {
+        return TRUE;
+    }
+    if (ABS(gActors[actor_index].velocityY.raw) > FIXED_UNIT(2.25)) {
+        return TRUE;
+    }
+    return FALSE;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80085AE4.s")
 

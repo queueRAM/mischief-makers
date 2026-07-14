@@ -1,3 +1,4 @@
+#define Actor_Initialize_RET void
 #include "common.h"
 #include "28EF0.h"
 
@@ -463,7 +464,26 @@ void func_800853C8(u16 actor_index) {
     func_800840A4(actor_index);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80085844.s")
+void func_80085844(u16 actor_index) {
+    u16 free_actor;
+
+    free_actor = Actor_RangeFindInactive(0x90, 0xC0);
+    if (free_actor != 0) {
+        gActors[free_actor].actorType = 0x46;
+        Actor_Initialize(free_actor);
+        gActors[free_actor].var_160 = 0;
+        gActors[free_actor].unk_164 = FIXED_UNIT(-12.0);
+        gActors[free_actor].var_158 = actor_index;
+        gActors[free_actor].unk_170 = gActors[actor_index].unk_168 / 60;
+        if (gActors[actor_index].unk_184 >= 0x3A) {
+            gActors[free_actor].unk_174 = 0;
+        }
+        else {
+            gActors[free_actor].unk_174 = 1;
+        }
+    }
+    gActors[actor_index].unk_184 = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008594C.s")
 

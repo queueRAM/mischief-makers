@@ -1474,6 +1474,7 @@ void func_800886E0(u16 actor_index) {
     gActors[actor_index].graphicFlags |= ACTOR_GFLAG_UNK11;
 }
 
+// similar to func_80087B4C
 void func_80088720(u16 actor_index) {
     s32 var_110_int;
 
@@ -1483,7 +1484,9 @@ void func_80088720(u16 actor_index) {
     gActors[actor_index].var_15C &= 0x03FFFFFF;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_800887B0.s")
+void func_800887B0(u16 actor_index) {
+    gActors[actor_index].flags |= ACTOR_FLAG_UNK12 | ACTOR_FLAG_UNK10 | ACTOR_FLAG_UNK9 | ACTOR_FLAG_UNK8 | ACTOR_FLAG_UNK7;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_800887F0.s")
 

@@ -1652,7 +1652,16 @@ void ActorUpdate_Spikeball_80(u16 actor_index) {
     gActors[actor_index].flags |= ACTOR_FLAG_UNK17;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_800891EC.s")
+void func_800891EC(u16 actor_index) {
+    u16 particle_index;
+
+    particle_index = SpawnParticle_List_90C0_16(gGraphicListBlank, gActors[actor_index].posX.whole, gActors[actor_index].posY.whole + 12, gActors[actor_index].posZ.whole + 1);
+    if (particle_index != 0) {
+        gActors[particle_index].graphicIndex = 0x16E;
+        gActors[particle_index].velocityX.raw = FIXED_UNIT(-0.0078125);
+        gActors[particle_index].var_154 = -4;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80089298.s")
 

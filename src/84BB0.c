@@ -1765,7 +1765,35 @@ void func_80089418(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_800896AC.s")
+u16 func_800896AC(u16 actor_index) {
+    u16 free_actor;
+
+    if (gActors[actor_index].var_158 == 0) {
+        return 0;
+    }
+    if ((gActors[actor_index].unk_164 == 1) &&
+        (gActors[gActors[actor_index].unk_168].flags & ACTOR_FLAG_ACTIVE)) {
+        return 0;
+    }
+
+    free_actor = Actor_RangeFindInactive(0x70, 0x7A);
+    if (free_actor == 0) {
+        return 0;
+    }
+    gActors[free_actor].actorType = 0x1D;
+    Actor_Initialize(free_actor);
+    gActors[free_actor].hitboxBY0 = 8; \
+    gActors[free_actor].hitboxBY1 = -8;
+    gActors[free_actor].hitboxBX0 = -8; \
+    gActors[free_actor].hitboxBX1 = 8;
+    gActors[free_actor].unk_0DF = 0x40;
+    gActors[free_actor].flags = ACTOR_FLAG_ACTIVE;
+    gActors[free_actor].health = 1;
+    gActors[free_actor].posX.whole = gActors[actor_index].posX.whole;
+    gActors[free_actor].posY.whole = gActors[actor_index].posY.whole;
+    gActors[free_actor].posZ.whole = gActors[actor_index].posZ.whole;
+    return free_actor;
+}
 
 void DiggingSpot_SpawnActor(u16 actor_0, u16 actor_1, s32* vals) {
     s32* vals_ptr;

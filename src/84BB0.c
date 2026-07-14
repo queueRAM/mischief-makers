@@ -700,7 +700,7 @@ void func_800862CC(u16 actor_index, s16 x, s16 y) {
     }
 }
 
-s32 func_80086360(u16 actor_index, s16 x, s16 y, s32* arg3) {
+s32 func_80086360(u16 actor_index, s16 x, s16 y, u32* arg3) {
     u16 index;
     u16 sp2C;
     u16 sp2A;
@@ -740,45 +740,53 @@ s32 func_80086360(u16 actor_index, s16 x, s16 y, s32* arg3) {
     return FALSE;
 }
 
-#ifdef NON_MATCHING
-// https://decomp.me/scratch/MPqE5
-s32 func_800865BC(u16 arg0) {
-    s32 sp60;
-    s32 var_s3;
-    s32 var_s4;
-    s16 temp_s0;
-    s16 temp_s1;
+s32 func_800865BC(u16 actor_index) {
+    s16 x;
+    s16 y;
+    s32 result;
+    u32 index;
+    u32 sp60;
+    s32 pad[2];
 
-    sp60 = gActors[arg0].unk_178;
-    var_s3 = FALSE;
-    for (var_s4 = gActors[arg0].unk_174; var_s4 != gActors[arg0].unk_178; var_s4++, var_s4 &= 0x3F) {
-        if (D_80182020[var_s4] == -1) {
+    result = FALSE;
+    sp60 = gActors[actor_index].unk_178;
+
+    for (index = gActors[actor_index].unk_174; index != gActors[actor_index].unk_178; index++, index &= 0x3F) {
+        if (D_80182020[index] == -1) {
             continue;
         }
-        temp_s0 = (D_80182020[var_s4] >> 0x10) - gScreenPosCurrentX.whole;
-        temp_s1 = D_80182020[var_s4] - gScreenPosCurrentY.whole;
-        if (func_80086360(arg0, temp_s0 - 0x10, temp_s1, &sp60)) {
-            var_s3 = TRUE;
+
+        x = (D_80182020[index] >> 0x10) & 0xFFFF;
+        y = D_80182020[index] & 0xFFFF;
+        x -= gScreenPosCurrentX.whole;
+        y -= gScreenPosCurrentY.whole;
+        if (func_80086360(actor_index, x - 16, y, &sp60)) {
+            result = TRUE;
         }
-        if (func_80086360(arg0, temp_s0 + 0x10, temp_s1, &sp60)) {
-            var_s3 = TRUE;
+        if (func_80086360(actor_index, x + 16, y, &sp60)) {
+            result = TRUE;
         }
-        if (func_80086360(arg0, temp_s0, temp_s1 + 0x10, &sp60)) {
-            var_s3 = TRUE;
+        if (func_80086360(actor_index, x, y + 16, &sp60)) {
+            result = TRUE;
         }
-        if (func_80086360(arg0, temp_s0, temp_s1 - 0x10, &sp60)) {
-            var_s3 = TRUE;
+        if (func_80086360(actor_index, x, y - 16, &sp60)) {
+            result = TRUE;
         }
-        D_80182020[var_s4] = -1;
+
+        D_80182020[index] = -1;
+
+        // REAL (FAKE)
+        if (&sp60) {}
+        if (&sp60) {}
+        if (actor_index) {}
+        if (actor_index) {}
+        if (result) {}
+        if (result) {}
     }
-    gActors[arg0].unk_174 = gActors[arg0].unk_178;
-    gActors[arg0].unk_178 = sp60;
-    return var_s3;
+    gActors[actor_index].unk_174 = gActors[actor_index].unk_178;
+    gActors[actor_index].unk_178 = sp60;
+    return result;
 }
-#else
-s32 func_800865BC(u16 actor_index);
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_800865BC.s")
-#endif
 
 s32 func_80086790(u16 actor_index) {
     u16 index;

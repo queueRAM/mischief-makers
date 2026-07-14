@@ -1,5 +1,6 @@
 #include "PR/ultratypes.h"
 #include "actor.h"
+#include "common_structs.h"
 #define Actor_Initialize_RET void
 #include "common.h"
 #include "11820.h"
@@ -1290,7 +1291,15 @@ void func_80087B4C(u16 actor_index) {
     gActors[actor_index].var_15C &= 0x03FFFFFF;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80087BDC.s")
+void func_80087BDC(u16 actor_index) {
+    s16 angle;
+
+    gActors[actor_index].var_15C += gActors[actor_index].unk_164;
+    gActors[actor_index].var_15C &= 0x03FFFFFF;
+    angle = (gActors[actor_index].var_15C / FIXED_UNIT(1.0)) & 0x3FF;
+    gActors[actor_index].posX.whole = ((COS(angle) * gActors[actor_index].var_160) + gActors[actor_index].unk_170) - (0, gScreenPosCurrentX.whole);
+    gActors[actor_index].posY.whole = ((SIN(angle) * gActors[actor_index].var_160) + gActors[actor_index].unk_174) - (0, gScreenPosCurrentY.whole);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/ActorUpdate_Spikeball_OrbitXY.s")
 

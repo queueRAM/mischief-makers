@@ -2267,7 +2267,18 @@ void func_8008AD3C(u16 actor_index) {
     func_8008AB68(actor_index);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008AE78.s")
+void func_8008AE78(u16 actor_index) {
+    s32 pos_y;
+    s32 temp_t6;
+
+    gActors[actor_index].var_154 = (gActors[actor_index].var_150 & 0xF) << 16;
+    gActors[actor_index].var_158 = ((gActors[actor_index].var_0D8 & 0xF000) >> 12) << 15;
+    temp_t6 = ((gActors[actor_index].var_0D8 & 0xF00) >> 8) << 19;
+    pos_y = gActors[actor_index].posY.raw + gScreenPosCurrentY.raw;
+    gActors[actor_index].var_15C = pos_y + temp_t6;
+    gActors[actor_index].var_160 = pos_y - temp_t6;
+    gActors[actor_index].unk_164 = gActors[actor_index].var_0D8 & 0xFF;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008AF04.s")
 

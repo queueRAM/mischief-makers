@@ -522,7 +522,22 @@ s32 func_80085A4C(u16 actor_index) {
     return FALSE;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80085AE4.s")
+s32 func_80085AE4(u16 actor_index) {
+    if ((gActors[actor_index].velocityY.raw <= 0) && (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK5)) {
+        gActors[actor_index].state = 1;
+        gActors[actor_index].flags &= ~ACTOR_FLAG_UNK17;
+        gActors[actor_index].flags |= ACTOR_FLAG_UNK16;
+        if (func_80085A4C(actor_index) != 0) {
+            func_800859C4(actor_index);
+        }
+        else {
+            gActors[actor_index].velocityX.raw = 0;
+            gActors[actor_index].velocityY.raw = 0;
+        }
+        return FALSE;
+    }
+    return TRUE;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80085BAC.s")
 

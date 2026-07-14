@@ -777,7 +777,29 @@ s32 func_80086790(u16 actor_index) {
     return TRUE;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80086824.s")
+s32 func_80086824(u16 actor_index) {
+    if (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK9) {
+        gActors[actor_index].state = 2;
+        gActors[actor_index].velocityX.raw = 0;
+        gActors[actor_index].velocityY.raw = 0;
+        if (gActors[actor_index].parentIndex == 0) {
+            gActors[actor_index].flags = ACTOR_FLAG_UNK8 | ACTOR_FLAG_ACTIVE | ACTOR_FLAG_DRAW;
+        }
+        else {
+            gActors[actor_index].flags = ACTOR_FLAG_UNK10 | ACTOR_FLAG_ACTIVE | ACTOR_FLAG_DRAW;
+        }
+        if (gActors[actor_index].unk_168 == 0) {
+            gActors[actor_index].unk_168 = ((gActors[actor_index].var_150 & 0xFF) * 0x3C) + 1;
+            Sound_PlaySfxAtActor2(0x7C, actor_index);
+        }
+        gActors[actor_index].unk_164 = 0x1E;
+        gActors[actor_index].var_150 &= 0xFFFF;
+        return TRUE;
+    }
+    else {
+        return FALSE;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80086900.s")
 

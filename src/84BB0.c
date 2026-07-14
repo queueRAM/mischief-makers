@@ -2280,7 +2280,26 @@ void func_8008AE78(u16 actor_index) {
     gActors[actor_index].unk_164 = gActors[actor_index].var_0D8 & 0xFF;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008AF04.s")
+void func_8008AF04(u16 actor_index) {
+    s32 current;
+    s32 target;
+
+    current = gActors[actor_index].posY.raw + gScreenPosCurrentY.raw;
+    if (gActors[actor_index].unk_168 != 0) {
+        target = gActors[actor_index].var_160;
+    }
+    else {
+        target = gActors[actor_index].var_15C;
+    }
+    current = Math_ApproachS32(current, target, gActors[actor_index].var_158);
+    if (current == target) {
+        gActors[actor_index].unk_168 ^= 1;
+    }
+    gActors[actor_index].posY.raw = current - gScreenPosCurrentY.raw;
+    if (!(gActors[actor_index].unk_164 & gActiveFrames) && (gActors[actor_index].unk_16C == 0)) {
+        gActors[actor_index].unk_16C = 1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008AFE8.s")
 

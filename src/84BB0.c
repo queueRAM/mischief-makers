@@ -1474,7 +1474,14 @@ void func_800886E0(u16 actor_index) {
     gActors[actor_index].graphicFlags |= ACTOR_GFLAG_UNK11;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80088720.s")
+void func_80088720(u16 actor_index) {
+    s32 var_110_int;
+
+    var_110_int = (s32) gActors[actor_index].var_110;
+    gActors[actor_index].var_160 += (var_110_int & 0xF) * 8;
+    gActors[actor_index].var_15C += (((var_110_int & 0xF0) >> 4) << 22);
+    gActors[actor_index].var_15C &= 0x03FFFFFF;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_800887B0.s")
 

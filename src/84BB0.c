@@ -105,7 +105,19 @@ void func_800844B8(u16 actor_index) {
     gActors[actor_index].rotateZ = INDEX_TO_DEG((Math_Atan2(gActors[actor_index].velocityX.raw, gActors[actor_index].velocityY.raw) + 0x100) & 0x3FF);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_800846A8.s")
+s32 func_800846A8(u16 actor_index) {
+    if (gActors[actor_index].velocityY.raw <= 0) {
+        if (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK5) {
+            gActors[actor_index].state = 1;
+            gActors[actor_index].flags &= ~ACTOR_FLAG_UNK17;
+            gActors[actor_index].flags |= ACTOR_FLAG_UNK16;
+            gActors[actor_index].velocityX.raw = 0;
+            gActors[actor_index].velocityY.raw = 0;
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80084734.s")
 

@@ -4,6 +4,8 @@
 #include "11820.h"
 #include "28EF0.h"
 
+extern u16 D_800D9B64[]; // palette
+
 extern u16 D_800E3D20[]; // array of graphic indices, used in func_80084974
 extern u8 D_800E3D2C[];
 extern u16 D_800E3D4C[]; // array of graphic indices, used in func_800853C8
@@ -901,7 +903,34 @@ void func_80086B74(u16 actor_index) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/ActorUpdate_Clanbomb.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80087568.s")
+void func_80087568(u16 actor_index, u16 graphic_index, s32 pos_x, s32 pos_y, s32 pos_z) {
+    u16 free_actor;
+
+    free_actor = Actor_RangeFindInactive(0x90, 0xC0);
+    if (free_actor != 0) {
+        gActors[free_actor].actorType = 0x34;
+        Actor_Initialize(free_actor);
+        gActors[free_actor].graphicIndex = graphic_index;
+        gActors[free_actor].graphicFlags = ACTOR_GFLAG_UNK11 | ACTOR_GFLAG_PALETTE | ACTOR_GFLAG_SCALE;
+        gActors[free_actor].scaleX = gActors[actor_index].scaleX;
+        gActors[free_actor].scaleY = gActors[actor_index].scaleY;
+        gActors[free_actor].colorR = 0xFF;
+        gActors[free_actor].colorG = 0xFF;
+        gActors[free_actor].colorB = 0xFF;
+        gActors[free_actor].colorA = gActors[actor_index].colorA;
+        gActors[free_actor].unk_188 = 0;
+        gActors[free_actor].posX.raw = pos_x;
+        gActors[free_actor].posY.raw = pos_y;
+        gActors[free_actor].posZ.raw = pos_z;
+        gActors[free_actor].palette_18C = D_800D9B64;
+        if (actor_index < free_actor) {
+            gActors[free_actor].unk_138_arr[4] = 1.0f;
+        }
+        else {
+            gActors[free_actor].unk_138_arr[4] = 0.0f;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80087698.s")
 

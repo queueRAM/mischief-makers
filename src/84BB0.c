@@ -1988,8 +1988,42 @@ s32 func_80089EF8(u16 actor_index) {
     return FALSE;
 }
 
+void func_8008A0F4(u16 actor_index) {
+    u16 free_actor;
+    u16 angle;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008A0F4.s")
+    D_800E3580 = 0;
+    func_8002AA20(actor_index, 0);
+    gActors[actor_index].unk_174++;
+    if (gActors[actor_index].unk_174 >= gActors[actor_index].unk_178) {
+        if (func_80029B00(224, 128, -128)) {
+            free_actor = Actor_RangeFindInactive(0x30, 0x90);
+            if (free_actor != 0) {
+                angle = (gActors[actor_index].var_150 & 0xFF00) >> 4;
+                gActors[free_actor].actorType = 0x59;
+                Actor_Initialize(free_actor);
+                gActors[free_actor].velocityX.raw = COS(angle) * FIXED_UNIT(2.0);
+                gActors[free_actor].velocityY.raw = SIN(angle) * FIXED_UNIT(4.0);
+                gActors[free_actor].var_110 = gActors[actor_index].var_0D8;
+                if (gActors[actor_index].var_0D8 == 1) {
+                    gActors[free_actor].posX.whole = gActors[actor_index].posX.whole;
+                    gActors[free_actor].posY.whole = gActors[actor_index].posY.whole + 8;
+                    gActors[free_actor].posZ.whole = gActors[actor_index].posZ.whole - 1;
+                }
+                else {
+                    gActors[free_actor].posX.whole = gActors[actor_index].posX.whole;
+                    gActors[free_actor].posY.whole = gActors[actor_index].posY.whole + 0x18;
+                    gActors[free_actor].posZ.whole = gActors[actor_index].posZ.whole - 1;
+                }
+            }
+            Sound_PlaySfxAtActor2(0x5D, free_actor);
+            if (gActors[actor_index].unk_16C == 0) {
+                gActors[actor_index].unk_16C = 1;
+            }
+        }
+        gActors[actor_index].unk_174 = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008A32C.s")
 

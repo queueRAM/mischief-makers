@@ -1,6 +1,7 @@
 #include "PR/ultratypes.h"
 #define Actor_Initialize_RET void
 #include "common.h"
+#include "11820.h"
 #include "28EF0.h"
 
 extern u16 D_800E3D20[]; // array of graphic indices, used in func_80084974
@@ -623,7 +624,19 @@ void func_80085F78(u16 actor_index) {
     gActors[actor_index].unk_178++;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008603C.s")
+s32 func_8008603C(s32 arg0, s16 x, s16 y, s32* arg3) {
+    if (func_80012AB4(x, y) == 0xF8) {
+        func_80083FB0(x, y);
+        D_80182020[*arg3] = gScreenPosCurrentY.whole + ((x + gScreenPosCurrentX.whole) << 0x10) + y;
+        func_80012044(x, y, 0x34);
+        *arg3 += 1;
+        *arg3 &= 0x3F;
+        return TRUE;
+    }
+    else {
+        return FALSE;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_800860FC.s")
 

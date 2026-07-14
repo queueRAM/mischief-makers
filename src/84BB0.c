@@ -9,6 +9,7 @@
 
 extern u16 D_800D9B64[]; // palette
 
+extern u8 D_800E0F00[];
 extern u16 D_800E3D20[]; // array of graphic indices, used in func_80084974
 extern u8 D_800E3D2C[];
 extern u16 D_800E3D4C[]; // array of graphic indices, used in func_800853C8
@@ -20,7 +21,7 @@ extern u16 D_800E3DB8;
 extern f32 D_800E3DBC[];
 extern s16 D_800E3DDC[];
 extern s32 D_800E3DE4[];
-extern u8 D_800E0F00[];
+extern s32 D_800E3E24[];
 
 // .bss
 extern u32 D_80182020[];
@@ -1301,7 +1302,27 @@ void func_80087BDC(u16 actor_index) {
     gActors[actor_index].posY.whole = ((SIN(angle) * gActors[actor_index].var_160) + gActors[actor_index].unk_174) - (0, gScreenPosCurrentY.whole);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/ActorUpdate_Spikeball_OrbitXY.s")
+void ActorUpdate_Spikeball_OrbitXY(u16 actor_index) {
+    u16 index;
+
+    Spikeball_Update(actor_index);
+    switch (gActors[actor_index].state) {
+    case 0:
+        Spikeball_State0(actor_index);
+        index = gActors[actor_index].var_0D8 * 4;
+        gActors[actor_index].var_15C = D_800E3E24[index + 1];
+        gActors[actor_index].var_160 = D_800E3E24[index + 2];
+        gActors[actor_index].unk_164 = D_800E3E24[index + 3];
+        gActors[actor_index].unk_114 = D_800E3E24[index + 0];
+        func_80087B4C(actor_index);
+        // fallthrough
+    case 1:
+        func_80087BDC(actor_index);
+        Spikeball_State1End(actor_index, gActors[actor_index].unk_114);
+        break;
+    }
+    Spikeball_UpdateHitbox(actor_index);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80087EAC.s")
 

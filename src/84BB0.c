@@ -12,7 +12,7 @@ extern s16 D_800E3DDC[];
 extern s32 D_800E3DE4[];
 
 // .bss
-extern s32 D_80182020[];
+extern u32 D_80182020[];
 extern s16 D_80182220[];
 
 // forward declarations
@@ -624,7 +624,7 @@ void func_80085F78(u16 actor_index) {
     gActors[actor_index].unk_178++;
 }
 
-s32 func_8008603C(s32 arg0, s16 x, s16 y, s32* arg3) {
+s32 func_8008603C(u16 arg0, s16 x, s16 y, s32* arg3) {
     if (func_80012AB4(x, y) == 0xF8) {
         func_80083FB0(x, y);
         D_80182020[*arg3] = gScreenPosCurrentY.whole + ((x + gScreenPosCurrentX.whole) << 0x10) + y;
@@ -638,7 +638,43 @@ s32 func_8008603C(s32 arg0, s16 x, s16 y, s32* arg3) {
     }
 }
 
+#ifdef NON_MATCHING
+// https://decomp.me/scratch/YqCAS
+u16 func_800860FC(u16 arg0) {
+    u16 sp66;
+    s32 pad;
+    s16 temp_s0;
+    s16 temp_s1;
+    s32 sp58;
+    s32 var_s2;
+
+    sp66 = 0;
+    sp58 = gActors[arg0].unk_178;
+    for (var_s2 = gActors[arg0].unk_174; var_s2 != gActors[arg0].unk_178; var_s2++, var_s2 &= 0x3F) {
+        if (D_80182020[var_s2] == -1) {
+            continue;
+        }
+        temp_s0 = (D_80182020[var_s2] >> 0x10) - gScreenPosCurrentX.whole;
+        temp_s1 = D_80182020[var_s2] - gScreenPosCurrentY.whole;
+        func_8008603C(arg0, temp_s0, temp_s1 + 0x10, &sp58);
+        func_8008603C(arg0, temp_s0, temp_s1 - 0x10, &sp58);
+        func_8008603C(arg0, temp_s0 - 0x10, temp_s1, &sp58);
+        func_8008603C(arg0, temp_s0 + 0x10, temp_s1, &sp58);
+        D_80182020[var_s2] = -1;
+        if (!(gActors[arg0].var_150 & 0x1000)) {
+            gActors[arg0].posX.whole = temp_s0;
+            gActors[arg0].posY.whole = temp_s1;
+        }
+        sp66 = 1;
+    }
+    gActors[arg0].unk_174 = gActors[arg0].unk_178;
+    gActors[arg0].unk_178 = sp58;
+    return sp66;
+}
+#else
+u16 func_800860FC(u16 actor_index);
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_800860FC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_800862CC.s")
 

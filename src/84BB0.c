@@ -6,6 +6,9 @@ extern u16 D_800E3D20[]; // array of graphic indices, used in func_80084974
 extern u8 D_800E3D2C[];
 extern u16 D_800E3D4C[]; // array of graphic indices, used in func_800853C8
 
+// forward declarations
+void func_800859C4(u16);
+
 void func_80083FB0(s16 x, s16 y) {
     u16 actor_index;
 
@@ -485,7 +488,16 @@ void func_80085844(u16 actor_index) {
     gActors[actor_index].unk_184 = 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008594C.s")
+s32 func_8008594C(u16 actor_index, u16 arg1) {
+    gActors[actor_index].unk_168 -= arg1;
+    if (gActors[actor_index].unk_168 <= 0) {
+        func_800859C4(actor_index);
+        return TRUE;
+    }
+    else {
+        return FALSE;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_800859C4.s")
 

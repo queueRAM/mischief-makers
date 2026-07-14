@@ -29,7 +29,37 @@ void func_800840A4(u16 actor_index) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008412C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_800842AC.s")
+s32 func_800842AC(s32* arg0, f32* arg1, f32* arg2, f32* arg3) {
+    s32 result;
+
+    result = FALSE;
+    if (*arg0 != 0) {
+        if (*arg1 >= 270.0f) {
+            *arg2 -= *arg3;
+        }
+        else {
+            *arg2 += *arg3;
+            if (*arg2 >= 0.0f) {
+                *arg2 = 0.0f;
+                result = TRUE;
+                *arg0 ^= 1;
+            }
+        }
+    }
+    else if (*arg1 <= 270.0f) {
+        *arg2 += *arg3;
+    }
+    else {
+        *arg2 -= *arg3;
+        if (*arg2 <= 0.0f) {
+            *arg2 = 0.0f;
+            result = TRUE;
+            *arg0 ^= 1;
+        }
+    }
+    *arg1 += *arg2;
+    return result;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_800843E0.s")
 

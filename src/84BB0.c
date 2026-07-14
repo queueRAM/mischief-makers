@@ -10,7 +10,22 @@ void func_80083FB0(s16 x, s16 y) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_800840A4.s")
+void func_800840A4(u16 actor_index) {
+    if (gActors[actor_index].unk_178 != 0) {
+        gActors[actor_index].unk_17C++;
+        if (gActors[actor_index].unk_17C >= 0x2D0) {
+            gActors[actor_index].flags = 0;
+        }
+        if (gActors[actor_index].unk_17C >= 0x21C) {
+            if (gActors[actor_index].unk_17C & 4) {
+                gActors[actor_index].colorA = 0;
+            }
+            else {
+                gActors[actor_index].colorA = 0xFF;
+            }
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008412C.s")
 

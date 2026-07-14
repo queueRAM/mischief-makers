@@ -1841,7 +1841,96 @@ void DiggingSpot_SpawnActorCheck(u16 actor_0, u16 actor_1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80089A10.s")
+void func_80089A10(u16 actor_index) {
+    u16 particle_index;
+    u16 state;
+
+    state = gActors[actor_index].var_150 & 0xF;
+    switch (state) {
+    case 0:
+        if (!(gActiveFrames & 0xF)) {
+            particle_index = SpawnParticle_List_90C0_16(
+                gGraphicListBlank,
+                gActors[actor_index].posX.whole + ((Rand() - 0x80) * 0.03125),
+                gActors[actor_index].posY.whole + ((Rand() - 0x80) * 0.125) + 16.0,
+                gActors[actor_index].posZ.whole
+            );
+            if (particle_index != 0) {
+                gActors[particle_index].graphicFlags |= ACTOR_GFLAG_ROTZ | ACTOR_GFLAG_SCALE;
+                gActors[particle_index].graphicIndex = 0x1AE;
+                gActors[particle_index].scaleX = (Rand() * 0.0078125);
+                gActors[particle_index].scaleY = gActors[particle_index].scaleX;
+                gActors[particle_index].var_154 = -10;
+                gActors[particle_index].var_150 = FIXED_UNIT(-8.0);
+                gActors[particle_index].var_15C = 2000;
+                gActors[particle_index].unk_16C = 0x28;
+            }
+        }
+        break;
+    case 1:
+        if (!(gActiveFrames & 0x3F)) {
+            particle_index = SpawnParticle_List_90C0_16(gGraphicListBlank, gActors[actor_index].posX.whole, gActors[actor_index].posY.whole + 8, 1);
+            if (particle_index != 0) {
+                gActors[particle_index].graphicFlags = ACTOR_GFLAG_SCALE;
+                gActors[particle_index].flags = ACTOR_FLAG_ONSCREEN_ONLY | ACTOR_FLAG_ACTIVE | ACTOR_FLAG_DRAW;
+                gActors[particle_index].graphicIndex = 0x1A2;
+                gActors[particle_index].scaleX = 1.8f;
+                gActors[particle_index].scaleY = 1.8f;
+                gActors[particle_index].velocityY.raw = FIXED_UNIT(0.625);
+                gActors[particle_index].var_154 = -3;
+                gActors[particle_index].var_110 = 0.002f;
+                gActors[particle_index].unk_114 = 0.001f;
+                gActors[particle_index].unk_118 = 0.0f;
+                gActors[particle_index].unk_11C = 0.0f;
+                gActors[particle_index].var_15C = -400;
+                gActors[particle_index].unk_16C = 0;
+            }
+        }
+        break;
+    case 2:
+        if (!(gActiveFrames & 0x3F)) {
+            particle_index = SpawnParticle_List_90C0_16(gGraphicListBlank, gActors[actor_index].posX.whole, gActors[actor_index].posY.whole + 16, gActors[actor_index].posZ.whole);
+            if (particle_index != 0) {
+                gActors[particle_index].graphicFlags = ACTOR_GFLAG_SCALE;
+                gActors[particle_index].flags = ACTOR_FLAG_ONSCREEN_ONLY | ACTOR_FLAG_ACTIVE | ACTOR_FLAG_DRAW;
+                gActors[particle_index].graphicIndex = 0x1A2;
+                gActors[particle_index].scaleX = 0.8f;
+                gActors[particle_index].scaleY = 0.8f;
+                gActors[particle_index].velocityY.raw = FIXED_UNIT(0.625);
+                gActors[particle_index].var_154 = -3;
+                gActors[particle_index].var_110 = 0.002f;
+                gActors[particle_index].unk_114 = 0.001f;
+                gActors[particle_index].unk_118 = 0.0f;
+                gActors[particle_index].unk_11C = 0.0f;
+                gActors[particle_index].var_15C = -400;
+                gActors[particle_index].unk_16C = 0;
+            }
+        }
+        break;
+    case 3:
+        if (!(gActiveFrames & 0xF)) {
+            particle_index = SpawnParticle_List_90C0_16(
+                gGraphicListBlank,
+                gActors[actor_index].posX.whole + ((Rand() - 0x80) * 0.05),
+                gActors[actor_index].posY.whole + ((Rand() - 0x80) * 0.05),
+                gActors[actor_index].posZ.whole
+            );
+            if (particle_index != 0) {
+                gActors[particle_index].graphicFlags |= ACTOR_GFLAG_ROTZ | ACTOR_GFLAG_SCALE;
+                gActors[particle_index].graphicIndex = 0x1D6;
+                gActors[particle_index].scaleX = 1.0f;
+                gActors[particle_index].scaleY = 1.0f;
+                gActors[particle_index].var_154 = -10;
+                gActors[particle_index].var_150 = FIXED_UNIT(-32.0);
+                gActors[particle_index].var_110 = -0.05f;
+                gActors[particle_index].unk_114 = -0.05f;
+                gActors[particle_index].unk_118 = 0.0f;
+                gActors[particle_index].unk_11C = 0.0f;
+            }
+        }
+        break;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80089EF8.s")
 

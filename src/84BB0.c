@@ -2,6 +2,7 @@
 #include "28EF0.h"
 
 extern u16 D_800E3D20[]; // array of graphic indices, used in func_80084974
+extern u8 D_800E3D2C[];
 
 void func_80083FB0(s16 x, s16 y) {
     u16 actor_index;
@@ -252,7 +253,15 @@ void func_80084974(u16 actor_index) {
     func_800840A4(actor_index);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80084D18.s")
+void func_80084D18(u16 actor_index) {
+    u8 base_index;
+
+    base_index = gActors[actor_index].var_110 * 4;
+    gActors[actor_index].unk_138_arr[0] = D_800E3D2C[base_index + 0];
+    gActors[actor_index].unk_138_arr[1] = D_800E3D2C[base_index + 1];
+    gActors[actor_index].unk_138_arr[2] = D_800E3D2C[base_index + 2];
+    gActors[actor_index].unk_138_arr[3] = D_800E3D2C[base_index + 3];
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80084E7C.s")
 

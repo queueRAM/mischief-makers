@@ -1302,7 +1302,7 @@ void func_80087BDC(u16 actor_index) {
 
     gActors[actor_index].var_15C += gActors[actor_index].unk_164;
     gActors[actor_index].var_15C &= 0x03FFFFFF;
-    angle = (gActors[actor_index].var_15C / FIXED_UNIT(1.0)) & 0x3FF;
+    angle = FROM_FIXED(gActors[actor_index].var_15C) & 0x3FF;
     gActors[actor_index].posX.whole = ((COS(angle) * gActors[actor_index].var_160) + gActors[actor_index].unk_170) - (0, gScreenPosCurrentX.whole);
     gActors[actor_index].posY.whole = ((SIN(angle) * gActors[actor_index].var_160) + gActors[actor_index].unk_174) - (0, gScreenPosCurrentY.whole);
 }
@@ -1492,7 +1492,13 @@ void func_800887F0(u16 actor_index) {
     gActors[actor_index].flags &= ~(ACTOR_FLAG_UNK12 | ACTOR_FLAG_UNK10 | ACTOR_FLAG_UNK9 | ACTOR_FLAG_UNK8 | ACTOR_FLAG_UNK7);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80088834.s")
+void func_80088834(u16 actor_index) {
+    s16 angle;
+
+    angle = FROM_FIXED(gActors[actor_index].var_15C) & 0x3FF;
+    gActors[actor_index].posX.whole = ((COS(angle) * gActors[actor_index].var_160) + gActors[actor_index].unk_170) - (0, gScreenPosCurrentX.whole);
+    gActors[actor_index].unk_188 = (SIN(angle) * gActors[actor_index].var_160) * -3.0f;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80088944.s")
 

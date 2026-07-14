@@ -1,6 +1,14 @@
 #include "common.h"
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80083FB0.s")
+void func_80083FB0(s16 x, s16 y) {
+    u16 actor_index;
+
+    actor_index = func_8003EEC0(1.0 - ((f32) (Rand() & 3) * 0.1), (0x10 - (Rand() & 0x1F)) + x, (0x10 - (Rand() & 0x1F)) + y, 1);
+    if (actor_index != 0) {
+        Actor_SetColorRgb(actor_index, 0x6F);
+        gActors[actor_index].velocityZ.raw = 0x38000;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_800840A4.s")
 

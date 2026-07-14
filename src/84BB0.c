@@ -263,7 +263,28 @@ void func_80084D18(u16 actor_index) {
     gActors[actor_index].unk_138_arr[3] = D_800E3D2C[base_index + 3];
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80084E7C.s")
+void func_80084E7C(u16 actor_index) {
+    gActors[actor_index].var_158 = gActors[actor_index].velocityX.raw;
+    gActors[actor_index].var_15C = gActors[actor_index].velocityY.raw;
+
+    if (gActors[actor_index].velocityX.raw < 0) {
+        gActors[actor_index].unk_16C = 0;
+    }
+    else if (gActors[actor_index].velocityX.raw > 0) {
+        gActors[actor_index].unk_16C = 1;
+    }
+    else {
+        gActors[actor_index].unk_16C = Rand() & 1;
+    }
+
+    if (gActors[actor_index].unk_16C != 0) {
+        gActors[actor_index].unk_138_arr[5] = 295.0f;
+    } 
+    else {
+        gActors[actor_index].unk_138_arr[5] = 255.0f;
+    }
+    gActors[actor_index].unk_130 = 0.08f;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80084F38.s")
 

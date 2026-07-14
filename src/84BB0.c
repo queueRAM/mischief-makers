@@ -49,7 +49,23 @@ void func_800840A4(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008412C.s")
+s32 func_8008412C(u16 actor_index, f32 arg1, f32 arg2, u16 arg3) {
+    f32 temp_f2;
+    f32 var_f0;
+    f32 velocity_y;
+    u16 index;
+    f32 velocity_x = arg1;
+
+    var_f0 = ABS(arg3 / 2);
+    temp_f2 = 2.0 * (arg2 / SQ(var_f0));
+    velocity_y = 0.0f;
+    for (index = 0; index < arg3 / 2; index++) {
+        velocity_y += temp_f2;
+    }
+    gActors[actor_index].velocityX.raw = TO_FIXED(velocity_x / arg3);
+    gActors[actor_index].velocityY.raw = TO_FIXED(velocity_y);
+    return TO_FIXED(temp_f2);
+}
 
 s32 func_800842AC(s32* arg0, f32* arg1, f32* arg2, f32* arg3) {
     s32 result;

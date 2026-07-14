@@ -1402,7 +1402,21 @@ void ActorUpdate_Spikeball_77(u16 actor_index) {
     Spikeball_UpdateHitbox(actor_index);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_800882E8.s")
+s32 func_800882E8(u16 actor_index, f32 arg1, u16 arg2) {
+    f32 temp_f2;
+    f32 var_f0;
+    f32 velocity_x;
+    u16 index;
+
+    var_f0 = ABS(arg2 / 2);
+    temp_f2 = 2.0 * (arg1 / SQ(var_f0));
+    velocity_x = 0.0f;
+    for (index = 0; index < arg2 / 2; index++) {
+        velocity_x += temp_f2;
+    }
+    gActors[actor_index].velocityY.raw = TO_FIXED(velocity_x);
+    return TO_FIXED(temp_f2);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80088408.s")
 

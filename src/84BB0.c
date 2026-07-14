@@ -1418,7 +1418,28 @@ s32 func_800882E8(u16 actor_index, f32 arg1, u16 arg2) {
     return TO_FIXED(temp_f2);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80088408.s")
+void func_80088408(u16 actor_index) {
+    if ((gActors[actor_index].velocityY.raw < 0) && (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK5)) {
+        gActors[actor_index].var_15C = func_800882E8(actor_index, gActors[actor_index].unk_164, gActors[actor_index].unk_168);
+    }
+    if ((gActors[actor_index].velocityY.raw > 0) && (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK4)) {
+        gActors[actor_index].velocityY.raw = (s32) -gActors[actor_index].velocityY.raw / 2;
+    }
+
+    if (gActors[actor_index].velocityX.raw > 0) {
+        if (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK3) {
+            gActors[actor_index].velocityX.raw = -gActors[actor_index].velocityX.raw;
+        }
+    }
+    else if (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK2) {
+        gActors[actor_index].velocityX.raw = -gActors[actor_index].velocityX.raw;
+    }
+
+    gActors[actor_index].velocityY.raw -= gActors[actor_index].var_15C;
+    if (gActors[actor_index].velocityY.raw < FIXED_UNIT(-4.0)) {
+        gActors[actor_index].velocityY.raw = FIXED_UNIT(-4.0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80088518.s")
 

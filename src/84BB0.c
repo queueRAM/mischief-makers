@@ -1281,7 +1281,14 @@ void func_80087820(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80087B4C.s")
+void func_80087B4C(u16 actor_index) {
+    s32 var_110_int;
+
+    var_110_int = (s32) gActors[actor_index].var_110;
+    gActors[actor_index].var_160 += (var_110_int & 0xF) * 8;
+    gActors[actor_index].var_15C += (((var_110_int & 0xF0) >> 4) << 22);
+    gActors[actor_index].var_15C &= 0x03FFFFFF;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80087BDC.s")
 

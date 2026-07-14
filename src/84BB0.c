@@ -10,6 +10,9 @@ extern f32 D_800E3DBC[];
 extern s16 D_800E3DDC[];
 extern s32 D_800E3DE4[];
 
+// .bss
+extern s32 D_80182020[];
+
 // forward declarations
 void func_800859C4(u16);
 void func_80085D00(u16);
@@ -595,7 +598,15 @@ void func_80085EB0(u16 actor_index) {
     gActors[actor_index].unk_0FC.raw = D_800E3DE4[gActors[actor_index].var_0D8 * 2 + 1];
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80085F08.s")
+void func_80085F08(u16 actor_index) {
+    u16 index;
+
+    for (index = 0; index < 0x40; index++) {
+        D_80182020[index] = -1;
+    }
+    gActors[actor_index].unk_174 = 0;
+    gActors[actor_index].unk_178 = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80085F78.s")
 

@@ -1,4 +1,7 @@
 #include "common.h"
+#include "28EF0.h"
+
+extern u16 D_800E3D20[]; // array of graphic indices, used in func_80084974
 
 void func_80083FB0(s16 x, s16 y) {
     u16 actor_index;
@@ -167,7 +170,87 @@ void func_80084924(u16 actor_index) {
     gActors[actor_index].hitboxBX1 = 4;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80084974.s")
+void func_80084974(u16 actor_index) {
+    u16 index;
+    u16 temp_v0;
+    s32 flags;
+
+    flags = ACTOR_FLAG_UNK17 | ACTOR_FLAG_UNK12 | ACTOR_FLAG_ACTIVE | ACTOR_FLAG_DRAW;
+    if (Clanpot_AddItemCheck3(actor_index, 0, 0, 0, gActors[actor_index].graphicIndex) >= 0) {
+        gActors[actor_index].state = 0xA;
+        gActors[actor_index].flags = ACTOR_FLAG_ACTIVE;
+    }
+    gActors[actor_index].posZ.raw = FIXED_UNIT(-4.0);
+    switch (gActors[actor_index].state) {
+    case 0: 
+        gActors[actor_index].state++;
+        gActors[actor_index].graphicFlags = ACTOR_GFLAG_ROTZ;
+        gActors[actor_index].flags = flags;
+        // comparison on gActors[arg0].var_110?
+        index = gActors[actor_index].var_110;
+        if (gActors[actor_index].var_110 >= 0.0f) {
+            gActors[actor_index].graphicIndex = D_800E3D20[index & 0xF];
+        }
+        gActors[actor_index].unk_178 = gActors[actor_index].var_0D8 & 1;
+        gActors[actor_index].unk_0DF = 0x40;
+        func_80084924(actor_index);
+        /* fallthrough */
+    case 1: 
+        gActors[actor_index].rotateZ = 0.0f;
+        if (!func_800846A8(actor_index)) {
+            gActors[actor_index].state = 4;
+        }
+        if (func_800848A0(actor_index)) {
+            gActors[actor_index].state = 2;
+        }
+        break;
+    case 2:
+        temp_v0 = func_800291AC(actor_index, 3, flags, 4, flags);
+        switch (temp_v0) {
+        case 0:
+        case 1:
+            break;
+        case 2:
+            gActors[actor_index].var_150 = 0x14;
+            gActors[actor_index].unk_0F8.raw = (s32) gActors[actor_index].unk_0F8.raw / 24;
+            gActors[actor_index].unk_0FC.raw /= 24;
+            gActors[actor_index].unk_0FC.raw -= 0x800;
+            func_80084924(actor_index);
+            break;
+        case 3:
+            func_80084924(actor_index);
+            gActors[actor_index].var_150 = 0xA;
+            break;
+        }
+        break;
+    case 3: 
+        gActors[actor_index].velocityX.raw -= gActors[actor_index].unk_0F8.raw;
+        gActors[actor_index].velocityY.raw -= gActors[actor_index].unk_0FC.raw;
+        gActors[actor_index].var_150--;
+        if (gActors[actor_index].var_150 < 0) {
+            gActors[actor_index].var_150 = 0xA;
+            gActors[actor_index].state = 4;
+        }
+        gActors[actor_index].rotateZ = INDEX_TO_DEG((Math_Atan2(gActors[actor_index].velocityX.raw, gActors[actor_index].velocityY.raw) + 0x100) & 0x3FF);
+        func_800848A0(actor_index);
+        func_8008486C(actor_index);
+        break;
+    case 4: 
+        func_800843E0(actor_index);
+        gActors[actor_index].state++;
+        /* fallthrough */
+    case 5: 
+        func_800844B8(actor_index);
+        func_800848A0(actor_index);
+        func_8008486C(actor_index);
+        break;
+    case 10:
+        func_800848A0(actor_index);
+        break;
+    }
+    gActors[actor_index].flags_098 &= ~(ACTOR_FLAG3_UNK21 | ACTOR_FLAG3_UNK10 | ACTOR_FLAG3_UNK9);
+    func_800840A4(actor_index);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80084D18.s")
 

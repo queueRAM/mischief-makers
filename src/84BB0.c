@@ -31,6 +31,7 @@ extern s32 D_800E41B4[];
 extern s32 D_800E41C4[];
 extern s32 D_800E42F0[];
 extern s16 D_800E42F4[];
+extern s32* D_800E4440[];
 
 // .bss
 extern u32 D_80182020[];
@@ -1831,7 +1832,14 @@ void DiggingSpot_SpawnActor(u16 actor_0, u16 actor_1, s32* vals) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/DiggingSpot_SpawnActorCheck.s")
+void DiggingSpot_SpawnActorCheck(u16 actor_0, u16 actor_1) {
+    if (gActors[actor_0].unk_190 == NULL) {
+        DiggingSpot_SpawnActor(actor_0, actor_1, D_800E4440[gActors[actor_0].var_0D8]);
+    }
+    else {
+        DiggingSpot_SpawnActor(actor_0, actor_1, (s32*)gActors[actor_0].unk_190);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80089A10.s")
 

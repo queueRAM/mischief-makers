@@ -1588,7 +1588,13 @@ void ActorUpdate_Spikeball_OrbitYZ(u16 actor_index) {
     Spikeball_UpdateHitbox(actor_index);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80088E38.s")
+void func_80088E38(u16 actor_index) {
+    gActors[actor_index].graphicFlags |= ACTOR_GFLAG_ROTZ;
+    if (gActors[actor_index].var_150 & 1) {
+        gActors[actor_index].damage = 0;
+        gActors[actor_index].unk_0DA = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80088E90.s")
 

@@ -8,6 +8,7 @@ extern u16 D_800E3D4C[]; // array of graphic indices, used in func_800853C8
 
 // forward declarations
 void func_800859C4(u16);
+void func_80085D00(u16);
 
 void func_80083FB0(s16 x, s16 y) {
     u16 actor_index;
@@ -499,7 +500,16 @@ s32 func_8008594C(u16 actor_index, u16 arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_800859C4.s")
+void func_800859C4(u16 actor_index) {
+    gActors[actor_index].flags = ACTOR_FLAG_UNK7 | ACTOR_FLAG_ACTIVE;
+    gActors[actor_index].health = 0;
+    func_80085D00(actor_index);
+    gActors[actor_index].velocityX.raw = 0;
+    gActors[actor_index].velocityY.raw = 0;
+    gActors[actor_index].state = 4;
+    gActors[actor_index].unk_168 = 0;
+    Sound_PlaySfxAtActor2(0x43, actor_index);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80085A4C.s")
 

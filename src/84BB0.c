@@ -668,7 +668,7 @@ void func_80085F78(u16 actor_index) {
     gActors[actor_index].unk_178++;
 }
 
-s32 func_8008603C(u16 arg0, s16 x, s16 y, s32* arg3) {
+s32 func_8008603C(u16 arg0, s16 x, s16 y, u32* arg3) {
     if (func_80012AB4(x, y) == 0xF8) {
         func_80083FB0(x, y);
         D_80182020[*arg3] = gScreenPosCurrentY.whole + ((x + gScreenPosCurrentX.whole) << 0x10) + y;
@@ -684,16 +684,14 @@ s32 func_8008603C(u16 arg0, s16 x, s16 y, s32* arg3) {
 
 u16 func_800860FC(u16 actor_index) {
     u16 result;
-    s32 temp_v1;
     s16 x;
     s16 y;
-    s32 sp58;
-    s32 index;
+    u32 index;
+    u32 sp58;
 
     result = FALSE;
-    temp_v1 = gActors[actor_index].unk_178;
     sp58 = gActors[actor_index].unk_178;
-    for (index = gActors[actor_index].unk_174; index != temp_v1; index++, index &= 0x3F) {
+    for (index = gActors[actor_index].unk_174; index != gActors[actor_index].unk_178; index++, index &= 0x3F) {
         if (D_80182020[index] == -1) {
             continue;
         }
@@ -711,7 +709,6 @@ u16 func_800860FC(u16 actor_index) {
             gActors[actor_index].posY.whole = y;
         }
         result = TRUE;
-        temp_v1 = gActors[actor_index].unk_178;
     }
     gActors[actor_index].unk_174 = gActors[actor_index].unk_178;
     gActors[actor_index].unk_178 = sp58;

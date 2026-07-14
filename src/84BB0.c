@@ -2025,7 +2025,26 @@ void func_8008A0F4(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008A32C.s")
+void func_8008A32C(u16 actor_index) {
+    u16 index;
+
+    index = SpawnParticle_List_90C0_16(gGraphicListBlank, gActors[actor_index].posX.whole, gActors[actor_index].posY.whole + 24, 2);
+    if (index != 0) {
+        gActors[index].graphicFlags = ACTOR_GFLAG_UNK4 | ACTOR_GFLAG_SCALE;
+        gActors[index].graphicIndex = 0x170;
+        gActors[index].velocityY.raw = FIXED_UNIT(1.5);
+        gActors[index].var_15C = -0x100;
+        gActors[index].unk_16C = 0;
+        gActors[index].var_154 = -0x10;
+        gActors[index].unk_164 = 0;
+        gActors[index].scaleX = 1.0f;
+        gActors[index].scaleY = 1.0f;
+        gActors[index].var_110 = 0.05f;
+        gActors[index].unk_114 = 0.05f;
+        gActors[index].unk_118 = 0.0f;
+        gActors[index].unk_11C = 0.0f;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008A41C.s")
 

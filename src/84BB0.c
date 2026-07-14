@@ -1441,7 +1441,10 @@ void func_80088408(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80088518.s")
+void func_80088518(u16 actor_index) {
+    gActors[actor_index].var_15C = FIXED_UNIT(0.1875);
+    gActors[actor_index].velocityX.raw = gActors[actor_index].var_160;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/ActorUpdate_Spikeball_78.s")
 

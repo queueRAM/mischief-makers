@@ -4,6 +4,7 @@
 #include "common.h"
 #include "11820.h"
 #include "28EF0.h"
+#include "7D8E0.h"
 
 extern u16 D_800D9B64[]; // palette
 
@@ -18,6 +19,7 @@ extern u16 D_800E3DB8;
 extern f32 D_800E3DBC[];
 extern s16 D_800E3DDC[];
 extern s32 D_800E3DE4[];
+extern u8 D_800E0F00[];
 
 // .bss
 extern u32 D_80182020[];
@@ -1183,7 +1185,29 @@ void func_80087568(u16 actor_index, u16 graphic_index, s32 pos_x, s32 pos_y, s32
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80087698.s")
+void func_80087698(u16 actor_index) {
+    s32 pad;
+    func_8007CCE0(gActors[actor_index].unk_170);
+    if (D_800E0F00[6] == 0) {
+        func_80087568(actor_index, (D_800E0F00[7] * 2) + 0x2D2,
+            gActors[actor_index].posX.raw,
+            gActors[actor_index].posY.raw,
+            gActors[actor_index].posZ.raw + FIXED_UNIT(1.0)
+        );
+    }
+    else {
+        func_80087568(actor_index, (D_800E0F00[6] * 2) + 0x2D2,
+            gActors[actor_index].posX.raw - (gActors[actor_index].scaleX * FIXED_UNIT(4.0)),
+            gActors[actor_index].posY.raw,
+            gActors[actor_index].posZ.raw + FIXED_UNIT(1.0)
+        );
+        func_80087568(actor_index, (D_800E0F00[7] * 2) + 0x2D2,
+            gActors[actor_index].posX.raw + (gActors[actor_index].scaleX * FIXED_UNIT(4.0)),
+            gActors[actor_index].posY.raw,
+            gActors[actor_index].posZ.raw + FIXED_UNIT(1.0)
+        );
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_80087820.s")
 

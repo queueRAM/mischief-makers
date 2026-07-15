@@ -2618,7 +2618,17 @@ s32 func_8008BFE4(u16 unused_arg0) {
     return 0xFF;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008C038.s")
+s32 func_8008C038(u16 actor_index, s16 x, s16 y, s32* arg3) {
+    if (func_80012AB4(x, y) == 0xF8) {
+        D_801822A0[gActors[actor_index].var_154][*arg3] = gScreenPosCurrentY.whole + ((x + gScreenPosCurrentX.whole) << 0x10) + y;
+        func_80012044(x, y, 0x34);
+        func_80083FB0(x, y);
+        *arg3 += 1;
+        *arg3 &= 0x3F;
+        return TRUE;
+    }
+    return FALSE;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008C120.s")
 

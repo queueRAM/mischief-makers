@@ -2301,9 +2301,48 @@ void func_8008AF04(u16 actor_index) {
     }
 }
 
+void func_8008AFE8(u16);
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008AFE8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008B284.s")
+u16 func_8008B284(u16 actor_index) {
+    u16 result;
+
+    result = FALSE;
+    switch (gActors[actor_index].unk_16C) {
+    case 0:
+        gActors[actor_index].unk_170 = 6;
+        break;
+    case 1:
+        gActors[actor_index].scaleX = Math_ApproachF32(gActors[actor_index].scaleX, 1.8f, 0.3f);
+        gActors[actor_index].scaleY = Math_ApproachF32(gActors[actor_index].scaleY, 0.4f, 0.7f);
+        if (gActors[actor_index].unk_170 < 0) {
+            gActors[actor_index].unk_170 = 2;
+            gActors[actor_index].unk_16C++;
+        }
+        break;
+    case 2:
+        gActors[actor_index].scaleX = Math_ApproachF32(gActors[actor_index].scaleX, 0.4f, 0.7f);
+        gActors[actor_index].scaleY = Math_ApproachF32(gActors[actor_index].scaleY, 1.8f, 0.7f);
+        if (gActors[actor_index].unk_170 < 0) {
+            gActors[actor_index].unk_170 = 6;
+            gActors[actor_index].unk_16C++;
+            func_8008AFE8(actor_index);
+            result = TRUE;
+        }
+        break;
+    case 3:
+        gActors[actor_index].scaleX = Math_ApproachF32(gActors[actor_index].scaleX, 1.0f, 0.2f);
+        gActors[actor_index].scaleY = Math_ApproachF32(gActors[actor_index].scaleY, 1.0f, 0.2f);
+        if (gActors[actor_index].unk_170 < 0) {
+            gActors[actor_index].scaleY = 1.0f;
+            gActors[actor_index].scaleX = 1.0f;
+            gActors[actor_index].unk_16C = 0;
+        }
+        break;
+    }
+    gActors[actor_index].unk_170--;
+    return result;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008B438.s")
 

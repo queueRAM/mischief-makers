@@ -2513,7 +2513,26 @@ void func_8008B9FC(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008BB64.s")
+void func_8008BB64(u16 actor_index) {
+    u16 free_actor;
+
+    free_actor = Actor_RangeFindInactive(0x90, 0xC0);
+    if (free_actor != 0) {
+        gActors[free_actor].actorType = 0x5C;
+        Actor_Initialize(free_actor);
+        gActors[free_actor].graphicFlags = ACTOR_GFLAG_SCALE;
+        gActors[free_actor].flags = ACTOR_FLAG_ONSCREEN_ONLY | ACTOR_FLAG_ACTIVE | ACTOR_FLAG_DRAW;
+        gActors[free_actor].graphicIndex = 0x1A2;
+        gActors[free_actor].state = 0x10;
+        gActors[free_actor].scaleX = 0.5f;
+        gActors[free_actor].scaleY = 0.5f;
+        gActors[free_actor].posX.whole = gActors[actor_index].posX.whole;
+        gActors[free_actor].posY.whole = gActors[actor_index].posY.whole;
+        gActors[free_actor].posZ.whole = gActors[actor_index].posZ.whole;
+        gActors[free_actor].var_150 = gActors[actor_index].var_150;
+        gActors[free_actor].unk_168 = actor_index;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008BC5C.s")
 

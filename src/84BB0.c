@@ -2486,7 +2486,32 @@ void func_8008B830(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008B9FC.s")
+void func_8008B9FC(u16 actor_index) {
+    switch (gActors[actor_index].state) {
+    case 0:
+        gActors[actor_index].var_150 = gActors[actor_index].var_110;
+        gActors[actor_index].graphicFlags = ACTOR_GFLAG_UNK11 | ACTOR_GFLAG_PALETTE | ACTOR_GFLAG_ROTZ | ACTOR_GFLAG_SCALE;
+        gActors[actor_index].flags = ACTOR_FLAG_ACTIVE | ACTOR_FLAG_DRAW;
+        gActors[actor_index].graphicList = D_800E44DC;
+        gActors[actor_index].graphicTimer = 1;
+        gActors[actor_index].posZ.whole = -8;
+        gActors[actor_index].unk_188 = 0;
+        gActors[actor_index].palette_18C = D_800DE188;
+        gActors[actor_index].unk_164 = 0x1F;
+        gActors[actor_index].state++;
+        /* fallthrough */
+    case 1:
+        if (gActors[0x51].var_154 != 0) {
+            func_8008B7CC(actor_index);
+            gActors[actor_index].var_154 += FIXED_UNIT(16.0);
+            gActors[actor_index].rotateZ = INDEX_TO_DEG(FROM_FIXED(gActors[actor_index].var_154));
+        }
+        if (func_8008B284(actor_index)) {
+            func_8008B830(actor_index);
+        }
+        break;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008BB64.s")
 

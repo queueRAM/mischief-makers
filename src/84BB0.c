@@ -2630,39 +2630,36 @@ s32 func_8008C038(u16 actor_index, s16 x, s16 y, u32* arg3) {
     return FALSE;
 }
 
-#ifdef NON_MATCHING
-// https://decomp.me/scratch/gSvO7
-u16 func_8008C120(u16 arg0) {
-    u16 sp66;
-    s16 temp_s0;
-    s16 temp_s1;
-    u32 var_s4;
+u16 func_8008C120(u16 actor_index) {
+    u16 result;
+    s16 x;
+    s16 y;
+    u32 index;
     u32 sp58;
 
-    sp66 = 0;
-    sp58 = gActors[arg0].unk_178;
-    for (var_s4 = gActors[arg0].unk_174; var_s4 != gActors[arg0].unk_178; var_s4 = (var_s4 + 1) & 0x3F) {
-        if (D_801822A0[gActors[arg0].var_154][var_s4] == 0xFFFFFFFF) {
+    result = FALSE;
+    sp58 = gActors[actor_index].unk_178;
+    for (index = gActors[actor_index].unk_174; index != gActors[actor_index].unk_178; index = (index + 1) & 0x3F) {
+        if (D_801822A0[gActors[actor_index].var_154][index] == 0xFFFFFFFF) {
             continue;
         }
-        temp_s0 = (D_801822A0[gActors[arg0].var_154][var_s4] >> 0x10) - gScreenPosCurrentX.whole;
-        temp_s1 = D_801822A0[gActors[arg0].var_154][var_s4] - gScreenPosCurrentY.whole;
-        func_8008C038(arg0, temp_s0, temp_s1 + 16, &sp58);
-        func_8008C038(arg0, temp_s0, temp_s1 - 16, &sp58);
-        func_8008C038(arg0, temp_s0 - 16, temp_s1, &sp58);
-        func_8008C038(arg0, temp_s0 + 16, temp_s1, &sp58);
-        D_801822A0[gActors[arg0].var_154][var_s4] = 0xFFFFFFFF;
-        gActors[arg0].posX.whole = temp_s0;
-        gActors[arg0].posY.whole = temp_s1;
-        sp66 = 1;
+        x = (D_801822A0[gActors[actor_index].var_154][index] >> 0x10) & 0xFFFF;
+        y = D_801822A0[gActors[actor_index].var_154][index] & 0xFFFF;
+        x -= gScreenPosCurrentX.whole;
+        y -= gScreenPosCurrentY.whole;
+        func_8008C038(actor_index, x, y + 16, &sp58);
+        func_8008C038(actor_index, x, y - 16, &sp58);
+        func_8008C038(actor_index, x - 16, y, &sp58);
+        func_8008C038(actor_index, x + 16, y, &sp58);
+        D_801822A0[gActors[actor_index].var_154][index] = 0xFFFFFFFF;
+        gActors[actor_index].posX.whole = x;
+        gActors[actor_index].posY.whole = y;
+        result = TRUE;
     }
-    gActors[arg0].unk_174 = gActors[arg0].unk_178;
-    gActors[arg0].unk_178 = sp58;
-    return sp66;
+    gActors[actor_index].unk_174 = gActors[actor_index].unk_178;
+    gActors[actor_index].unk_178 = sp58;
+    return result;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008C120.s")
-#endif
 
 void func_8008C304(u16 actor_index) {
     switch (gActors[actor_index].state) {

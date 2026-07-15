@@ -42,6 +42,7 @@ extern ActorUnk_800E44C0* D_800E44C0[];
 extern s16 D_800E44C8[]; // graphic list
 extern s16 D_800E44DC[]; // graphic list
 extern s32 D_800E44F0[];
+extern s16 D_800E4534[];
 
 // .bss
 extern u32 D_80182020[];
@@ -2298,48 +2299,40 @@ void func_8008AF04(u16 actor_index) {
     }
 }
 
-#ifdef NON_MATCHING
-// https://decomp.me/scratch/ax1Vj
-void func_8008AFE8(u16 arg0) {
-    u16 var_a0;
-    s16 var_a1;
-    u16 temp_v0;
-    u16 pad0;
-    f32 pad1;
+void func_8008AFE8(u16 actor_index) {
+    u16 angle;
+    s16 pos_x;
+    u16 particle_index;
+    f32 x;
+    f32 y;
 
-    if (gActors[arg0].var_150 & 0x100) {
-        var_a1 = -8;
-    }
-    else {
-        var_a1 = 8;
-    }
-    var_a1 += gActors[arg0].posX.whole;
-    temp_v0 = SpawnParticle_List_90C0_16(D_800E4534, var_a1, gActors[arg0].posY.whole, 1);
-    if (temp_v0 != 0) {
-        gActors[temp_v0].graphicFlags = 0x11;
-        gActors[temp_v0].graphicIndex = 0x170;
-        gActors[temp_v0].velocityY.raw = 0x18000;
-        gActors[temp_v0].scaleY = gActors[temp_v0].scaleX = 0.5f;
-        var_a0 = gActors[arg0].rotateZ * 2.844444;
-        var_a0 += 0x100; // rotate 90°
-        gActors[temp_v0].posX.whole = (COS(var_a0) * 8.0f) + gActors[arg0].posX.whole;
-        gActors[temp_v0].posY.whole = (SIN(var_a0) * 8.0f) + gActors[arg0].posY.whole;
-        gActors[temp_v0].var_158 = -0x100;
-        gActors[temp_v0].velocityY.raw = gActors[temp_v0].velocityX.raw = (COS(var_a0) * 131072.0f);
-        gActors[temp_v0].unk_168 = 0;
-        gActors[temp_v0].var_15C = -0x80;
-        gActors[temp_v0].unk_16C = 0;
-        gActors[temp_v0].var_154 = -0x10;
-        gActors[temp_v0].unk_164 = 0;
-        gActors[temp_v0].var_110 = 0.05f;
-        gActors[temp_v0].unk_114 = 0.05f;
-        gActors[temp_v0].unk_118 = gActors[temp_v0].unk_11C = 0.0f;
+    pos_x = (gActors[actor_index].var_150 & 0x100) ? -8 : 8;
+    pos_x += gActors[actor_index].posX.whole;
+    particle_index = SpawnParticle_List_90C0_16(D_800E4534, pos_x, gActors[actor_index].posY.whole, 1);
+    if (particle_index != 0) {
+        gActors[particle_index].graphicFlags = ACTOR_GFLAG_UNK4 | ACTOR_GFLAG_SCALE;
+        gActors[particle_index].graphicIndex = 0x170;
+        gActors[particle_index].velocityY.raw = FIXED_UNIT(1.5);
+        gActors[particle_index].scaleY = gActors[particle_index].scaleX = 0.5f;
+        angle = (u16)(gActors[actor_index].rotateZ * 2.844444); // TODO: 1/DEG_PER_INDEX
+        angle += COS_DEG_90;
+        x = COS(angle);
+        y = SIN(angle);
+        gActors[particle_index].posX.whole = gActors[actor_index].posX.whole + (x * 8.0f);
+        gActors[particle_index].posY.whole = gActors[actor_index].posY.whole + (y * 8.0f);
+        gActors[particle_index].velocityX.raw = x * FIXED_UNIT(2.0);
+        gActors[particle_index].var_158 = -0x100;
+        gActors[particle_index].velocityY.raw = x * FIXED_UNIT(2.0);
+        gActors[particle_index].unk_168 = 0;
+        gActors[particle_index].var_15C = -0x80;
+        gActors[particle_index].unk_16C = 0;
+        gActors[particle_index].var_154 = -0x10;
+        gActors[particle_index].unk_164 = 0;
+        gActors[particle_index].var_110 = 0.05f;
+        gActors[particle_index].unk_114 = 0.05f;
+        gActors[particle_index].unk_118 = gActors[particle_index].unk_11C = 0.0f;
     }
 }
-#else
-void func_8008AFE8(u16 actor_index);
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008AFE8.s")
-#endif
 
 u16 func_8008B284(u16 actor_index) {
     u16 result;
@@ -2481,7 +2474,7 @@ void func_8008B830(u16 actor_index) {
     if (free_actor != 0) {
         gActors[free_actor].actorType = 0x59;
         Actor_Initialize(free_actor);
-        angle = FROM_FIXED(gActors[actor_index].var_154) + 0x100;
+        angle = FROM_FIXED(gActors[actor_index].var_154) + COS_DEG_90;
         x = COS(angle);
         y = SIN(angle);
         gActors[free_actor].posX.whole = gActors[actor_index].posX.whole + (x * 8.0f);

@@ -2598,7 +2598,13 @@ void func_8008BC5C(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008BFB0.s")
+void func_8008BFB0(void) {
+    u16 index;
+
+    for (index = 0; index < 4; index++) {
+        D_801826A0[index] = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008BFE4.s")
 

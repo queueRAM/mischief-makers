@@ -45,11 +45,11 @@ extern s32 D_800E44F0[];
 extern s16 D_800E4534[];
 
 // .bss
-extern u32 D_80182020[];
-extern u32 D_80182120[];
-extern u16 D_80182220[];
-extern u32 D_801822A0[][0x40];
-extern s32 D_801826A0[4];
+u32 D_80182020[0x40];
+u32 D_80182120[0x40];
+u16 D_80182220[0x40];
+u32 D_801822A0[4][0x40];
+s32 D_801826A0[4];
 
 // forward declarations
 void func_800859C4(u16);
@@ -492,7 +492,8 @@ void func_800853C8(u16 actor_index) {
         }
         if (gActors[actor_index].var_154 != 0) {
             gActors[actor_index].velocityX.raw -= FIXED_UNIT(0.01953125);
-        } else {
+        }
+        else {
             gActors[actor_index].velocityX.raw += FIXED_UNIT(0.01953125);
         }
         func_800852CC(actor_index);
@@ -657,7 +658,7 @@ void func_80085EB0(u16 actor_index) {
 void func_80085F08(u16 actor_index) {
     u16 index;
 
-    for (index = 0; index < 0x40; index++) {
+    for (index = 0; index < ARRAYLENGTH(D_80182020); index++) {
         D_80182020[index] = -1;
     }
     gActors[actor_index].unk_174 = 0;
@@ -669,7 +670,7 @@ void func_80085F78(u16 actor_index) {
     s16 pos_x;
     s16 pos_y;
 
-    for (index = 0; index < 0x40; index++) { D_80182220[index] = 0; }
+    for (index = 0; index < ARRAYLENGTH(D_80182220); index++) { D_80182220[index] = 0; }
 
     pos_x = ((gActors[actor_index].posX.whole + (0, gScreenPosCurrentX.whole)) & 0xFFF0) + 8; // fakematch
     pos_y = ((gActors[actor_index].posY.whole + (0, gScreenPosCurrentY.whole)) & 0xFFF0) + 8;
@@ -726,7 +727,7 @@ u16 func_800860FC(u16 actor_index) {
 }
 
 void func_800862CC(u16 actor_index, s16 x, s16 y) {
-    if (gActors[actor_index].unk_18C < 0x40) {
+    if (gActors[actor_index].unk_18C < ARRAYLENGTH(D_80182120)) {
         D_80182120[gActors[actor_index].unk_18C] = gScreenPosCurrentY.whole + ((x + gScreenPosCurrentX.whole) << 0x10) + y;
         gActors[actor_index].unk_18C++;
     }
@@ -738,13 +739,13 @@ s32 func_80086360(u16 actor_index, s16 x, s16 y, u32* arg3) {
     u16 sp2A;
     u8 temp_v0;
 
-    if (((gActors[actor_index].posX.whole - 0x30) >= x) || (x >= (gActors[actor_index].posX.whole + 0x30)) ||
-        ((gActors[actor_index].posY.whole - 0x30) >= y) || (y >= (gActors[actor_index].posY.whole + 0x30))) {
+    if (((gActors[actor_index].posX.whole - 48) >= x) || (x >= (gActors[actor_index].posX.whole + 48)) ||
+        ((gActors[actor_index].posY.whole - 48) >= y) || (y >= (gActors[actor_index].posY.whole + 48))) {
         return FALSE;
     }
 
-    sp2C = ((x - gActors[actor_index].posX.whole) + 0x40) & 0xF0;
-    sp2A = ((y - gActors[actor_index].posY.whole) + 0x40) & 0xF0;
+    sp2C = ((x - gActors[actor_index].posX.whole) + 64) & 0xF0;
+    sp2A = ((y - gActors[actor_index].posY.whole) + 64) & 0xF0;
     temp_v0 = func_80012AB4(x, y);
     if (temp_v0 == 0xF8) {
         if (temp_v0 == 0xF8) {

@@ -2640,19 +2640,17 @@ u16 func_8008C120(u16 arg0) {
 
     sp66 = 0;
     sp58 = gActors[arg0].unk_178;
-    for (var_s4 = gActors[arg0].unk_174; var_s4 != gActors[arg0].unk_178; var_s4++, var_s4 &= 0x3F) {
-        if (D_801822A0[gActors[arg0].var_154][var_s4] == -1) {
+    for (var_s4 = gActors[arg0].unk_174; var_s4 != gActors[arg0].unk_178; var_s4 = (var_s4 + 1) & 0x3F) {
+        if (D_801822A0[gActors[arg0].var_154][var_s4] == 0xFFFFFFFF) {
             continue;
         }
-        temp_s0 = (D_801822A0[gActors[arg0].var_154][var_s4] >> 0x10) & 0xFFFF;
-        temp_s1 = D_801822A0[gActors[arg0].var_154][var_s4] & 0xFFFF;
-        temp_s0 -= gScreenPosCurrentX.whole;
-        temp_s1 -= gScreenPosCurrentY.whole;
+        temp_s0 = (D_801822A0[gActors[arg0].var_154][var_s4] >> 0x10) - gScreenPosCurrentX.whole;
+        temp_s1 = D_801822A0[gActors[arg0].var_154][var_s4] - gScreenPosCurrentY.whole;
         func_8008C038(arg0, temp_s0, temp_s1 + 16, &sp58);
         func_8008C038(arg0, temp_s0, temp_s1 - 16, &sp58);
         func_8008C038(arg0, temp_s0 - 16, temp_s1, &sp58);
         func_8008C038(arg0, temp_s0 + 16, temp_s1, &sp58);
-        D_801822A0[gActors[arg0].var_154][var_s4] = -1;
+        D_801822A0[gActors[arg0].var_154][var_s4] = 0xFFFFFFFF;
         gActors[arg0].posX.whole = temp_s0;
         gActors[arg0].posY.whole = temp_s1;
         sp66 = 1;

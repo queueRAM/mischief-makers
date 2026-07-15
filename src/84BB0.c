@@ -2464,7 +2464,11 @@ void func_8008B654(u16 actor_index) {
     gActors[actor_index].flags_098 &= ~(ACTOR_FLAG3_UNK21 | ACTOR_FLAG3_UNK10 | ACTOR_FLAG3_UNK9);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008B7CC.s")
+void func_8008B7CC(u16 actor_index) {
+    if (!(gActors[actor_index].unk_164 & gActiveFrames) && (gActors[actor_index].unk_16C == 0)) {
+        gActors[actor_index].unk_16C = 1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008B830.s")
 

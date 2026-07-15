@@ -1,6 +1,3 @@
-#include "PR/ultratypes.h"
-#include "actor.h"
-#include "common_structs.h"
 #define Actor_Initialize_RET void
 #include "common.h"
 #include "11820.h"
@@ -2301,8 +2298,48 @@ void func_8008AF04(u16 actor_index) {
     }
 }
 
-void func_8008AFE8(u16);
+#ifdef NON_MATCHING
+// https://decomp.me/scratch/ax1Vj
+void func_8008AFE8(u16 arg0) {
+    u16 var_a0;
+    s16 var_a1;
+    u16 temp_v0;
+    u16 pad0;
+    f32 pad1;
+
+    if (gActors[arg0].var_150 & 0x100) {
+        var_a1 = -8;
+    }
+    else {
+        var_a1 = 8;
+    }
+    var_a1 += gActors[arg0].posX.whole;
+    temp_v0 = SpawnParticle_List_90C0_16(D_800E4534, var_a1, gActors[arg0].posY.whole, 1);
+    if (temp_v0 != 0) {
+        gActors[temp_v0].graphicFlags = 0x11;
+        gActors[temp_v0].graphicIndex = 0x170;
+        gActors[temp_v0].velocityY.raw = 0x18000;
+        gActors[temp_v0].scaleY = gActors[temp_v0].scaleX = 0.5f;
+        var_a0 = gActors[arg0].rotateZ * 2.844444;
+        var_a0 += 0x100; // rotate 90°
+        gActors[temp_v0].posX.whole = (COS(var_a0) * 8.0f) + gActors[arg0].posX.whole;
+        gActors[temp_v0].posY.whole = (SIN(var_a0) * 8.0f) + gActors[arg0].posY.whole;
+        gActors[temp_v0].var_158 = -0x100;
+        gActors[temp_v0].velocityY.raw = gActors[temp_v0].velocityX.raw = (COS(var_a0) * 131072.0f);
+        gActors[temp_v0].unk_168 = 0;
+        gActors[temp_v0].var_15C = -0x80;
+        gActors[temp_v0].unk_16C = 0;
+        gActors[temp_v0].var_154 = -0x10;
+        gActors[temp_v0].unk_164 = 0;
+        gActors[temp_v0].var_110 = 0.05f;
+        gActors[temp_v0].unk_114 = 0.05f;
+        gActors[temp_v0].unk_118 = gActors[temp_v0].unk_11C = 0.0f;
+    }
+}
+#else
+void func_8008AFE8(u16 actor_index);
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008AFE8.s")
+#endif
 
 u16 func_8008B284(u16 actor_index) {
     u16 result;
@@ -2344,7 +2381,33 @@ u16 func_8008B284(u16 actor_index) {
     return result;
 }
 
+#ifdef NON_MATCHING
+// https://decomp.me/scratch/X0yAm
+void func_8008B438(u16 arg0) {
+    s16 var_v1;
+    u16 temp_a0;
+
+    temp_a0 = Actor_RangeFindInactive(0x70, 0x7A);
+    if (temp_a0 != 0) {
+        gActors[temp_a0].actorType = 0x45;
+        Actor_Initialize(temp_a0);
+        var_v1 = (gActors[arg0].var_150 & 0x100) ? -8 : 8;
+        gActors[temp_a0].posX.whole = gActors[arg0].posX.whole + var_v1;
+        gActors[temp_a0].posY.whole = gActors[arg0].posY.whole;
+        if (gActors[arg0].var_150 & 0x100) {
+            gActors[temp_a0].velocityX.raw = -gActors[arg0].var_154;
+        }
+        else {
+            gActors[temp_a0].velocityX.raw = gActors[arg0].var_154;
+        }
+        gActors[temp_a0].var_110 = 37123.0f;
+        gActors[temp_a0].var_0D8 = 2;
+    }
+}
+#else
+void func_8008B438(u16 actor_index);
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008B438.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008B548.s")
 

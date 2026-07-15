@@ -2470,7 +2470,28 @@ void func_8008B7CC(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008B830.s")
+void func_8008B830(u16 actor_index) {
+    u16 free_actor;
+    u16 angle;
+    f32 x;
+    f32 y;
+    s32 pad;
+
+    free_actor = Actor_RangeFindInactive(0x70, 0x7A);
+    if (free_actor != 0) {
+        gActors[free_actor].actorType = 0x59;
+        Actor_Initialize(free_actor);
+        angle = FROM_FIXED(gActors[actor_index].var_154) + 0x100;
+        x = COS(angle);
+        y = SIN(angle);
+        gActors[free_actor].posX.whole = gActors[actor_index].posX.whole + (x * 8.0f);
+        gActors[free_actor].posY.whole = gActors[actor_index].posY.whole + (y * 8.0f);
+        gActors[free_actor].velocityX.raw = x * FIXED_UNIT(4.0);
+        gActors[free_actor].velocityY.raw = y * FIXED_UNIT(4.0);
+        gActors[free_actor].var_0D8 = 0;
+        gActors[free_actor].var_110 = 1.0f;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008B9FC.s")
 

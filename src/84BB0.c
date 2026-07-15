@@ -49,7 +49,7 @@ extern u32 D_80182020[];
 extern u32 D_80182120[];
 extern u16 D_80182220[];
 extern u32 D_801822A0[][0x40];
-extern s32 D_801826A0[];
+extern s32 D_801826A0[4];
 
 // forward declarations
 void func_800859C4(u16);
@@ -2606,7 +2606,17 @@ void func_8008BFB0(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008BFE4.s")
+s32 func_8008BFE4(u16 unused_arg0) {
+    u16 index;
+
+    for (index = 0; index < 4; index++) {
+        if (D_801826A0[index] == 0) {
+            D_801826A0[index] = 1;
+            return index;
+        }
+    }
+    return 0xFF;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/84BB0/func_8008C038.s")
 

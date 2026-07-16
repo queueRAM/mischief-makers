@@ -80,6 +80,17 @@ void func_80083CF0(s32 arg0, s32 arg1) {
     func_8008391C(str, arg0, arg1, gDebugOSDTint, gDebugOSDTint, gDebugOSDTint, 0xFF, 1.0f, 1.0f);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/osd_debug_text/func_80083DB8.s")
+void func_80083DB8(u16 arg0) {
+    s32 delta_t;
+    s32 time_val;
+
+    delta_t = osGetTime() - D_80182018;
+    if (!arg0) {
+        rmonPrintf("\n");
+    }
+    time_val = ((delta_t * 1.32) / 10000.0);
+    rmonPrintf("%02d : %03d%\n", arg0, time_val);
+    D_80182018 = osGetTime();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/osd_debug_text/func_80083E74.s")

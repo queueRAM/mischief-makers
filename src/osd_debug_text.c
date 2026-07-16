@@ -15,6 +15,7 @@ typedef struct {
 
 extern s32 D_80180FD0;
 extern Unk_80180FD8 D_80180FD8[0x28];
+extern u32 D_80182018;
 
 void func_800838E0(void) {
     s16 index;
@@ -68,7 +69,16 @@ void func_80083A04(s32 value, s32 x, s32 y) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/osd_debug_text/func_80083CCC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/osd_debug_text/func_80083CF0.s")
+void func_80083CF0(s32 arg0, s32 arg1) {
+    s32 delta_t;
+    s32 time_val;
+    char str[0x50];
+
+    delta_t = (osGetTime() - D_80182018);
+    time_val = ((delta_t * 1.32) / 1000.0);
+    sprintf(str, "%03d", time_val);
+    func_8008391C(str, arg0, arg1, gDebugOSDTint, gDebugOSDTint, gDebugOSDTint, 0xFF, 1.0f, 1.0f);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/osd_debug_text/func_80083DB8.s")
 

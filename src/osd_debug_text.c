@@ -1,6 +1,19 @@
 #include "common.h"
 
-#pragma GLOBAL_ASM("asm/nonmatchings/osd_debug_text/func_800838E0.s")
+typedef struct {
+    s16 unk0;
+    u8 pad2[0x68 - 2];
+} Unk_80180FD8; // size = 0x68
+
+extern Unk_80180FD8 D_80180FD8[0x28];
+
+void func_800838E0(void) {
+    s16 index;
+
+    for (index = 0; index < 0x28; index++) {
+        D_80180FD8[index].unk0 = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/osd_debug_text/func_8008391C.s")
 

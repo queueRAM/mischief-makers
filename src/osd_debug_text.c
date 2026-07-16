@@ -1,10 +1,13 @@
 #include "common.h"
+#include "boot.h"
+#include "font.h"
+#include "compiler/ido/string.h" // for strlen
 
 typedef struct {
-    s16 unk0;
-    char unk2[0x50];
-    s32 positionX;
-    s32 positionY;
+    u16 isSet;
+    char text[0x50];
+    s32 posX;
+    s32 posY;
     u8 colorR;
     u8 colorG;
     u8 colorB;
@@ -14,14 +17,14 @@ typedef struct {
 } Unk_80180FD8; // size = 0x68
 
 extern s32 D_80180FD0;
-extern Unk_80180FD8 D_80180FD8[0x28];
+extern Unk_80180FD8 D_80180FD8[40];
 extern u32 D_80182018;
 
 void func_800838E0(void) {
     s16 index;
 
     for (index = 0; index < 0x28; index++) {
-        D_80180FD8[index].unk0 = 0;
+        D_80180FD8[index].isSet = 0;
     }
 }
 
@@ -29,9 +32,9 @@ void func_8008391C(char* str, s32 x, s32 y, u8 red, u8 green, u8 blue, u8 alpha,
     u16 index;
 
     if (D_80180FD0 < 0x29) {
-        D_80180FD8[D_80180FD0].unk0 = 1;
-        D_80180FD8[D_80180FD0].positionX = x;
-        D_80180FD8[D_80180FD0].positionY = y;
+        D_80180FD8[D_80180FD0].isSet = 1;
+        D_80180FD8[D_80180FD0].posX = x;
+        D_80180FD8[D_80180FD0].posY = y;
         D_80180FD8[D_80180FD0].colorR = red;
         D_80180FD8[D_80180FD0].colorG = green;
         D_80180FD8[D_80180FD0].colorB = blue;
@@ -40,7 +43,7 @@ void func_8008391C(char* str, s32 x, s32 y, u8 red, u8 green, u8 blue, u8 alpha,
         D_80180FD8[D_80180FD0].scaleY = scale_y;
         
         for (index = 0; index < 0x50; index++) {
-            D_80180FD8[D_80180FD0].unk2[index] = *str;
+            D_80180FD8[D_80180FD0].text[index] = *str;
             if (*str == 0) {
                 break;
             }
@@ -93,4 +96,28 @@ void func_80083DB8(u16 arg0) {
     D_80182018 = osGetTime();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/osd_debug_text/func_80083E74.s")
+void func_80083E74(void) {
+    Gfx* display_list;
+    s32 i;
+    char pad[0x50]; // unused, likely allocated for local string
+
+    display_list = gDisplayListHead;
+    Font_Init(&display_list);
+    Font_SetTransparent(0);
+    Font_SetColor(gDebugOSDTint, gDebugOSDTint, gDebugOSDTint, 0xFF);
+    Font_SetScale(1.0, 1.0);
+    Font_SetTransparent(1);
+    
+    for (i = 0; i < ARRAYLENGTH(D_80180FD8); i++) {
+        if (D_80180FD8[i].isSet) {
+            Font_SetWindow(strlen(D_80180FD8[i].text) + 1, 1);
+            Font_SetPos(D_80180FD8[i].posX + SCREEN_WIDTH / 2, -D_80180FD8[i].posY + SCREEN_HEIGHT / 2);
+            Font_SetColor(D_80180FD8[i].colorR, D_80180FD8[i].colorG, D_80180FD8[i].colorB, D_80180FD8[i].colorA);
+            Font_SetScale(D_80180FD8[i].scaleX, D_80180FD8[i].scaleY);
+            Font_ShowString(&display_list, D_80180FD8[i].text);
+        }
+    }
+    D_80180FD0 = 0;
+    Font_Finish(&display_list);
+    gDisplayListHead = display_list;
+}

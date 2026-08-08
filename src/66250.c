@@ -22,7 +22,7 @@ void func_80079378(u16 actor_index);
 void func_8007951C(u16 actor_index);
 
 // TODO: Move to .h file(s)
-extern void func_800339BC(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+extern void func_800339BC(s32 pos_x, s32 pos_y, s32 pos_z, u16 arg3);
 extern void func_80033E7C(u16 actor_index, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s32 arg6);
 extern void func_80028C00(u16 actor_index);
 extern void func_80072628(u16 actor_index);
@@ -164,7 +164,8 @@ void func_80065650(u16 actor_index) {
         func_800339BC(
             (gActors[actor_index].posX.raw - ((rand_x[0] & 0x1F) * FIXED_UNIT(5.0/8))) + FIXED_UNIT(10.0),
             (gActors[actor_index].posY.raw - ((rand_y & 0x1F) * FIXED_UNIT(0.75))) + FIXED_UNIT(18.0),
-            gActors[actor_index].posZ.raw, 0
+            gActors[actor_index].posZ.raw,
+            0
         );
     }
 }
@@ -441,7 +442,14 @@ void func_80066644(u16 actor_index, s32 arg1_unused) {
     );
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_800666B4.s")
+void func_800666B4(u16 actor_index, f32 pos_x, f32 pos_y, u16 arg3) {
+    func_800339BC(
+        gActors[actor_index].posX.raw + (pos_x * FIXED_UNIT(1.0)),
+        gActors[actor_index].posY.raw + (pos_y * FIXED_UNIT(1.0)),
+        gActors[actor_index].posZ.raw,
+        arg3
+    );
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006678C.s")
 

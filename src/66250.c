@@ -432,7 +432,14 @@ void func_8006641C(u16 actor_index) {
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006641C.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80066644.s")
+void func_80066644(u16 actor_index, s32 arg1_unused) {
+    SpawnParticle_List_90C0_16(
+        D_800E154C,
+        gActors[actor_index].posX.whole,
+        gActors[actor_index].posY.whole + gActors[actor_index].hitboxBY0 + 0x10,
+        gActors[actor_index].posZ.whole
+    );
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_800666B4.s")
 

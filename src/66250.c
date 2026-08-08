@@ -241,7 +241,43 @@ void func_80065A38(u16 actor_index, s16 pos_x, s16 pos_y) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80065B78.s")
+void func_80065B78(u16 actor_index) {
+    u16 free_actor;
+
+    free_actor = SpawnParticle_List_90C0_16(D_800E156C, gActors[actor_index].pos[0].whole, gActors[actor_index].pos[1].whole, gActors[actor_index].pos[2].whole + 1);
+    if (free_actor != 0) {
+        gActors[free_actor].graphicFlags = ACTOR_GFLAG_PALETTE | ACTOR_GFLAG_SCALE;
+        gActors[free_actor].colorA = 0xC0;
+        gActors[free_actor].scaleX = 0.8f;
+        gActors[free_actor].scaleY = 1.0f;
+        gActors[free_actor].colorR = 0x7F;
+        gActors[free_actor].palette_18C = D_800D8508;
+        switch ((u8)(gActors[actor_index].unk_178 & 6)) {
+        case 0:
+            gActors[free_actor].unk_148 = 18.0f;
+            break;
+        case 2:
+            gActors[free_actor].unk_148 = 8.0f;
+            break;
+        case 4:
+            gActors[free_actor].unk_148 = 28.0f;
+            break;
+        }
+        gActors[free_actor].var_110 = -(gActors[free_actor].scaleX / gActors[free_actor].unk_148);
+        gActors[free_actor].unk_114 = -(gActors[free_actor].scaleY / gActors[free_actor].unk_148);
+        gActors[free_actor].unk_130 = actor_index;
+        gActors[free_actor].unk_14C = gActors[actor_index].actorType;
+        gActors[free_actor].unk_138 = -10.0f;
+        gActors[free_actor].unk_13C_f32 = 1.0f;
+        if (gActors[actor_index].flags & ACTOR_FLAG_FLIPPED) {
+            gActors[free_actor].flags |= ACTOR_FLAG_FLIPPED;
+            gActors[free_actor].unk_134 = -22.0f;
+        }
+        else {
+            gActors[free_actor].unk_134 = 22.0f;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80065D60.s")
 

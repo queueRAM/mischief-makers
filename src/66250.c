@@ -373,7 +373,30 @@ void func_8006605C(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_800662F0.s")
+void func_800662F0(u16 actor_index) {
+    s32 invert_flipped;
+    u16 particle_index;
+
+    particle_index = SpawnParticle_Image_90C0_16(0x1EC, gActors[actor_index].posX.whole, gActors[actor_index].posY.whole, gActors[actor_index].posZ.whole + 1);
+    if (particle_index != 0) {
+        invert_flipped = (gActors[actor_index].flags & ACTOR_FLAG_FLIPPED) ^ ACTOR_FLAG_FLIPPED;
+        gActors[particle_index].graphicFlags = ACTOR_GFLAG_PALETTE | ACTOR_GFLAG_ROTZ | ACTOR_GFLAG_SCALE;
+        gActors[particle_index].flags |= invert_flipped + ACTOR_FLAG_UNK15;
+        gActors[particle_index].palette_18C = PALETTE_8022D4E8;
+        gActors[particle_index].colorA = 0xE0;
+        gActors[particle_index].var_150 = FIXED_UNIT(20.0);
+        gActors[particle_index].var_154 = 0x10;
+        gActors[particle_index].unk_164 = -6;
+        gActors[particle_index].scaleX = 1.0f;
+        gActors[particle_index].scaleY = 1.0f;
+        gActors[particle_index].unk_140_f32 = -13.0f;
+        gActors[particle_index].unk_144 = 18.0f;
+        if (invert_flipped) {
+            gActors[particle_index].unk_140_f32 = -gActors[particle_index].unk_140_f32;
+            gActors[particle_index].var_150 = -gActors[particle_index].var_150;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006641C.s")
 

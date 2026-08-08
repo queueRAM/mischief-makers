@@ -398,7 +398,39 @@ void func_800662F0(u16 actor_index) {
     }
 }
 
+#ifdef NON_MATCHING
+// .rodata split somewhere after func_8006641C, before func_80066BCC
+// candidates: func_800668E0, func_80066A10
+void func_8006641C(u16 actor_index) {
+    s32 pos_x;
+    s32 pos_y;
+    u16 particle_index;
+
+    if (!(gActiveFrames & 0x1F)) {
+        if (gActors[actor_index].unk_178 & 1) {
+            pos_x = gActors[actor_index].posX.whole + (gActors[actor_index].unk_148 * -18.0f);
+            pos_y = gActors[actor_index].posY.whole * gActors[actor_index].scaleX;
+        }
+        else {
+            pos_x = gActors[actor_index].posX.whole + (gActors[actor_index].unk_148 * -18.0f);
+            pos_y = gActors[actor_index].posY.whole * gActors[actor_index].scaleX;
+        }
+        particle_index = SpawnParticle_List_90C0_16(gGraphicListBlank, pos_x, pos_y, gActors[actor_index].posZ.whole + 1);
+        if (particle_index != 0) {
+            gActors[particle_index].scaleX = 0.2f;
+            gActors[particle_index].scaleY = 0.2f;
+            gActors[particle_index].unk_148 = 30.0f;
+            gActors[particle_index].graphicFlags = 1;
+            gActors[particle_index].graphicIndex = 0x16A;
+            gActors[particle_index].velocityX.raw = gActors[actor_index].unk_148 * -10240.0f;
+            gActors[particle_index].velocityY.raw = 0x10000;
+            gActors[particle_index].var_15C = -0x800;
+        }
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006641C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80066644.s")
 

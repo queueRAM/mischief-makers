@@ -139,6 +139,7 @@ extern s16 D_800D82BC[]; /* = {
     0x0026, 0xD001,
     0x0100, 0x0000
 };*/
+extern s16 D_800E156C[];
 extern s16 D_800E1574[];
 extern s16 D_800E1604[];
 extern u8 D_800E1750[];
@@ -222,7 +223,23 @@ void func_800658D8(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80065A38.s")
+void func_80065A38(u16 actor_index, s16 pos_x, s16 pos_y) {
+    u16 free_actor;
+
+    free_actor = SpawnParticle_List_90C0_16(D_800E156C, pos_x, pos_y, gActors[actor_index].posZ.whole + 1);
+    if (free_actor != 0) {
+        gActors[free_actor].graphicFlags = ACTOR_GFLAG_PALETTE | ACTOR_GFLAG_SCALE;
+        gActors[free_actor].flags |= gActors[actor_index].flags & ACTOR_FLAG_FLIPPED;
+        gActors[free_actor].colorA = 0xFF;
+        gActors[free_actor].colorR = 0x7F;
+        gActors[free_actor].scaleX = 0.5f;
+        gActors[free_actor].scaleY = 0.6f;
+        gActors[free_actor].velocityX.raw = gActors[actor_index].unk_148 * FIXED_UNIT(3.5);
+        gActors[free_actor].var_154 = -0x18;
+        gActors[free_actor].unk_11C = -0.01f;
+        gActors[free_actor].palette_18C = D_800D8508;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80065B78.s")
 

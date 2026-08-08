@@ -54,6 +54,8 @@ extern u16 D_800D2950; // = 0;
 extern s16 D_800D75A0[];
 extern s16 D_800D75D8[];
 extern s8 D_800D76D8[];
+extern s16 D_800D7DC4[];
+extern s16 D_800D7DD8[];
 extern ActorFunc D_800D7F00[];
 extern u16 D_800D80C0[]; // = { 0x0000, 0x0010, 0x0030, 0x0000, };
 extern s16 D_800D8190[]; /* = {
@@ -648,7 +650,41 @@ void func_80067214(u16 actor_0, u16 actor_1, u16 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80067394.s")
+s32 func_80067394(u16 actor_index, u16 arg1) {
+    u16 particle_0;
+    u16 particle_1;
+
+    particle_0 = SpawnParticle_List_90C0_16(gGraphicListBlank, 0, 0, 0);
+    if (particle_0 == 0) {
+        gActors[particle_0].flags = 0;
+        return 0;
+    }
+    particle_1 = SpawnParticle_List_90C0_16(gGraphicListBlank, 0, 0, 0);
+    if (particle_1 == 0) {
+        gActors[particle_1].flags = 0;
+        return 0;
+    }
+
+    gActors[actor_index].var_158 = particle_0;
+    gActors[actor_index].var_15C = particle_1;
+    func_80067068(actor_index, particle_0);
+    gActors[particle_1].graphicFlags |= gActors[actor_index].graphicFlags & ACTOR_GFLAG_PALETTE;
+    if (arg1) {
+        gActors[particle_1].graphicList = D_800D7DC4;
+    }
+    else {
+        gActors[particle_1].graphicList = D_800D7DD8;
+    }
+    gActors[particle_1].graphicTimer = 1;
+    gActors[particle_1].unk_18C = gActors[actor_index].unk_18C;
+    gActors[particle_1].unk_140_f32 = 4.0f;
+    if (gActors[actor_index].flags & ACTOR_FLAG_FLIPPED) {
+        gActors[particle_1].unk_140_f32 = -gActors[particle_1].unk_140_f32;
+    }
+    func_80067214(actor_index, particle_0, arg1);
+    func_80067214(actor_index, particle_1, (arg1 ^ 1));
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006756C.s")
 

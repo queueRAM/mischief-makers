@@ -475,7 +475,7 @@ void func_8006678C(u16 actor_index, f32 pos_x_0, f32 pos_y_0, f32 pos_x_1, f32 p
     }
 }
 
-void func_800668E0(u16 actor_index, s32 arg1_unused, u16 palette_index) {
+void func_800668E0(u16 actor_index, u16 arg1_unused, u16 palette_index) {
     if (gActors[actor_index].var_150 & 0x08000000) {
         gActors[actor_index].palette_18C = D_800D18C4[palette_index];
     }
@@ -484,7 +484,20 @@ void func_800668E0(u16 actor_index, s32 arg1_unused, u16 palette_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80066964.s")
+void func_80066964(u16 actor_index, u16 palette_index) {
+    s16* graphic_list;
+
+    graphic_list = gActors[actor_index].graphicList;
+    if ((gActors[actor_index].graphicTimer == 1) && (graphic_list != NULL) && (graphic_list[0] != 0)) {
+        if (graphic_list[0] < 0) {
+            graphic_list += graphic_list[0];
+        }
+        func_800668E0(actor_index, graphic_list[0], palette_index);
+    }
+    else {
+        func_800668E0(actor_index, gActors[actor_index].graphicIndex, palette_index);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80066A10.s")
 

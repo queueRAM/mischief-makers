@@ -1423,11 +1423,11 @@ void func_80079B28(u16 actor_index) {
     gActors[actor_index].var_160 = 0x01000000;
     gActors[actor_index].unk_118 = 0.0f;
     var_s2 = 3;
-    var_s0 = (gActors[actor_index].hitboxBY0 + gActors->posY.whole) - 1;
+    var_s0 = (gPlayerActor.posY.whole + gActors[actor_index].hitboxBY0) - 1;
     while (var_s2 > 0) {
-        if ((func_80012AB4(gActors->posX.whole - 0x10, var_s0) & 0x80) || (func_80012AB4(gActors->posX.whole + 0x10, var_s0) & 0x80)) {
+        if ((func_80012AB4(gPlayerActor.posX.whole - 0x10, var_s0) & 0x80) || (func_80012AB4(gPlayerActor.posX.whole + 0x10, var_s0) & 0x80)) {
             gActors[actor_index].posY.whole -= 8;
-            gActors->posY.whole -= 8;
+            gPlayerActor.posY.whole -= 8;
         }
         var_s0 -= 8; var_s2--;
     }

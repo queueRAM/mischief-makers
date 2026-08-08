@@ -451,7 +451,27 @@ void func_800666B4(u16 actor_index, f32 pos_x, f32 pos_y, u16 arg3) {
     );
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006678C.s")
+void func_8006678C(u16 actor_index, f32 pos_x_0, f32 pos_y_0, f32 pos_x_1, f32 pos_y_1) {
+    u16 rand_bool;
+
+    pos_x_0 *= gActors[actor_index].unk_148;
+    pos_y_0 *= gActors[actor_index].scaleY;
+    pos_x_1 *= gActors[actor_index].unk_148;
+    pos_y_1 *= gActors[actor_index].scaleY;
+    if (Actor_IsOutsideRegion(actor_index, 0x20) == 0) {
+        rand_bool = Rand() & 1;
+        if (rand_bool && !(gActiveFrames & 0xF)) {
+            func_800666B4(actor_index, pos_x_0, pos_y_0, 0);
+        }
+        else if (rand_bool && ((gActiveFrames & 0xF) == 7)) {
+            func_800666B4(actor_index, pos_x_1, pos_y_1, 0);
+        }
+        else {
+            func_800666B4(actor_index, pos_x_0, pos_y_0, 1);
+            func_800666B4(actor_index, pos_x_1, pos_y_1, 1);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_800668E0.s")
 

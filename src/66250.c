@@ -52,6 +52,8 @@ extern s16 D_800D291C; // = 0;
 extern s16 D_800D2920; // = 0;
 extern u16 D_800D2950; // = 0;
 extern s16 D_800D75A0[];
+extern s16 D_800D75D8[];
+extern s8 D_800D76D8[];
 extern ActorFunc D_800D7F00[];
 extern u16 D_800D80C0[]; // = { 0x0000, 0x0010, 0x0030, 0x0000, };
 extern s16 D_800D8190[]; /* = {
@@ -509,7 +511,92 @@ void func_80066A10(u16 actor_index) {
     }
 }
 
+#ifdef NON_MATCHING
+// https://decomp.me/scratch/9cpVH
+void func_80066BCC(u16 arg0) {
+    f32 temp_f0;
+    s32 var_a2;
+    s16* temp_a0_2;
+    u16 temp_a1;
+    u16 temp_t9;
+    u16 var_a0;
+    s32 var_a1;
+    s32 var_a2_3;
+    u32 temp_a0;
+    s8* temp_a3;
+    s16* var_t0;
+
+    temp_t9 = gActors[arg0].unk_140_f32;
+    if (temp_t9 != 0) {
+        if ((gActors[temp_t9].flags & 2) && (gActors[temp_t9].actorType == 0x34)) {
+            temp_a1 = (((gActors[arg0].var_0D8 & 0xF00) / 256));
+            temp_a1 *= 8;
+            gActors[temp_t9].unk_148 = 1.0f;
+            gActors[temp_t9].graphicFlags &= 0xF7EF;
+            gActors[temp_t9].graphicFlags = (gActors[arg0].graphicFlags & 0x810) + 8;
+            gActors[temp_t9].flags &= ~1;
+            gActors[temp_t9].flags = (gActors[arg0].flags & 1) + 2;
+            if (gActors[temp_t9].flags & 0x800) {
+                gActors[temp_t9].unk_188 = gActors[arg0].unk_188;
+            }
+            gActors[temp_t9].colorA = gActors[arg0].colorA;
+            gActors[temp_t9].colorR = gActors[arg0].colorR;
+            gActors[temp_t9].colorG = gActors[arg0].colorG;
+            gActors[temp_t9].colorB = gActors[arg0].colorB;
+            temp_a0_2 = gActors[arg0].graphicList;
+            if ((gActors[arg0].graphicTimer == 1) && (temp_a0_2 != NULL) && (temp_a0_2[0] != 0)) {
+                if (temp_a0_2[0] < 0) {
+                    temp_a0_2 += temp_a0_2[0];
+                }
+                if (temp_a0_2[0] >= 0x6800) {
+                    var_a0 = ((temp_a0_2[0] * 3) - 0x13800);
+                }
+                else {
+                    var_a0 = ((((temp_a0_2[0] - 0x1026) / 2) * 3) + 0x3E7);
+                }
+            }
+            else {
+                if (gActors[arg0].graphicIndex >= 0x6800) {
+                    var_a0 = ((gActors[arg0].graphicIndex * 3) - 0x13800);
+                }
+                else if (gActors[arg0].var_150 & 0x08000000) {
+                    var_a0 = ((((gActors[arg0].graphicIndex - 0x1090) / 2) * 3) + 0x390);
+                }
+                else {
+                    var_a0 = ((((gActors[arg0].graphicIndex - 0x1026) / 2) * 3) + 0x3E7);
+                }
+            }
+            temp_a3 = &D_800D76D8[var_a0];
+            var_a2 = temp_a3[2];
+            if (var_a2 & 1) {
+                temp_a1 += 2;
+                gActors[temp_t9].posZ.raw = gActors[arg0].posZ.raw - 1;
+                gActors[temp_t9].graphicIndex = D_800D75D8[temp_a1 + 1];
+                var_a2 += D_800D75D8[temp_a1 + 7];
+            }
+            else {
+                gActors[temp_t9].posZ.raw = gActors[arg0].posZ.raw;
+                gActors[temp_t9].graphicIndex = D_800D75D8[temp_a1];
+                var_a2 += D_800D75D8[temp_a1 + 6];
+            }
+            var_a2_3 = (var_a2 & 0xFE) * 4;
+            temp_f0 = (temp_a3[0] * gActors[arg0].scaleX) + (D_800D75D8[temp_a1 + 2] * gActors[arg0].scaleX);
+            if (gActors[arg0].flags & 0x20) {
+                var_a2_3 = -var_a2_3;
+                gActors[temp_t9].flags |= 0x20;
+                gActors[temp_t9].posX.whole = gActors[arg0].posX.whole - temp_f0;
+            }
+            else {
+                gActors[temp_t9].posX.whole = gActors[arg0].posX.whole + temp_f0;
+            }
+            gActors[temp_t9].posY.whole = ((gActors[arg0].scaleY * temp_a3[1]) + (D_800D75D8[temp_a1 + 3] * gActors[arg0].scaleY) + gActors[arg0].posY.whole);
+            gActors[temp_t9].rotateZ = ((f32) var_a2_3 * 0.3515625);
+        }
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80066BCC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80067068.s")
 

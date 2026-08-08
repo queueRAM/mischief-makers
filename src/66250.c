@@ -279,7 +279,27 @@ void func_80065B78(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80065D60.s")
+void func_80065D60(u16 actor_index) {
+    u16 free_actor;
+    s32 rand_vel_x;
+    s32 rand_15C;
+
+    free_actor = SpawnParticle_List_90C0_16(D_800E1604, gActors[actor_index].posX.whole + (gActors[actor_index].unk_148 * 18.0f), gActors[actor_index].posY.whole + gActors[actor_index].hitboxBY1, gActors[actor_index].posZ.whole + 1);
+    if (free_actor != 0) {
+        gActors[free_actor].graphicFlags = 1;
+        gActors[free_actor].scaleX = 0.45f;
+        gActors[free_actor].scaleY = 0.45f;
+        rand_vel_x = ((Rand() & 3) << 0xF);
+        rand_15C = ((Rand() & 3) * 0x1200);
+        gActors[free_actor].velocityX.raw = (-gActors[actor_index].velocityX.raw - (gActors[actor_index].unk_148 * rand_vel_x));
+        gActors[free_actor].velocityY.raw = 0x20000;
+        gActors[free_actor].var_110 = 0.04f;
+        gActors[free_actor].unk_114 = 0.04f;
+        gActors[free_actor].var_154 = -0x10;
+        gActors[free_actor].var_158 = -gActors[free_actor].velocityX.raw / 12;
+        gActors[free_actor].var_15C = -rand_15C;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80065F14.s")
 

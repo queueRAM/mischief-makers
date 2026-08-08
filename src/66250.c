@@ -598,7 +598,31 @@ void func_80066BCC(u16 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80066BCC.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80067068.s")
+void func_80067068(u16 actor_0, u16 actor_1) {
+    switch ((u16)gActors[actor_0].unk_124) {
+    case 0x3F0:
+        gActors[actor_1].graphicIndex = 0x101E;
+        gActors[actor_0].unk_11C = 8.0f;
+        break;
+    case 1:
+        gActors[actor_1].graphicIndex = 0x1014;
+        gActors[actor_0].unk_11C = 9.0f;
+        break;
+    case 2:
+        gActors[actor_1].graphicIndex = 0x101C;
+        gActors[actor_0].unk_11C = 4.0f;
+        break;
+    case 3:
+        gActors[actor_1].graphicIndex = 0x1016;
+        gActors[actor_0].unk_11C = 7.0f;
+        break;
+    case 4:
+        gActors[actor_1].graphicIndex = 0x1020;
+        gActors[actor_0].unk_11C = 6.0f;
+        break;
+    }
+    gActors[actor_0].unk_11C *= gActors[actor_0].scaleX;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80067214.s")
 

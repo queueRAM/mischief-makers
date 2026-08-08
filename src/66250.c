@@ -44,6 +44,8 @@ extern void func_80028B90(u16 actor_index);
 extern u16 gGuestActorIndex;
 
 // data of this TU
+extern u16* D_800D18A4[];
+extern u16* D_800D18C4[];
 extern s32 D_800D1938[];
 extern s16 D_800D2918; // = 0;
 extern s16 D_800D291C; // = 0;
@@ -473,7 +475,14 @@ void func_8006678C(u16 actor_index, f32 pos_x_0, f32 pos_y_0, f32 pos_x_1, f32 p
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_800668E0.s")
+void func_800668E0(u16 actor_index, s32 arg1_unused, u16 palette_index) {
+    if (gActors[actor_index].var_150 & 0x08000000) {
+        gActors[actor_index].palette_18C = D_800D18C4[palette_index];
+    }
+    else {
+        gActors[actor_index].palette_18C = D_800D18A4[palette_index];
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80066964.s")
 

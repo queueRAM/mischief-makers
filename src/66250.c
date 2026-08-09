@@ -1808,7 +1808,29 @@ void func_8006A924(u16 actor_index) {
     gActors[actor_index].graphicIndex = D_800D7EB0[gActors[actor_index].var_15C / FIXED_UNIT(8.0)];
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006ABEC.s")
+void func_8006ABEC(u16 actor_index, s16* arg1) {
+    func_80069DA8(actor_index);
+    if ((gActors[actor_index].velocityY.raw < 0) && (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK5)) {
+        if (gActors[actor_index].var_150 & 0x08000000) {
+            Sound_PlaySfxAtActor2(0x8B, actor_index);
+            gActors[actor_index].state = 0xD0;
+            gActors[actor_index].velocityY.raw = 0;
+            gActors[actor_index].flags |= ACTOR_FLAG_UNK16;
+            gActors[actor_index].flags &= ~ACTOR_FLAG_UNK17; \
+            gActors[actor_index].flags_098 &= ~ACTOR_FLAG3_UNK6;
+        }
+        else {
+            gActors[actor_index].state = 0x150;
+            gActors[actor_index].graphicList = arg1;
+            gActors[actor_index].graphicTimer = 1;
+            gActors[actor_index].velocityX.raw = (f32) gActors[actor_index].velocityX.raw * 0.5;
+            gActors[actor_index].velocityY.raw = 0;
+            gActors[actor_index].flags |= ACTOR_FLAG_UNK16; \
+            gActors[actor_index].flags &= ~ACTOR_FLAG_UNK17; \
+            gActors[actor_index].flags_098 &= ~ACTOR_FLAG3_UNK6;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006AD50.s")
 

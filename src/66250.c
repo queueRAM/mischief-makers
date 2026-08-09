@@ -1593,7 +1593,12 @@ s32 func_80069D04(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80069DA8.s")
+void func_80069DA8(u16 actor_index) {
+    func_80069BF4(actor_index);
+    if (gActors[actor_index].velocityY.raw > FIXED_UNIT(-6.5)) {
+        gActors[actor_index].velocityY.raw -= FIXED_UNIT(0.265625);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80069E18.s")
 

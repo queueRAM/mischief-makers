@@ -1271,7 +1271,20 @@ s32 func_80068F08(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80068FBC.s")
+void func_80068FBC(u16 actor_index, u16 actor_state_1, u16 actor_state_2) {
+    s32 temp_v0;
+
+    temp_v0 = func_80068F08(actor_index);
+    switch (temp_v0) {
+    case 0x81:
+    case 0x83:
+        gActors[actor_index].state = actor_state_2;
+        break;;
+    case 0x82:
+    case 0x84:
+        gActors[actor_index].state = actor_state_1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006907C.s")
 

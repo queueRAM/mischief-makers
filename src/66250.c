@@ -2180,7 +2180,31 @@ u32 func_8006BD08(u16 actor_index) {
     return free_actor;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006BEF4.s")
+s32 func_8006BEF4(u16 actor_index) {
+    u16 actor_0;
+
+    actor_0 = gActors[actor_index].unk_11C;
+    if (!(gActors[actor_0].flags & 2) || (gActors[actor_0].actorType != (u16)gActors[actor_index].unk_120)) {
+        gActors[actor_index].state = 0x60;
+        return TRUE;
+    }
+    else {
+        
+        if (gActors[actor_index].graphicTimer == 0) {
+            func_800662F0(actor_index);
+            gActors[actor_index].state++;
+            gActors[actor_0].flags_098 |= ACTOR_FLAG3_UNK10;
+            gActors[actor_0].unk_0F8.raw = gActors[actor_index].var_158;
+            gActors[actor_0].unk_0FC.raw = gActors[actor_index].var_15C;
+            Sound_PlaySfxAtActor2(0x2A, actor_index);
+            return TRUE;
+        }
+        else {
+            func_8006BC90(actor_index, actor_0);
+            return FALSE;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006C0F4.s")
 

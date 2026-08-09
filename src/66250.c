@@ -2152,7 +2152,33 @@ void func_8006BC90(u16 actor_0, u16 actor_1) {
     gActors[actor_1].unk_10C = gActors[actor_0].posZ.raw - 8;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006BD08.s")
+u32 func_8006BD08(u16 actor_index) {
+    u16 free_actor;
+
+    free_actor = Actor_RangeFindInactive(0x70, 0x7A);
+    if (free_actor != 0) {
+        gActors[free_actor].actorType = 0;
+        Actor_Initialize(free_actor);
+        gActors[free_actor].posX.whole = gActors[actor_index].posX.whole;
+        gActors[free_actor].posY.whole = gActors[actor_index].posY.whole;
+        gActors[free_actor].posZ.whole = gActors[actor_index].posZ.whole - 1;
+        gActors[actor_index].pfn_158(actor_index, free_actor);
+        if (1) {} // fakematch
+        gActors[actor_index].unk_11C = free_actor;
+        gActors[actor_index].unk_120 = gActors[free_actor].actorType;
+        gActors[actor_index].var_158 = gActors[free_actor].velocityX.raw * gActors[actor_index].scaleX;
+        gActors[actor_index].var_15C = gActors[free_actor].velocityY.raw * gActors[actor_index].scaleX;
+        gActors[actor_index].velocityX.raw = 0;
+        gActors[actor_index].velocityY.raw = 0;
+        if (((gActors[actor_index].flags & ACTOR_FLAG_FLIPPED) && (gActors[actor_index].var_158 > 0)) || 
+            (!(gActors[actor_index].flags & ACTOR_FLAG_FLIPPED) && (gActors[actor_index].var_158 < 0))) {
+            gActors[actor_index].flags ^= ACTOR_FLAG_FLIPPED;
+        }
+        gActors[actor_index].unk_134 -= 1.0f;
+        func_8006BC90(actor_index, free_actor);
+    }
+    return free_actor;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006BEF4.s")
 

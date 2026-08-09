@@ -1976,7 +1976,18 @@ void func_8006B518(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006B5B0.s")
+void func_8006B5B0(u16 actor_index) {
+    gActors[actor_index].state++;
+    gActors[actor_index].flags |= ACTOR_FLAG_UNK16;
+    gActors[actor_index].flags &= ~ACTOR_FLAG_UNK17; \
+    gActors[actor_index].flags_098 &= ~ACTOR_FLAG3_UNK6;
+    gActors[actor_index].graphicTimer = 1;
+    gActors[actor_index].velocityY.raw = 0;
+    gActors[actor_index].var_158 = gActors[actor_index].flags & ACTOR_FLAG_FLIPPED;
+    gActors[actor_index].var_15C = gActors[actor_index].var_158 ^ ACTOR_FLAG_FLIPPED;
+    gActors[actor_index].var_160 = 0;
+    gActors[actor_index].unk_118 = 0.0f;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006B648.s")
 

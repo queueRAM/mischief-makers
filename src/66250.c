@@ -1000,7 +1000,7 @@ s32 func_800684D0(u16 actor_index) {
     else {
         x = gActors[actor_index].posX.whole + gActors[actor_index].hitboxBX0;
     }
-    if (func_8001FCA0(actor_index, x, gActors[actor_index].posY.whole + gActors[actor_index].hitboxBY1 + 0x10) & 0x80) {
+    if (func_8001FCA0(actor_index, x, gActors[actor_index].posY.whole + gActors[actor_index].hitboxBY1 + 16) & 0x80) {
         return 0;
     }
     else {
@@ -1008,7 +1008,34 @@ s32 func_800684D0(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80068570.s")
+s32 func_80068570(u16 actor_index) {
+    s32 y;
+    u16 var_s1;
+
+    y = gActors[actor_index].posY.whole + gActors[actor_index].hitboxBY1 + 32;
+    var_s1 = 0;
+    if (func_8001FCA0(actor_index, gActors[actor_index].posX.whole + gActors[actor_index].hitboxBX1, y) & 0x80) {
+        if (gActors[actor_index].flags_098 & 8) {
+            if (func_8001FCA0(actor_index, gActors[actor_index].posX.whole + gActors[actor_index].hitboxBX1 - 1, y) & 0x80) {
+                var_s1 = 34;
+            }
+        }
+        else {
+            var_s1 = 2;
+        }
+    }
+    if (func_8001FCA0(actor_index, gActors[actor_index].posX.whole + gActors[actor_index].hitboxBX0, y) & 0x80) {
+        if (gActors[actor_index].flags_098 & 4) {
+            if (func_8001FCA0(actor_index, gActors[actor_index].posX.whole + gActors[actor_index].hitboxBX0 + 1, y) & 0x80) {
+                var_s1 += 17;
+            }
+        }
+        else {
+            var_s1 += 1;
+        }
+    }
+    return var_s1;
+}
 
 u32 func_800686CC(u32 arg0) {
     return 0;

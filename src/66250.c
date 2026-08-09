@@ -1434,7 +1434,12 @@ s32 func_80069538(u16 actor_index) {
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80069538.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_800695E4.s")
+void func_800695E4(u16 actor_index) {
+    s16 y = gActors[actor_index].posY.whole + (gActors[actor_index].scaleX * 30.0f);
+    if (func_80012AB4(gActors[actor_index].posX.whole, y - 3) & 0x80) {
+        gActors[actor_index].posY.whole -= 1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_800696A8.s")
 

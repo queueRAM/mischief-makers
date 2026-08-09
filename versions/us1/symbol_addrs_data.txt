@@ -223,6 +223,8 @@ D_800E8E98 = 0x800E8E98;
 D_800E8F04 = 0x800E8F04;
 D_800E8F7C = 0x800E8F7C;
 
+D_800EC5B8 = 0x800EC5B8; // type:f64
+
 gDialogPortraitGraphic = 0x801782DE; // type:s16 size:0x2
 gDialogTextboxIndex = 0x80178438; // type:u16 size:0x2
 gDialogTextBGIndex = 0x8017843A; // type:u16 size:0x2

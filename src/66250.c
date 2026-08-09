@@ -1832,7 +1832,17 @@ void func_8006ABEC(u16 actor_index, s16* arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006AD50.s")
+s32 func_8006AD50(u16 actor_index) {
+    if ((gActors[actor_index].velocityX.raw < 0) && (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK2)) {
+        gActors[actor_index].velocityX.raw = -gActors[actor_index].velocityX.raw / 2;
+        return 2;
+    }
+    else if ((gActors[actor_index].velocityX.raw > 0) && (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK3)) {
+        gActors[actor_index].velocityX.raw = -gActors[actor_index].velocityX.raw / 2;
+        return 3;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006ADF8.s")
 

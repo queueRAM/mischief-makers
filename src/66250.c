@@ -991,7 +991,22 @@ u16 func_80068378(u16 actor_index) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_800684D0.s")
+s32 func_800684D0(u16 actor_index) {
+    s32 x;
+
+    if (!(gActors[actor_index].flags & 0x20)) {
+        x = gActors[actor_index].posX.whole + gActors[actor_index].hitboxBX1;
+    }
+    else {
+        x = gActors[actor_index].posX.whole + gActors[actor_index].hitboxBX0;
+    }
+    if (func_8001FCA0(actor_index, x, gActors[actor_index].posY.whole + gActors[actor_index].hitboxBY1 + 0x10) & 0x80) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80068570.s")
 

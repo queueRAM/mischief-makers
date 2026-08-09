@@ -55,6 +55,15 @@ extern s16 D_800D75A0[];
 extern s16 D_800D75D8[];
 extern s8 D_800D76D8[];
 extern s16 D_800D7AF8[];
+extern s16 D_800D7C78[];
+extern s16 D_800D7C80[];
+extern s16 D_800D7C88[];
+extern s16 D_800D7C90[];
+extern s16 D_800D7C98[];
+extern s16 D_800D7CA0[];
+extern s16 D_800D7CA8[];
+extern s16 D_800D7CB0[];
+extern s16 D_800D7CB8[];
 extern s16 D_800D7DC4[];
 extern s16 D_800D7DD8[];
 extern ActorFunc D_800D7F00[];
@@ -814,7 +823,56 @@ s32 func_800679DC(u16 actor_index, u16 arg1) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80067B18.s")
+u16 func_80067B18(u16 actor_index, s32 arg1) {
+    switch (arg1) {
+    case 0x1000000:
+        gActors[actor_index].var_160 = (s32) D_800D7C78;
+        arg1 = 0x100;
+        break;
+    case 0xC00000: 
+    case 0x1400000:
+        gActors[actor_index].var_160 = (s32) D_800D7C80;
+        arg1 = 0x100;
+        break;
+    case 0x800000:
+    case 0x1800000:
+        gActors[actor_index].var_160 = (s32) D_800D7C88;
+        arg1 = 0x80;
+        break;
+    case 0x400000: 
+    case 0x1C00000:
+        gActors[actor_index].var_160 = (s32) D_800D7C90;
+        arg1 = 0;
+        break;
+    case 0x0:      
+    case 0x2000000:
+        gActors[actor_index].var_160 = (s32) D_800D7C98;
+        arg1 = 0;
+        break;
+    case 0x2400000:
+    case 0x3C00000:
+        gActors[actor_index].var_160 = (s32) D_800D7CA0;
+        arg1 = 0;
+        break;
+    case 0x2800000:
+    case 0x3800000:
+        gActors[actor_index].var_160 = (s32) D_800D7CA8;
+        arg1 = 0x380;
+        break;
+    case 0x2C00000:
+    case 0x3400000:
+        gActors[actor_index].var_160 = (s32) D_800D7CB0;
+        arg1 = 0x300;
+        break;
+    case 0x3000000:
+        gActors[actor_index].var_160 = (s32) D_800D7CB8;
+        arg1 = 0x300;
+        break;
+    }
+    gActors[actor_index].unk_120 = 1.0f;
+    func_8006756C(actor_index);
+    return arg1;
+}
 
 void func_80067E50(u16 actor_index, void* arg1) {
     if (gActors[actor_index].graphicTimer == 0) {

@@ -1965,7 +1965,16 @@ void func_8006B448(u16 actor_index) {
     gActors[actor_index].velocityY.raw /= 4;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006B518.s")
+void func_8006B518(u16 actor_index) {
+    if (gActors[actor_index].unk_11C >= 0.0f) {
+        gActors[actor_index].unk_11C -= 1.0f;
+        if (gActors[actor_index].unk_11C == 0.0f) {
+            gActors[actor_index].velocityX.raw = gActors[actor_index].var_158;
+            gActors[actor_index].velocityY.raw = gActors[actor_index].var_15C;
+            gActors[actor_index].flags |= gActors[actor_index].var_160;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006B5B0.s")
 

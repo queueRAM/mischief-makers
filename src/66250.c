@@ -1367,7 +1367,57 @@ void func_800692F8(u16 arg0, u16 arg1) {
 void func_80069304(u16 arg0) {
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006930C.s")
+u16 func_8006930C(u16 actor_index, u16 actor_state_1, u16 actor_state_2, u16 actor_state_3, u16 actor_state_4, s16 arg5, s16 arg6, s16 arg7, s16 arg8) {
+    u16 sp36;
+
+    sp36 = func_80029FB8(actor_index, arg5, arg6, arg7, arg8);
+    if (sp36 & 0x8000) {
+        if ((!(gActors[actor_index].flags & ACTOR_FLAG_FLIPPED) && (sp36 & 1)) ||
+            ((gActors[actor_index].flags & ACTOR_FLAG_FLIPPED) && !(sp36 & 1))) {
+            actor_state_1 = actor_state_2;
+            actor_state_3 = actor_state_4;
+        }
+        switch (gActors[actor_index].state) {
+        case 0x61:
+        case 0x91:
+        case 0xA1:
+        case 0xB1:
+            if (actor_state_1 != actor_state_2) {
+                if ((func_80069204(actor_index) == 0) && (gActors[actor_index].state != (actor_state_1 + 1))) {
+                    gActors[actor_index].state = actor_state_1;
+                }
+            }
+            else if (gActors[actor_index].state != (actor_state_1 + 1)) {
+                gActors[actor_index].state = actor_state_1;
+            }
+            break;
+        case 0x201:
+        case 0x241:
+            if (actor_state_3 != actor_state_4) {
+                if ((func_80069204(actor_index) == 0) && ((actor_state_3 + 1) != gActors[actor_index].state)) {
+                    gActors[actor_index].state = actor_state_3;
+                }
+            }
+            else if ((actor_state_3 + 1) != gActors[actor_index].state) {
+                gActors[actor_index].state = actor_state_3;
+            }
+            break;
+        }
+    }
+    else {
+        switch (gActors[actor_index].state) {
+        case 0x91:
+        case 0xA1:
+        case 0xB1:
+            gActors[actor_index].state = 0x60;
+            break;
+        case 0x241:
+            gActors[actor_index].state = 0x200;
+            break;
+        }
+    }
+    return sp36;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80069538.s")
 

@@ -3,6 +3,8 @@
 
 #include <PR/ultratypes.h>
 
+s32 Math_PlaneQuadrant(s32 x, s32 y);
+
 s32 Actor_ReduceHealth(u16 actor_index, u16 health_diff);
 
 void Actor_SetVelocityXAbs(u16 actor_index, s32 velocity_x);

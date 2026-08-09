@@ -2134,7 +2134,15 @@ void func_8006BAFC(u16 actor_0, u16 actor_1) {
     gActors[actor_1].unk_0F8.raw = -3;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006BB8C.s")
+void func_8006BB8C(u16 actor_0, u16 actor_1) {
+    s32 angle;
+
+    angle = Math_PlaneQuadrant(
+        gActors[D_800E3580].posX.whole - gActors[actor_0].posX.whole,
+        gActors[D_800E3580].posY.whole - gActors[actor_0].posY.whole
+    );
+    SpawnShuriken(actor_1, gActors[actor_0].posX.whole, gActors[actor_0].posY.whole, COS(angle) * FIXED_UNIT(2.875), SIN(angle) * FIXED_UNIT(2.875));
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006BC90.s")
 

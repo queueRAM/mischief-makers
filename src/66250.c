@@ -54,6 +54,7 @@ extern u16 D_800D2950; // = 0;
 extern s16 D_800D75A0[];
 extern s16 D_800D75D8[];
 extern s8 D_800D76D8[];
+extern s16 D_800D7AF8[];
 extern s16 D_800D7DC4[];
 extern s16 D_800D7DD8[];
 extern ActorFunc D_800D7F00[];
@@ -686,7 +687,103 @@ s32 func_80067394(u16 actor_index, u16 arg1) {
     return 1;
 }
 
+#ifdef NON_MATCHING
+// https://decomp.me/scratch/ds1nP
+void func_8006756C(u16 arg0) {
+    s32 pad;
+    s16* temp_t2;
+    s32 temp_f16;
+    s32 temp_v1_4;
+    s32 var_t1;
+    s16* var_v0;
+    s32 var_t3;
+    s32 var_t5;
+    u16 temp_v0_2;
+    u16 idx;
+
+    // TODO: var_160 ptr type?
+    var_v0 = (s16*)gActors[arg0].var_160;
+    if (var_v0[2] != 0) {
+        if (gActors[arg0].unk_120 < var_v0[1]) {
+            gActors[arg0].unk_120 += 1.0f;
+        }
+        else {
+            var_v0 += 2;
+            if (var_v0[0] < 0) {
+                var_v0 += var_v0[0];
+            }
+            gActors[arg0].var_160 = (s32)var_v0;
+            gActors[arg0].unk_120 = 1.0f;
+        }
+    }
+    else {
+        gActors[arg0].unk_120 = 0.0f;
+    }
+    temp_t2 = &D_800D7AF8[var_v0[0]];
+    gActors[arg0].graphicIndex = temp_t2[0];
+    switch (gActors[arg0].graphicIndex) {
+    case 0x1026:
+        var_t3 = 0x100000;
+        var_t5 = 0x90000;
+        break;
+    case 0x1028:
+        var_t3 = 0xE0000;
+        var_t5 = 0xA0000;
+        break;
+    case 0x102A:
+        var_t3 = 0xC0000;
+        var_t5 = 0xB0000;
+        break;
+    case 0x6837:
+        var_t3 = 0xC0000;
+        var_t5 = 0x40000;
+        break;
+    case 0x6838:
+        var_t3 = 0xC0000;
+        var_t5 = 0x30000;
+        break;
+    }
+
+    var_t3 *= gActors[arg0].scaleX;
+    var_t5 *= gActors[arg0].scaleX;
+    idx = gActors[arg0].unk_158_u16[1];
+    gActors[idx].unk_148 = 1.0f;
+    var_t1 = (COS(temp_t2[1]) * (gActors[arg0].scaleX * 589824.0f));
+    temp_f16 = (SIN(temp_t2[1]) * (gActors[arg0].scaleX * 589824.0f));
+    gActors[idx].unk_140_f32 = temp_t2[3] + gActors[arg0].unk_11C;
+    temp_v1_4 = ((temp_t2[2] + temp_t2[1]) & 0x3FF) << 0x10;
+    if (gActors[arg0].flags & 0x20) {
+        gActors[idx].flags |= gActors[arg0].flags & 0x20;
+        var_t3 = -var_t3;
+        var_t1 = -var_t1;
+        gActors[idx].var_160 = 0x04000000 - temp_v1_4;
+        gActors[idx].unk_140_f32 = -gActors[idx].unk_140_f32;
+    } else {
+        gActors[idx].var_160 = temp_v1_4;
+        gActors[idx].flags &= ~0x20;
+    }
+    gActors[idx].unk_134 = (var_t1 + var_t3) / 0x10000;
+    gActors[idx].unk_138 = (temp_f16 + var_t5) / 0x10000;
+    temp_v0_2 = SpawnParticle_List_90C0_16(gGraphicListBlank, 0, 0, 0);
+    if (temp_v0_2 != 0) {
+        gActors[temp_v0_2].graphicIndex = 0x290;
+        gActors[temp_v0_2].graphicFlags = 9;
+        gActors[temp_v0_2].flags |= gActors[arg0].flags & 0x20;
+        gActors[temp_v0_2].scaleX = gActors[arg0].scaleX * 0.8;
+        gActors[temp_v0_2].scaleY = gActors[arg0].scaleX * 0.8;
+        gActors[temp_v0_2].unk_148 = 0.0f;
+        gActors[temp_v0_2].var_160 = (temp_t2[1] << 0x10);
+        if (gActors[arg0].flags & 0x20) {
+            gActors[temp_v0_2].var_160 = 0x04000000 -  gActors[temp_v0_2].var_160;
+        }
+        gActors[temp_v0_2].pos[0].raw = gActors[arg0].pos[0].raw + (var_t1 / 2) + var_t3;
+        gActors[temp_v0_2].pos[1].raw = gActors[arg0].pos[1].raw + (temp_f16 / 2) + var_t5;
+        gActors[temp_v0_2].pos[2].raw = gActors[arg0].pos[2].raw - 2;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006756C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_800679DC.s")
 

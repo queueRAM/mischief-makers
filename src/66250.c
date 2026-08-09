@@ -1304,7 +1304,25 @@ void func_8006907C(u16 actor_index, u16 actor_state_1, u16 actor_state_2) {
 void func_80069130(u16 arg0) {
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80069138.s")
+s32 func_80069138(u16 actor_index, u16 actor_state_1, s32 arg2, u16 actor_state_2, s32 arg4) {
+    s32 temp_v0;
+
+    temp_v0 = func_800686D8(actor_index);
+    if (temp_v0 != 0) {
+        if (temp_v0 & 2) {
+            gActors[actor_index].state = actor_state_1;
+            gActors[actor_index].unk_178 = arg2;
+        }
+        else {
+            gActors[actor_index].state = actor_state_2;
+            gActors[actor_index].unk_178 = arg4;
+        }
+        return TRUE;
+    }
+    else {
+        return FALSE;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80069204.s")
 

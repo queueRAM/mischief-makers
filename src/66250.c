@@ -1122,7 +1122,18 @@ u32 func_80068A30(void) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80068A68.s")
+s32 func_80068A68(void) {
+    if (func_800689A8()) {
+        return 1;
+    }
+    if (func_800689F8()) {
+        return 2;
+    }
+    if (func_80068A30()) {
+        return 3;
+    }
+    return 0;
+}
 
 u32 func_80068ACC(void) {
     return 1;

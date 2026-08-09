@@ -1566,7 +1566,19 @@ void func_80069CDC(u16 actor_index) {
     func_80069C54(actor_index);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80069D04.s")
+s32 func_80069D04(u16 actor_index) {
+    func_80069B94(actor_index);
+    if (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK6) {
+        gActors[actor_index].state += 1;
+        gActors[actor_index].flags |= ACTOR_FLAG_UNK17; \
+        gActors[actor_index].flags &= ~ACTOR_FLAG_UNK16; \
+        gActors[actor_index].flags_098 &= ~ACTOR_FLAG3_UNK5;
+        return TRUE;
+    }
+    else {
+        return FALSE;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80069DA8.s")
 

@@ -1186,7 +1186,15 @@ s32 func_80068C48(u16 actor_index, u16 arg1) {
     return FALSE;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80068CA8.s")
+s32 func_80068CA8(u16 actor_index, u16 actor_state) {
+    if ((gActors[actor_index].var_150 & 0x20000) && (D_800E3584 & 0x10000)) {
+        gActors[actor_index].state = actor_state;
+        return TRUE;
+    }
+    else {
+        return FALSE;
+    }
+}
 
 s32 func_80068D18(u16 actor_index, u16 arg1) {
     if ((((s32)gActors[actor_index].var_150 << 0xE) < 0) && (D_800E3584 & 0x30000)) {

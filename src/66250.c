@@ -3,6 +3,7 @@
 #include "common.h"
 #include "actor.h"
 #include "28EF0.h"
+#include "1F1E0.h"
 
 // forward declarations
 void func_80067E50(u16 actor_index, void* arg1);
@@ -948,7 +949,18 @@ s32 func_80068040(u16 actor_index, u16 arg1);
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80068040.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_800682AC.s")
+u16 func_800682AC(u16 actor_index, s16 x, s16 y) {
+    if (func_8001FCA0(actor_index, x, y) & 0x80) {
+        if (gPlatformHit != 0 && gActors[gPlatformHitActor].actorType == 2) {
+            if (gActors[actor_index].unk_148 != gActors[gPlatformHitActor].unk_148) {
+                return 2;
+            }
+            return 3;
+        }
+        return 1;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80068378.s")
 

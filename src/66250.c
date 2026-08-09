@@ -68,6 +68,7 @@ extern s16 D_800D7CB0[];
 extern s16 D_800D7CB8[];
 extern s16 D_800D7DC4[];
 extern s16 D_800D7DD8[];
+extern s16 D_800D7E48[];
 extern ActorFunc D_800D7F00[];
 extern u16 D_800D80C0[]; // = { 0x0000, 0x0010, 0x0030, 0x0000, };
 extern s16 D_800D8190[]; /* = {
@@ -1621,7 +1622,14 @@ void func_80069EC4(u16 actor_index, f32 arg1) {
     gActors[actor_index].unk_11C = 0.0f;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80069F10.s")
+void func_80069F10(u16 actor_index) {
+    gActors[actor_index].velocityX.raw = (FIXED_UNIT(0.9375) * gActors[actor_index].unk_118) * gActors[actor_index].unk_148;
+    gActors[actor_index].graphicIndex = D_800D7E48[(u16)gActors[actor_index].unk_11C / 2];
+    gActors[actor_index].unk_11C += gActors[actor_index].unk_118;
+    if (gActors[actor_index].unk_11C > 32.0) {
+        gActors[actor_index].unk_11C -= 32.0;
+    }
+}
 
 void func_8006A06C(u16 actor_index, f32 arg1) {
     gActors[actor_index].state = 0xA0;

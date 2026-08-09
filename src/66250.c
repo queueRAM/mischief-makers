@@ -1600,7 +1600,20 @@ void func_80069DA8(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80069E18.s")
+void func_80069E18(u16 actor_index) {
+    gActors[actor_index].unk_118 -= 1.0f;
+    if (gActors[actor_index].unk_118 == 0.0f) {
+        if (!(gActors[actor_index].flags & ACTOR_FLAG_FLIPPED)) {
+            gActors[actor_index].flags |= ACTOR_FLAG_FLIPPED;
+            gActors[actor_index].unk_148 = -1.0f;
+        }
+        else {
+            gActors[actor_index].flags &= ~ACTOR_FLAG_FLIPPED;
+            gActors[actor_index].unk_148 = 1.0f;
+        }
+    }
+    func_80069B94(actor_index);
+}
 
 void func_80069EC4(u16 actor_index, f32 arg1) {
     gActors[actor_index].state = 0x90;

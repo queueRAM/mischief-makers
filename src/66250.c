@@ -2123,7 +2123,11 @@ void func_8006B9EC(u16 actor_index, u16 actor_1) {
     );
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006BA80.s")
+void func_8006BA80(u16 arg0_unused, u16 actor_index) {
+    gActors[actor_index].actorType = 0x2601;
+    gActors[actor_index].velocityY.raw = FIXED_UNIT(4.0);
+    func_8002A57C(actor_index, 0x2000, gActors[D_800E3580].posX.raw, FIXED_UNIT(3.0));
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006BAFC.s")
 

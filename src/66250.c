@@ -1693,7 +1693,18 @@ void func_8006A64C(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006A724.s")
+void func_8006A724(u16 actor_index) {
+    gActors[actor_index].flags |= ACTOR_FLAG_UNK17;
+    gActors[actor_index].flags &= ~ACTOR_FLAG_UNK16; \
+    gActors[actor_index].flags_098 &= ~ACTOR_FLAG3_UNK5;
+    gActors[actor_index].var_158 = 0;
+    gActors[actor_index].var_15C = FIXED_UNIT(16.0);
+    gActors[actor_index].var_160 = 1;
+    gActors[actor_index].velocityX.raw = 0;
+    gActors[actor_index].velocityY.raw = 0;
+    gActors[actor_index].graphicIndex = 0x1034;
+    gActors[actor_index].graphicTimer = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006A7B0.s")
 

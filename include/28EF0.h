@@ -32,6 +32,7 @@ void SpawnRoundBomb(u16 actor_index, s16 pos_x, s16 pos_y, s32 vel_x, s32 vel_y)
 s16 func_8003526C(u16 actor_index, u16 arg1, u16 arg2, u16 arg3, u16 arg4);
 void func_80034644(u16 actor_index);
 s32 func_8002995C(s32 arg0, s32 arg1);
+void func_8002B140(u16 actor_index, s16 arg1);
 void func_8002ECAC(u16 actor_index, s16 pos_x, s16 pos_y, s32 vel_x, s32 vel_y);
 void func_800333A0(s16 x, s16 y, s16 z, f32 arg3);
 void func_800340CC(u16 actor_index, s16 arg1, u16 arg2);

@@ -1473,7 +1473,57 @@ void func_80069814(u16 actor_index) {
     gActors[actor_index].graphicTimer = 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80069884.s")
+u16 func_80069884(u16 actor_index) {
+    s32 pad;
+    if ((gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK1) && !(gActors[actor_index].var_150 & 0x40000) &&
+        !(gActors[actor_index].var_150 & 0x80000) && !(gActors[actor_index].flags & ACTOR_FLAG_UNK15)) {
+        gActors[actor_index].graphicFlags &= ~ACTOR_GFLAG_ROTZ;
+        switch (gActors[actor_index].unk_0DD) {
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        default:
+            gActors[actor_index].unk_118 = 0.0f;
+            func_80069814(actor_index);
+            func_8002B140(actor_index, 0x40);
+            return TRUE;
+        case 6:
+        case 7:
+        case 8:
+            gActors[actor_index].unk_118 = 1.0f;
+            func_80069814(actor_index);
+            Sound_PlaySfxAtActor2(SFX_CLANCER_OW_009D, actor_index);
+            func_8002B140(actor_index, 0x80);
+            return TRUE;
+        case 9:
+        case 10:
+        case 11:
+            gActors[actor_index].unk_118 = 3.0f;
+            func_80069814(actor_index);
+            Sound_PlaySfxAtActor2(SFX_CLANCER_OW_009D, actor_index);
+            return TRUE;
+        case 12:
+        case 13:
+        case 14:
+            gActors[actor_index].unk_118 = 1.0f;
+            func_80069814(actor_index);
+            Sound_PlaySfxAtActor2(SFX_CLANCER_OW_009D, actor_index);
+            return TRUE;
+        case 19:
+            Sound_PlaySfxAtActor2(SFX_CLANCER_OW_009D, actor_index);
+            gActors[actor_index].flags = 0;
+            gActors[actor_index].health = 0;
+            /* fallthrough */
+        case 20:
+        case 23:
+            return TRUE;
+        }
+    }
+    else {
+        return FALSE;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80069A18.s")
 

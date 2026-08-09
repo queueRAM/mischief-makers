@@ -2532,7 +2532,8 @@ void func_8002ED34(u16 actor_index, s16 pos_x, s16 pos_y, s16 vel_x, s16 vel_y) 
 // @param pos_x x-position of projectile
 // @param pos_y y-position of projectile
 // @param vel_x unused.
-void SpawnBoomerang(u16 actor_index, s16 pos_x, s16 pos_y, s32 vel_x) {
+// @param vel_y unused.
+void SpawnBoomerang(u16 actor_index, s16 pos_x, s16 pos_y, s32 vel_x, s32 vel_y) {
     gActors[actor_index].actorType = ACTORTYPE_OVL0_GEN_BOOMERANG;
     Actor_Initialize(actor_index);
     gActors[actor_index].posX.whole = pos_x;

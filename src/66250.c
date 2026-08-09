@@ -2129,7 +2129,10 @@ void func_8006BA80(u16 arg0_unused, u16 actor_index) {
     func_8002A57C(actor_index, 0x2000, gActors[D_800E3580].posX.raw, FIXED_UNIT(3.0));
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006BAFC.s")
+void func_8006BAFC(u16 actor_0, u16 actor_1) {
+    SpawnBoomerang(actor_1, gActors[actor_0].posX.whole, gActors[actor_0].posY.whole, 0, 0);
+    gActors[actor_1].unk_0F8.raw = -3;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006BB8C.s")
 

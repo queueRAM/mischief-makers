@@ -70,6 +70,7 @@ extern s16 D_800D7DC4[];
 extern s16 D_800D7DD8[];
 extern s16 D_800D7E48[];
 extern s16 D_800D7E68[];
+extern s16 D_800D7E88[];
 extern ActorFunc D_800D7F00[];
 extern u16 D_800D80C0[]; // = { 0x0000, 0x0010, 0x0030, 0x0000, };
 extern s16 D_800D8190[]; /* = {
@@ -1647,7 +1648,15 @@ void func_8006A0B8(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006A214.s")
+void func_8006A214(u16 actor_index) {
+    gActors[actor_index].velocityX.raw = (FIXED_UNIT(1.5) * gActors[actor_index].unk_118) * gActors[actor_index].unk_148;
+    gActors[actor_index].graphicIndex = D_800D7E88[(u16)gActors[actor_index].unk_11C / 4];
+    gActors[actor_index].unk_11C += gActors[actor_index].unk_118;
+    if (gActors[actor_index].unk_11C >= 16.0) {
+        gActors[actor_index].unk_11C -= 16.0;
+        Sound_PlaySfxAtActor2(0x12C, actor_index);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006A384.s")
 

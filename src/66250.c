@@ -2144,7 +2144,13 @@ void func_8006BB8C(u16 actor_0, u16 actor_1) {
     SpawnShuriken(actor_1, gActors[actor_0].posX.whole, gActors[actor_0].posY.whole, COS(angle) * FIXED_UNIT(2.875), SIN(angle) * FIXED_UNIT(2.875));
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006BC90.s")
+void func_8006BC90(u16 actor_0, u16 actor_1) {
+    gActors[actor_1].parentIndex = actor_0;
+    gActors[actor_1].flags_098 |= ACTOR_FLAG3_UNK9;
+    gActors[actor_1].unk_104 = gActors[actor_0].posX.raw;
+    gActors[actor_1].unk_108 = gActors[actor_0].posY.raw + FIXED_UNIT(6.0);
+    gActors[actor_1].unk_10C = gActors[actor_0].posZ.raw - 8;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006BD08.s")
 

@@ -1525,7 +1525,32 @@ u16 func_80069884(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80069A18.s")
+void func_80069A18(u16 actor_index) {
+    u16 particle_index;
+
+    func_8002B400(actor_index);
+    if (!(gActiveFrames & 3)) {
+        particle_index = SpawnParticle_List_90C0_16(
+            D_800E1540,
+            gActors[actor_index].posX.whole + (0x10 - (Rand() & 0x1F)),
+            gActors[actor_index].posY.whole + (0x10 - (Rand() & 0x1F)),
+            gActors[actor_index].posZ.whole - 1
+        );
+        if (particle_index != 0) {
+            gActors[particle_index].graphicFlags = ACTOR_GFLAG_SCALE;
+            gActors[particle_index].flags = ACTOR_FLAG_ACTIVE | ACTOR_FLAG_DRAW;
+            gActors[particle_index].var_110 = -0.06f;
+            gActors[particle_index].unk_114 = -0.06f;
+            gActors[particle_index].velocityX.raw = -gActors[actor_index].velocityX.raw / 2;
+            gActors[particle_index].velocityY.raw = -gActors[actor_index].velocityY.raw / 2;
+            gActors[particle_index].var_15C = 0x1000;
+            gActors[particle_index].var_154 = -0x12;
+            Actor_SetColorRgb(particle_index, 0x7F);
+            gActors[particle_index].unk_104 = -0x20;
+            gActors[particle_index].pfn_17C = func_80030A24;
+        }
+    }
+}
 
 void func_80069B94(u16 actor_index) {
     gActors[actor_index].velocityX.raw = Math_ApproachS32(gActors[actor_index].velocityX.raw, 0, FIXED_UNIT(1.0/4));

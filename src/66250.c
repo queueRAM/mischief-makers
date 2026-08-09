@@ -187,6 +187,7 @@ extern s16 D_800E1DA4[];
 extern s16 D_800E2024[];
 extern u8 D_800E223C[];
 extern u8 D_800E2250[];
+extern s16 D_800E2268[];
 extern u8 D_800E2274[];
 extern u8 D_800E2564[];
 extern u16 D_800E3570; // = 0; // actor flag storage?
@@ -2206,7 +2207,17 @@ s32 func_8006BEF4(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006C0F4.s")
+void func_8006C0F4(u16 actor_index) {
+    gActors[actor_index].state = 0x470;
+    gActors[actor_index].flags |= ACTOR_FLAG_UNK16;
+    gActors[actor_index].flags &= ~ACTOR_FLAG_UNK17; \
+    gActors[actor_index].flags_098 &= ~ACTOR_FLAG3_UNK6;
+    gActors[actor_index].graphicList = D_800E2268; \
+    gActors[actor_index].graphicTimer = 1;
+    gActors[actor_index].unk_144 = 4.0f;
+    gActors[actor_index].velocityX.raw /= 2;
+    gActors[actor_index].velocityY.raw = 0;
+}
 
 void ActorType2_Noop(u16 arg0) {
 }

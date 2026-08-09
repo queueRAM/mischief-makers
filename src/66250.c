@@ -1419,7 +1419,20 @@ u16 func_8006930C(u16 actor_index, u16 actor_state_1, u16 actor_state_2, u16 act
     return sp36;
 }
 
+#ifdef NON_MATCHING
+// https://decomp.me/scratch/NKTHr
+// matches with func_80012AB4(s16, s16), likely file split above
+s32 func_80069538(u16 actor_index) {
+    if (func_80012AB4(gActors[actor_index].posX.whole, gActors[actor_index].posY.whole + (gActors[actor_index].scaleX * 30.0f)) & 0x80) {
+        return TRUE;
+    }
+    else {
+        return FALSE;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80069538.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_800695E4.s")
 

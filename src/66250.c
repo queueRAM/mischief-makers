@@ -962,7 +962,34 @@ u16 func_800682AC(u16 actor_index, s16 x, s16 y) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80068378.s")
+u16 func_80068378(u16 actor_index) {
+    s16 x;
+    s16 y;
+    u16 temp_v0;
+    u16 index;
+    u16 bits;
+    s32 temp;
+
+    x = (30.0f * gActors[actor_index].unk_148) + gActors[actor_index].posX.whole;
+    y = gActors[actor_index].hitboxBY1 + gActors[actor_index].posY.whole + 1;
+    for (index = 0; index < 3; index++) {
+        temp_v0 = func_800682AC(actor_index, x, y);
+        if (temp_v0) {
+            return temp_v0;
+        }
+        y += 0xF;
+    }
+    if (!(gActors[actor_index].flags & 0x20)) {
+        bits = gActors[actor_index].flags_098 & 8;
+    } else {
+        temp = gActors[actor_index].flags_098 & 4;
+        bits = temp; // fakematch
+    }
+    if (bits) {
+        return 4;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_800684D0.s")
 

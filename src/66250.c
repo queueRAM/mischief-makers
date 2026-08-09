@@ -1324,7 +1324,21 @@ s32 func_80069138(u16 actor_index, u16 actor_state_1, s32 arg2, u16 actor_state_
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80069204.s")
+s32 func_80069204(u16 actor_index) {
+    u16 temp_a2;
+
+    temp_a2 = func_80068378(actor_index);
+    if (temp_a2 & 3) {
+        func_80068040(actor_index, 0);
+        if ((temp_a2 == 2) || (temp_a2 == 3)) {
+            gActors[actor_index].unk_11C /= ((Rand() & 1) + 1);
+        }
+        return TRUE;
+    }
+    else {
+        return FALSE;
+    }
+}
 
 void func_800692C0(u16 arg0) {
 }

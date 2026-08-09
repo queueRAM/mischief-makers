@@ -1,4 +1,5 @@
 #define func_80012AB4_ARGS
+#define func_8001FCA0_ARGS u16 actor_index, s32 x, s32 y
 #include "common.h"
 #include "actor.h"
 #include "28EF0.h"
@@ -910,7 +911,42 @@ void func_80067FEC(u16 actor_index) {
     }
 }
 
+#ifdef NON_MATCHING
+// https://decomp.me/scratch/2GiYM
+s32 func_80068040(u16 arg0, u16 arg1) {
+    s32 var_s1;
+    s32 temp_s2;
+    s32 temp_t1;
+    u16 var_s4;
+
+    if (arg1) {
+        var_s1 = gActors[arg0].hitboxBY0;
+    }
+    else {
+        var_s1 = gActors[arg0].hitboxBY0;
+    }
+    var_s1 += 8;
+    for (var_s4 = 6; var_s4 > 0; var_s4--, var_s1 += 0x10) {
+        if (!(func_8001FCA0(arg0, gActors[arg0].posX.whole, gActors[arg0].posY.whole + var_s1) & 0x80)) {
+            temp_s2 = func_8001FCA0(arg0, (gActors[arg0].posX.whole + (gActors[arg0].unk_148 * 30.0f)), gActors[arg0].posY.whole + var_s1) & 0x80;
+            temp_t1 = func_8001FCA0(arg0, (gActors[arg0].posX.whole + (gActors[arg0].unk_148 * 16.0f)), gActors[arg0].posY.whole + var_s1) & 0x80;
+            if (!(temp_s2) && !(temp_t1)) {
+                gActors[arg0].state = 0x120;
+                gActors[arg0].unk_178 = 5;
+                gActors[arg0].unk_118 = 32.0f;
+                gActors[arg0].unk_11C = ((sqrtf((32.0f * ((var_s1 + 0x14) * 0x10)) + 16.0f) - 4.0f) / 8) * 17408.0f;
+                gActors[arg0].unk_120 = gActors[arg0].unk_148 * 98304.0f;
+                gActors[arg0].unk_124 = 0.0f;
+                return 0;
+            }
+        }
+    }
+    return 1;
+}
+#else
+s32 func_80068040(u16 actor_index, u16 arg1);
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80068040.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_800682AC.s")
 

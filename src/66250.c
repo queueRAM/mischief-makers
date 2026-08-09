@@ -1246,7 +1246,7 @@ void func_80068E48(u16 actor_index, u16 actor_state_1, u16 actor_state_2) {
     }
 }
 
-s32 func_80068F08(u16 actor_index) {
+u16 func_80068F08(u16 actor_index) {
     s16 diff;
 
     diff = gActors[actor_index].unk_17C - gActors[actor_index].unk_184_s16[0];
@@ -1272,7 +1272,7 @@ s32 func_80068F08(u16 actor_index) {
 }
 
 void func_80068FBC(u16 actor_index, u16 actor_state_1, u16 actor_state_2) {
-    s32 temp_v0;
+    u16 temp_v0;
 
     temp_v0 = func_80068F08(actor_index);
     switch (temp_v0) {
@@ -1286,7 +1286,20 @@ void func_80068FBC(u16 actor_index, u16 actor_state_1, u16 actor_state_2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006907C.s")
+void func_8006907C(u16 actor_index, u16 actor_state_1, u16 actor_state_2) {
+    u16 temp_v0;
+
+    temp_v0 = func_80068F08(actor_index);
+    switch (temp_v0) {
+    case 0:
+        gActors[actor_index].state = actor_state_1;
+        break;
+    case 0x81:
+    case 0x83:
+        gActors[actor_index].state = actor_state_2;
+        break;
+    }
+}
 
 void func_80069130(u16 arg0) {
 }

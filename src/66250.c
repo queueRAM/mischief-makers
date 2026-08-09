@@ -1052,12 +1052,18 @@ s32 func_800686D8(u16 actor_index) {
         if (gActors[actor_index].flags & ACTOR_FLAG_FLIPPED) {
             return 1;
         }
-        return 3;
+        else {
+            return 3;
+        }
     }
-    if (gActors[actor_index].flags & ACTOR_FLAG_FLIPPED) {
-        return 2;
+    else {
+        if (gActors[actor_index].flags & ACTOR_FLAG_FLIPPED) {
+            return 2;
+        }
+        else {
+            return 4;
+        }
     }
-    return 4;
 }
 
 u32 func_80068870(void) {
@@ -1240,7 +1246,30 @@ void func_80068E48(u16 actor_index, u16 actor_state_1, u16 actor_state_2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80068F08.s")
+s32 func_80068F08(u16 actor_index) {
+    s16 diff;
+
+    diff = gActors[actor_index].unk_17C - gActors[actor_index].unk_184_s16[0];
+    if ((diff < 11) && (diff > -11)) {
+        return 0;
+    }
+    if (diff >= 0) {
+        if (!(gActors[actor_index].flags & ACTOR_FLAG_FLIPPED)) {
+            return 0x81;
+        }
+        else {
+            return 0x82;
+        }
+    }
+    else {
+        if (gActors[actor_index].flags & ACTOR_FLAG_FLIPPED) {
+            return 0x83;
+        }
+        else {
+            return 0x84;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80068FBC.s")
 

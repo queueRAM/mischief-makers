@@ -2108,7 +2108,10 @@ void func_8006B648(u16 actor_index, u16 arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006B940.s")
+void func_8006B940(u16 actor_index, u16 actor_1) {
+    SpawnRoundBomb(actor_1, gActors[actor_index].posX.whole, gActors[actor_index].posY.whole, 0, FIXED_UNIT(2.5));
+    func_8002A57C(actor_1, 0x3000, gActors[D_800E3580].posX.raw, FIXED_UNIT(4.0));
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006B9EC.s")
 

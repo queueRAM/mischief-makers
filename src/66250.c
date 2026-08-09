@@ -1668,7 +1668,14 @@ void func_8006A384(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006A4DC.s")
+void func_8006A4DC(u16 actor_index, s16 vel_y_scale) {
+    gActors[actor_index].velocityY.raw = ((f32)vel_y_scale * FIXED_UNIT(0.375) * gActors[actor_index].unk_118) * gActors[actor_index].unk_148;
+    gActors[actor_index].graphicIndex = D_800D7E90[(u16)(gActors[actor_index].unk_11C / 2)];
+    gActors[actor_index].unk_11C += gActors[actor_index].unk_118;
+    if (gActors[actor_index].unk_11C > 30.0) {
+        gActors[actor_index].unk_11C -= 30.0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006A64C.s")
 

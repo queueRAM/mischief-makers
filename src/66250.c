@@ -979,7 +979,7 @@ u16 func_80068378(u16 actor_index) {
         }
         y += 0xF;
     }
-    if (!(gActors[actor_index].flags & 0x20)) {
+    if (!(gActors[actor_index].flags & ACTOR_FLAG_FLIPPED)) {
         bits = gActors[actor_index].flags_098 & 8;
     } else {
         temp = gActors[actor_index].flags_098 & 4;
@@ -994,7 +994,7 @@ u16 func_80068378(u16 actor_index) {
 s32 func_800684D0(u16 actor_index) {
     s32 x;
 
-    if (!(gActors[actor_index].flags & 0x20)) {
+    if (!(gActors[actor_index].flags & ACTOR_FLAG_FLIPPED)) {
         x = gActors[actor_index].posX.whole + gActors[actor_index].hitboxBX1;
     }
     else {
@@ -1015,7 +1015,7 @@ s32 func_80068570(u16 actor_index) {
     y = gActors[actor_index].posY.whole + gActors[actor_index].hitboxBY1 + 32;
     var_s1 = 0;
     if (func_8001FCA0(actor_index, gActors[actor_index].posX.whole + gActors[actor_index].hitboxBX1, y) & 0x80) {
-        if (gActors[actor_index].flags_098 & 8) {
+        if (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK3) {
             if (func_8001FCA0(actor_index, gActors[actor_index].posX.whole + gActors[actor_index].hitboxBX1 - 1, y) & 0x80) {
                 var_s1 = 34;
             }
@@ -1025,7 +1025,7 @@ s32 func_80068570(u16 actor_index) {
         }
     }
     if (func_8001FCA0(actor_index, gActors[actor_index].posX.whole + gActors[actor_index].hitboxBX0, y) & 0x80) {
-        if (gActors[actor_index].flags_098 & 4) {
+        if (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK2) {
             if (func_8001FCA0(actor_index, gActors[actor_index].posX.whole + gActors[actor_index].hitboxBX0 + 1, y) & 0x80) {
                 var_s1 += 17;
             }
@@ -1041,7 +1041,24 @@ u32 func_800686CC(u32 arg0) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_800686D8.s")
+s32 func_800686D8(u16 actor_index) {
+    if (func_8001FCA0(actor_index, gActors[actor_index].posX.whole, gActors[actor_index].posY.whole + gActors[actor_index].hitboxBY1 - 8) & 0xC0) {
+        return 0;
+    }
+    if (func_8001FCA0(actor_index, gActors[actor_index].posX.whole - (gActors[actor_index].scaleX * 13.0f), gActors[actor_index].posY.whole + gActors[actor_index].hitboxBY1 - 8) & 0xC0) {
+        if (func_8001FCA0(actor_index, gActors[actor_index].posX.whole + (gActors[actor_index].scaleX * 13.0f), gActors[actor_index].posY.whole + gActors[actor_index].hitboxBY1 - 8) & 0xC0) {
+            return 0;
+        }
+        if (gActors[actor_index].flags & ACTOR_FLAG_FLIPPED) {
+            return 1;
+        }
+        return 3;
+    }
+    if (gActors[actor_index].flags & ACTOR_FLAG_FLIPPED) {
+        return 2;
+    }
+    return 4;
+}
 
 u32 func_80068870(void) {
     return 0;

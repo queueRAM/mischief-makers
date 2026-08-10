@@ -277,6 +277,7 @@ typedef struct {
             union {
                 /* 0x160 */ s32 var_160;
                 /* 0x160 */ u8 var_160_u8;
+                /* 0x160 */ s16* graphicList_160;
             };
             /* 0x164 */ s32 unk_164;
             union {

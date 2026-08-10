@@ -255,6 +255,8 @@ extern s16 D_800E22CC[];
 extern s16 D_800E22F8[];
 extern s16 D_800E2314[];
 extern s16 D_800E2330[];
+extern s16 D_800E2374[];
+extern s16 D_800E23A4[];
 extern s16 D_800E2464[];
 extern s16 D_800E24A0[];
 extern u8 D_800E2564[];
@@ -4551,7 +4553,54 @@ void func_80072F54(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80072FE4.s")
+void func_80072FE4(u16 actor_index) {
+    if (func_8006C8B8(actor_index)) {
+        return;
+    }
+
+    switch (gActors[actor_index].state) {
+    case 0x110:
+        gActors[actor_index].state++;
+        ACTOR_GFX_INIT(actor_index, D_800E2374);
+        gActors[actor_index].velocityX.raw = gActors[actor_index].unk_148 * FIXED_UNIT(-0.09375);
+        gActors[actor_index].unk_118 = 30.0f;
+        /* fallthrough */
+    case 0x111:
+        func_80033E7C(
+            actor_index,
+            gActors[actor_index].posX.whole,
+            gActors[actor_index].posY.whole + 8,
+            gActors[actor_index].posZ.whole - 1,
+            FIXED_UNIT(1),
+            10,
+            5);
+        gActors[actor_index].unk_118 -= 1.0f;
+        if ((gActors[actor_index].unk_118 < 0.0f) || (gActors[actor_index].flags_098 & 0x40)) {
+            gActors[actor_index].state++;
+            gActors[actor_index].unk_144 = 8.0f;
+            gActors[actor_index].flags |= ACTOR_FLAG_UNK17;
+            gActors[actor_index].flags &= ~ACTOR_FLAG_UNK16;
+            gActors[actor_index].flags_098 &= ~ACTOR_FLAG3_UNK5;
+            gActors[actor_index].velocityX.raw = gActors[actor_index].unk_148 * FIXED_UNIT(-1.5);
+            gActors[actor_index].velocityY.raw = FIXED_UNIT(1.5);
+        }
+        break;
+    case 0x112:
+        func_80069DA8(actor_index);
+        if (gActors[actor_index].velocityY.raw < 0) {
+            if (gActors[actor_index].flags_098 & 0x20) {
+                gActors[actor_index].state = 0x191;
+                gActors[actor_index].flags |= ACTOR_FLAG_UNK16; \
+                gActors[actor_index].flags &= ~ACTOR_FLAG_UNK17; \
+                gActors[actor_index].flags_098 &= ~ACTOR_FLAG3_UNK6;
+                ACTOR_GFX_INIT(actor_index, D_800E23A4);
+                gActors[actor_index].velocityY.raw = 0;
+                gActors[actor_index].var_158 = 20;
+            }
+        }
+        break;
+    }
+}
 
 // update behavior for almost every Clancer
 void Clancer_Update(u16 actor_index) {

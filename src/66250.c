@@ -183,12 +183,14 @@ extern s16 D_800E199C[];
 extern s16 D_800E19C0[];
 extern s16 D_800E1A8C[];
 extern s16 D_800E1BF4[];
-extern s16 D_800E1C1C[]; // graphic list
+extern s16 D_800E1C00[];
+extern s16 D_800E1C1C[];
 extern s16 D_800E1C2C[];
 extern s16 D_800E1C78[];
 extern s16 D_800E1CC4[];
 extern s16 D_800E1CE8[];
 extern s16 D_800E1D0C[];
+extern s16 D_800E1D30[];
 extern s16 D_800E1D84[];
 extern s16 D_800E1D8C[];
 extern s16 D_800E1DA4[];
@@ -2863,7 +2865,46 @@ void func_8006DF28(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006E000.s")
+void func_8006E000(u16 actor_index) {
+    if (!func_8006C908(actor_index)) {
+        if (gActors[actor_index].state == 0x130) {
+            gActors[actor_index].state++;
+            func_8006C6F0(actor_index);
+            gActors[actor_index].flags |= ACTOR_FLAG_UNK17;
+            gActors[actor_index].flags &= ~ACTOR_FLAG_UNK16;
+            gActors[actor_index].flags_098 &= ~ACTOR_FLAG3_UNK5;
+            gActors[actor_index].graphicList = D_800E1C00; \
+            gActors[actor_index].graphicTimer = 1;
+            gActors[actor_index].unk_144 = 8.0f;
+            gActors[actor_index].velocityY.raw = gActors[actor_index].unk_11C;
+            gActors[actor_index].velocityX.raw = gActors[actor_index].unk_120;
+        }
+        if ((gActors[actor_index].unk_124 != 0.0f) && (gActors[actor_index].velocityY.raw < FIXED_UNIT(2.5))) {
+            gActors[actor_index].unk_124 = 0.0f;
+            if ((gActors[actor_index].velocityX.raw == 0) || 
+                (!(gActors[actor_index].flags & ACTOR_FLAG_FLIPPED) && (gActors[actor_index].velocityX.raw > 0)) ||
+                 ((gActors[actor_index].flags & ACTOR_FLAG_FLIPPED) && (gActors[actor_index].velocityX.raw < 0))) {
+                gActors[actor_index].graphicList = D_800E1D0C;
+            }
+            else {
+                gActors[actor_index].graphicList = D_800E1D30;
+            }
+            gActors[actor_index].graphicTimer = 1;
+        }
+        if (gActors[actor_index].velocityY.raw < 0) {
+            gActors[actor_index].state = 0x101;
+        }
+        else {
+            if (func_80069538(actor_index) != 0) {
+                gActors[actor_index].unk_13C_f32 = 28.0f;
+            }
+            if (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK4) {
+                gActors[actor_index].velocityY.raw = 0;
+            }
+        }
+        func_8006ABEC(actor_index, D_800E1C78);
+    }
+}
 
 void func_8006E1F8(u16 actor_index) {
     if (!func_8006C908(actor_index)) {

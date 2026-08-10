@@ -250,6 +250,8 @@ extern u8 D_800E223C[];
 extern u8 D_800E2250[];
 extern s16 D_800E2268[];
 extern u8 D_800E2274[];
+extern s16 D_800E22A8[];
+extern s16 D_800E22B4[];
 extern u8 D_800E2564[];
 extern u16 D_800E3570; // = 0; // actor flag storage?
 extern u16 D_800E3574; // = 0; // actor flag storage?
@@ -4257,7 +4259,51 @@ void func_800722F8(u16 actor_index) {
     func_8006641C(actor_index);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80072400.s")
+void func_80072400(u16 actor_index) {
+    if (func_8006CB4C(actor_index)) {
+        return;
+    }
+
+    switch (gActors[actor_index].state) {
+    case 0x420:
+        gActors[actor_index].state++;
+        gActors[actor_index].flags |= ACTOR_FLAG_UNK17;
+        gActors[actor_index].flags &= ~ACTOR_FLAG_UNK16;
+        gActors[actor_index].flags_098 &= ~ACTOR_FLAG3_UNK5;
+        ACTOR_GFX_INIT(actor_index, D_800E22A8);
+        gActors[actor_index].velocityY.raw = gActors[actor_index].unk_118;
+        /* fallthrough */
+    case 0x421:
+        gActors[actor_index].velocityX.raw = Math_ApproachS32(gActors[actor_index].velocityX.raw, 0, FIXED_UNIT(0.03125));
+        if (gActors[actor_index].velocityY.raw < 0) {
+            if (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK5) {
+                gActors[actor_index].state++;
+                Sound_PlaySfxAtActor2(SFX_0094, actor_index);
+            }
+        }
+        else if (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK4) {
+            gActors[actor_index].velocityY.raw = 0;
+        }
+        func_80069DA8(actor_index);
+        break;
+    case 0x422:
+        gActors[actor_index].state++;
+        ACTOR_GFX_INIT(actor_index, D_800E22B4);
+        gActors[actor_index].flags |= ACTOR_FLAG_UNK16;
+        gActors[actor_index].flags &= ~ACTOR_FLAG_UNK17;
+        gActors[actor_index].flags_098 &= ~ACTOR_FLAG3_UNK6;
+        gActors[actor_index].velocityY.raw = 0;
+        gActors[actor_index].unk_144 = 4.0f;
+        /* fallthrough */
+    case 0x423:
+        gActors[actor_index].unk_120 -= 1.0f;
+        if (gActors[actor_index].unk_120 < 0.0f) {
+            gActors[actor_index].state = 0x210;
+        }
+        func_80069B94(actor_index);
+        break;
+    }
+}
 
 void func_80072620(u16 arg0) {
 }

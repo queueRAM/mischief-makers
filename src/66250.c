@@ -2635,7 +2635,24 @@ void func_8006D160(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006D3E4.s")
+void func_8006D3E4(u16 actor_index, u16 actor_state) {
+    u16 cur_110;
+    u16 cur_0D8;
+
+    if (gActors[actor_index].flags & ACTOR_FLAG_FLIPPED) {
+        gActors[actor_index].var_110 = ((u16)gActors[actor_index].var_110 | 0x100);
+    }
+    else {
+        gActors[actor_index].var_110 = ((u16)gActors[actor_index].var_110 & ~0x100);
+    }
+    cur_110 = gActors[actor_index].var_110;
+    cur_0D8 = gActors[actor_index].var_0D8;
+    Actor_Initialize(actor_index);
+    gActors[actor_index].var_110 = cur_110;
+    gActors[actor_index].var_0D8 = cur_0D8;
+    func_8006D160(actor_index);
+    gActors[actor_index].state = actor_state;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006D65C.s")
 

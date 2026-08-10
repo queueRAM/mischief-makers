@@ -3716,7 +3716,17 @@ void func_80070A14(u16 arg0) {
 void func_80070A1C(u16 arg0) {
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80070A24.s")
+void func_80070A24(u16 actor_0, u16 actor_1, u16 index, s32 arg3) {
+    if (actor_1 == PLAYER_INDEX) {
+        index += 110;
+        func_8004F614(actor_0, D_800E3630[index + 0] * gActors[actor_0].unk_124, D_800E3630[index + 1] * gActors[actor_0].unk_124, arg3);
+    }
+    else {
+        index += gActors[actor_1].unk_0CE * 10;
+        gActors[actor_1].unk_0F8.raw = D_800E3630[index + 0] * gActors[actor_0].unk_148 * gActors[actor_0].unk_124;
+        gActors[actor_1].unk_0FC.raw = D_800E3630[index + 1] * gActors[actor_0].unk_124;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80070BEC.s")
 

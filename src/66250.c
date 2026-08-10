@@ -3492,7 +3492,52 @@ void func_8006FF70(u16 actor_index) {
 void func_80070000(u16 arg0) {
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80070008.s")
+void func_80070008(u16 actor_index) {
+    s32 var_a0;
+
+    if (!func_8006CAD4(actor_index)) {
+        switch (gActors[actor_index].state) {
+        case 0x280:
+            func_8006A4DC(actor_index, 1);
+            gActors[actor_index].velocityX.raw = gActors[actor_index].unk_148 * FIXED_UNIT(2.0);
+            gActors[actor_index].graphicFlags |= ACTOR_GFLAG_ROTZ;
+            if (gActors[actor_index].flags & ACTOR_FLAG_FLIPPED) {
+                var_a0 = 0x03000000;
+                gActors[actor_index].unk_144 = 12.0f;
+            }
+            else {
+                var_a0 = 0x01000000;
+                gActors[actor_index].unk_144 = 16.0f;
+            }
+            gActors[actor_index].var_158 = func_800298D0(var_a0, gActors[actor_index].var_158, FIXED_UNIT(32.0));
+            if (gActors[actor_index].var_158 == var_a0) {
+                gActors[actor_index].state++;
+                gActors[actor_index].flags &= ~ACTOR_FLAG_UNK16;
+                gActors[actor_index].flags |= ACTOR_FLAG_UNK17;
+                gActors[actor_index].velocityX.raw = 0;
+            }
+            break;
+        case 0x281:
+            gActors[actor_index].velocityX.raw = gActors[actor_index].unk_148 * FIXED_UNIT(0.5);
+            if (gActors[actor_index].var_158 == 0x03000000) {
+                if (!(func_8001FCA0(actor_index, gActors[actor_index].posX.whole + gActors[actor_index].hitboxBX0 - 3, gActors[actor_index].posY.whole) & 0x80)) {
+                    gActors[actor_index].state = 0x250;
+                    gActors[actor_index].unk_118 = FIXED_UNIT(-1.0);
+                    gActors[actor_index].unk_11C = FIXED_UNIT(3.125);
+                }
+                func_8006A4DC(actor_index, -1);
+                return;
+            }
+            if (!(func_8001FCA0(actor_index, gActors[actor_index].posX.whole + gActors[actor_index].hitboxBX1 + 3, gActors[actor_index].posY.whole) & 0x80)) {
+                gActors[actor_index].state = 0x250;
+                gActors[actor_index].unk_118 = FIXED_UNIT(1.0);
+                gActors[actor_index].unk_11C = FIXED_UNIT(3.125);
+            }
+            func_8006A4DC(actor_index, 1);
+            break;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80070234.s")
 

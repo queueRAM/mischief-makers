@@ -35,7 +35,6 @@ extern u32 func_80029D58(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 extern u32 func_80029DEC(s32 arg0, s32 arg1);
 extern u16 func_80072CC4(u16 actor_index);
 extern void func_80073EF4(u16 actor_index);
-extern u16 func_8006C7B8(u16 actor_index);
 extern u16 func_80069884(u16 actor_index);
 extern void func_800742FC(u16, u16);
 extern void func_80078CC8(u16 actor_index, s32 arg1);
@@ -2364,7 +2363,25 @@ void func_8006C6F0(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006C7B8.s")
+u16 func_8006C7B8(u16 actor_index) {
+    if ((gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK9) && !(gActors[actor_index].var_150 & 0x40000)) {
+        func_80040858(actor_index);
+        gActors[actor_index].graphicFlags &= ~ACTOR_GFLAG_ROTZ;
+        if (gActors[actor_index].scaleX == 0.7) {
+            Sound_PlaySfxAtActor2(SFX_CLANCER_OW_00A4, actor_index);
+        }
+        else {
+            Sound_PlaySfxAtActor2(SFX_CLANCER_OW_0067, actor_index);
+        }
+        func_80029134(actor_index);
+        gActors[actor_index].state = 0x160;
+        func_8006C6F0(actor_index);
+        return TRUE;
+    }
+    else {
+        return FALSE;
+    }
+}
 
 u16 func_8006C8B8(u16 actor_index){
     u16 result = func_80069C54(actor_index);

@@ -252,6 +252,10 @@ extern s16 D_800E2268[];
 extern u8 D_800E2274[];
 extern s16 D_800E22A8[];
 extern s16 D_800E22B4[];
+extern s16 D_800E22CC[];
+extern s16 D_800E22F8[];
+extern s16 D_800E2314[];
+extern s16 D_800E2330[];
 extern u8 D_800E2564[];
 extern u16 D_800E3570; // = 0; // actor flag storage?
 extern u16 D_800E3574; // = 0; // actor flag storage?
@@ -4308,7 +4312,78 @@ void func_80072400(u16 actor_index) {
 void func_80072620(u16 arg0) {
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80072628.s")
+void func_80072628(u16 actor_index) {
+    s32 pos_x;
+
+    if (func_8006C8B8(actor_index)) {
+        return;
+    }
+
+    switch (gActors[actor_index].state) {
+    case 0x430:
+    case 0x440:
+    case 0x450:
+        gActors[actor_index].var_158 = 0;
+        Sound_PlaySfxAtActor2(SFX_CLANCER_CRY_00A1, actor_index);
+        switch (gActors[actor_index].state) {
+        case 0x430:
+        case 0x450:
+            gActors[actor_index].graphicList = D_800E22CC;
+            break;
+        case 0x440:
+            gActors[actor_index].graphicList = D_800E2314;
+            break;
+        }
+        gActors[actor_index].state++;
+        gActors[actor_index].graphicTimer = 1;
+        /* fallthrough */
+    case 0x431:
+    case 0x441:
+    case 0x451:
+        if (gActors[actor_index].var_158 == 0xF0) {
+            switch (gActors[actor_index].state) {
+            case 0x431:
+            case 0x441:
+                gActors[actor_index].graphicList = D_800E22F8;
+                break;
+            case 0x451:
+                gActors[actor_index].graphicList = D_800E2330;
+                break;
+            }
+            gActors[actor_index].state++;
+            gActors[actor_index].graphicTimer = 1;
+        }
+        if (!Actor_IsOutsideRegion(actor_index, 32)) {
+            func_80033E7C(
+                actor_index,
+                gActors[actor_index].posX.whole,
+                gActors[actor_index].posY.whole + (gActors[actor_index].scaleX * -4.0f),
+                gActors[actor_index].posZ.whole - 1,
+                FIXED_UNIT(1), FIXED_UNIT(8), 4
+            );
+        }
+        break;
+    case 0x432:
+    case 0x442:
+        if (gActors[actor_index].graphicIndex == 0x6846) {
+            pos_x = -1;
+        }
+        else {
+            pos_x = 0;
+        }
+        func_8006678C(actor_index, pos_x + 4, -2.0f, pos_x + 10, 0.0f);
+        break;
+    case 0x452:
+        if ((gActors[actor_index].graphicIndex == 0x6819) || (gActors[actor_index].graphicIndex == 0x681A)) {
+            func_8006678C(actor_index, 7.0f, -6.0f, 12.0f, -6.0f);
+        }
+        break;
+    }
+    if (gActors[actor_index].var_158 < 0x4000) {
+        gActors[actor_index].var_158++;
+    }
+    func_80069B94(actor_index);
+}
 
 void func_800728E8(u16 actor_index) {
     func_80072628(actor_index);

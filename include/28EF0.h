@@ -28,6 +28,8 @@ void Actor_ClearRange_C0ToC7(void);
 void Actor_UpdateNearest(u16 actor_index);
 void Actor_UpdateNearestTo0(u16 actor_index);
 
+u16 Actor_IsOutsideRegion(u16 actor_index, s16 length);
+
 void Actor_ApproachRgb(u16 actor_index, s16 arg1);
 void Actor_SetHitboxAX(u16 actor_index, s16 arg1, s16 arg2);
 

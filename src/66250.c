@@ -182,6 +182,7 @@ extern s16 D_800E198C[];
 extern s16 D_800E199C[];
 extern s16 D_800E19C0[];
 extern s16 D_800E1A8C[];
+extern s16 D_800E1BF4[];
 extern s16 D_800E1C1C[]; // graphic list
 extern s16 D_800E1C2C[];
 extern s16 D_800E1C78[];
@@ -2839,7 +2840,24 @@ void func_8006DDF0(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006DF28.s")
+void func_8006DF28(u16 actor_index) {
+    if (func_8006C8B8(actor_index) == 0) {
+        if (gActors[actor_index].state == 0x120) {
+            gActors[actor_index].state++;
+            gActors[actor_index].flags |= ACTOR_FLAG_UNK16;
+            gActors[actor_index].flags &= ~ACTOR_FLAG_UNK17; \
+            gActors[actor_index].flags_098 &= ~ACTOR_FLAG3_UNK6;
+            gActors[actor_index].graphicList = D_800E1BF4; \
+            gActors[actor_index].graphicTimer = 1;
+            gActors[actor_index].velocityX.raw = 0;
+            gActors[actor_index].unk_144 = 0.0f;
+        }
+        if (gActors[actor_index].graphicTimer == 0) {
+            gActors[actor_index].state = 0x130;
+            func_800657B0(actor_index);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006E000.s")
 

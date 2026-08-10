@@ -1451,7 +1451,7 @@ u16 func_8006930C(u16 actor_index, u16 actor_state_1, u16 actor_state_2, u16 act
     return sp36;
 }
 
-s32 func_80069538(u16 actor_index) {
+u16 func_80069538(u16 actor_index) {
     s16 y;
     y = gActors[actor_index].posY.whole + (gActors[actor_index].scaleX * 30.0f);
     if (func_80012AB4(gActors[actor_index].posX.whole, y) & 0x80) {
@@ -2861,7 +2861,37 @@ void func_8006DF28(u16 actor_index) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006E000.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006E1F8.s")
+void func_8006E1F8(u16 actor_index) {
+    if (!func_8006C908(actor_index)) {
+        if (gActors[actor_index].state == 0x250) {
+            gActors[actor_index].state++;
+            gActors[actor_index].flags |= ACTOR_FLAG_UNK17;
+            gActors[actor_index].flags &= ~ACTOR_FLAG_UNK16;
+            gActors[actor_index].flags_098 &= ~ACTOR_FLAG3_UNK5;
+            gActors[actor_index].unk_144 = 8.0f;
+            gActors[actor_index].velocityY.raw = gActors[actor_index].unk_11C;
+        }
+        gActors[actor_index].velocityX.raw = gActors[actor_index].unk_118;
+        if (((gActors[actor_index].velocityX.raw > 0) && (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK3)) || 
+            ((gActors[actor_index].velocityX.raw < 0) && (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK2))) {
+            gActors[actor_index].velocityX.raw = 0;
+        }
+        func_80069DA8(actor_index);
+        if (gActors[actor_index].velocityY.raw < 0) {
+            if (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK5) {
+                gActors[actor_index].state = 0x200;
+                gActors[actor_index].graphicFlags &= ~ACTOR_GFLAG_ROTZ;
+                gActors[actor_index].velocityX.raw /= 2;
+                gActors[actor_index].velocityY.raw = 0;
+                func_800658D8(actor_index);
+            }
+        }
+        else if (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK4) {
+            gActors[actor_index].velocityY.raw = 0;
+        }
+        gActors[actor_index].var_158 = func_800298D0(0, gActors[actor_index].var_158, FIXED_UNIT(32.0));
+    }
+}
 
 void func_8006E3DC(u16 arg0) {
 }

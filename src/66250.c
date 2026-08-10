@@ -4473,8 +4473,17 @@ void func_80072A28(u16 actor_index) {
     func_80069B94(actor_index);
 }
 
+void func_80072C1C(u16 actor_0, u16 actor_1) {
+    u16* val_array;
+    u16 index;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80072C1C.s")
+    // TODO: add u16* union type to var_158?
+    val_array = (u16*)gActors[actor_0].var_158;
+    for (index = 0; !(val_array[index] & 0x8000); index++) {
+        // copy from actor_0 u16 array ptr to actor_1 s32 0x150
+        gActors[actor_1].base_0F8_s32[index + 0x16] = val_array[index];
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80072CC4.s")
 

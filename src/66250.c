@@ -4531,7 +4531,12 @@ void func_80072E54(u16 actor_index) {
     gActors[actor_index].unk_144 = 0.0f;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80072EE0.s")
+void func_80072EE0(u16 actor_index) {
+    gActors[actor_index].var_150 &= ~0x8000000;
+    if (!(gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK21)) {
+        func_80072E54(actor_index);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80072F54.s")
 

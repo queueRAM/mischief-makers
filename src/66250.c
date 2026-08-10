@@ -2562,7 +2562,15 @@ void func_8006CFDC(u16 actor_index) {
     gActors[actor_index].var_0D8 = cur_0D8;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006D0EC.s")
+void func_8006D0EC(u16 actor_index) {
+    if (gActors[actor_index].state == 0) {
+        func_8006CD5C(actor_index);
+        func_800358DC(actor_index);
+    }
+    else {
+        ClanpotIcon_State1(actor_index);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006D160.s")
 

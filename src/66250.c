@@ -2757,7 +2757,19 @@ void func_8006D9A4(u16 actor_index) {
 void func_8006DB10(u16 arg0) {
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006DB18.s")
+void func_8006DB18(u16 actor_index) {
+    if (func_8006C908(actor_index) == 0) {
+        if (gActors[actor_index].state == 0xF0) {
+            gActors[actor_index].state++;
+            gActors[actor_index].flags |= ACTOR_FLAG_UNK17;
+            gActors[actor_index].flags &= ~ACTOR_FLAG_UNK16; \
+            gActors[actor_index].flags_098 &= ~ACTOR_FLAG3_UNK5;
+        }
+        gActors[actor_index].velocityX.raw = Math_ApproachS32(gActors[actor_index].velocityX.raw, 0, FIXED_UNIT(0.0625));
+        func_8006A214(actor_index);
+        func_8006ABEC(actor_index, NULL);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006DBE4.s")
 

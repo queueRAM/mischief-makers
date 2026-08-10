@@ -29,6 +29,7 @@ void Actor_UpdateNearest(u16 actor_index);
 void Actor_UpdateNearestTo0(u16 actor_index);
 
 void Actor_ApproachRgb(u16 actor_index, s16 arg1);
+void Actor_SetHitboxAX(u16 actor_index, s16 arg1, s16 arg2);
 
 u16 SpawnParticle_RingWaveBlue(f32 arg0, s16 pos_x, s16 pos_y, s16 pos_z);
 void SpawnParticle_SineUpNotes(s16 pos_x, s16 pos_y, s16 pos_z);

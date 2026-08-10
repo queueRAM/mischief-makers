@@ -268,8 +268,12 @@ typedef struct {
                 /* 0x158 */ s32 var_158;
                 /* 0x158 */ u16 unk_158_u16[2];
                 /* 0x158 */ ActorVarFunc pfn_158;
+                /* 0x158 */ s16* graphicList_158;
             };
-            /* 0x15C */ s32 var_15C;
+            union {
+                /* 0x15C */ s32 var_15C;
+                /* 0x15C */ s16* graphicList_15C;
+            };
             union {
                 /* 0x160 */ s32 var_160;
                 /* 0x160 */ u8 var_160_u8;

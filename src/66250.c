@@ -27,7 +27,6 @@ void func_8006CE74(u16 actor_index);
 
 // TODO: Move to .h file(s)
 extern void func_800339BC(s32 pos_x, s32 pos_y, s32 pos_z, u16 arg3);
-extern void func_80033E7C(u16 actor_index, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s32 arg6);
 extern void func_80028C00(u16 actor_index);
 extern void func_80072628(u16 actor_index);
 extern u32 func_80029A7C(s32 arg0, s32 arg1, s32 arg2);

@@ -2530,7 +2530,23 @@ void func_8006CE74(u16 actor_index) {
     gActors[actor_index].scaleY = gActors[actor_index].scaleX;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006CF20.s")
+void func_8006CF20(u16 actor_index) {
+    if (gActors[actor_index].state == 0) {
+        gActors[actor_index].graphicIndex = 0x6800;
+        func_8006CD5C(actor_index);
+        func_800358DC(actor_index);
+        func_8006CC70(actor_index);
+    }
+    else {
+        ClanpotIcon_State1(actor_index);
+    }
+    if (gActors[actor_index].flags != 0) {
+        func_80066BCC(actor_index);
+    }
+    else {
+        func_8006CB88(actor_index);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006CFDC.s")
 

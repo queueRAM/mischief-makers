@@ -3385,7 +3385,15 @@ void func_8006FAC0(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006FB48.s")
+void func_8006FB48(u16 actor_index) {
+    if (!func_8006C9D0(actor_index)) {
+        if (gActors[actor_index].state == 0x1F0) {
+            func_8006A724(actor_index);
+            gActors[actor_index].state = 0x1F1;
+        }
+        func_8006A924(actor_index);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006FBD0.s")
 

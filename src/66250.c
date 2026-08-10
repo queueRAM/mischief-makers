@@ -2758,7 +2758,7 @@ void func_8006DB10(u16 arg0) {
 }
 
 void func_8006DB18(u16 actor_index) {
-    if (func_8006C908(actor_index) == 0) {
+    if (!func_8006C908(actor_index)) {
         if (gActors[actor_index].state == 0xF0) {
             gActors[actor_index].state++;
             gActors[actor_index].flags |= ACTOR_FLAG_UNK17;
@@ -2771,7 +2771,22 @@ void func_8006DB18(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006DBE4.s")
+void func_8006DBE4(u16 actor_index) {
+    if (!func_8006C8B8(actor_index)) {
+        if (gActors[actor_index].state == 0xB0) {
+            gActors[actor_index].state++;
+            gActors[actor_index].flags |= ACTOR_FLAG_UNK16;
+            gActors[actor_index].flags &= ~ACTOR_FLAG_UNK17; \
+            gActors[actor_index].flags_098 &= ~ACTOR_FLAG3_UNK6;
+            gActors[actor_index].graphicIndex = 0x689B;
+            gActors[actor_index].graphicTimer = 0;
+            gActors[actor_index].var_150 |= 0x1800;
+            gActors[actor_index].unk_144 = 0.0f;
+        }
+        gActors[actor_index].flags |= ACTOR_FLAG_ONSCREEN_ONLY;
+        func_8006A64C(actor_index);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006DCB8.s")
 

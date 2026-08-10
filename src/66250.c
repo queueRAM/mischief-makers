@@ -257,6 +257,7 @@ extern s16 D_800E22F8[];
 extern s16 D_800E2314[];
 extern s16 D_800E2330[];
 extern u8 D_800E2564[];
+extern s16 D_800E2450[];
 extern u16 D_800E3570; // = 0; // actor flag storage?
 extern u16 D_800E3574; // = 0; // actor flag storage?
 extern u16 D_800E3580; // = 0;
@@ -4393,7 +4394,27 @@ void func_80072910(u16 actor_index) {
     func_80072628(actor_index);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80072938.s")
+void func_80072938(u16 actor_index) {
+    if (func_8006C8B8(actor_index)) {
+        return;
+    }
+
+    switch (gActors[actor_index].state) {
+    case 0x460:
+        gActors[actor_index].state++;
+        ACTOR_GFX_INIT(actor_index, D_800E2450);
+        gActors[actor_index].var_158 = 0;
+        /* fallthrough */
+    case 0x461:
+        func_8006678C(actor_index, 0.5f, 0.0f, 7.0f, 1.0f);
+        func_80069B94(actor_index);
+        break;
+    }
+    if (gActors[actor_index].var_158 < 0x4000) {
+        gActors[actor_index].var_158++;
+    }
+    func_80069B94(actor_index);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80072A28.s")
 

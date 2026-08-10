@@ -4512,7 +4512,13 @@ void func_80072D9C(u16 actor_index) {
 void func_80072DD4(u16 arg0) {
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80072DDC.s")
+void func_80072DDC(u16 actor_index) {
+    gActors[actor_index].var_150 &= ~0x8000000;
+    if (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK9) {
+        gActors[actor_index].state = 0x60;
+        gActors[actor_index].flags = D_800E3574 + (ACTOR_FLAG_UNK17 | ACTOR_FLAG_ACTIVE | ACTOR_FLAG_DRAW);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80072E54.s")
 

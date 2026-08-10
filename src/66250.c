@@ -2509,7 +2509,26 @@ void func_8006CD5C(u16 actor_index) {
     gActors[actor_index].palette_18C = D_800D18A4[(gActors[actor_index].var_0D8 & 0x7000) / 4096];
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006CE74.s")
+void func_8006CE74(u16 actor_index) {
+    s32 temp_t9;
+
+    temp_t9 = gActors[actor_index].var_0D8 & 0x30;
+    switch (temp_t9) {
+    case 0:
+        gActors[actor_index].scaleX = 1.0f;
+        break;
+    case 16:
+        gActors[actor_index].scaleX = 0.85f;
+        break;
+    case 32:
+        gActors[actor_index].scaleX = 0.7f;
+        break;
+    case 48:
+        gActors[actor_index].scaleX = 1.2f;
+        break;
+    }
+    gActors[actor_index].scaleY = gActors[actor_index].scaleX;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006CF20.s")
 

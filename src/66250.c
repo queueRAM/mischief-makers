@@ -202,6 +202,7 @@ extern s16 D_800E2024[];
 extern s16 D_800E2034[];
 extern s16 D_800E2044[];
 extern s16 D_800E205C[];
+extern s16 D_800E20C4[];
 extern s16 D_800E20FC[];
 extern u8 D_800E223C[];
 extern u8 D_800E2250[];
@@ -3330,8 +3331,7 @@ void func_8006F850(u16 actor_index) {
     if (!func_8006C8B8(actor_index)) {
         if (gActors[actor_index].state == 0x1B0) {
             gActors[actor_index].state++;
-            gActors[actor_index].graphicList = D_800E20FC; \
-            gActors[actor_index].graphicTimer = 1;
+            ACTOR_GFX_INIT(actor_index, D_800E20FC);
         }
         func_80069B94(actor_index);
         if (gActors[actor_index].graphicTimer == 0) {
@@ -3342,7 +3342,28 @@ void func_8006F850(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006F90C.s")
+void func_8006F90C(u16 actor_index) {
+    func_80040858(actor_index);
+    if (gActors[actor_index].state == 0x1C0) {
+        gActors[actor_index].state++;
+        gActors[actor_index].graphicFlags &= ~ACTOR_GFLAG_PALETTE;
+        gActors[actor_index].flags &= ~(ACTOR_FLAG_UNK15 | ACTOR_FLAG_UNK12 | ACTOR_FLAG_UNK11 | ACTOR_FLAG_UNK10 | ACTOR_FLAG_UNK9 | ACTOR_FLAG_UNK8 | ACTOR_FLAG_UNK7);
+        gActors[actor_index].flags |= ACTOR_FLAG_UNK16; \
+        gActors[actor_index].flags &= ~ACTOR_FLAG_UNK17; \
+        gActors[actor_index].flags_098 &= ~ACTOR_FLAG3_UNK6;
+        ACTOR_GFX_INIT(actor_index, D_800E20C4);
+        gActors[actor_index].velocityX.raw = 0;
+        gActors[actor_index].velocityY.raw = 0;
+        func_8006CB88(actor_index);
+        Sound_PlaySfxAtActor2(0x3C, actor_index);
+    }
+    gActors[actor_index].colorA = Math_ApproachS32(gActors[actor_index].colorA, 0, 4);
+    if ((gActors[actor_index].colorA == 0) || (gActors[actor_index].graphicTimer == 0)) {
+        gActors[actor_index].flags = 0;
+        gActors[actor_index].unk_13C_f32 = 25.0f;
+        func_8006CFDC(actor_index);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006FA38.s")
 

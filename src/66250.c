@@ -75,6 +75,7 @@ extern s16 D_800D7E88[];
 extern s16 D_800D7E90[];
 extern u16 D_800D7EB0[];
 extern u16 D_800D7EBC[];
+extern s16 D_800D7ED8[];
 extern ActorFunc D_800D7F00[];
 extern u16 D_800D80C0[]; // = { 0x0000, 0x0010, 0x0030, 0x0000, };
 extern s16 D_800D8190[]; /* = {
@@ -3728,7 +3729,63 @@ void func_80070A24(u16 actor_0, u16 actor_1, u16 index, s32 arg3) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80070BEC.s")
+void func_80070BEC(u16 actor_index) {
+    s32 pad;
+    u16 parent_index;
+
+    if (func_8006C8B8(actor_index)) {
+        return;
+    }
+
+    switch (gActors[actor_index].state & 0xF) {
+    case 0:
+        gActors[actor_index].state++;
+        ACTOR_GFX_INIT(actor_index, D_800D7ED8);
+        /* fallthrough */
+    case 1:
+        if (!func_80070830(actor_index)) {
+            break;
+        }
+        parent_index = gActors[actor_index].parentIndex;
+        if (gActors[actor_index].graphicIndex == 0x68CF) {
+            gActors[actor_index].state++;
+            gActors[parent_index].flags_098 &= ~ACTOR_FLAG3_UNK9;
+            gActors[parent_index].flags_098 |= ACTOR_FLAG3_UNK10;
+            switch (gActors[actor_index].state & 0xFFF0) {
+            case 0x320:
+                func_80070A24(actor_index, parent_index, 0, 100);
+                return;
+            case 0x330:
+                func_80070A24(actor_index, parent_index, 2, 80);
+                return;
+            case 0x340:
+                func_80070A24(actor_index, parent_index, 4, 50);
+                return;
+            case 0x350:
+                func_80070A24(actor_index, parent_index, 6, 30);
+                return;
+            case 0x360:
+                func_80070A24(actor_index, parent_index, 8, 10);
+                return;
+            case 0x390:
+                if (parent_index == 0) {
+                    func_8004F614(actor_index, gActors[actor_index].var_158 * gActors[actor_index].unk_124, gActors[actor_index].var_15C * gActors[actor_index].unk_124, gActors[actor_index].unk_11C);
+                }
+                else {
+                    gActors[parent_index].unk_0F8.raw = gActors[actor_index].var_158 * gActors[actor_index].scaleX * gActors[actor_index].unk_124;
+                    gActors[parent_index].unk_0FC.raw = gActors[actor_index].var_15C * gActors[actor_index].unk_124;
+                }
+            }
+        }
+        break;
+    case 2:
+        if (gActors[actor_index].graphicTimer == 0) {
+            gActors[actor_index].state = 0x60;
+            gActors[actor_index].unk_13C_f32 = 16.0f;
+        }
+        break;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80070F24.s")
 

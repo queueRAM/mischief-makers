@@ -22,6 +22,7 @@ void func_800789C4(u16 actor_index);
 void func_80078FF0(u16 actor_index, s32 arg1, s32 arg2);
 void func_80079378(u16 actor_index);
 void func_8007951C(u16 actor_index);
+void func_8006CE74(u16 actor_index);
 
 // TODO: Move to .h file(s)
 extern void func_800339BC(s32 pos_x, s32 pos_y, s32 pos_z, u16 arg3);
@@ -2354,8 +2355,14 @@ void func_8006C5A4(u16 actor_index) {
     gActors[actor_index].flags_098 &= ~(ACTOR_FLAG3_UNK21 | ACTOR_FLAG3_UNK10 | ACTOR_FLAG3_UNK9);
 }
 
-void func_8006C6F0(u16);
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006C6F0.s")
+void func_8006C6F0(u16 actor_index) {
+    if (gActors[actor_index].var_150 & 0x08000000) {
+        gActors[actor_index].var_150 &= ~0x08000000;
+        func_8006CE74(actor_index);
+        gActors[actor_index].posY.whole += 3.0f * gActors[actor_index].scaleX;
+        gActors[actor_index].graphicIndex = 0x6800;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006C7B8.s")
 

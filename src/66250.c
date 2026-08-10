@@ -2548,7 +2548,19 @@ void func_8006CF20(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006CFDC.s")
+void func_8006CFDC(u16 actor_index) {
+    u16 cur_110;
+    u16 cur_0D8;
+
+    cur_110 = gActors[actor_index].var_110;
+    cur_0D8 = gActors[actor_index].var_0D8;
+    gActors[actor_index].actorType = ACTORTYPE_CLANCERGHOST;
+    Actor_Initialize(actor_index);
+    gActors[actor_index].state = 0xFFFF;
+    gActors[actor_index].var_110 = cur_110 + 0x8000;
+    gActors[actor_index].colorA = 0;
+    gActors[actor_index].var_0D8 = cur_0D8;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006D0EC.s")
 

@@ -3666,7 +3666,30 @@ void func_80070338(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80070830.s")
+s32 func_80070830(u16 actor_index) {
+    u16 parent_index;
+
+    if (func_80028C08(actor_index)) {
+        parent_index = gActors[actor_index].parentIndex;
+        if (gActors[actor_index].unk_118 > 0.0f) {
+            gActors[actor_index].unk_118 -= 1.0f;
+            gActors[actor_index].var_158 -= gActors[actor_index].var_160;
+            gActors[actor_index].var_15C -= gActors[actor_index].unk_164;
+            gActors[parent_index].unk_104 = gActors[actor_index].posX.raw + gActors[actor_index].var_158;
+            gActors[parent_index].unk_108 = gActors[actor_index].posY.raw + gActors[actor_index].var_15C + FIXED_UNIT(8);
+        }
+        else {
+            gActors[parent_index].unk_104 = gActors[actor_index].posX.raw;
+            gActors[parent_index].unk_108 = gActors[actor_index].posY.raw + FIXED_UNIT(8);
+        }
+        gActors[parent_index].unk_10C = gActors[actor_index].posZ.raw - 1;
+        return TRUE;
+    }
+    else {
+        gActors[actor_index].state = 0x60;
+        return FALSE;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8007095C.s")
 

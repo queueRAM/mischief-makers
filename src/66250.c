@@ -2451,7 +2451,17 @@ u16 func_8006CB4C(u16 actor_index) {
     return result;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006CB88.s")
+void func_8006CB88(u16 actor_index) {
+    u16 actor_1;
+
+    actor_1 = gActors[actor_index].unk_140_f32;
+    if (actor_1 != 0) {
+        if (gActors[actor_1].actorType == ACTORTYPE_GRAPHIC_52) {
+            gActors[actor_1].flags = 0;
+             gActors[actor_index].unk_140_f32 = 0.0f;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006CC70.s")
 

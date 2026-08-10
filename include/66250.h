@@ -3,6 +3,8 @@
 
 #include <PR/ultratypes.h>
 
+extern s16 D_800E19C0[]; // graphic list
+
 u16 func_8006CC70(u16 actor_index);
 
 #endif

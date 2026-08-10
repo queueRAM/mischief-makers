@@ -971,42 +971,41 @@ void func_80067FEC(u16 actor_index) {
     }
 }
 
-#ifdef NON_MATCHING
-// https://decomp.me/scratch/2GiYM
-s32 func_80068040(u16 arg0, u16 arg1) {
-    s32 var_s1;
-    s32 temp_s2;
-    s32 temp_t1;
-    u16 var_s4;
+s32 func_80068040(u16 actor_index, u16 arg1) {
+    s32 y;
+    u8 temp_s2;
+    u8 temp_t1;
+    u16 remaining;
+    f32 var_f0;
 
     if (arg1) {
-        var_s1 = gActors[arg0].hitboxBY0;
+        y = gActors[actor_index].hitboxBY0 + 8;
+        remaining = 6;
     }
     else {
-        var_s1 = gActors[arg0].hitboxBY0;
+        y = gActors[actor_index].hitboxBY0 + 8;
+        remaining = 6;
     }
-    var_s1 += 8;
-    for (var_s4 = 6; var_s4 > 0; var_s4--, var_s1 += 0x10) {
-        if (!(func_8001FCA0(arg0, gActors[arg0].posX.whole, gActors[arg0].posY.whole + var_s1) & 0x80)) {
-            temp_s2 = func_8001FCA0(arg0, (gActors[arg0].posX.whole + (gActors[arg0].unk_148 * 30.0f)), gActors[arg0].posY.whole + var_s1) & 0x80;
-            temp_t1 = func_8001FCA0(arg0, (gActors[arg0].posX.whole + (gActors[arg0].unk_148 * 16.0f)), gActors[arg0].posY.whole + var_s1) & 0x80;
-            if (!(temp_s2) && !(temp_t1)) {
-                gActors[arg0].state = 0x120;
-                gActors[arg0].unk_178 = 5;
-                gActors[arg0].unk_118 = 32.0f;
-                gActors[arg0].unk_11C = ((sqrtf((32.0f * ((var_s1 + 0x14) * 0x10)) + 16.0f) - 4.0f) / 8) * 17408.0f;
-                gActors[arg0].unk_120 = gActors[arg0].unk_148 * 98304.0f;
-                gActors[arg0].unk_124 = 0.0f;
-                return 0;
-            }
+    for (; remaining > 0; remaining--, y += 16) {
+        if (func_8001FCA0(actor_index, gActors[actor_index].posX.whole, gActors[actor_index].posY.whole + y) & 0x80) {
+            break;
+        }
+        temp_s2 = func_8001FCA0(actor_index, (gActors[actor_index].posX.whole + (gActors[actor_index].unk_148 * 30.0f)), gActors[actor_index].posY.whole + y) & 0x80;
+        temp_t1 = func_8001FCA0(actor_index, (gActors[actor_index].posX.whole + (gActors[actor_index].unk_148 * 16.0f)), gActors[actor_index].posY.whole + y) & 0x80;
+        if (!temp_s2 && !temp_t1) {
+            gActors[actor_index].state = 0x120;
+            gActors[actor_index].unk_178 = 5;
+            gActors[actor_index].unk_118 = 32.0f;
+            y += 20;
+            var_f0 = y * 16;
+            gActors[actor_index].unk_11C = ((sqrtf((32.0f * var_f0) + 16.0f) - 4.0f) / 8) * 17408.0f;
+            gActors[actor_index].unk_120 = gActors[actor_index].unk_148 * 98304.0f;
+            gActors[actor_index].unk_124 = 0.0f;
+            return FALSE;
         }
     }
-    return 1;
+    return TRUE;
 }
-#else
-s32 func_80068040(u16 actor_index, u16 arg1);
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80068040.s")
-#endif
 
 u16 func_800682AC(u16 actor_index, s16 x, s16 y) {
     if (func_8001FCA0(actor_index, x, y) & 0x80) {

@@ -2222,7 +2222,7 @@ s32 func_8006BEF4(u16 actor_index) {
     u16 actor_0;
 
     actor_0 = gActors[actor_index].unk_11C;
-    if (!(gActors[actor_0].flags & 2) || (gActors[actor_0].actorType != (u16)gActors[actor_index].unk_120)) {
+    if (!(gActors[actor_0].flags & ACTOR_FLAG_ACTIVE) || (gActors[actor_0].actorType != (u16)gActors[actor_index].unk_120)) {
         gActors[actor_index].state = 0x60;
         return TRUE;
     }
@@ -2249,8 +2249,7 @@ void func_8006C0F4(u16 actor_index) {
     gActors[actor_index].flags |= ACTOR_FLAG_UNK16;
     gActors[actor_index].flags &= ~ACTOR_FLAG_UNK17; \
     gActors[actor_index].flags_098 &= ~ACTOR_FLAG3_UNK6;
-    gActors[actor_index].graphicList = D_800E2268; \
-    gActors[actor_index].graphicTimer = 1;
+    ACTOR_GFX_INIT(actor_index, D_800E2268);
     gActors[actor_index].unk_144 = 4.0f;
     gActors[actor_index].velocityX.raw /= 2;
     gActors[actor_index].velocityY.raw = 0;
@@ -2714,8 +2713,7 @@ void func_8006D744(u16 actor_index) {
     if (!func_8006C8B8(actor_index)) {
         if (gActors[actor_index].state == 0x70) {
             gActors[actor_index].state++;
-            gActors[actor_index].graphicList = D_800E19C0; \
-            gActors[actor_index].graphicTimer = 1;
+            ACTOR_GFX_INIT(actor_index, D_800E19C0);
             gActors[actor_index].unk_118 = 6.0f;
         }
         if (gActors[actor_index].graphicTimer == 0) {
@@ -2824,8 +2822,7 @@ void func_8006DCB8(u16 actor_index) {
     if (!func_8006C8B8(actor_index)) {
         if (gActors[actor_index].state == 0xC0) {
             gActors[actor_index].state++;
-            gActors[actor_index].graphicList = D_800E1A8C; \
-            gActors[actor_index].graphicTimer = 1;
+            ACTOR_GFX_INIT(actor_index, D_800E1A8C);
             gActors[actor_index].var_158 = 0x16;
             gActors[actor_index].unk_118 = 0.0f;
         }
@@ -2850,13 +2847,11 @@ void func_8006DDF0(u16 actor_index) {
             gActors[actor_index].flags |= ACTOR_FLAG_UNK17;
             gActors[actor_index].flags &= ~ACTOR_FLAG_UNK16;
             gActors[actor_index].flags_098 &= ~ACTOR_FLAG3_UNK5;
-            gActors[actor_index].graphicList = D_800E1C1C; \
-            gActors[actor_index].graphicTimer = 1;
+            ACTOR_GFX_INIT(actor_index, D_800E1C1C);
             gActors[actor_index].unk_144 = 8.0f;
         }
         if (gActors[actor_index].graphicTimer == 0) {
-            gActors[actor_index].graphicList = D_800E1C1C; \
-            gActors[actor_index].graphicTimer = 1;
+            ACTOR_GFX_INIT(actor_index, D_800E1C1C);
         }
         gActors[actor_index].velocityX.raw = Math_ApproachS32(gActors[actor_index].velocityX.raw, 0, FIXED_UNIT(0.0625));
         if (gActors[actor_index].velocityY.raw < FIXED_UNIT(-3.0)) {
@@ -2875,8 +2870,7 @@ void func_8006DF28(u16 actor_index) {
             gActors[actor_index].flags |= ACTOR_FLAG_UNK16;
             gActors[actor_index].flags &= ~ACTOR_FLAG_UNK17; \
             gActors[actor_index].flags_098 &= ~ACTOR_FLAG3_UNK6;
-            gActors[actor_index].graphicList = D_800E1BF4; \
-            gActors[actor_index].graphicTimer = 1;
+            ACTOR_GFX_INIT(actor_index, D_800E1BF4);
             gActors[actor_index].velocityX.raw = 0;
             gActors[actor_index].unk_144 = 0.0f;
         }
@@ -2895,8 +2889,7 @@ void func_8006E000(u16 actor_index) {
             gActors[actor_index].flags |= ACTOR_FLAG_UNK17;
             gActors[actor_index].flags &= ~ACTOR_FLAG_UNK16;
             gActors[actor_index].flags_098 &= ~ACTOR_FLAG3_UNK5;
-            gActors[actor_index].graphicList = D_800E1C00; \
-            gActors[actor_index].graphicTimer = 1;
+            ACTOR_GFX_INIT(actor_index, D_800E1C00);
             gActors[actor_index].unk_144 = 8.0f;
             gActors[actor_index].velocityY.raw = gActors[actor_index].unk_11C;
             gActors[actor_index].velocityX.raw = gActors[actor_index].unk_120;
@@ -3260,8 +3253,7 @@ void func_8006F1FC(u16 actor_index) {
             func_8006AD50(actor_index);
             if ((gActors[actor_index].unk_164 != 0) && (gActors[actor_index].velocityY.raw < FIXED_UNIT(-2.5))) {
                 gActors[actor_index].unk_164 = 0;
-                gActors[actor_index].graphicList = D_800E2034; \
-                gActors[actor_index].graphicTimer = 1;
+                ACTOR_GFX_INIT(actor_index, D_800E2034);
             }
             if (gActors[actor_index].velocityY.raw < FIXED_UNIT(-4.5)) {
                 gActors[actor_index].unk_118 = ((u16)gActors[actor_index].unk_118 | 1);
@@ -3303,8 +3295,7 @@ void func_8006F5D4(u16 actor_index) {
             gActors[actor_index].flags |= ACTOR_FLAG_UNK16;
             gActors[actor_index].flags &= ~ACTOR_FLAG_UNK17;
             gActors[actor_index].flags_098 &= ~ACTOR_FLAG3_UNK6;
-            gActors[actor_index].graphicList = D_800E2044; \
-            gActors[actor_index].graphicTimer = 1;
+            ACTOR_GFX_INIT(actor_index, D_800E2044);
             gActors[actor_index].velocityY.raw = 0;
             gActors[actor_index].var_158 = 0x41;
             gActors[actor_index].unk_144 = 4.0f;

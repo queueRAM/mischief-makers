@@ -4485,7 +4485,23 @@ void func_80072C1C(u16 actor_0, u16 actor_1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80072CC4.s")
+u16 func_80072CC4(u16 actor_index) {
+    u16 index;
+    u16* val_array;
+
+    val_array = (u16*)gActors[actor_index].var_158;
+    for (index = 0; !(val_array[index] & 0x8000); index++) {
+        if ((func_8005DEFC() & 0x7FFF) == val_array[index]) {
+            if (val_array[index + 1] & 0x8000) {
+                return 2;
+            }
+            else {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
 
 void func_80072D9C(u16 actor_index) {
     if (func_80072CC4(actor_index)) {

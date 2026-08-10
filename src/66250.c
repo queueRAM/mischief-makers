@@ -200,6 +200,7 @@ extern s16 D_800E1F88[];
 extern s16 D_800E1FB4[];
 extern s16 D_800E2024[];
 extern s16 D_800E2034[];
+extern s16 D_800E2044[];
 extern s16 D_800E205C[];
 extern u8 D_800E223C[];
 extern u8 D_800E2250[];
@@ -3276,7 +3277,30 @@ void func_8006F1FC(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006F5D4.s")
+void func_8006F5D4(u16 actor_index) {
+    if (!func_8006C944(actor_index)) {
+        if (gActors[actor_index].state == 0x190) {
+            gActors[actor_index].state++;
+            gActors[actor_index].flags &= ~(ACTOR_FLAG_UNK11 | ACTOR_FLAG_UNK9 | ACTOR_FLAG_UNK7);
+            gActors[actor_index].flags |= ACTOR_FLAG_UNK16;
+            gActors[actor_index].flags &= ~ACTOR_FLAG_UNK17;
+            gActors[actor_index].flags_098 &= ~ACTOR_FLAG3_UNK6;
+            gActors[actor_index].graphicList = D_800E2044; \
+            gActors[actor_index].graphicTimer = 1;
+            gActors[actor_index].velocityY.raw = 0;
+            gActors[actor_index].var_158 = 0x41;
+            gActors[actor_index].unk_144 = 4.0f;
+            Sound_PlaySfxAtActor2(SFX_0094, actor_index);
+            func_800658D8(actor_index);
+            SpawnDizzyStar(actor_index, gActors[actor_index].unk_148 * -8.0f, 8, gActors[actor_index].posZ.raw, 64);
+        }
+        func_80069B94(actor_index);
+        gActors[actor_index].var_158--;
+        if (gActors[actor_index].var_158 < 0) {
+            gActors[actor_index].state = 0x1B0;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006F730.s")
 

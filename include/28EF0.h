@@ -25,9 +25,15 @@ void Actor_ClearRange_10To20(void);
 void Actor_ClearRange_30To90(void);
 void Actor_ClearRange_C0ToC7(void);
 
+void Actor_UpdateNearest(u16 actor_index);
+void Actor_UpdateNearestTo0(u16 actor_index);
+
+void Actor_ApproachRgb(u16 actor_index, s16 arg1);
+
 u16 SpawnParticle_RingWaveBlue(f32 arg0, s16 pos_x, s16 pos_y, s16 pos_z);
 void SpawnParticle_SineUpNotes(s16 pos_x, s16 pos_y, s16 pos_z);
 
+u16 func_8002884C(u16 actor_index);
 void func_80028CE8(u16 actor_index);
 void func_8002A57C(u16 actor_index, s32 arg1, s32 arg2, s32 max_vx);
 u16 func_800291AC(u16 actor_index, u16 state1, s32 flags1, u16 state2, s32 flags2);

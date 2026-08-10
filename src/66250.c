@@ -792,7 +792,8 @@ void func_8006756C(u16 arg0) {
         var_t1 = -var_t1;
         gActors[idx].var_160 = 0x04000000 - temp_v1_4;
         gActors[idx].unk_140_f32 = -gActors[idx].unk_140_f32;
-    } else {
+    }
+    else {
         gActors[idx].var_160 = temp_v1_4;
         gActors[idx].flags &= ~0x20;
     }
@@ -1004,7 +1005,8 @@ u16 func_80068378(u16 actor_index) {
     }
     if (!(gActors[actor_index].flags & ACTOR_FLAG_FLIPPED)) {
         bits = gActors[actor_index].flags_098 & 8;
-    } else {
+    }
+    else {
         temp = gActors[actor_index].flags_098 & 4;
         bits = temp; // fakematch
     }
@@ -2222,7 +2224,103 @@ void func_8006C0F4(u16 actor_index) {
 void ActorType2_Noop(u16 arg0) {
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006C1AC.s")
+void func_8006C1AC(u16 actor_index) {
+    s32 pad0;
+    s32 pad1;
+    s32 pad2;
+    u16 temp_v0_3;
+
+    gActors[actor_index].unk_13C_f32 = 0.0f;
+    if (gActors[actor_index].var_150 & 0x800) {
+        if ((gActors[actor_index].posX.whole > 384) || (gActors[actor_index].posX.whole < -384) || 
+            (gActors[actor_index].posY.whole > 384) || (gActors[actor_index].posY.whole < -384)) {
+            gActors[actor_index].flags = 0;
+            return;
+        }
+    }
+
+    gActors[actor_index].var_150 &= ~0x82C000;
+    if (gActors[actor_index].var_150 & 0x2000) {
+        D_800E3570 = 0x80;
+        D_800E3574 = 0x100;
+    }
+    else {
+        D_800E3570 = 0x200;
+        D_800E3574 = 0x400;
+    }
+    Actor_ApproachRgb(actor_index, 8);
+    if ((gActors[actor_index].posX.whole > 152) || (gActors[actor_index].posX.whole < -152) || 
+        (gActors[actor_index].posY.whole > 104) || (gActors[actor_index].posY.whole < -104)) {
+        gActors[actor_index].var_150 |= 0x800000;
+    }
+    gActors[actor_index].unk_17C = gActors[actor_index].posX.whole + gScreenPosCurrentX.whole;
+    gActors[actor_index].unk_180 = gActors[actor_index].posY.whole + gScreenPosCurrentY.whole;
+    if (gActors[actor_index].state >= 0x51) {
+        if (gActors[actor_index].health <= 0) {
+            if (gActors[actor_index].var_150 & 0x80) {
+                gActors[actor_index].var_150 |= 0x80000000;
+                gActors[actor_index].health = 0x4000;
+            }
+        }
+        gActors[actor_index].posZ.raw = gActors[actor_index].var_154;
+        gActors[actor_index].flags &= ~ACTOR_FLAG_PLATFORM0;
+        if (gActors[actor_index].var_150 & 0x1000) {
+            if (gActors[actor_index].var_150 & 0x02000000) {
+                if (func_8002884C(actor_index)) {
+                    gActors[actor_index].var_150 &= ~0x02000000;
+                }
+            }
+        }
+        else if (gActors[actor_index].var_150 & 0x02000000) {
+            if (func_8002884C(actor_index)) {
+                gActors[actor_index].var_150 &= ~0x02000000;
+            }
+            else {
+                gActors[actor_index].iFrames = 8;
+                gActors[actor_index].flags_098 &= ~ACTOR_FLAG3_UNK1;
+            }
+        }
+        else {
+            temp_v0_3 = func_8002877C(actor_index);
+            if (temp_v0_3 != 0) {
+                if (temp_v0_3 & 1) {
+                    gActors[actor_index].var_150 |= 0x4000;
+                }
+                else {
+                    gActors[actor_index].var_150 |= 0x8000;
+                }
+            }
+        }
+        if ((gActors[actor_index].var_0D8 & 0x30) == 0x20) {
+            if (Clanpot_AddItemCheck3(actor_index, 0x400, 0, 0, 0x65) >= 0) {
+                gActors[actor_index].flags = ACTOR_FLAG_ACTIVE;
+                gActors[actor_index].state = 0x20;
+                gActors[actor_index].velocityX.raw = 0;
+                gActors[actor_index].velocityY.raw = 0;
+                gActors[actor_index].rotateZ = 0.0f;
+            }
+        }
+        if (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK21) {
+            gActors[actor_index].flags = ACTOR_FLAG_ACTIVE;
+            gActors[actor_index].state = 0x30;
+            gActors[actor_index].velocityX.raw = 0;
+            gActors[actor_index].velocityY.raw = 0;
+            gActors[actor_index].rotateZ = 0.0f;
+        }
+    }
+    if ((u16)gActors[actor_index].var_110 & 0x4000) {
+        if ((u16)gActors[actor_index].var_110 & 0x2000) {
+            Actor_UpdateNearest(actor_index);
+        }
+        else {
+            Actor_UpdateNearestTo0(actor_index);
+        }
+    }
+    else {
+        D_800E3580 = 0;
+    }
+    func_8002AA20(actor_index, 0);
+}
 
 void func_8006C5A4(u16 actor_index) {
     u16 state;

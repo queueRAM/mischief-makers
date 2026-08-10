@@ -63,7 +63,6 @@ extern s16 D_800E155C[];
 extern s16 D_800E157C[];
 extern s16 D_800E15C4[];
 extern s16 D_800E1604[];
-extern s16 D_800E1C1C[];
 extern s16 D_800E1C2C[];
 extern s16 D_800E1D0C[];
 extern s16 D_800E1DEC[];

@@ -2463,7 +2463,22 @@ void func_8006CB88(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006CC70.s")
+u16 func_8006CC70(u16 actor_index) {
+    u16 free_actor;
+
+    if (gActors[actor_index].var_0D8 & 0xF00) {
+        free_actor = Actor_RangeFindInactive_90ToC0();
+        if (free_actor != 0) {
+            gActors[actor_index].unk_140_f32 = free_actor;
+            gActors[free_actor].actorType = 0x34;
+            Actor_Initialize(free_actor);
+            gActors[free_actor].flags = 2;
+            gActors[free_actor].unk_148 = 1.0f;
+        }
+        return free_actor;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006CD5C.s")
 

@@ -1,4 +1,5 @@
 #include "common.h"
+#include "66250.h"
 #include "7D8E0.h"
 
 typedef struct Overlay_7A6E60_Graphic_Index_Table {

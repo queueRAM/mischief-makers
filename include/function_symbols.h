@@ -73,7 +73,6 @@ extern void ActorUpdate_3DIcon(u16 actor_index);
 extern void func_80066BCC(u16 actor_index);
 extern void func_80067EF0(u16);
 extern void func_8006CB88(u16);
-extern void func_8006CC70(u16);
 extern void func_8006CD5C(u16);
 
 extern void Actor_ClearRange_10To20(void);

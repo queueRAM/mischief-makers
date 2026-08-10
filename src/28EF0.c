@@ -7,6 +7,7 @@
 #include "stage.h"
 #include "1F1E0.h"
 #include "28EF0.h"
+#include "66250.h"
 #include "7D8E0.h"
 
 extern u16* gParticlePalettes[]; // palettes of particles.

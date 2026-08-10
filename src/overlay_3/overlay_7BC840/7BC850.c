@@ -1,6 +1,7 @@
 #include "common.h"
 #include "actor.h"
 #include "28EF0.h"
+#include "66250.h"
 #include "805E0.h"
 #include "80D90.h"
 

@@ -330,6 +330,7 @@ typedef struct {
             };
             union {
                 /* 0x190 */ s32 unk_190;
+                /* 0x190 */ s16 unk_190_s16[2];
                 /* 0x190 */ void* unk_190_p;
                 /* 0x190 */ u16* warpgateCoords; // coordinates for a warp gate. {x,y,x-facing}
                 /* 0x190 */ ActorFunc pfn_190;

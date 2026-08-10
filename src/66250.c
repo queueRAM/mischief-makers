@@ -3302,7 +3302,28 @@ void func_8006F5D4(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006F730.s")
+void func_8006F730(u16 actor_index) {
+    if (!func_8006C994(actor_index)) {
+        if (gActors[actor_index].state == 0x1A0) {
+            gActors[actor_index].state++;
+            gActors[actor_index].flags |= ACTOR_FLAG_UNK17;
+            gActors[actor_index].flags &= ~ACTOR_FLAG_UNK16; \
+            gActors[actor_index].flags_098 &= ~ACTOR_FLAG3_UNK5;
+        }
+        gActors[actor_index].velocityX.raw = Math_ApproachS32(gActors[actor_index].velocityX.raw, 0, 0x1000);
+        if (gActors[actor_index].velocityY.raw > FIXED_UNIT(-6.5)) {
+            gActors[actor_index].velocityY.raw -= FIXED_UNIT(0.25);
+        }
+        if (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK5) {
+            gActors[actor_index].state = 0x191;
+            gActors[actor_index].flags |= ACTOR_FLAG_UNK16; \
+            gActors[actor_index].flags &= ~ACTOR_FLAG_UNK17; \
+            gActors[actor_index].flags_098 &= ~ACTOR_FLAG3_UNK6;
+            gActors[actor_index].velocityY.raw = 0;
+            gActors[actor_index].var_158 = 0x14;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006F850.s")
 

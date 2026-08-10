@@ -2989,7 +2989,8 @@ void func_8006E4EC(u16 actor_index) {
         return;
     }
 
-    if (((u16)gActors[actor_index].unk_114 != (0, 1)) && ((u16)gActors[actor_index].unk_114 != 2)) { // fakematch
+    switch ((u16)gActors[actor_index].unk_114) {
+    default:
         if (gActors[actor_index].graphicTimer == 0) {
             gActors[actor_index].graphicList = D_800E1F88;
             gActors[actor_index].graphicTimer = 1;
@@ -2997,14 +2998,19 @@ void func_8006E4EC(u16 actor_index) {
             gActors[actor_index].unk_0DB = 2; \
             gActors[actor_index].unk_0DA = 0x85;
         }
+        break;
+    case 1:
+    case 2:
+        if (gActors[actor_index].graphicTimer == 0) {
+            gActors[actor_index].graphicList = D_800E1D0C;
+            gActors[actor_index].graphicTimer = 1;
+            gActors[actor_index].damage = gActors[actor_index].scaleX * 70.0f;
+            gActors[actor_index].unk_0DB = 2; \
+            gActors[actor_index].unk_0DA = 0x85;
+        }
+        break;
     }
-    else if (gActors[actor_index].graphicTimer == 0) {
-        gActors[actor_index].graphicList = D_800E1D0C;
-        gActors[actor_index].graphicTimer = 1;
-        gActors[actor_index].damage = gActors[actor_index].scaleX * 70.0f;
-        gActors[actor_index].unk_0DB = 2; \
-        gActors[actor_index].unk_0DA = 0x85;
-    }
+
     switch (func_800291AC(actor_index,
         0x170,
         D_800E3574 + (ACTOR_FLAG_UNK17 | ACTOR_FLAG_UNK12 | ACTOR_FLAG_UNK7 | ACTOR_FLAG_FLIPPED | ACTOR_FLAG_ACTIVE | ACTOR_FLAG_DRAW),

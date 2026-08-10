@@ -70,6 +70,7 @@ extern s16 D_800D7CA0[];
 extern s16 D_800D7CA8[];
 extern s16 D_800D7CB0[];
 extern s16 D_800D7CB8[];
+extern s16 D_800D7CC0[];
 extern s16 D_800D7CD4[];
 extern s16 D_800D7D04[];
 extern s16 D_800D7D34[];
@@ -4194,7 +4195,38 @@ void func_80071CE8(u16 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80071CE8.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_800721C4.s")
+void func_800721C4(u16 actor_index) {
+    if (func_8006C8B8(actor_index)) {
+        return;
+    }
+    
+    switch (gActors[actor_index].state) {
+    case 0x400:
+        gActors[actor_index].state++;
+        gActors[actor_index].graphicList_160 = D_800D7C98;
+        gActors[actor_index].unk_120 = 1.0f;
+        /* fallthrough */
+    case 0x401:
+        if (gActors[TERAN_PLAYER_INDEX].unk_18C == 1) {
+            gActors[actor_index].state++;
+            gActors[actor_index].graphicList_160 = D_800D7CC0;
+            gActors[actor_index].unk_120 = 1.0f;
+        }
+        func_8006756C(actor_index);
+        break;
+    case 0x402:
+        if (gActors[TERAN_PLAYER_INDEX].unk_18C == 2) {
+            gActors[actor_index].state++;
+            gActors[actor_index].graphicList_160 = D_800D7D04;
+            gActors[actor_index].unk_120 = 1.0f;
+        }
+        func_8006756C(actor_index);
+        return;
+    case 0x403:
+        func_8006756C(actor_index);
+        break;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_800722F8.s")
 

@@ -5652,7 +5652,36 @@ void func_80076BF4(u16 actor_index) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80078214.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80078338.s")
+void func_80078338(u16 actor_index) {
+    s32 angle;
+    s32 y;
+    s32 z;
+    s32 x;
+    u16 free_actor;
+
+    gActors[actor_index].var_150 ^= 0x4000;
+    free_actor = Actor_RangeFindInactive(0x70, 0x7A);
+    if (free_actor != 0) {
+        if (gActors[actor_index].var_150 & 0x4000) {
+            x = FIXED_UNIT(8);
+            y = FIXED_UNIT(3);
+            z = 0x4E20;
+        }
+        else {
+            x = FIXED_UNIT(31);
+            y = FIXED_UNIT(6);
+            z = 1;
+        }
+        if (gActors[actor_index].flags & 0x20) {
+            angle = FIXED_UNIT(COS_DEG_180);
+            x = -x;
+        }
+        else {
+            angle = 0;
+        }
+        SpawnHovercraftShot(free_actor, 0, angle, gActors[actor_index].posX.raw + x, gActors[actor_index].posY.raw + y, gActors[actor_index].posZ.raw + z);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80078418.s")
 

@@ -522,9 +522,6 @@ void func_800662F0(u16 actor_index) {
     }
 }
 
-#ifdef NON_MATCHING
-// .rodata split somewhere after func_8006641C, before func_80066BCC
-// candidates: func_800668E0, func_80066A10
 void func_8006641C(u16 actor_index) {
     s32 pos_x;
     s32 pos_y;
@@ -546,16 +543,12 @@ void func_8006641C(u16 actor_index) {
             gActors[particle_index].unk_148 = 30.0f;
             gActors[particle_index].graphicFlags = 1;
             gActors[particle_index].graphicIndex = 0x16A;
-            gActors[particle_index].velocityX.raw = gActors[actor_index].unk_148 * -10240.0f;
-            gActors[particle_index].velocityY.raw = 0x10000;
+            gActors[particle_index].velocityX.raw = gActors[actor_index].unk_148 * FIXED_UNIT(-0.15625);
+            gActors[particle_index].velocityY.raw = FIXED_UNIT(1);
             gActors[particle_index].var_15C = -0x800;
         }
     }
 }
-#else
-void func_8006641C(u16 actor_index);
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006641C.s")
-#endif
 
 void func_80066644(u16 actor_index, s32 arg1_unused) {
     SpawnParticle_List_90C0_16(

@@ -5602,7 +5602,16 @@ s32 func_800769AC(u16 actor_index) {
     return FALSE;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80076A38.s")
+void func_80076A38(u16 actor_index) {
+    gActors[actor_index].state = 1;
+    gActors[actor_index].flags = ACTOR_FLAG_ACTIVE;
+    gActors[actor_index].flags_098 = 0;
+    gActors[actor_index].velocityX.raw = 0;
+    gActors[actor_index].velocityY.raw = 0;
+    gActors[actor_index].velocityZ.raw = 0;
+    gActors[actor_index].posX.whole = gActors[actor_index].unk_170 - gScreenPosCurrentX.whole;
+    gActors[actor_index].posY.whole = gActors[actor_index].unk_174 - gScreenPosCurrentY.whole;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80076AB4.s")
 

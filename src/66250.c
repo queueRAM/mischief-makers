@@ -4746,72 +4746,66 @@ void func_80073970(u16 actor_index) {
     }
 }
 
-#ifdef NON_MATCHING
-// https://decomp.me/scratch/n3HgC
-// Clancer_Update return void, but this function seems to only match with a bad (or no) prototype
-void func_80073A60(u16 arg0) {
-    Clancer_Update(arg0);
-    switch (gActors[arg0].state) {
+void func_80073A60(u16 actor_update) {
+    Clancer_Update(actor_update);
+    switch (gActors[actor_update].state) {
     case 0x0:
-        gActors[arg0].state = 0x60;
+        gActors[actor_update].state = 0x60;
         break;
     case 0x61:
-        gActors[arg0].velocityX.raw = 0;
-        if (gActors[arg0].unk_174 == 2) {
-            if (gActors[arg0].flags & 0x20) {
-                gActors[arg0].state = 0x70;
+        gActors[actor_update].velocityX.raw = 0;
+        if (gActors[actor_update].unk_174 == 2) {
+            if (gActors[actor_update].flags & ACTOR_FLAG_FLIPPED) {
+                gActors[actor_update].state = 0x70;
             }
             else {
-                gActors[arg0].state = 0xA0;
-                gActors[arg0].unk_184_s16[0] = gActors[arg0].unk_17C + 0x80;
+                gActors[actor_update].state = 0xA0;
+                gActors[actor_update].unk_184_s16[0] = gActors[actor_update].unk_17C + 0x80;
             }
         } else {
-            if (!(func_80073438(arg0) & 0x8000)) {
-                if (gActors[arg0].unk_174 == 0) {
+            if (!(func_80073438(actor_update) & 0x8000)) {
+                if (gActors[actor_update].unk_174 == 0) {
                     if (D_800E3584 & 0xC0000) {
-                        gActors[arg0].state = 0x70;
+                        gActors[actor_update].state = 0x70;
                     }
                     else {
-                        func_80067EF0(arg0);
+                        func_80067EF0(actor_update);
                         if (func_80029B00(0x80, 0x80, -0x50) != 0) {
-                            gActors[arg0].unk_174++;
-                            gActors[arg0].graphicList = D_800E2274; \
-                            gActors[arg0].graphicTimer = 1;
-                            Sound_PlaySfxAtActor2(D_800D80A8[gActors[arg0].var_0D8 & 0xF], arg0);
-                            SpawnTextBubble(arg0, D_800D8088[gActors[arg0].var_0D8 & 0xF], 0, 0x20, 0x23);
+                            gActors[actor_update].unk_174++;
+                            gActors[actor_update].graphicList = D_800E2274; \
+                            gActors[actor_update].graphicTimer = 1;
+                            Sound_PlaySfxAtActor2(D_800D80A8[gActors[actor_update].var_0D8 & 0xF], actor_update);
+                            SpawnTextBubble(actor_update, D_800D8088[gActors[actor_update].var_0D8 & 0xF], 0, 0x20, 0x23);
                         }
                     }
                 }
                 else {
-                    func_80065724(arg0);
-                    if (gActors[arg0].graphicTimer == 0) {
-                        gActors[arg0].unk_174++;
+                    func_80065724(actor_update);
+                    if (gActors[actor_update].graphicTimer == 0) {
+                        gActors[actor_update].unk_174++;
                     }
                 }
             }
         }
         break;
     case 0xA1:
-        gActors[arg0].unk_184_s16[0] = gActors[arg0].unk_17C + 0x80;
-        if (gActors[arg0].unk_174 == 2) {
-            if (gActors[arg0].flags & 0x20) {
-                gActors[arg0].state = 0x60;
+        gActors[actor_update].unk_184_s16[0] = gActors[actor_update].unk_17C + 0x80;
+        if (gActors[actor_update].unk_174 == 2) {
+            if (gActors[actor_update].flags & ACTOR_FLAG_FLIPPED) {
+                gActors[actor_update].state = 0x60;
             }
         }
-        func_80073438(arg0);
-        if (((gActors[arg0].velocityX.raw > 0) && (gActors[arg0].flags_098 & 8)) ||
-            ((gActors[arg0].velocityX.raw < 0) && (gActors[arg0].flags_098 & 4))) {
-            gActors[arg0].unk_0F8.raw = -gActors[arg0].velocityX.raw;
-            gActors[arg0].unk_0FC.raw = 0x20000;
-            gActors[arg0].unk_118 = 1.0f;
-            func_80069814(arg0);
+        func_80073438(actor_update);
+        if (((gActors[actor_update].velocityX.raw > 0) && (gActors[actor_update].flags_098 & ACTOR_FLAG3_UNK3)) ||
+            ((gActors[actor_update].velocityX.raw < 0) && (gActors[actor_update].flags_098 & ACTOR_FLAG3_UNK2))) {
+            gActors[actor_update].unk_0F8.raw = -gActors[actor_update].velocityX.raw;
+            gActors[actor_update].unk_0FC.raw = FIXED_UNIT(2);
+            gActors[actor_update].unk_118 = 1.0f;
+            func_80069814(actor_update);
         }
         break;
     }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80073A60.s")
-#endif
 
 #ifdef NON_MATCHING
 // https://decomp.me/scratch/o5z9V

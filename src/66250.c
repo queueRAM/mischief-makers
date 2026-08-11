@@ -85,6 +85,8 @@ extern u16 D_800D7EB0[];
 extern u16 D_800D7EBC[];
 extern s16 D_800D7ED8[];
 extern ActorFunc D_800D7F00[];
+extern u16* D_800D8088[];
+extern u16 D_800D80A8[];
 extern u16 D_800D80C0[]; // = { 0x0000, 0x0010, 0x0030, 0x0000, };
 extern s16 D_800D8190[]; /* = {
     GINDEX_WM_STAGEICONMERCO, 2,
@@ -249,7 +251,7 @@ extern s16 D_800E216C[];
 extern u8 D_800E223C[];
 extern u8 D_800E2250[];
 extern s16 D_800E2268[];
-extern u8 D_800E2274[];
+extern s16 D_800E2274[];
 extern s16 D_800E22A8[];
 extern s16 D_800E22B4[];
 extern s16 D_800E22CC[];
@@ -925,46 +927,46 @@ s32 func_800679DC(u16 actor_index, u16 arg1) {
 u16 func_80067B18(u16 actor_index, s32 arg1) {
     switch (arg1) {
     case 0x1000000:
-        gActors[actor_index].var_160 = (s32) D_800D7C78;
+        gActors[actor_index].graphicList_160 = D_800D7C78;
         arg1 = 0x100;
         break;
     case 0xC00000: 
     case 0x1400000:
-        gActors[actor_index].var_160 = (s32) D_800D7C80;
+        gActors[actor_index].graphicList_160 = D_800D7C80;
         arg1 = 0x100;
         break;
     case 0x800000:
     case 0x1800000:
-        gActors[actor_index].var_160 = (s32) D_800D7C88;
+        gActors[actor_index].graphicList_160 = D_800D7C88;
         arg1 = 0x80;
         break;
     case 0x400000: 
     case 0x1C00000:
-        gActors[actor_index].var_160 = (s32) D_800D7C90;
+        gActors[actor_index].graphicList_160 = D_800D7C90;
         arg1 = 0;
         break;
     case 0x0:      
     case 0x2000000:
-        gActors[actor_index].var_160 = (s32) D_800D7C98;
+        gActors[actor_index].graphicList_160 = D_800D7C98;
         arg1 = 0;
         break;
     case 0x2400000:
     case 0x3C00000:
-        gActors[actor_index].var_160 = (s32) D_800D7CA0;
+        gActors[actor_index].graphicList_160 = D_800D7CA0;
         arg1 = 0;
         break;
     case 0x2800000:
     case 0x3800000:
-        gActors[actor_index].var_160 = (s32) D_800D7CA8;
+        gActors[actor_index].graphicList_160 = D_800D7CA8;
         arg1 = 0x380;
         break;
     case 0x2C00000:
     case 0x3400000:
-        gActors[actor_index].var_160 = (s32) D_800D7CB0;
+        gActors[actor_index].graphicList_160 = D_800D7CB0;
         arg1 = 0x300;
         break;
     case 0x3000000:
-        gActors[actor_index].var_160 = (s32) D_800D7CB8;
+        gActors[actor_index].graphicList_160 = D_800D7CB8;
         arg1 = 0x300;
         break;
     }
@@ -981,31 +983,31 @@ void func_80067E50(u16 actor_index, void* arg1) {
 
 void func_80067E9C(u16 actor_index) {
     if (gActors[actor_index].graphicTimer == 0) {
-        ACTOR_GFX_INIT(actor_index,D_800E1700);
+        ACTOR_GFX_INIT(actor_index, D_800E1700);
     }
 }
 
 void func_80067EF0(u16 actor_index) {
     if (gActors[actor_index].graphicTimer == 0) {
-        ACTOR_GFX_INIT(actor_index,D_800E1750);
+        ACTOR_GFX_INIT(actor_index, D_800E1750);
     }
 }
 
 void func_80067F44(u16 actor_index) {
     if (gActors[actor_index].graphicTimer == 0) {
-        ACTOR_GFX_INIT(actor_index,D_800E223C);
+        ACTOR_GFX_INIT(actor_index, D_800E223C);
     }
 }
 
 void func_80067F98(u16 actor_index) {
     if (gActors[actor_index].graphicTimer == 0) {
-        ACTOR_GFX_INIT(actor_index,D_800E2274);
+        ACTOR_GFX_INIT(actor_index, D_800E2274);
     }
 }
 
 void func_80067FEC(u16 actor_index) {
     if (gActors[actor_index].graphicTimer == 0) {
-        ACTOR_GFX_INIT(actor_index,D_800E2250);
+        ACTOR_GFX_INIT(actor_index, D_800E2250);
     }
 }
 
@@ -4760,7 +4762,72 @@ void func_80073970(u16 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80073970.s")
 #endif
 
+#ifdef NON_MATCHING
+// https://decomp.me/scratch/n3HgC
+// Clancer_Update return void, but this function seems to only match with a bad (or no) prototype
+void func_80073A60(u16 arg0) {
+    Clancer_Update(arg0);
+    switch (gActors[arg0].state) {
+    case 0x0:
+        gActors[arg0].state = 0x60;
+        break;
+    case 0x61:
+        gActors[arg0].velocityX.raw = 0;
+        if (gActors[arg0].unk_174 == 2) {
+            if (gActors[arg0].flags & 0x20) {
+                gActors[arg0].state = 0x70;
+            }
+            else {
+                gActors[arg0].state = 0xA0;
+                gActors[arg0].unk_184_s16[0] = gActors[arg0].unk_17C + 0x80;
+            }
+        } else {
+            if (!(func_80073438(arg0) & 0x8000)) {
+                if (gActors[arg0].unk_174 == 0) {
+                    if (D_800E3584 & 0xC0000) {
+                        gActors[arg0].state = 0x70;
+                    }
+                    else {
+                        func_80067EF0(arg0);
+                        if (func_80029B00(0x80, 0x80, -0x50) != 0) {
+                            gActors[arg0].unk_174++;
+                            gActors[arg0].graphicList = D_800E2274; \
+                            gActors[arg0].graphicTimer = 1;
+                            Sound_PlaySfxAtActor2(D_800D80A8[gActors[arg0].var_0D8 & 0xF], arg0);
+                            SpawnTextBubble(arg0, D_800D8088[gActors[arg0].var_0D8 & 0xF], 0, 0x20, 0x23);
+                        }
+                    }
+                }
+                else {
+                    func_80065724(arg0);
+                    if (gActors[arg0].graphicTimer == 0) {
+                        gActors[arg0].unk_174++;
+                    }
+                }
+            }
+        }
+        break;
+    case 0xA1:
+        gActors[arg0].unk_184_s16[0] = gActors[arg0].unk_17C + 0x80;
+        if (gActors[arg0].unk_174 == 2) {
+            if (gActors[arg0].flags & 0x20) {
+                gActors[arg0].state = 0x60;
+            }
+        }
+        func_80073438(arg0);
+        if (((gActors[arg0].velocityX.raw > 0) && (gActors[arg0].flags_098 & 8)) ||
+            ((gActors[arg0].velocityX.raw < 0) && (gActors[arg0].flags_098 & 4))) {
+            gActors[arg0].unk_0F8.raw = -gActors[arg0].velocityX.raw;
+            gActors[arg0].unk_0FC.raw = 0x20000;
+            gActors[arg0].unk_118 = 1.0f;
+            func_80069814(arg0);
+        }
+        break;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80073A60.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80073CE8.s")
 

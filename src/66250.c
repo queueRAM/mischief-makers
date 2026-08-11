@@ -5181,7 +5181,27 @@ s32 func_8007502C(u16 actor_index, u16 arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80075324.s")
+s32 func_80075324(u16 actor_index, u16 arg1) {
+    u16 free_actor;
+    u16 angle;
+
+    free_actor = func_800742B8(arg1 & 1);
+    if (free_actor) {
+        angle = func_80074654(free_actor, actor_index);
+        func_8002DB0C(
+            free_actor,
+            arg1 & 1,
+            TO_FIXED(angle),
+            gActors[free_actor].posX.raw,
+            gActors[free_actor].posY.raw,
+            gActors[free_actor].posZ.raw
+        );
+        return TRUE;
+    }
+    else {
+        return FALSE;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_800753C4.s")
 

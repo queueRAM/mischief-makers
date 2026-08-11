@@ -5203,7 +5203,12 @@ s32 func_80075324(u16 actor_index, u16 arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_800753C4.s")
+void func_800753C4(u16 actor_index) {
+    gActors[actor_index].hitboxBY0 = 16; \
+    gActors[actor_index].hitboxBY1 = -4; \
+    gActors[actor_index].hitboxBX0 = -8;\
+    gActors[actor_index].hitboxBX1 = 8; \
+}
 
 void func_80075418(u16 actor_index) {
     gActors[actor_index].velocityX.raw = Math_ApproachS32(gActors[actor_index].velocityX.raw, 0, FIXED_UNIT(1.0 / 16.0));

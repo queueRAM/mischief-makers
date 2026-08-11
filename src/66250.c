@@ -5101,7 +5101,7 @@ void func_80074C30(u16 actor_index, u16 arg1) {
     gActors[actor_index].scaleY = 1.5f;
 }
 
-s32 func_80074D28(u16 actor_index, u16 arg1) {
+u16 func_80074D28(u16 actor_index, u16 arg1) {
     u16 free_actor;
     u16 angle;
     u16 pad;
@@ -5318,7 +5318,46 @@ void func_80075900(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80075A90.s")
+void func_80075A90(u16 actor_index) {
+    u16 should_update;
+
+    if (!(gActors[actor_index + 1].unk_188 & 0x8000)) {
+        if (gActors[actor_index].unk_11C < 0.0f) {
+            should_update = FALSE;
+            switch ((u16)gActors[actor_index].var_110 & 0xF) {
+            case 0:
+                if (func_80074938(actor_index + 1, 0)) {
+                    gActors[actor_index].unk_11C = 40.0f;
+                    if (gActors[actor_index].flags & ACTOR_FLAG_FLIPPED) {
+                        gActors[actor_index].velocityX.raw = FIXED_UNIT(1.375);
+                    }
+                    else {
+                        gActors[actor_index].velocityX.raw = FIXED_UNIT(-1.375);
+                    }
+                    gActors[actor_index].unk_120 += 1.0f;
+                    if (gActors[actor_index].unk_120 > 2.0f) {
+                        should_update = TRUE;
+                    }
+                }
+                break;
+            case 1:
+                if (func_80074D28(actor_index + 1, 0)) {
+                    gActors[actor_index].unk_11C = 8.0f;
+                    gActors[actor_index].unk_120 += 1.0f;
+                    if (gActors[actor_index].unk_120 > 5.0f) {
+                        should_update = TRUE;
+                    }
+                }
+                break;
+            }
+            if (should_update) {
+                gActors[actor_index].state = 0x20;
+                gActors[actor_index].var_158 = 0xA;
+                gActors[actor_index].unk_11C = 140.0f;
+            }
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80075CD8.s")
 

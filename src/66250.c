@@ -4734,7 +4734,31 @@ void func_800737C4(u16 actor_index) {
     }
 }
 
+#ifdef NON_MATCHING
+// https://decomp.me/scratch/BUzMJ
+// Clancer_Update return void, but this function seems to only match with a bad (or no) prototype
+void func_80073970(u16 arg0) {
+    Clancer_Update(arg0);
+    switch (gActors[arg0].state) {
+    case 0x0:
+        gActors[arg0].state = 0x60;
+        break;
+    case 0x61:
+        if (!(func_80073320(arg0) & 0x8000)) {
+            func_80067E9C(arg0);
+            if ((func_80029B00(0x80, 0x50, -0x50)) && (D_800E3584 & 0xC0000)) {
+                gActors[arg0].state = 0x70;
+            }
+        }
+        break;
+    case 0x91:
+        func_80073320(arg0);
+        break;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80073970.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80073A60.s")
 

@@ -798,18 +798,18 @@ s32 func_80067394(u16 actor_index, u16 arg1) {
 // https://decomp.me/scratch/ds1nP
 void func_8006756C(u16 arg0) {
     s32 pad;
-    s16* temp_t2;
-    s32 temp_f16;
-    s32 temp_v1_4;
+    s32 temp_v1;
     s32 var_t1;
-    s16* var_v0;
-    s32 var_t3;
-    s32 var_t5;
-    u16 temp_v0_2;
+    s32 temp_f16;
+    s16* var_v0; // sp34
+    u16 temp_v0;
     u16 idx;
+    s32 var_t3; // sp2C
+    s32 var_t5; // sp28
+    s32 pad1;
+    s16* temp_t2;
 
-    // TODO: var_160 ptr type?
-    var_v0 = (s16*)gActors[arg0].var_160;
+    var_v0 = gActors[arg0].graphicList_160;
     if (var_v0[2] != 0) {
         if (gActors[arg0].unk_120 < var_v0[1]) {
             gActors[arg0].unk_120 += 1.0f;
@@ -819,7 +819,7 @@ void func_8006756C(u16 arg0) {
             if (var_v0[0] < 0) {
                 var_v0 += var_v0[0];
             }
-            gActors[arg0].var_160 = (s32)var_v0;
+            gActors[arg0].graphicList_160 = var_v0;
             gActors[arg0].unk_120 = 1.0f;
         }
     }
@@ -858,35 +858,35 @@ void func_8006756C(u16 arg0) {
     var_t1 = (COS(temp_t2[1]) * (gActors[arg0].scaleX * 589824.0f));
     temp_f16 = (SIN(temp_t2[1]) * (gActors[arg0].scaleX * 589824.0f));
     gActors[idx].unk_140_f32 = temp_t2[3] + gActors[arg0].unk_11C;
-    temp_v1_4 = ((temp_t2[2] + temp_t2[1]) & 0x3FF) << 0x10;
+    temp_v1 = (((temp_t2[2] + temp_t2[1]) & 0x3FF) << 0x10);
     if (gActors[arg0].flags & 0x20) {
         gActors[idx].flags |= gActors[arg0].flags & 0x20;
         var_t3 = -var_t3;
         var_t1 = -var_t1;
-        gActors[idx].var_160 = 0x04000000 - temp_v1_4;
+        gActors[idx].var_160 = 0x4000000 - temp_v1;
         gActors[idx].unk_140_f32 = -gActors[idx].unk_140_f32;
     }
     else {
-        gActors[idx].var_160 = temp_v1_4;
+        gActors[idx].var_160 = temp_v1;
         gActors[idx].flags &= ~0x20;
     }
     gActors[idx].unk_134 = (var_t1 + var_t3) / 0x10000;
     gActors[idx].unk_138 = (temp_f16 + var_t5) / 0x10000;
-    temp_v0_2 = SpawnParticle_List_90C0_16(gGraphicListBlank, 0, 0, 0);
-    if (temp_v0_2 != 0) {
-        gActors[temp_v0_2].graphicIndex = 0x290;
-        gActors[temp_v0_2].graphicFlags = 9;
-        gActors[temp_v0_2].flags |= gActors[arg0].flags & 0x20;
-        gActors[temp_v0_2].scaleX = gActors[arg0].scaleX * 0.8;
-        gActors[temp_v0_2].scaleY = gActors[arg0].scaleX * 0.8;
-        gActors[temp_v0_2].unk_148 = 0.0f;
-        gActors[temp_v0_2].var_160 = (temp_t2[1] << 0x10);
+    temp_v0 = SpawnParticle_List_90C0_16(gGraphicListBlank, 0, 0, 0);
+    if (temp_v0 != 0) {
+        gActors[temp_v0].graphicIndex = 0x290;
+        gActors[temp_v0].graphicFlags = 9;
+        gActors[temp_v0].flags |= gActors[arg0].flags & 0x20;
+        gActors[temp_v0].scaleX = gActors[arg0].scaleX * 0.8;
+        gActors[temp_v0].scaleY = gActors[arg0].scaleX * 0.8;
+        gActors[temp_v0].unk_148 = 0.0f;
+        gActors[temp_v0].var_160 = (temp_t2[1] << 0x10);
         if (gActors[arg0].flags & 0x20) {
-            gActors[temp_v0_2].var_160 = 0x04000000 -  gActors[temp_v0_2].var_160;
+            gActors[temp_v0].var_160 = 0x04000000 -  gActors[temp_v0].var_160;
         }
-        gActors[temp_v0_2].pos[0].raw = gActors[arg0].pos[0].raw + (var_t1 / 2) + var_t3;
-        gActors[temp_v0_2].pos[1].raw = gActors[arg0].pos[1].raw + (temp_f16 / 2) + var_t5;
-        gActors[temp_v0_2].pos[2].raw = gActors[arg0].pos[2].raw - 2;
+        gActors[temp_v0].posX.raw = gActors[arg0].posX.raw + (var_t1 / 2) + var_t3;
+        gActors[temp_v0].posY.raw = gActors[arg0].posY.raw + (temp_f16 / 2) + var_t5;
+        gActors[temp_v0].posZ.raw = gActors[arg0].posZ.raw - 2;
     }
 }
 #else

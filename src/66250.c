@@ -5439,7 +5439,7 @@ void ActorUpdate_CatTank(u16 actor_index) {
         func_800755F8(actor_index);
         func_80075670(actor_index);
         if ((gActiveFrames % 9) == 0) {
-            Sound_PlaySfxAtActor3(0xA5, actor_index);
+            Sound_PlaySfxAtActor3(SFX_00A5, actor_index);
         }
         break;
     case 0x100:
@@ -5479,7 +5479,15 @@ void ActorUpdate_CatTank(u16 actor_index) {
     gActors[actor_index].flags_098 &= ~(ACTOR_FLAG3_UNK21 | ACTOR_FLAG3_UNK10 | ACTOR_FLAG3_UNK9);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80076228.s")
+f32 func_80076228(f32 val) {
+    if (val < 0.0f) {
+        val = -val;
+    }
+    if (val > FIXED_UNIT(4)) {
+        val = FIXED_UNIT(4);
+    }
+    return FROM_FIXED(val) / 10.0f;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80076270.s")
 

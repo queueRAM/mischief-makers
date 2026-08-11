@@ -5263,7 +5263,39 @@ void func_800756FC(u16 actor_index){
     ACTOR_GFX_INIT(actor_index,D_800E2564);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8007574C.s")
+void func_8007574C(u16 actor_index, s16 arg1) {
+    s16 sign;
+
+    gActors[actor_index].var_158--;
+    if (gActors[actor_index].var_154 & 1) {
+        if ((((gActors[actor_index].unk_178 + arg1) < gActors[actor_index].unk_180) ||
+            (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK3)) && (gActors[actor_index].var_158 < 0)) {
+            func_800756FC(actor_index);
+            gActors[actor_index].var_158 = 0x1E;
+            gActors[actor_index].var_154 ^= 1;
+        }
+        else {
+            sign = 1;
+            gActors[actor_index].flags &= ~ACTOR_FLAG_FLIPPED;
+        }
+    }
+    else if (((gActors[actor_index].unk_180 < (gActors[actor_index].unk_178 - arg1)) ||
+        (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK2)) && (gActors[actor_index].var_158 < 0)) {
+        func_800756FC(actor_index);
+        gActors[actor_index].var_158 = 0x1E;
+        gActors[actor_index].var_154 ^= 1;
+    }
+    else {
+        sign = -1;
+        gActors[actor_index].flags |= ACTOR_FLAG_FLIPPED;
+    }
+    if (gActiveFrames & 8) {
+        gActors[actor_index].velocityX.raw = Math_ApproachS32(gActors[actor_index].velocityX.raw, sign * FIXED_UNIT(0.75), FIXED_UNIT(0.25));
+    }
+    else {
+        gActors[actor_index].velocityX.raw = Math_ApproachS32(gActors[actor_index].velocityX.raw, sign * FIXED_UNIT(0.375), FIXED_UNIT(0.25));
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80075900.s")
 

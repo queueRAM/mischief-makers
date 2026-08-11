@@ -5585,7 +5585,11 @@ s32 func_800768D8(u16 actor_index) {
     return FALSE;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80076950.s")
+void func_80076950(u16 actor_index) {
+    gActors[actor_index].state = 0x10;
+    gActors[actor_index].flags |= ACTOR_FLAG_UNK17; \
+    gActors[actor_index].flags &= ~ACTOR_FLAG_UNK16;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_800769AC.s")
 

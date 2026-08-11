@@ -5036,7 +5036,45 @@ void func_80074804(u16 actor_index, u16 arg1) {
     gActors[actor_index].unk_118 = 30.0f;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80074938.s")
+u16 func_80074938(u16 actor_index, u16 arg1) {
+    u16 free_actor;
+    u16 angle;
+
+    free_actor = func_800742B8(arg1 & 1);
+    if (free_actor) {
+        gActors[free_actor].var_0D8 = (arg1 & 0x1F00) / 256;
+        func_80074804(free_actor, arg1 & 1);
+        if (gActors[free_actor].var_0D8 & 1) {
+            gActors[free_actor].damage /= 2;
+            gActors[free_actor].graphicFlags &= ~ACTOR_GFLAG_SCALE;
+            Sound_PlaySfxAtActor2(SFX_00D6, actor_index);
+        } else {
+            Sound_PlaySfxAtActor2(SFX_LASER_0052, actor_index);
+        }
+        gActors[free_actor].flags += gActors[actor_index].flags & ACTOR_FLAG_FLIPPED;
+        angle = func_800744AC(free_actor, actor_index);
+        gActors[free_actor].velocityX.raw = COS(angle) * FIXED_UNIT(-0.5);
+        gActors[free_actor].velocityY.raw = SIN(angle) * FIXED_UNIT(-0.5);
+        if (arg1 & 1) {
+            gActors[free_actor].var_158 = COS(angle) * FIXED_UNIT(0.28125);
+            gActors[free_actor].var_15C = SIN(angle) * FIXED_UNIT(0.28125);
+        }
+        else {
+            gActors[free_actor].var_158 = COS(angle) * FIXED_UNIT(0.15625);
+            gActors[free_actor].var_15C = SIN(angle) * FIXED_UNIT(0.15625);
+        }
+        if (gActors[free_actor].flags & ACTOR_FLAG_FLIPPED) {
+            gActors[free_actor].unk_16C = TO_FIXED(-angle) + FIXED_UNIT(512.0);
+        }
+        else {
+            gActors[free_actor].unk_16C = TO_FIXED(angle);
+        }
+        gActors[free_actor].unk_170 = TO_FIXED(angle);
+        gActors[free_actor].unk_184 = actor_index;
+        gActors[free_actor].unk_188 = gActors[actor_index].actorType;
+    }
+    return free_actor;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80074C30.s")
 

@@ -88,6 +88,7 @@ extern u16* D_800D8088[];
 extern u16 D_800D80A8[]; // list of SFX IDs
 extern u16 D_800D80C0[]; // = { 0x0000, 0x0010, 0x0030, 0x0000, };
 extern s16 D_800D80C8[];
+extern s16 D_800D80D0[];
 extern s16 D_800D8190[]; /* = {
     GINDEX_WM_STAGEICONMERCO, 2,
     0, 0
@@ -5489,7 +5490,15 @@ f32 func_80076228(f32 val) {
     return FROM_FIXED(val) / 10.0f;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80076270.s")
+void func_80076270(u16 arg0) {
+    u16 index;
+
+    index = (((u16)gActors[arg0].var_110 & 0x30) / 16) * 4;
+    gActors[arg0].hitboxBY0 = D_800D80D0[index + 0];
+    gActors[arg0].hitboxBY1 = D_800D80D0[index + 1];
+    gActors[arg0].hitboxBX0 = D_800D80D0[index + 2];
+    gActors[arg0].hitboxBX1 = D_800D80D0[index + 3];
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80076374.s")
 

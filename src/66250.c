@@ -5517,7 +5517,13 @@ s32 func_80076374(u16 actor_index) {
     return (TO_FIXED(Math_Atan2(x, gActors[actor_index].velocityY.raw)) + FIXED_UNIT(256)) & 0x03FFFFFF;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80076414.s")
+void func_80076414(u16 actor_index) {
+    gActors[actor_index].velocityX.raw = Math_ApproachS32(gActors[actor_index].velocityX.raw, 0, FIXED_UNIT(0.0625));
+    if (gActors[actor_index].velocityY.raw > FIXED_UNIT(-7.5)) {
+        gActors[actor_index].velocityY.raw -= FIXED_UNIT(0.375);
+    }
+    gActors[actor_index].unk_16C = func_800298D0(func_80076374(actor_index), gActors[actor_index].unk_16C, FIXED_UNIT(32.0));
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_800764B0.s")
 

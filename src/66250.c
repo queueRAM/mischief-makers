@@ -5247,7 +5247,16 @@ s32 func_800755F8(u16 actor_index) {
     return FALSE;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80075670.s")
+s32 func_80075670(u16 actor_index) {
+    if (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK9) {
+        gActors[actor_index].state = 0x100;
+        gActors[actor_index].flags = ACTOR_FLAG_UNK17 | ACTOR_FLAG_UNK8 | ACTOR_FLAG_ACTIVE | ACTOR_FLAG_DRAW;
+        Sound_PlaySfxAtActor2(SFX_GRAB_002F, actor_index);
+        func_80029134(actor_index);
+        return TRUE;
+    }
+    return FALSE;
+}
 
 void func_800756FC(u16 actor_index){
     gActors[actor_index].state = 0x20;

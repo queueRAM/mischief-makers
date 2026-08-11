@@ -5365,7 +5365,11 @@ void func_80075CD8(u16 actor_index) {
     func_80075670(actor_index);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80075D50.s")
+void func_80075D50(u16 actor_index) {
+    gActors[actor_index].flags = 0;
+    Sound_PlaySfxAtActor2(SFX_BOOM_0043, actor_index);
+    func_8003F138(0.8f, gActors[actor_index].posX.whole, gActors[actor_index].posY.whole, 0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/ActorUpdate_CatTank.s")
 

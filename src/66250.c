@@ -89,6 +89,7 @@ extern u16 D_800D80A8[]; // list of SFX IDs
 extern u16 D_800D80C0[]; // = { 0x0000, 0x0010, 0x0030, 0x0000, };
 extern s16 D_800D80C8[];
 extern s16 D_800D80D0[];
+extern u16 D_800D80F0[];
 extern s16 D_800D8190[]; /* = {
     GINDEX_WM_STAGEICONMERCO, 2,
     0, 0
@@ -5613,7 +5614,16 @@ void func_80076A38(u16 actor_index) {
     gActors[actor_index].posY.whole = gActors[actor_index].unk_174 - gScreenPosCurrentY.whole;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80076AB4.s")
+void func_80076AB4(u16 actor_index, f32 arg1) {
+    s32 index;
+
+    if ((gActors[actor_index].flags & ACTOR_FLAG_ENABLED) == ACTOR_FLAG_ENABLED) {
+        index = (u16)gActors[actor_index].var_110 & 0xF00;
+        if (index) {
+            func_80032E60(actor_index, D_800D80F0[index / 256], 0x100, gActors[actor_index].scaleY * 3.0f, 1, (f64)arg1, (f64)arg1);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80076BF4.s")
 

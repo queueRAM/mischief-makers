@@ -5500,7 +5500,22 @@ void func_80076270(u16 arg0) {
     gActors[arg0].hitboxBX1 = D_800D80D0[index + 3];
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80076374.s")
+s32 func_80076374(u16 actor_index) {
+    s32 x;
+
+    if (gActors[actor_index].velocityX.raw == 0) {
+        if (Rand() & 1) {
+            x = FIXED_UNIT(0.5);
+        }
+        else {
+            x = FIXED_UNIT(-0.5);
+        }
+    }
+    else {
+        x = gActors[actor_index].velocityX.raw;
+    }
+    return (TO_FIXED(Math_Atan2(x, gActors[actor_index].velocityY.raw)) + FIXED_UNIT(256)) & 0x03FFFFFF;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80076414.s")
 

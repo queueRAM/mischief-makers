@@ -183,6 +183,7 @@ extern s16 D_800E1728[];
 extern s16 D_800E176C[];
 extern s16 D_800E17A4[];
 extern s16 D_800E17DC[];
+extern s16 D_800E17F8[];
 extern s16 D_800E1888[];
 extern s16 D_800E1898[];
 extern s16 D_800E18B4[];
@@ -4683,7 +4684,55 @@ void func_80073744(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_800737C4.s")
+void func_800737C4(u16 actor_index) {
+    Clancer_Update(actor_index);
+    switch (gActors[actor_index].state) {
+    case 0x0: 
+        gActors[actor_index].state = 0x60;
+        break;
+    case 0x61:
+        switch (gActors[actor_index].unk_174) {
+        case 0:
+            func_80073320(actor_index);
+            func_80067E9C(actor_index);
+            break;
+        case 1:
+            func_80073320(actor_index);
+            func_80067F98(actor_index);
+            break;
+        case 16:
+            func_80073438(actor_index);
+            func_80067E9C(actor_index);
+            break;
+        case 17:
+            func_80073438(actor_index);
+            func_80067F98(actor_index);
+            break;
+        case 18:
+            func_80073438(actor_index);
+            func_80067EF0(actor_index);
+            break;
+        case 32:
+            func_80073438(actor_index);
+            if (gActors[actor_index].graphicTimer == 0) {
+                ACTOR_GFX_INIT(actor_index, D_800E17F8);
+            }
+        }
+        break;
+    case 0x91:
+        func_80073320(actor_index);
+        break;
+    case 0xA1:
+        func_80073438(actor_index);
+        break;
+    case 0x130:
+        Sound_PlaySfxAtActor2(SFX_0121, actor_index);
+        break;
+    case 0x150:
+        Sound_PlaySfxAtActor2(SFX_LAND_00AC, actor_index);
+        break;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80073970.s")
 

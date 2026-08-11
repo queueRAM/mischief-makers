@@ -86,7 +86,7 @@ extern u16 D_800D7EBC[];
 extern s16 D_800D7ED8[];
 extern ActorFunc D_800D7F00[];
 extern u16* D_800D8088[];
-extern u16 D_800D80A8[];
+extern u16 D_800D80A8[]; // list of SFX IDs
 extern u16 D_800D80C0[]; // = { 0x0000, 0x0010, 0x0030, 0x0000, };
 extern s16 D_800D8190[]; /* = {
     GINDEX_WM_STAGEICONMERCO, 2,
@@ -201,6 +201,7 @@ extern s16 D_800E199C[];
 extern s16 D_800E19C0[];
 extern s16 D_800E19E8[];
 extern s16 D_800E1A8C[];
+extern s16 D_800E1BE0[];
 extern s16 D_800E1BF4[];
 extern s16 D_800E1C00[];
 extern s16 D_800E1C1C[];
@@ -4851,7 +4852,29 @@ void func_80073E50(u16 actor_index, u16 graphic_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80073EF4.s")
+void func_80073EF4(u16 actor_index) {
+    s32 flag_flipped;
+
+    gActors[actor_index].actorType = ACTORTYPE_96;
+    flag_flipped = gActors[actor_index].flags & ACTOR_FLAG_FLIPPED;
+    Actor_Initialize(actor_index);
+    gActors[actor_index].graphicFlags = ACTOR_GFLAG_PALETTE | ACTOR_GFLAG_SCALE;
+    gActors[actor_index].flags = flag_flipped + (ACTOR_FLAG_UNK17 | ACTOR_FLAG_ONSCREEN_ONLY | ACTOR_FLAG_ACTIVE);
+    gActors[actor_index].state = 0xFFFF;
+    gActors[actor_index].hitboxBY1 = -18; \
+    gActors[actor_index].hitboxBX0 = -14;
+    gActors[actor_index].hitboxBY0 = 14; \
+    gActors[actor_index].hitboxBX1 = 14;
+    ACTOR_GFX_INIT(actor_index, D_800E1BE0);
+    if (flag_flipped & ACTOR_FLAG_FLIPPED) {
+        gActors[actor_index].velocityX.raw = FIXED_UNIT(2);
+    }
+    else {
+        gActors[actor_index].velocityX.raw = FIXED_UNIT(-2);
+    }
+    gActors[actor_index].velocityY.raw = FIXED_UNIT(2);
+    gActors[actor_index].flags_098 = 0;
+}
 
 void func_80073FD8(u16 actor_index, u16 arg1, s32 arg2) {
     func_80073EF4(actor_index);

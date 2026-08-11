@@ -5641,9 +5641,28 @@ void func_80076BF4(u16 actor_index) {
     func_80076AB4(actor_index, 0.7f);
 }
 
+void Clanblob_Update(u16);
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/Clanblob_Update.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/ActorUpdate_Clanblob.s")
+void ActorUpdate_Clanblob(u16 actor_index) {
+    Clanblob_Update(actor_index);
+    if (gActors[actor_index].state == 0x20) {
+        gActors[actor_index].state = 0x11;
+        gActors[actor_index].unk_118 = 6.0f;
+        gActors[actor_index].unk_130 = 1.3f;
+        gActors[actor_index].unk_134 = 0.8f;
+        gActors[actor_index].unk_138 = (1.3f - gActors[actor_index].scaleX) / 6.0f;
+        gActors[actor_index].unk_13C_f32 = (0.8f - gActors[actor_index].scaleY) / 6.0f;
+        if (gActors[actor_index].unk_178 < gActors[actor_index].unk_180) {
+            gActors[actor_index].var_158 = FIXED_UNIT(-1.5);
+        }
+        else {
+            gActors[actor_index].var_158 = FIXED_UNIT(1.5);
+        }
+        gActors[actor_index].var_15C = ((Rand() & 7) << 14) + FIXED_UNIT(2.5);
+    }
+    gActors[actor_index].flags_098 &= ~(ACTOR_FLAG3_UNK21 | ACTOR_FLAG3_UNK10 | ACTOR_FLAG3_UNK9);
+}
 
 void func_80077D24(u16 actor_index) {
     s16 angle;

@@ -13,5 +13,6 @@ extern s16 D_800E1CE8[]; // graphic list
 extern s16 D_800E1D0C[]; // graphic list
 
 u16 func_8006CC70(u16 actor_index);
+u16 func_80073320(u16 actor_index);
 
 #endif

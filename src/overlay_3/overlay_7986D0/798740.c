@@ -4,6 +4,7 @@
 
 #include "common.h"
 #include "28EF0.h"
+#include "66250.h"
 
 // "Overlay 3" code for World 2
 

@@ -179,7 +179,6 @@ extern void func_8005DF40(s16 arg0, s16 arg1);
 extern void func_8005E09C(s32 arg0, s32 arg1);
 extern void func_80067E9C(u16 actor_index);
 extern void Clancer_Update(u16 actor_index);
-extern s32 func_80073320(u16 actor_index); // return could be u16
 
 extern u16 SpawnTextBubble(u16 index, u16* text, s16 off_x, s16 off_y, s32 time);
 extern void func_8008310C(void);

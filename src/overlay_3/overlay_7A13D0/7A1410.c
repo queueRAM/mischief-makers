@@ -1,5 +1,6 @@
 #include "common.h"
 #include "28EF0.h"
+#include "66250.h"
 #include "7D8E0.h"
 
 // struct used for skiing Clancers

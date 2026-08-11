@@ -4617,7 +4617,14 @@ void ActorUpdate_Type2(u16 arg0) {
     ActorType2_Noop(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80073320.s")
+u16 func_80073320(u16 actor_index) {
+    return func_8006930C(
+        actor_index, 0x90, 0x70, 0x210, 0x210,
+        gActors[actor_index].unk_184_s16[0] - 4,
+        gActors[actor_index].unk_184_s16[0] + 4,
+        gActors[actor_index].unk_184_s16[1] + 40,
+        gActors[actor_index].unk_184_s16[1] - 40);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_800733AC.s")
 

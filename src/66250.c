@@ -5648,7 +5648,16 @@ void func_80076BF4(u16 actor_index) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80077F58.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80078190.s")
+void func_80078190(u16 actor_index, u16 arg1_unused) {
+    gActors[actor_index].flags |= ACTOR_FLAG_UNK17 | ACTOR_FLAG_PLATFORM0 | ACTOR_FLAG_UNK12 | ACTOR_FLAG_UNK10;
+    gActors[actor_index].health = 100;
+    gActors[actor_index].unk_0DE = 6; \
+    gActors[actor_index].unk_0DF = 2;
+    gActors[actor_index].hitboxBY0 = 23; \
+    gActors[actor_index].hitboxBY1 = -12; \
+    gActors[actor_index].hitboxBX0 = -24; \
+    gActors[actor_index].hitboxBX1 = 16;
+}
 
 void func_80078214(u16 actor_index) {
     f32 x_scale;

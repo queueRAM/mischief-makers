@@ -341,7 +341,7 @@ void func_80028B90(u16 actor_index) {
     }
 }
 
-void func_80028C00(s32 arg0) {
+void func_80028C00(u16 actor_index) {
 }
 
 s32 func_80028C08(u16 actor_index) {

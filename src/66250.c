@@ -26,7 +26,6 @@ void func_8006CE74(u16 actor_index);
 
 // TODO: Move to .h file(s)
 extern void func_800339BC(s32 pos_x, s32 pos_y, s32 pos_z, u16 arg3);
-extern void func_80028C00(u16 actor_index);
 extern void func_80072628(u16 actor_index);
 extern u32 func_80029A7C(s32 arg0, s32 arg1, s32 arg2);
 extern u32 func_80029CC0(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
@@ -4597,7 +4596,7 @@ void func_80072FE4(u16 actor_index) {
 }
 
 // update behavior for almost every Clancer
-void Clancer_Update(u16 actor_index) {
+s32 Clancer_Update(u16 actor_index) {
     func_8006C1AC(actor_index);
     if (gActors[actor_index].state < 0x4000) {
         D_800D7F00[gActors[actor_index].state / 16](actor_index);

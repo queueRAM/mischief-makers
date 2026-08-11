@@ -1,5 +1,6 @@
 #include "common.h"
 #include "28EF0.h"
+#include "66250.h"
 #include "7D8E0.h"
 
 #define OVERLAY1_DISPATCH_ACTOR ((ActorFunc*)OVERLAY1_DISPATCH_TABLE_VRAM)

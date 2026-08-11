@@ -35,6 +35,7 @@ void Actor_SetHitboxAX(u16 actor_index, s16 arg1, s16 arg2);
 
 
 u16 func_8002884C(u16 actor_index);
+void func_80028C00(u16 actor_index);
 void func_80028CE8(u16 actor_index);
 void func_8002A57C(u16 actor_index, s32 arg1, s32 arg2, s32 max_vx);
 u16 func_800291AC(u16 actor_index, u16 state1, s32 flags1, u16 state2, s32 flags2);

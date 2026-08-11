@@ -5359,7 +5359,11 @@ void func_80075A90(u16 actor_index) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80075CD8.s")
+void func_80075CD8(u16 actor_index) {
+    gActors[actor_index].velocityX.raw = Math_ApproachS32(gActors[actor_index].velocityX.raw, 0, FIXED_UNIT(0.125));
+    func_800755F8(actor_index);
+    func_80075670(actor_index);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80075D50.s")
 

@@ -18,7 +18,6 @@ void func_80073EF4(u16 actor_index);
 void func_8006C6F0(u16 actor_index);
 u16 func_8006C7B8(u16 actor_index);
 u16 func_80069884(u16 actor_index);
-void func_80078CC8(u16 actor_index, s32 arg1);
 void func_800789C4(u16 actor_index);
 void func_80078FF0(u16 actor_index, s32 arg1, s32 arg2);
 void func_80079378(u16 actor_index);
@@ -36,7 +35,6 @@ extern u32 func_80029DEC(s32 arg0, s32 arg1);
 extern u16 func_80072CC4(u16 actor_index);
 extern void func_80073EF4(u16 actor_index);
 extern u16 func_80069884(u16 actor_index);
-extern void func_80078CC8(u16 actor_index, s32 arg1);
 extern void func_800358DC(u16 actor_index);
 extern void func_80035A20(u16 actor_index);
 extern s32 func_80029044(u16 actor_index);
@@ -5659,7 +5657,36 @@ void func_80076BF4(u16 actor_index) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_800789C4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80078CC8.s")
+void func_80078CC8(u16 actor_index, u16 arg1_unused) {
+    u16 particle_index;
+
+    particle_index = SpawnParticle_List_90C0_16(
+        D_800E1540,
+        (gActors[actor_index].posX.whole - (Rand() & 0xF)) + 8,
+        (gActors[actor_index].posY.whole - (Rand() & 0xF)) + 8,
+        gActors[actor_index].posZ.whole - 1
+    );
+    if (particle_index != 0) {
+        gActors[particle_index].graphicFlags = 1;
+        gActors[particle_index].flags = 3;
+        gActors[particle_index].scaleX = 1.0f;
+        gActors[particle_index].scaleY = 1.0f;
+        Actor_SetColorRgb(particle_index, 0x7F);
+        gActors[particle_index].var_110 = 0.4f;
+        gActors[particle_index].unk_118 = -0.08f;
+        gActors[particle_index].velocityX.raw = (f32) -gActors[actor_index].velocityX.raw * 0.5;
+        gActors[particle_index].velocityY.raw = (f32) -gActors[actor_index].velocityY.raw * 0.5;
+        gActors[particle_index].var_158 = -gActors[actor_index].velocityX.raw / 6;
+        gActors[particle_index].var_15C = -gActors[actor_index].velocityY.raw / 6;
+        gActors[particle_index].unk_114 = 0.4f;
+        gActors[particle_index].unk_11C = -0.08f;
+        gActors[particle_index].unk_148 = 10.0f;
+        gActors[particle_index].var_154 = -0x10;
+        gActors[particle_index].unk_104 = -0x20;
+        gActors[particle_index].pfn_17C = func_80030A24;
+        gActors[particle_index].velocityZ.raw = -1;
+    }
+}
 
 void func_80078F14(u16 actor_index, s32 arg1) {
     if (!(gActiveFrames & 1)) {

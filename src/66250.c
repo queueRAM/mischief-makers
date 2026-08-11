@@ -4122,106 +4122,106 @@ void func_80071A64(u16 actor_index) {
     func_80069B94(actor_index);
 }
 
-#ifdef NON_MATCHING
-// https://decomp.me/scratch/oOrAd
-// some branch-delay slot optimization
-void func_80071CE8(u16 arg0) {
-    s32 temp_v0_2;
-    u16 temp_v0_4;
+// https://decomp.me/scratch/tkQXI
+// several fakematches used to overcome some branch-delay slot optimization
+void func_80071CE8(u16 actor_index) {
+    s32 angle;
+    u16 shot_actor_index;
     u16 actor;
 
-    if (func_8006C8B8(arg0)) {
-        return;
-    }
-    
-    switch (gActors[arg0].state) {
-    case 0x3F0:
-        gActors[arg0].state++;
-        gActors[arg0].unk_124 = 0.0f;
-        if (!(gActors[arg0].flags & 0x20)) {
-            gActors[arg0].var_15C = 0;
-        }
-        else {
-            gActors[arg0].var_15C = 0x02000000;
-        }
-        /* fallthrough */
-    case 0x3F1:
-        gActors[arg0].state++;
-        gActors[arg0].unk_164 = gActors[arg0].var_15C;
-        temp_v0_2 = Math_PlaneOctant(gActors[D_800E3580].posX.whole - gActors[arg0].posX.whole, gActors[D_800E3580].posY.whole - gActors[arg0].posY.whole);
-        if (gActors[arg0].flags & 0x20) {
-            if ((temp_v0_2 < 0xC1) || (temp_v0_2 >= 0x340)) {
-                gActors[arg0].flags &= ~0x20;
-                gActors[arg0].unk_148 = 1.0f;
+    // fakematch: func_8006C8B8 returns boolean so using a switch is not ideal
+    switch (func_8006C8B8(actor_index)) {
+        case 0:
+            switch (gActors[actor_index].state) {
+            case 0x3F0:
+                gActors[actor_index].state++;
+                gActors[actor_index].unk_124 = 0.0f;
+                if (!(gActors[actor_index].flags & ACTOR_FLAG_FLIPPED)) {
+                    gActors[actor_index].var_15C = 0;
+                }
+                else {
+                    gActors[actor_index].var_15C = FIXED_UNIT(COS_DEG_180);
+                }
+                /* fallthrough */
+            case 0x3F1:
+                gActors[actor_index].state++;
+                gActors[actor_index].unk_164 = gActors[actor_index].var_15C;
+                angle = Math_PlaneOctant(gActors[D_800E3580].posX.whole - gActors[actor_index].posX.whole, gActors[D_800E3580].posY.whole - gActors[actor_index].posY.whole);
+                if (gActors[actor_index].flags & ACTOR_FLAG_FLIPPED) {
+                    if ((angle <= 0xC0) || (angle >= 0x340)) {
+                        gActors[actor_index].flags &= ~ACTOR_FLAG_FLIPPED;
+                        gActors[actor_index].unk_148 = 1.0f;
+                    }
+                }
+                else if ((angle >= 0x140) && (angle <= 0x2C0)) {
+                    gActors[actor_index].flags |= ACTOR_FLAG_FLIPPED;
+                    gActors[actor_index].unk_148 = -1.0f;
+                }
+                gActors[actor_index].var_15C = TO_FIXED(angle);
+                gActors[actor_index].unk_118 = 0.0f;
+                /* fallthrough */
+            case 0x3F2:
+                gActors[actor_index].unk_164 = func_800298D0(gActors[actor_index].var_15C, gActors[actor_index].unk_164, 0xC0000);
+                shot_actor_index = func_80067B18(actor_index, gActors[actor_index].unk_164);
+                if (gActors[actor_index].unk_118 < 20.0f) {
+                    gActors[actor_index].unk_118 += 1.0f;
+                }
+                if ((gActors[actor_index].var_15C == gActors[actor_index].unk_164) && (gActors[actor_index].unk_118 >= 8.0f)) {
+                    gActors[actor_index].state++;
+                    gActors[actor_index].unk_118 = shot_actor_index;
+                }
+                return; // fakematch, breaks should be suitable
+            case 0x3F3:
+                gActors[actor_index].state++;
+                gActors[actor_index].unk_124 += 1.0f;
+                shot_actor_index = Actor_RangeFindInactive(0x70, 0x7A);
+                if (shot_actor_index != 0) {
+                    actor = gActors[actor_index].unk_158_u16[1];
+                    SpawnEnergyShot(
+                        shot_actor_index, 0, gActors[actor_index].unk_164,
+                        (COS(FROM_FIXED(gActors[actor_index].unk_164)) * FIXED_UNIT(8) * gActors[actor].scaleX) + gActors[actor].posX.raw,
+                        (SIN(FROM_FIXED(gActors[actor_index].unk_164)) * FIXED_UNIT(8) * gActors[actor].scaleX) + gActors[actor].posY.raw,
+                        gActors[actor].posZ.raw
+                    );
+                    switch ((u16)gActors[actor_index].unk_118) {
+                    case 0x100:
+                        gActors[actor_index].graphicList_160 = D_800D7D04;
+                        break;
+                    case 0x80: 
+                        gActors[actor_index].graphicList_160 = D_800D7D34;
+                        break;
+                    case 0x0:  
+                        gActors[actor_index].graphicList_160 = D_800D7CD4;
+                        break;
+                    case 0x380:
+                        gActors[actor_index].graphicList_160 = D_800D7D64;
+                        break;
+                    case 0x300:
+                        gActors[actor_index].graphicList_160 = D_800D7D94;
+                        break;
+                    }
+                    gActors[actor_index].unk_120 = 1.0f;
+                }
+                func_8006756C(actor_index);
+                return;
+            case 0x3F4:
+                if (gActors[actor_index].unk_120 == 0.0f) {
+                    gActors[actor_index].state++;
+                }
+                func_8006756C(actor_index);
+                return;
+            case 0x3F5:
+                gActors[actor_index].state = 0x3E3;
+                gActors[actor_index].graphicList_160 = D_800D7C40;
+                gActors[actor_index].unk_120 = 1.0f;
+                gActors[actor_index].unk_124 = 1008.0f;
+                func_8006756C(actor_index);
+                break;
             }
-        }
-        else if ((temp_v0_2 >= 0x140) && (temp_v0_2 < 0x2C1)) {
-            gActors[arg0].flags |= 0x20;
-            gActors[arg0].unk_148 = -1.0f;
-        }
-        gActors[arg0].var_15C = temp_v0_2 << 0x10;
-        gActors[arg0].unk_118 = 0.0f;
-        /* fallthrough */
-    case 0x3F2:
-        gActors[arg0].unk_164 = func_800298D0(gActors[arg0].var_15C, gActors[arg0].unk_164, 0xC0000);
-        temp_v0_4 = func_80067B18(arg0, gActors[arg0].unk_164);
-        if (gActors[arg0].unk_118 < 20.0f) {
-            gActors[arg0].unk_118 += 1.0f;
-        }
-        if ((gActors[arg0].var_15C == gActors[arg0].unk_164) && (gActors[arg0].unk_118 >= 8.0f)) {
-            gActors[arg0].state++;
-            gActors[arg0].unk_118 = temp_v0_4;
-        }
-        break;
-    case 0x3F3:
-        gActors[arg0].state++;
-        gActors[arg0].unk_124 += 1.0f;
-        temp_v0_4 = Actor_RangeFindInactive(0x70, 0x7A);
-        if (temp_v0_4 != 0) {
-            actor = gActors[arg0].unk_158_u16[1];
-            SpawnEnergyShot(temp_v0_4, 0, gActors[arg0].unk_164,
-                            (COS(gActors[arg0].unk_164 / 0x10000) * 524288.0f * gActors[actor].scaleX) + gActors[actor].posX.raw,
-                            (SIN(gActors[arg0].unk_164 / 0x10000) * 524288.0f * gActors[actor].scaleX) + gActors[actor].posY.raw,
-                            gActors[actor].posZ.raw);
-            switch ((u16)gActors[arg0].unk_118) {
-            case 0x100:
-                gActors[arg0].graphicList_160 = D_800D7D04;
-                break;
-            case 0x80: 
-                gActors[arg0].graphicList_160 = D_800D7D34;
-                break;
-            case 0x0:  
-                gActors[arg0].graphicList_160 = D_800D7CD4;
-                break;
-            case 0x380:
-                gActors[arg0].graphicList_160 = D_800D7D64;
-                break;
-            case 0x300:
-                gActors[arg0].graphicList_160 = D_800D7D94;
-                break;
-            }
-            gActors[arg0].unk_120 = 1.0f;
-        }
-        func_8006756C(arg0);
-        break;
-    case 0x3F4:
-        if (gActors[arg0].unk_120 == 0.0f) {
-            gActors[arg0].state++;
-        }
-        func_8006756C(arg0);
-        break;
-    case 0x3F5:
-        gActors[arg0].state = 0x3E3;
-        gActors[arg0].graphicList_160 = D_800D7C40;
-        gActors[arg0].unk_120 = 1.0f;
-        gActors[arg0].unk_124 = 1008.0f;
-        func_8006756C(arg0);
-        break;
+        default:
+            if (D_800E3580 && D_800E3580) { } // fakematch
     }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80071CE8.s")
-#endif
 
 void func_800721C4(u16 actor_index) {
     if (func_8006C8B8(actor_index)) {

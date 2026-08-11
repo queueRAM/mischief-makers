@@ -4635,7 +4635,14 @@ u16 func_800733AC(u16 actor_index) {
         gActors[actor_index].unk_184_s16[1] - 40);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80073438.s")
+u16 func_80073438(u16 actor_index) {
+    return func_8006930C(
+        actor_index, 0xA0, 0x70, 0x210, 0x210,
+        gActors[actor_index].unk_184_s16[0] - 4,
+        gActors[actor_index].unk_184_s16[0] + 4,
+        gActors[actor_index].unk_184_s16[1] + 40,
+        gActors[actor_index].unk_184_s16[1] - 40);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_800734C4.s")
 

@@ -5575,7 +5575,15 @@ s32 func_800764B0(u16 actor_index) {
     return FALSE;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_800768D8.s")
+s32 func_800768D8(u16 actor_index) {
+    if (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK6) {
+        gActors[actor_index].state = 0x10;
+        gActors[actor_index].flags |= ACTOR_FLAG_UNK17; \
+        gActors[actor_index].flags &= ~ACTOR_FLAG_UNK16;
+        return TRUE;
+    }
+    return FALSE;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80076950.s")
 

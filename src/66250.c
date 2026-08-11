@@ -4827,7 +4827,42 @@ void func_80073A60(u16 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80073A60.s")
 #endif
 
+#ifdef NON_MATCHING
+// https://decomp.me/scratch/o5z9V
+// Clancer_Update return void, but this function seems to only match with a bad (or no) prototype
+void func_80073CE8(u16 actor_index) {
+    Clancer_Update(actor_index);
+    switch (gActors[actor_index].state) {
+    case 0x0:
+        gActors[actor_index].state = 0x60;
+        break;
+    case 0x61:
+        gActors[actor_index].velocityX.raw = 0;
+        if (!(func_80073438(actor_index) & 0x8000)) {
+            func_80067E9C(actor_index);
+            if (func_80029B00(0x90, 0x70, -0x70)) {
+                if (D_800E3584 & 0xC0000) {
+                    gActors[actor_index].state = 0x70;
+                }
+                else if (gActors[actor_index].var_158 > 120) {
+                    gActors[actor_index].graphicList = D_800E2274; \
+                    gActors[actor_index].graphicTimer = 1;
+                    SpawnTextBubble(actor_index, D_800D8088[gActors[actor_index].var_0D8 & 0xF], 0, 32, 35);
+                    Sound_PlaySfxAtActor2(D_800D80A8[gActors[actor_index].var_0D8 & 0xF], actor_index);
+                    gActors[actor_index].var_158 = 0;
+                }
+            }
+        }
+        break;
+    case 0xA1:
+        gActors[actor_index].unk_118 = 0.8f;
+        func_80073438(actor_index);
+        break;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80073CE8.s")
+#endif
 
 // based on .rodata, could be file split here 74A50/80073E50
 

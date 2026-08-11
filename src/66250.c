@@ -47,6 +47,7 @@ extern u16 gGuestActorIndex;
 // data of this TU
 extern u16* D_800D18A4[];
 extern u16* D_800D18C4[];
+extern u16* D_800D18E4[]; // array of palette pointers
 extern s32 D_800D1938[];
 extern s16 D_800D2918; // = 0;
 extern s16 D_800D291C; // = 0;
@@ -90,6 +91,7 @@ extern u16 D_800D80C0[]; // = { 0x0000, 0x0010, 0x0030, 0x0000, };
 extern s16 D_800D80C8[];
 extern s16 D_800D80D0[];
 extern u16 D_800D80F0[];
+extern f32 D_800D8108[]; // scaleX/Y values
 extern s16 D_800D8190[]; /* = {
     GINDEX_WM_STAGEICONMERCO, 2,
     0, 0
@@ -5625,7 +5627,19 @@ void func_80076AB4(u16 actor_index, f32 arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80076BF4.s")
+void func_80076BF4(u16 actor_index) {
+    if (gActors[actor_index].state == 0) {
+        gActors[actor_index].graphicIndex = 0xCC;
+        gActors[actor_index].palette_18C = D_800D18E4[(u16)gActors[actor_index].var_110 & 0xF];
+        gActors[actor_index].scaleX = D_800D8108[((u16)gActors[actor_index].var_110 & 0x30) / 16];
+        gActors[actor_index].scaleY = D_800D8108[((u16)gActors[actor_index].var_110 & 0x30) / 16];
+        func_800358DC(actor_index);
+    }
+    else {
+        ClanpotIcon_State1(actor_index);
+    }
+    func_80076AB4(actor_index, 0.7f);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/Clanblob_Update.s")
 

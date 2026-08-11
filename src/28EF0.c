@@ -8127,7 +8127,7 @@ u16 func_800405C0(u16 actor_index, s32 x, s32 y, s32 z) {
     return index;
 }
 
-s32 func_800406A4(u16* arg0, u16 arg1, s32 x, s32 y, s32 z) {
+s32 func_800406A4(u16* arg0, u16 parent_index, s32 x, s32 y, s32 z) {
     u16 index;
     u16 actor_index;
 
@@ -8135,7 +8135,7 @@ s32 func_800406A4(u16* arg0, u16 arg1, s32 x, s32 y, s32 z) {
     if ((D_800D5820 == 0) && !(gActors[actor_index].flags & ACTOR_FLAG_ACTIVE)) {
         gActors[actor_index].actorType = ACTORTYPE_93;
         Actor_Initialize(actor_index);
-        gActors[actor_index].parentIndex = arg1;
+        gActors[actor_index].parentIndex = parent_index;
         gActors[actor_index].unk_104 = TO_FIXED(x);
         gActors[actor_index].unk_108 = TO_FIXED(y);
         gActors[actor_index].unk_10C = TO_FIXED(z);
@@ -8143,7 +8143,7 @@ s32 func_800406A4(u16* arg0, u16 arg1, s32 x, s32 y, s32 z) {
         for (index = 0; (arg0[index] & 0x8000) == 0; index++) {
             (&gActors[actor_index].var_150)[index] = arg0[index];
         }
-        gActors[arg1].flags_098 |= ACTOR_FLAG3_UNK18;
+        gActors[parent_index].flags_098 |= ACTOR_FLAG3_UNK18;
         return actor_index;
     }
     return 0;

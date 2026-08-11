@@ -5645,7 +5645,39 @@ void func_80076BF4(u16 actor_index) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/ActorUpdate_Clanblob.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80077D24.s")
+void func_80077D24(u16 actor_index) {
+    s16 angle;
+    s32 target_angle;
+    s32 x;
+    s32 y;
+
+    x = gActors[actor_index].unk_180 - gActors[actor_index].unk_178;
+    y = gActors[actor_index].unk_184 - gActors[actor_index].unk_17C;
+    target_angle = Math_Atan2(x, y);
+    gActors[actor_index].unk_168 = func_800298D0(TO_FIXED(target_angle), gActors[actor_index].unk_168, FIXED_UNIT(24));
+    angle = FROM_FIXED(gActors[actor_index].unk_168);
+
+    if (x < 0) {
+        x = -x;
+    }
+    x = Math_ClampLimit(x << 8, 0x2000) & 0xFFFFFFFFFFFFFFFF; // fakematch
+
+    if (y < 0) {
+        y = -y;
+    }
+    y = Math_ClampLimit(y << 8, 0x2000);
+
+    x = COS(angle) * x;
+    if (x < 0) {
+        x = -x;
+    }
+    y = SIN(angle) * y;
+    if (y < 0) {
+        y = -y;
+    }
+    gActors[actor_index].velocityX.raw = Math_ApproachS32(gActors[actor_index].velocityX.raw, (COS(angle) * x * 16.0f), x);
+    gActors[actor_index].velocityY.raw = Math_ApproachS32(gActors[actor_index].velocityY.raw, (SIN(angle) * y * 16.0f), y);
+}
 
 void func_80077F58(u16 actor_index) {
     u16 temp_t0;

@@ -1,4 +1,5 @@
 #include "common_structs.h"
+#include "cosine.h"
 #define func_80012AB4_ARGS
 #define func_8001FCA0_ARGS u16 actor_index, s32 x, s32 y
 #include "common.h"
@@ -86,6 +87,7 @@ extern ActorFunc D_800D7F00[];
 extern u16* D_800D8088[];
 extern u16 D_800D80A8[]; // list of SFX IDs
 extern u16 D_800D80C0[]; // = { 0x0000, 0x0010, 0x0030, 0x0000, };
+extern s16 D_800D80C8[];
 extern s16 D_800D8190[]; /* = {
     GINDEX_WM_STAGEICONMERCO, 2,
     0, 0
@@ -5137,7 +5139,47 @@ s32 func_80074D28(u16 actor_index, u16 arg1) {
     return free_actor;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8007502C.s")
+s32 func_8007502C(u16 actor_index, u16 arg1) {
+    u16 index;
+    u16 free_actor;
+    u16 base_actor;
+    u16 angle;
+    u16 base_angle;
+
+    for (index = 0; index != 3; index++) {
+        free_actor = func_800742B8(arg1 & 1);
+        if (free_actor) {
+            func_80074C30(free_actor, arg1 & 1);
+            gActors[free_actor].flags += gActors[actor_index].flags & ACTOR_FLAG_FLIPPED;
+            if (index == 0) {
+                angle = func_800742FC(free_actor, actor_index);
+                base_actor = free_actor;
+                base_angle = angle;
+            } 
+            else {
+                gActors[free_actor].posX.raw = gActors[base_actor].posX.raw;
+                gActors[free_actor].posY.raw = gActors[base_actor].posY.raw;
+                gActors[free_actor].posZ.raw = gActors[base_actor].posZ.raw;
+                angle = (D_800D80C8[index] + base_angle);
+                angle &= COS_MASK;
+                gActors[free_actor].rotateZ = INDEX_TO_DEG((f32)angle);
+            }
+            gActors[free_actor].unk_114 = 10.0f;
+            gActors[free_actor].velocityX.raw = COS(angle) * FIXED_UNIT(1);
+            gActors[free_actor].velocityY.raw = SIN(angle) * FIXED_UNIT(1);
+            gActors[free_actor].var_158 = COS(angle) * FIXED_UNIT(0.75);
+            gActors[free_actor].var_15C = SIN(angle) * FIXED_UNIT(0.75);
+            gActors[free_actor].var_150 = 0x12;
+        }
+    }
+    if (index) {
+        Sound_PlaySfxAtActor3(SFX_SHOT_0046, free_actor);
+        return TRUE;
+    }
+    else {
+        return FALSE;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80075324.s")
 

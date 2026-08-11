@@ -4986,7 +4986,28 @@ u16 func_800744E0(u16 actor_dst, u16 actor_src) {
     return angle;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80074654.s")
+u16 func_80074654(u16 actor_dst, u16 actor_src) {
+    s32 rotation_index;
+    u16 angle;
+
+    gActors[actor_dst].rotateZ = gActors[actor_src].rotateZ;
+    rotation_index = DEG_TO_INDEX(gActors[actor_src].rotateZ);
+    if (gActors[actor_src].flags & ACTOR_FLAG_FLIPPED) {
+        angle = rotation_index + 0x218;
+    } else {
+        angle = rotation_index - 0x18;
+    }
+    gActors[actor_dst].posX.raw = gActors[actor_src].posX.raw + TO_FIXED(COS(angle) * 20.0f);
+    gActors[actor_dst].posY.raw = gActors[actor_src].posY.raw + TO_FIXED(SIN(angle) * 20.0f);
+    gActors[actor_dst].posZ.raw = gActors[actor_src].posZ.raw + FIXED_UNIT(1);
+    if (gActors[actor_src].flags & ACTOR_FLAG_FLIPPED) {
+        angle -= 0x18;
+    }
+    else {
+        angle += 0x18;
+    }
+    return angle;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80074804.s")
 

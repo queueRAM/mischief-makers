@@ -5650,7 +5650,35 @@ void func_80076BF4(u16 actor_index) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80078190.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80078214.s")
+void func_80078214(u16 actor_index) {
+    f32 x_scale;
+    u16 actor_1;
+
+    actor_1 = gActors[actor_index].unk_16C_u16[1];
+    if (actor_1 != 0) {
+        if (gActors[actor_1].flags != 0) {
+            if (actor_index == gActors[actor_1].unk_130) {
+                gActors[actor_1].flags &= ~ACTOR_FLAG_FLIPPED;
+                gActors[actor_1].flags |= (gActors[actor_index].flags & ACTOR_FLAG_FLIPPED);
+                gActors[actor_1].unk_148 = 1.0f;
+                if (gActors[actor_index].flags & ACTOR_FLAG_FLIPPED) {
+                    gActors[actor_index].hitboxBX0 = -16; \
+                    gActors[actor_index].hitboxBX1 = 24;
+                    x_scale = 6.0f;
+                }
+                else {
+                    gActors[actor_index].hitboxBX0 = -24; \
+                    gActors[actor_index].hitboxBX1 = 16;
+                    x_scale = -6.0f;
+                }
+                gActors[actor_1].unk_134 = gActors[actor_index].scaleX * x_scale;
+                gActors[actor_1].unk_138 = gActors[actor_index].scaleY * 25.0f;
+                gActors[actor_1].scaleX = gActors[actor_index].scaleX;
+                gActors[actor_1].scaleY = gActors[actor_index].scaleY;
+            }
+        }
+    }
+}
 
 void func_80078338(u16 actor_index) {
     s32 angle;

@@ -246,6 +246,7 @@ extern s16 D_800E205C[];
 extern s16 D_800E206C[];
 extern s16 D_800E209C[];
 extern s16 D_800E20C4[];
+extern s16 D_800E20E0[];
 extern s16 D_800E20FC[];
 extern s16 D_800E2150[];
 extern s16 D_800E216C[];
@@ -4887,7 +4888,50 @@ void func_8007406C(u16 actor_index, u16 arg1, s32 arg2) {
     gActors[actor_index].var_0D8 = arg1 & 0x7000;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_800740C8.s")
+void func_800740C8(u16 actor_index) {
+    switch (gActors[actor_index].state) {
+    default:
+        break;
+    case 0xFFFF:
+        gActors[actor_index].state--;
+        gActors[actor_index].flags |= ACTOR_FLAG_DRAW;
+        func_8006CD5C(actor_index);
+        /* fallthrough */
+    case 0xFFFE:
+        Actor_UpdateVelocityX(actor_index, FIXED_UNIT(0.03125));
+        if (gActors[actor_index].velocityY.raw > FIXED_UNIT(-7.5)) {
+            gActors[actor_index].velocityY.raw -= FIXED_UNIT(0.265625);
+        }
+        if (((gActors[actor_index].velocityX.raw > 0) && (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK3)) || 
+            ((gActors[actor_index].velocityX.raw < 0) && (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK2))) {
+            gActors[actor_index].velocityX.raw = -gActors[actor_index].velocityX.raw;
+        }
+        if ((gActors[actor_index].velocityY.raw > 0) && (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK4)) {
+            gActors[actor_index].velocityY.raw = 0;
+        }
+        if (gActors[actor_index].velocityY.raw < 0) {
+            if (gActors[actor_index].flags_098 & ACTOR_FLAG3_UNK5) {
+                Sound_PlaySfxAtActor2(SFX_0036, actor_index);
+                gActors[actor_index].state--;
+                gActors[actor_index].flags |= ACTOR_FLAG_UNK16;
+                gActors[actor_index].flags &= ~ACTOR_FLAG_UNK17; \
+                gActors[actor_index].flags_098 &= ~ACTOR_FLAG3_UNK6;
+                gActors[actor_index].velocityX.raw = 0;
+                gActors[actor_index].velocityY.raw = 0;
+                gActors[actor_index].graphicList = D_800E20E0; \
+                gActors[actor_index].graphicTimer = 1;
+            }
+        }
+        break;
+    case 0xFFFD:
+        gActors[actor_index].colorA = Math_ApproachS32(gActors[actor_index].colorA, 0, 4);
+        if (gActors[actor_index].graphicTimer == 0) {
+            gActors[actor_index].flags = 0;
+        }
+        break;
+    }
+    gActors[actor_index].flags_098 &= ~(ACTOR_FLAG3_UNK21 | ACTOR_FLAG3_UNK10 | ACTOR_FLAG3_UNK9);
+}
 
 u16 func_800742B8(u16 arg0) {
     if (arg0 & 1) {

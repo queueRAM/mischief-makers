@@ -5841,6 +5841,7 @@ void func_80078418(u16 actor_index) {
             case 20:
             case 23:
                 break;
+            // default cases can be reduced. minimally needs: 2 and at least two other cases < 24 and not 20/23
             default:
             case 2:
             case 3:

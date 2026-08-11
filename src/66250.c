@@ -168,6 +168,7 @@ extern s16 D_800D8240[]; /* = {
     0, 0
 }; */
 extern u16 D_800D8258[]; // = { 0x0005, 0x0014, 0x0032, 0x0064, 0x0166, 0x01B2, 0x01B4, 0x01B2 };
+extern s16 D_800D8268[];
 extern s16 D_800D82BC[]; /* = {
     0x0008, 0x000E,
     0x0008, 0x000E,
@@ -5655,7 +5656,58 @@ void func_80076BF4(u16 actor_index) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80078418.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_800789C4.s")
+void func_800789C4(u16 actor_index) {
+    f32 scale_x;
+    f32 scale_y;
+    f32 sp3C;
+    s16 rotation;
+    u16 index;
+    u32 angle;
+    s32 sp30;
+
+    if (gActors[actor_index].graphicIndex == 0) {
+        return;
+    }
+
+    index = ((gActors[actor_index].graphicIndex - 0x3030) / 2) * 3;
+    rotation = D_800D8268[index + 0];
+    sp3C = D_800D8268[index + 1];
+    sp30 = D_800D8268[index + 2];
+    scale_x = 0.6 + (f32) (Rand() & 7) / 15.0f;
+    scale_y = 0.6 - (f32) (Rand() & 7) / 15.0f;
+    index = func_80032E60(
+        actor_index,
+        0x168,
+        rotation,
+        gActors[actor_index].scaleX * sp3C,
+        -1,
+        gActors[actor_index].scaleX * scale_x,
+        gActors[actor_index].scaleX * scale_y
+    );
+    if (index != 0) {
+        gActors[index].graphicFlags |= ACTOR_GFLAG_PALETTE | ACTOR_GFLAG_SCALE;
+        gActors[index].colorA = 0xA0;
+        angle = (COS_DEG_180 - sp30);
+        if (gActors[actor_index].flags & ACTOR_FLAG_FLIPPED) {
+            gActors[index].rotateZ -= INDEX_TO_DEG(angle);
+        }
+        else {
+            gActors[index].rotateZ += INDEX_TO_DEG(angle);
+        }
+
+        if (Rand() & 3) {
+            if (gActiveFrames & 1) {
+                gActors[index].palette_18C = PALETTE_8022D4E8;
+            }
+            else {
+                gActors[index].palette_18C = D_800D84E8;
+            }
+        }
+        else {
+            gActors[index].palette_18C = D_800D8508;
+        }
+    }
+}
 
 void func_80078CC8(u16 actor_index, u16 arg1_unused) {
     u16 particle_index;

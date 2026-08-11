@@ -1,5 +1,6 @@
 #define func_80012AB4_ARGS s32 arg0, s32 arg1
 #include "common.h"
+#include "28EF0.h"
 
 typedef struct {
     /* 0x00 */ s32 unk_00;

@@ -4831,7 +4831,25 @@ void func_80073A60(u16 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80073CE8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80073E50.s")
+// based on .rodata, could be file split here 74A50/80073E50
+
+void func_80073E50(u16 actor_index, u16 graphic_index) {
+    s32 vel_x;
+    s32 vel_y;
+
+    if (1) { // fakematch?
+        gActors[actor_index].actorType = 0;
+        vel_x = gActors[actor_index].velocityX.raw;
+        vel_y = gActors[actor_index].velocityY.raw;
+        Actor_Initialize(actor_index);
+        gActors[actor_index].health = 10;
+        gActors[actor_index].velocityX.raw = vel_x;
+        gActors[actor_index].velocityY.raw = vel_y;
+        gActors[actor_index].actorType = 0x44;
+        gActors[actor_index].var_110 = -1.0f;
+        gActors[actor_index].graphicIndex = graphic_index;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80073EF4.s")
 

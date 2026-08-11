@@ -5297,7 +5297,26 @@ void func_8007574C(u16 actor_index, s16 arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80075900.s")
+void func_80075900(u16 actor_index) {
+    u16 should_spawn;
+
+    if (!(gActors[actor_index + 1].unk_188 & 0x8000)) {
+        if (gActors[actor_index].unk_11C < 0.0f) {
+            should_spawn = FALSE;
+            if (!((u16)gActors[actor_index].var_110 & 0xF0) && (D_800E3584 & 0x30000)) {
+                if (func_80029B00(0xC0, 0x40, -0x40)) {
+                    should_spawn = TRUE;
+                }
+            }
+            if (should_spawn) {
+                gActors[actor_index].state = 0x21;
+                gActors[actor_index].var_158 = 0x14;
+                gActors[actor_index].unk_120 = 0.0f;
+                SpawnParticle_Exclamation(1.0f, gActors[actor_index].posX.whole, gActors[actor_index].posY.whole, 1);
+            }
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80075A90.s")
 

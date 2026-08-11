@@ -44,6 +44,7 @@ void SpawnRoundBomb(u16 actor_index, s16 pos_x, s16 pos_y, s32 vel_x, s32 vel_y)
 void SpawnBoomerang(u16 actor_index, s16 pos_x, s16 pos_y, s32 vel_x, s32 vel_y);
 void SpawnDizzyStar(u16 parent, s32 scale_x, s32 scale_y, s32 pos_z, s32 duration);
 void SpawnEnergyShot(u16 actor_index, u16 flag, s32 angle, s32 pos_x, s32 pos_y, s32 pos_z);
+u16 SpawnParticle_Exclamation(f32 scale, s16 pos_x, s16 pos_y, s16 pos_z);
 s16 func_8003526C(u16 actor_index, u16 arg1, u16 arg2, u16 arg3, u16 arg4);
 void func_80034644(u16 actor_index);
 s32 func_8002995C(s32 arg0, s32 arg1);

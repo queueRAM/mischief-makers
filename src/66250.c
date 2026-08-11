@@ -4671,13 +4671,17 @@ u16 func_800735EC(u16 actor_index, u16 arg1) {
         gActors[actor_index].unk_184_s16[1] - 40);
 }
 
-void func_80073680(u16* arg0, u16 parent_index, u16 arg2) {
+void func_80073680(u16* arg0, u16 actor_index, u16 arg2) {
     if (func_80029B00(0x50, 0x40, -0x40)) {
-        func_800406A4(arg0, parent_index, gActors[parent_index].unk_148 * arg2, 16, 10);
+        func_800406A4(arg0, actor_index, gActors[actor_index].unk_148 * arg2, 16, 10);
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80073744.s")
+void func_80073744(u16 actor_index) {
+    if ((D_800E3584 & 0x30000) && (func_80029B00(0x50, 0x40, -0x40))) {
+        gActors[actor_index].flags_098 |= ACTOR_FLAG3_UNK18;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_800737C4.s")
 

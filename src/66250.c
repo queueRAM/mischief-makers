@@ -5009,7 +5009,32 @@ u16 func_80074654(u16 actor_dst, u16 actor_src) {
     return angle;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80074804.s")
+void func_80074804(u16 actor_index, u16 arg1) {
+    gActors[actor_index].actorType = ACTORTYPE_OVL1_GEN_GUNMISSLE;
+    Actor_Initialize(actor_index);
+    gActors[actor_index].graphicFlags = ACTOR_GFLAG_UNK15 | ACTOR_GFLAG_ROTZ | ACTOR_GFLAG_SCALE;
+    gActors[actor_index].damage = 80;
+    if (arg1 & 1) {
+        gActors[actor_index].flags = ACTOR_FLAG_UNK7 | ACTOR_FLAG_ONSCREEN_ONLY | ACTOR_FLAG_ACTIVE | ACTOR_FLAG_DRAW;
+        Actor_SetHitboxA(actor_index, 7);
+    }
+    else {
+        gActors[actor_index].flags = ACTOR_FLAG_UNK12 | ACTOR_FLAG_UNK10 | ACTOR_FLAG_UNK9 | ACTOR_FLAG_ONSCREEN_ONLY | ACTOR_FLAG_ACTIVE | ACTOR_FLAG_DRAW;
+        Actor_SetHitboxA(actor_index, 4);
+        Actor_SetHitboxB(actor_index, 6);
+        gActors[actor_index].damage /= 2;
+    }
+    gActors[actor_index].graphicIndex = 0x3064;
+    gActors[actor_index].unk_0CE = 9;
+    gActors[actor_index].unk_0DF = 0x40;
+    gActors[actor_index].unk_0DA = 0x84;
+    gActors[actor_index].unk_0DB = 0xA; \
+    gActors[actor_index].unk_0F8.raw = FIXED_UNIT(1); \
+    gActors[actor_index].unk_0FC.raw = FIXED_UNIT(5);
+    gActors[actor_index].scaleY = 2.0f;
+    gActors[actor_index].unk_114 = 240.0f;
+    gActors[actor_index].unk_118 = 30.0f;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80074938.s")
 

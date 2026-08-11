@@ -17,7 +17,6 @@ void func_80073EF4(u16 actor_index);
 void func_8006C6F0(u16 actor_index);
 u16 func_8006C7B8(u16 actor_index);
 u16 func_80069884(u16 actor_index);
-void func_800742FC(u16, u16);
 void func_80078CC8(u16 actor_index, s32 arg1);
 void func_800789C4(u16 actor_index);
 void func_80078FF0(u16 actor_index, s32 arg1, s32 arg2);
@@ -36,7 +35,6 @@ extern u32 func_80029DEC(s32 arg0, s32 arg1);
 extern u16 func_80072CC4(u16 actor_index);
 extern void func_80073EF4(u16 actor_index);
 extern u16 func_80069884(u16 actor_index);
-extern void func_800742FC(u16, u16);
 extern void func_80078CC8(u16 actor_index, s32 arg1);
 extern void func_800358DC(u16 actor_index);
 extern void func_80035A20(u16 actor_index);
@@ -4942,10 +4940,32 @@ u16 func_800742B8(u16 arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_800742FC.s")
+u16 func_800742FC(u16 actor_dst, u16 actor_src) {
+    s32 rotation_index;
+    u16 angle;
 
-void func_800744AC(u16 arg0, u16 arg1) {
-    func_800742FC(arg0, arg1);
+    gActors[actor_dst].rotateZ = gActors[actor_src].rotateZ;
+    rotation_index = DEG_TO_INDEX(gActors[actor_src].rotateZ);
+    if (gActors[actor_src].flags & ACTOR_FLAG_FLIPPED) {
+        angle = (rotation_index + 0x1E8);
+    }
+    else {
+        angle = (rotation_index + 0x18);
+    }
+    gActors[actor_dst].posX.raw = gActors[actor_src].posX.raw + TO_FIXED(COS(angle) * 26.0f);
+    gActors[actor_dst].posY.raw = gActors[actor_src].posY.raw + TO_FIXED(SIN(angle) * 26.0f);
+    gActors[actor_dst].posZ.raw = gActors[actor_src].posZ.raw + FIXED_UNIT(1);
+    if (gActors[actor_src].flags & ACTOR_FLAG_FLIPPED) {
+        angle += 0x18;
+    }
+    else {
+        angle -= 0x18;
+    }
+    return angle;
+}
+
+u16 func_800744AC(u16 arg0, u16 arg1) {
+    return func_800742FC(arg0, arg1);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/66250/func_800744E0.s")

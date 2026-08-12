@@ -50,7 +50,6 @@ u8 D_801B4B70_7C0AC0;
 
 extern void func_8002C5C4(u16 actor_index, u16 arg1, s16 arg2, f32 scale, s32 arg4, s16 arg5);
 extern void func_8002C6E4(u16 actor_index);
-extern void func_800339BC(s32 arg0, s32 arg1, s32 arg2, u16 arg3);
 extern u16 func_8003F7A0(f32 arg0, s16 pos_x, s16 pos_y, s16 pos_z);
 extern void func_80065650(u16 actor_index);
 extern void func_80067F98(u16 actor_index);

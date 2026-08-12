@@ -6,41 +6,13 @@
 #include "1F1E0.h"
 
 // forward declarations
-void func_80067E50(u16 actor_index, void* arg1);
-void func_80066964(u16 actor_index, u16 arg1);
-void func_80066A10(u16 actor_index);
-void func_8006C1AC(u16 actor_index);
-void func_80078F54(u16 actor_index);
-u16 func_80072CC4(u16 actor_index);
-void func_80073EF4(u16 actor_index);
+void func_80067E50(u16 actor_index, s16* graphic_list);
 void func_8006C6F0(u16 actor_index);
-u16 func_8006C7B8(u16 actor_index);
-u16 func_80069884(u16 actor_index);
-void func_800789C4(u16 actor_index);
-void func_80078FF0(u16 actor_index, s32 arg1, s32 arg2);
-void func_80079378(u16 actor_index);
-void func_8007951C(u16 actor_index);
 void func_8006CE74(u16 actor_index);
-
-// TODO: Move to .h file(s)
-extern void func_800339BC(s32 pos_x, s32 pos_y, s32 pos_z, u16 arg3);
-extern void func_80072628(u16 actor_index);
-extern u32 func_80029A7C(s32 arg0, s32 arg1, s32 arg2);
-extern u32 func_80029CC0(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-extern u32 func_80029D58(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-extern u32 func_80029DEC(s32 arg0, s32 arg1);
-extern u16 func_80072CC4(u16 actor_index);
-extern void func_80073EF4(u16 actor_index);
-extern u16 func_80069884(u16 actor_index);
-extern void func_80035A20(u16 actor_index);
-
-extern u16 gGuestActorIndex;
 
 // data of this TU
 extern u16* D_800D18A4[];
 extern u16* D_800D18C4[];
-extern s16 D_800D2920; // = 0;
-extern u16 D_800D2950; // = 0;
 extern s16 D_800D75A0[];
 extern s16 D_800D75D8[];
 extern s8 D_800D76D8[];
@@ -79,7 +51,7 @@ extern s16 D_800E156C[];
 extern s16 D_800E1574[];
 extern s16 D_800E1604[];
 extern u8 D_800E1750[];
-extern u8 D_800E1788[];
+extern s16 D_800E1788[];
 extern s16 D_800E1728[];
 extern s16 D_800E176C[];
 extern s16 D_800E17A4[];
@@ -853,9 +825,9 @@ u16 func_80067B18(u16 actor_index, s32 arg1) {
     return arg1;
 }
 
-void func_80067E50(u16 actor_index, void* arg1) {
+void func_80067E50(u16 actor_index, s16* graphic_list) {
     if (gActors[actor_index].graphicTimer == 0) {
-        ACTOR_GFX_INIT(actor_index,arg1);
+        ACTOR_GFX_INIT(actor_index, graphic_list);
     }
 }
 
@@ -1414,10 +1386,10 @@ void func_800695E4(u16 actor_index) {
     }
 }
 
-void func_800696A8(u16 arg0) {
-    gActors[arg0].flags &= ~(ACTOR_FLAG_UNK15 | ACTOR_FLAG_UNK12 | ACTOR_FLAG_UNK11 | ACTOR_FLAG_UNK10 | ACTOR_FLAG_UNK9 | ACTOR_FLAG_UNK8 | ACTOR_FLAG_UNK7);
-    gActors[arg0].state = 0x1C0;
-    func_8006C6F0(arg0);
+void func_800696A8(u16 actor_index) {
+    gActors[actor_index].flags &= ~(ACTOR_FLAG_UNK15 | ACTOR_FLAG_UNK12 | ACTOR_FLAG_UNK11 | ACTOR_FLAG_UNK10 | ACTOR_FLAG_UNK9 | ACTOR_FLAG_UNK8 | ACTOR_FLAG_UNK7);
+    gActors[actor_index].state = 0x1C0;
+    func_8006C6F0(actor_index);
 }
 
 void func_80069714(u16 actor_index) {

@@ -2239,7 +2239,6 @@ s32 func_8007AB44(u16 actor_index) {
     gActors[actor_index + 1].flags_098 = 0;
 
     // BUG: UB, missing return value
-    return;
 }
 
 void func_8007B60C(u16 actor_index) {

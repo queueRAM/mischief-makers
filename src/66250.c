@@ -4695,9 +4695,6 @@ void func_80073A60(u16 actor_update) {
     }
 }
 
-#ifdef NON_MATCHING
-// https://decomp.me/scratch/o5z9V
-// based on .rodata, need file split after this function at 74A50/80073E50
 void func_80073CE8(u16 actor_index) {
     Clancer_Update(actor_index);
     switch (gActors[actor_index].state) {
@@ -4728,6 +4725,3 @@ void func_80073CE8(u16 actor_index) {
         break;
     }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_80073CE8.s")
-#endif

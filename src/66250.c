@@ -786,105 +786,101 @@ s32 func_80067394(u16 actor_index, u16 arg1) {
     return 1;
 }
 
-#ifdef NON_MATCHING
-// https://decomp.me/scratch/ds1nP
-void func_8006756C(u16 arg0) {
-    s32 pad;
-    s32 temp_v1;
-    s32 var_t1;
-    s32 temp_f16;
-    s16* var_v0; // sp34
-    u16 temp_v0;
-    u16 idx;
-    s32 var_t3; // sp2C
-    s32 var_t5; // sp28
+void func_8006756C(u16 actor_index) {
+    s16* graphic_list;
+    u16 particle_index;
+    u16 actor_1;
+    s32 x;
+    s32 y;
+    s32 pad0;
     s32 pad1;
-    s16* temp_t2;
+    s32 x_offset;
+    s32 y_offset;
+    s32 angle;
+    s16* vals;
 
-    var_v0 = gActors[arg0].graphicList_160;
-    if (var_v0[2] != 0) {
-        if (gActors[arg0].unk_120 < var_v0[1]) {
-            gActors[arg0].unk_120 += 1.0f;
+    graphic_list = gActors[actor_index].graphicList_160;
+    if (graphic_list[2] != 0) {
+        if (gActors[actor_index].unk_120 < graphic_list[1]) {
+            gActors[actor_index].unk_120 += 1.0f;
         }
         else {
-            var_v0 += 2;
-            if (var_v0[0] < 0) {
-                var_v0 += var_v0[0];
+            graphic_list += 2;
+            if (graphic_list[0] < 0) {
+                graphic_list += graphic_list[0];
             }
-            gActors[arg0].graphicList_160 = var_v0;
-            gActors[arg0].unk_120 = 1.0f;
+            gActors[actor_index].graphicList_160 = graphic_list;
+            gActors[actor_index].unk_120 = 1.0f;
         }
     }
     else {
-        gActors[arg0].unk_120 = 0.0f;
+        gActors[actor_index].unk_120 = 0.0f;
     }
-    temp_t2 = &D_800D7AF8[var_v0[0]];
-    gActors[arg0].graphicIndex = temp_t2[0];
-    switch (gActors[arg0].graphicIndex) {
+    vals = &D_800D7AF8[graphic_list[0]];
+    gActors[actor_index].graphicIndex = vals[0];
+    switch (gActors[actor_index].graphicIndex) {
     case 0x1026:
-        var_t3 = 0x100000;
-        var_t5 = 0x90000;
+        x_offset = FIXED_UNIT(16);
+        y_offset = FIXED_UNIT(9);
         break;
     case 0x1028:
-        var_t3 = 0xE0000;
-        var_t5 = 0xA0000;
+        x_offset = FIXED_UNIT(14);
+        y_offset = FIXED_UNIT(10);
         break;
     case 0x102A:
-        var_t3 = 0xC0000;
-        var_t5 = 0xB0000;
+        x_offset = FIXED_UNIT(12);
+        y_offset = FIXED_UNIT(11);
         break;
     case 0x6837:
-        var_t3 = 0xC0000;
-        var_t5 = 0x40000;
+        x_offset = FIXED_UNIT(12);
+        y_offset = FIXED_UNIT(4);
         break;
     case 0x6838:
-        var_t3 = 0xC0000;
-        var_t5 = 0x30000;
+        x_offset = FIXED_UNIT(12);
+        y_offset = FIXED_UNIT(3);
         break;
     }
 
-    var_t3 *= gActors[arg0].scaleX;
-    var_t5 *= gActors[arg0].scaleX;
-    idx = gActors[arg0].unk_158_u16[1];
-    gActors[idx].unk_148 = 1.0f;
-    var_t1 = (COS(temp_t2[1]) * (gActors[arg0].scaleX * 589824.0f));
-    temp_f16 = (SIN(temp_t2[1]) * (gActors[arg0].scaleX * 589824.0f));
-    gActors[idx].unk_140_f32 = temp_t2[3] + gActors[arg0].unk_11C;
-    temp_v1 = (((temp_t2[2] + temp_t2[1]) & 0x3FF) << 0x10);
-    if (gActors[arg0].flags & 0x20) {
-        gActors[idx].flags |= gActors[arg0].flags & 0x20;
-        var_t3 = -var_t3;
-        var_t1 = -var_t1;
-        gActors[idx].var_160 = 0x4000000 - temp_v1;
-        gActors[idx].unk_140_f32 = -gActors[idx].unk_140_f32;
+    x_offset *= gActors[actor_index].scaleX;
+    y_offset *= gActors[actor_index].scaleX;
+    actor_1 = gActors[actor_index].unk_158_u16[1];
+    gActors[actor_1].unk_148 = 1.0f;
+
+    angle = vals[1];
+    x = COS(angle) * (gActors[actor_index].scaleX * FIXED_UNIT(9));
+    y = SIN(angle) * (gActors[actor_index].scaleX * FIXED_UNIT(9));
+    gActors[actor_1].unk_140_f32 = vals[3] + gActors[actor_index].unk_11C;
+    angle = TO_FIXED((vals[2] + vals[1]) & 0x3FF);
+    if (gActors[actor_index].flags & ACTOR_FLAG_FLIPPED) {
+        gActors[actor_1].flags |= gActors[actor_index].flags & ACTOR_FLAG_FLIPPED;
+        x_offset = -x_offset;
+        x = -x;
+        gActors[actor_1].var_160 = FIXED_UNIT(COS_DEG_360) - angle;
+        gActors[actor_1].unk_140_f32 = -gActors[actor_1].unk_140_f32;
     }
     else {
-        gActors[idx].var_160 = temp_v1;
-        gActors[idx].flags &= ~0x20;
+        gActors[actor_1].var_160 = angle;
+        gActors[actor_1].flags &= ~ACTOR_FLAG_FLIPPED;
     }
-    gActors[idx].unk_134 = (var_t1 + var_t3) / 0x10000;
-    gActors[idx].unk_138 = (temp_f16 + var_t5) / 0x10000;
-    temp_v0 = SpawnParticle_List_90C0_16(gGraphicListBlank, 0, 0, 0);
-    if (temp_v0 != 0) {
-        gActors[temp_v0].graphicIndex = 0x290;
-        gActors[temp_v0].graphicFlags = 9;
-        gActors[temp_v0].flags |= gActors[arg0].flags & 0x20;
-        gActors[temp_v0].scaleX = gActors[arg0].scaleX * 0.8;
-        gActors[temp_v0].scaleY = gActors[arg0].scaleX * 0.8;
-        gActors[temp_v0].unk_148 = 0.0f;
-        gActors[temp_v0].var_160 = (temp_t2[1] << 0x10);
-        if (gActors[arg0].flags & 0x20) {
-            gActors[temp_v0].var_160 = 0x04000000 -  gActors[temp_v0].var_160;
+    gActors[actor_1].unk_134 = FROM_FIXED(x + x_offset);
+    gActors[actor_1].unk_138 = FROM_FIXED(y + y_offset);
+    particle_index = SpawnParticle_List_90C0_16(gGraphicListBlank, 0, 0, 0);
+    if (particle_index != 0) {
+        gActors[particle_index].graphicIndex = 0x290;
+        gActors[particle_index].graphicFlags = 9;
+        gActors[particle_index].flags |= gActors[actor_index].flags & ACTOR_FLAG_FLIPPED;
+        gActors[particle_index].scaleX = gActors[actor_index].scaleX * 0.8;
+        gActors[particle_index].scaleY = gActors[actor_index].scaleX * 0.8;
+        gActors[particle_index].unk_148 = 0.0f;
+        gActors[particle_index].var_160 = TO_FIXED(vals[1]);
+        if (gActors[actor_index].flags & ACTOR_FLAG_FLIPPED) {
+            gActors[particle_index].var_160 = FIXED_UNIT(COS_DEG_360) - gActors[particle_index].var_160;
         }
-        gActors[temp_v0].posX.raw = gActors[arg0].posX.raw + (var_t1 / 2) + var_t3;
-        gActors[temp_v0].posY.raw = gActors[arg0].posY.raw + (temp_f16 / 2) + var_t5;
-        gActors[temp_v0].posZ.raw = gActors[arg0].posZ.raw - 2;
+        gActors[particle_index].posX.raw = gActors[actor_index].posX.raw + (x / 2) + x_offset;
+        gActors[particle_index].posY.raw = gActors[actor_index].posY.raw + (y / 2) + y_offset;
+        gActors[particle_index].posZ.raw = gActors[actor_index].posZ.raw - 2;
     }
 }
-#else
-void func_8006756C(u16 actor_index);
-#pragma GLOBAL_ASM("asm/nonmatchings/66250/func_8006756C.s")
-#endif
 
 s32 func_800679DC(u16 actor_index, u16 arg1) {
     u16 actor_0;
